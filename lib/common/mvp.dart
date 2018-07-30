@@ -1,0 +1,46 @@
+library mvp;
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' show State, StatefulWidget;
+
+abstract class IPresenter<V> {
+  @protected
+  V view;
+
+  @protocted
+  V get() => this.view;
+}
+
+abstract class IView {}
+
+abstract class Presenter<V extends IView> extends IPresenter<V> {
+  @mustCallSuper
+  @protected
+  onBindView(V view) : assert(view != null) {
+    this.view ??= view;
+  }
+
+  @mustCallSuper
+  @protected
+  unBindView() {
+    this.view = null;
+  }
+}
+
+abstract class MVPState<P extends Presenter<IView>, T extends StatefulWidget>
+    extends State<T> implements IView {
+  P presenter;
+
+  @mustCallSuper
+  MVPState(P presenter) : assert(presenter != null) {
+    this.presenter ??= presenter;
+    this.presenter.onBindView(this);
+  }
+
+  @override
+  @mustCallSuper
+  void dispose() {
+    super.dispose();
+    this.presenter.unBindView();
+  }
+}
