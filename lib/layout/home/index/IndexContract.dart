@@ -1,10 +1,9 @@
 import 'package:lowlottery/common/mvp.dart';
 
-class IndexFragIView extends IView {
-}
+abstract class IndexFragIView extends IView {}
 
-class IndexFragIPresenter extends IPresenter<IndexFragIView> {
-  void requestIndexFragLottery()
+abstract class IndexFragIPresenter extends IPresenter<IndexFragIView> {
+  void requestIndexFragLottery();
 }
 
 class IndexFragPresenter extends Presenter<IndexFragIView>
@@ -12,7 +11,5 @@ class IndexFragPresenter extends Presenter<IndexFragIView>
   IndexFragPresenter(IndexFragIView view) : super(view);
 
   @override
-  void requestIndexFragLottery() {
-
-  }
+  void requestIndexFragLottery() {}
 }

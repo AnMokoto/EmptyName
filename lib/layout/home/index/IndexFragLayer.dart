@@ -23,7 +23,7 @@ class _IndexFragState extends MVPState<IndexFragPresenter, IndexFragLayer> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    presenter.
+    presenter.requestIndexFragLottery();
   }
 
   @override
