@@ -7,7 +7,7 @@ abstract class IPresenter<V> {
   @protected
   V view;
 
-  @protocted
+  @protected
   V get() => this.view;
 }
 
@@ -40,7 +40,7 @@ abstract class MVPState<P extends Presenter<IView>, T extends StatefulWidget>
   @override
   @mustCallSuper
   void dispose() {
-    super.dispose();
     this.presenter.unBindView();
+    super.dispose();
   }
 }
