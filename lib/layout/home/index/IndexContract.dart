@@ -1,4 +1,5 @@
 import 'package:lowlottery/common/mvp.dart';
+import 'package:lowlottery/net/HttpFactory.dart';
 
 abstract class IndexFragIView extends IView {}
 
@@ -11,5 +12,7 @@ class IndexFragPresenter extends Presenter<IndexFragIView>
   IndexFragPresenter(IndexFragIView view) : super(view);
 
   @override
-  void requestIndexFragLottery() {}
+  void requestIndexFragLottery() {
+    HttpRetrofit.request("projectAdd", {}, (model) {});
+  }
 }
