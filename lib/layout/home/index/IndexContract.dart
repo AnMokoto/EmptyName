@@ -9,7 +9,7 @@ abstract class IndexFragIPresenter extends IPresenter<IndexFragIView> {
 
 class IndexFragPresenter extends Presenter<IndexFragIView>
     implements IndexFragIPresenter {
-  IndexFragPresenter(IndexFragIView view) : super(view);
+  IndexFragPresenter() : super();
 
   @override
   void requestIndexFragLottery() {

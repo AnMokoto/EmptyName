@@ -13,7 +13,7 @@ class IndexFragLayer extends StatefulWidget implements IndexFragIView {
 
   @override
   _IndexFragState createState() =>
-      new _IndexFragState(new IndexFragPresenter(this));
+      new _IndexFragState(new IndexFragPresenter());
 }
 
 class _IndexFragState extends MVPState<IndexFragPresenter, IndexFragLayer> {
@@ -33,7 +33,7 @@ class _IndexFragState extends MVPState<IndexFragPresenter, IndexFragLayer> {
         new AspectRatio(
           aspectRatio: 16.0 / 9.0,
           child: Image.asset(
-            "app_back.png",
+            "images/app_back.png",
             fit: BoxFit.cover,
           ),
         ), //banner

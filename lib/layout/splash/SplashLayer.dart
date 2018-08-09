@@ -8,7 +8,8 @@ class SplashLayer extends StatefulWidget {
   SplashState createState() => new SplashState();
 }
 
-class SplashState extends State<SplashLayer> with TickerProviderStateMixin {
+// ignore: mixin_inherits_from_not_object
+class SplashState extends State<SplashLayer> with TickerProviderStateMixin<SplashLayer> {
   // 动画
   Animation animation;
 

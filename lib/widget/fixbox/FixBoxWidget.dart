@@ -11,8 +11,11 @@ class FixBoxWidget extends StatefulWidget {
 
   List<FixBoxModel> models;
 
-  FixBoxWidget({Key key, this.count = 1, this.direction = Axis
-      .vertical, @required this.models})
+  FixBoxWidget(
+      {Key key,
+      this.count = 1,
+      this.direction = Axis.vertical,
+      @required this.models})
       : assert(models != null),
         super(key: key);
 
@@ -36,20 +39,16 @@ class FixBoxState extends State<FixBoxWidget> {
   }
 }
 
-
 class FixBoxWidgetItem extends StatefulWidget {
   final FixBoxModel model;
 
   @override
   FixBoxWidgetItemState createState() => new FixBoxWidgetItemState();
 
-
   FixBoxWidgetItem({Key key, this.model})
-      :assert(model != null),
-        super(key: key)
-
+      : assert(model != null),
+        super(key: key);
 }
-
 
 class FixBoxWidgetItemState extends State<FixBoxWidgetItem> {
   @override
@@ -65,19 +64,19 @@ class FixBoxWidgetItemState extends State<FixBoxWidgetItem> {
                 radius: 90.0,
               ),
               Spacer(),
-              Text(widget.model.name ?? "",
+              Text(
+                widget.model.name ?? "",
                 style: new TextStyle(
                     fontSize: 14.0,
                     color: Colors.black87,
-                    decoration: TextDecoration.none
-                ),
+                    decoration: TextDecoration.none),
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
-                maxLines: 1,)
+                maxLines: 1,
+              )
             ],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
-        ]
-    );
+        ]);
   }
 }

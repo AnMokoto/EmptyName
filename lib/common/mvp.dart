@@ -16,13 +16,13 @@ abstract class IView {}
 abstract class Presenter<V extends IView> extends IPresenter<V> {
   @mustCallSuper
   @protected
-  onBindView(V view) : assert(view != null) {
+  void onBindView(V view) {
     this.view ??= view;
   }
 
   @mustCallSuper
   @protected
-  unBindView() {
+  void unBindView() {
     this.view = null;
   }
 }

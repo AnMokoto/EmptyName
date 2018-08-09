@@ -5,11 +5,10 @@ import 'package:lowlottery/layout/home/index/IndexFragLayer.dart';
 
 class HomeLayer extends StatefulWidget implements HomeIView {
   @override
-  HomeState createState() => new HomeState(new HomePresenter(this));
+  HomeState createState() => new HomeState(new HomePresenter());
 }
 
-class HomeState extends MVPState<HomePresenter, HomeLayer>
-    with TickerProviderStateMixin {
+class HomeState extends MVPState<HomePresenter, HomeLayer> {
   PageController _pageController;
 
   int _currentIndex = 0;
@@ -42,10 +41,20 @@ class HomeState extends MVPState<HomePresenter, HomeLayer>
   Widget build(BuildContext context) {
     return new Scaffold(
       body: new PageView.builder(
+        physics: new AlwaysScrollableScrollPhysics(),
         onPageChanged: _onPageChanged,
         controller: _pageController,
-        itemBuilder: (context, index) {
-
+        itemBuilder: (BuildContext, index) {
+          return (<Widget>[
+            new ConstrainedBox(
+              constraints: const BoxConstraints.expand(),
+              child: new IndexFragLayer(),
+            ),
+            new ConstrainedBox(
+              constraints: const BoxConstraints.expand(),
+              child: new IndexFragLayer(),
+            )
+          ])[index];
         },
         itemCount: 2,
       ),

@@ -15,13 +15,15 @@ typedef void onError(Exception e);
 
 typedef void onNext<T>(IModel<T> t);
 
-abstract class IOnAction<T> {
-  void onNext(IModel<T> t);
-  void onError(Exception e);
-  void onComplete();
+class IOnAction<T> {
+  void onNext(IModel<T> t) {}
+
+  void onError(Exception e) {}
+
+  void onComplete() {}
 }
 
-final class OnAction<T> implements IOnAction<T> {
+class OnAction<T> extends IOnAction<T> {
   onNext next;
   onError error;
 
@@ -54,29 +56,29 @@ final class OnAction<T> implements IOnAction<T> {
   }
 }
 
-
 void _abRequest(String path, Map<String, dynamic> map, IOnAction action) {
-  var request = new http.Request("POST", HOST_NAME+path);
+  var request = new http.Request("POST", HOST_NAME + path);
   request.body = json.encode(map);
   request.headers['Content-Type'] = "application/json";
   request.headers['Accept'] = "application/json";
-  _client.send(request)
-  //.post(HOST_NAME+path, body: map)
-  .timeout(Duration(milliseconds: 1000),onTimeout: (){})
-  .then((response) {
+  _client
+      .send(request)
+      //.post(HOST_NAME+path, body: map)
+      .timeout(Duration(milliseconds: 1000), onTimeout: () {})
+      .then((response) {
     var state = response.statusCode;
     if (state == 200) {
-     return response.stream.transform(utf8.decoder).join();
+      return response.stream.transform(utf8.decoder).join();
     }
-    throw new FormatException("NetWork Error",null,state);
+    throw new FormatException("NetWork Error", null, state);
   }).then((response) {
-    var body  = json.decode(response);
-      var code = body['code'];
-      if (code == 200) {
+    var body = json.decode(response);
+    var code = body['code'];
+    if (code == 200) {
       action.onNext(body['body']);
-      } else {
-        action.onError(new FormatException(body['message'], null, code));
-      }
+    } else {
+      action.onError(new FormatException(body['message'], null, code));
+    }
   }).whenComplete(() {
     _client.close();
     action.onComplete();
