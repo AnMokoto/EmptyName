@@ -52,7 +52,9 @@ class FixBoxWidgetItem extends StatefulWidget {
 }
 
 class FixBoxWidgetItemState extends State<FixBoxWidgetItem> {
-  void _onFixBoxTopClick(int id) {}
+  void _onFixBoxTopClick(int id) {
+    
+  }
 
   @override
   Widget build(BuildContext context) {
