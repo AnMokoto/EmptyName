@@ -13,7 +13,8 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: ,
+      //appBar: ,
+      
     );
   }
 }

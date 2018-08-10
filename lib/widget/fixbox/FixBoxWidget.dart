@@ -5,6 +5,7 @@ import 'package:lowlottery/widget/fixbox/FixBoxModel.dart';
 
 /// @auther An'Mokoto
 /// @desc item to show container
+@immutable
 class FixBoxWidget extends StatefulWidget {
   final int count;
   final Axis direction;
@@ -13,7 +14,7 @@ class FixBoxWidget extends StatefulWidget {
 
   FixBoxWidget(
       {Key key,
-      this.count = 1,
+      this.count = 3,
       this.direction = Axis.vertical,
       @required this.models})
       : assert(models != null),
@@ -26,7 +27,7 @@ class FixBoxWidget extends StatefulWidget {
 class FixBoxState extends State<FixBoxWidget> {
   @override
   Widget build(BuildContext context) {
-    new GridView.count(
+    return new GridView.count(
       crossAxisCount: widget.count,
       scrollDirection: widget.direction,
       children: widget.models.map((f) {
@@ -51,32 +52,38 @@ class FixBoxWidgetItem extends StatefulWidget {
 }
 
 class FixBoxWidgetItemState extends State<FixBoxWidgetItem> {
+  void _onFixBoxTopClick(int id) {}
+
   @override
   Widget build(BuildContext context) {
-    return new Stack(
-        fit: StackFit.expand,
-        alignment: AlignmentDirectional.center,
-        children: <Widget>[
-          new Column(
-            children: <Widget>[
-              CircleAvatar(
-                backgroundImage: NetworkImage(widget.model.url ?? ""),
-                radius: 90.0,
-              ),
-              Spacer(),
-              Text(
-                widget.model.name ?? "",
-                style: new TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.black87,
-                    decoration: TextDecoration.none),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              )
-            ],
-            mainAxisAlignment: MainAxisAlignment.center,
-          ),
-        ]);
+    return new FittedBox(
+      fit: BoxFit.contain,
+      alignment: AlignmentDirectional.center,
+      child: new InkWell(
+        onTap: () {
+          _onFixBoxTopClick(widget.model.id);
+        },
+        child: new Column(
+          children: <Widget>[
+            CircleAvatar(
+              backgroundImage: AssetImage(widget.model.url ??
+                  ""), //NetworkImage(widget.model.url ?? "")
+              radius: 90.0,
+            ),
+            Text(
+              widget.model.name ?? "",
+              style: new TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.black87,
+                  decoration: TextDecoration.none),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            )
+          ],
+          mainAxisAlignment: MainAxisAlignment.center,
+        ),
+      ),
+    );
   }
 }

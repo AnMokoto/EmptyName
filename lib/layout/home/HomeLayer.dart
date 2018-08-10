@@ -3,17 +3,17 @@ import 'package:lowlottery/common/mvp.dart';
 import 'package:lowlottery/layout/home/HomeContract.dart';
 import 'package:lowlottery/layout/home/index/IndexFragLayer.dart';
 
-class HomeLayer extends StatefulWidget implements HomeIView {
+class HomeLayer extends StatefulWidget  {
   @override
-  HomeState createState() => new HomeState(new HomePresenter());
+  _HomeState createState() => new _HomeState(new HomePresenter());
 }
 
-class HomeState extends MVPState<HomePresenter, HomeLayer> {
+class _HomeState extends MVPState<HomePresenter, HomeLayer> implements HomeIView{
   PageController _pageController;
 
   int _currentIndex = 0;
 
-  HomeState(HomePresenter presenter) : super(presenter);
+  _HomeState(HomePresenter presenter) : super(presenter);
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class HomeState extends MVPState<HomePresenter, HomeLayer> {
   Widget build(BuildContext context) {
     return new Scaffold(
       body: new PageView.builder(
-        physics: new AlwaysScrollableScrollPhysics(),
+        physics: new PageScrollPhysics(),
         onPageChanged: _onPageChanged,
         controller: _pageController,
         itemBuilder: (BuildContext, index) {

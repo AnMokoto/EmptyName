@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:lowlottery/layout/home/HomeLayer.dart';
 
 /// @author An'Mokoto
 /// @desc splash layer
@@ -9,7 +11,8 @@ class SplashLayer extends StatefulWidget {
 }
 
 // ignore: mixin_inherits_from_not_object
-class SplashState extends State<SplashLayer> with TickerProviderStateMixin<SplashLayer> {
+class SplashState extends State<SplashLayer>
+    with TickerProviderStateMixin<SplashLayer> {
   // 动画
   Animation animation;
 
@@ -25,7 +28,7 @@ class SplashState extends State<SplashLayer> with TickerProviderStateMixin<Splas
     controller = AnimationController(
         vsync: this,
         duration: const Duration(
-          milliseconds: 3000,
+          milliseconds: 5000,
         ));
 
     animation = new Tween(
@@ -34,11 +37,13 @@ class SplashState extends State<SplashLayer> with TickerProviderStateMixin<Splas
     ).animate(controller);
 
     animationStateListener = (state) {
-      if (state == AnimationStatus.completed) {
-        Navigator.of(context).pushAndRemoveUntil(
-            new MaterialPageRoute(builder: (context) => null),
-            (route) => route = null);
-      }
+      // Navigator.of(context).pushAndRemoveUntil(
+      //     new MaterialPageRoute(builder: (context) => new HomeLayer()),
+      //     (route) => route = null);
+
+      //Navigator.of(context).pushNamed("/home");
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new HomeLayer()));
     };
 
     animation.addStatusListener(animationStateListener);
@@ -51,7 +56,7 @@ class SplashState extends State<SplashLayer> with TickerProviderStateMixin<Splas
     return new FadeTransition(
       opacity: animation,
       child: new Image.asset(
-        "app_back.png",
+        "assets/images/app_back.png",
         fit: BoxFit.cover,
       ),
     );
