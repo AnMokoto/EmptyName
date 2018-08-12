@@ -18,11 +18,11 @@ class FixBoxModel extends Object with _$FixBoxModelSerializerMixin {
   /// always not be null
   static List<FixBoxModel> fromJsonToList(List<dynamic> json) {
     List<FixBoxModel> list = new List();
-    for (var str in json) {
+    json.forEach((f) {
       try {
-        list.add(FixBoxModel.fromJson(str));
-      } on Exception {}
-    }
+        list.add(FixBoxModel.fromJson(f));
+      } catch (e) {}
+    });
     return list;
   }
 }

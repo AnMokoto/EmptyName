@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/rendering.dart';
 import 'package:lowlottery/common/mvp.dart';
 import 'IndexContract.dart';
 import 'package:lowlottery/widget/fixbox/FixBoxWidget.dart';
 import 'package:lowlottery/widget/fixbox/FixBoxModel.dart';
+import 'package:lowlottery/layout/lottery/LotteryLayer.dart';
 
 class IndexFragLayer extends StatefulWidget {
   List<FixBoxModel> models;
@@ -41,20 +44,28 @@ class _IndexFragState extends MVPState<IndexFragPresenter, IndexFragLayer>
             fit: BoxFit.cover,
           ),
         ), //banner
-
-        new Text(
-          "data",
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.left,
-          style: new TextStyle(
-            color: Colors.black,
-            fontSize: 12.0,
+        new Align(
+          alignment: Alignment.centerLeft,
+          child: new Directionality(
+            textDirection: TextDirection.ltr,
+            child: new Text(
+              "data",
+              overflow: TextOverflow.fade,
+              textAlign: TextAlign.left,
+              style: new TextStyle(
+                color: Colors.black,
+                fontSize: 12.0,
+              ),
+            ),
           ),
         ),
         new Expanded(
             child: new FixBoxWidget(
-          models: widget.models,
-        ))
+                models: widget.models,
+                onItemClick: (model, position) {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (context) => new LotteryLayer()));
+                }))
       ],
     );
   }

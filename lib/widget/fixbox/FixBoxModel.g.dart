@@ -11,11 +11,8 @@ FixBoxModel _$FixBoxModelFromJson(Map<String, dynamic> json) =>
 
 abstract class _$FixBoxModelSerializerMixin {
   dynamic get id;
-
   dynamic get name;
-
   dynamic get url;
-
   Map<String, dynamic> toJson() =>
       <String, dynamic>{'id': id, 'name': name, 'url': url};
 }

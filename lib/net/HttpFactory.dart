@@ -13,10 +13,10 @@ typedef void onComplete();
 
 typedef void onError(Exception e);
 
-typedef void onNext<T>(IModel<T> t);
+typedef void onNext<T>(T t);
 
 class IOnAction<T> {
-  void onNext(IModel<T> t) {}
+  void onNext(T t) {}
 
   void onError(Exception e) {}
 
@@ -43,7 +43,7 @@ class OnAction<T> extends IOnAction<T> {
     this.c = complete;
   }
 
-  void OnNext(IModel<T> t) {
+  void OnNext(T t) {
     this.next(t);
   }
 
@@ -57,7 +57,7 @@ class OnAction<T> extends IOnAction<T> {
 }
 
 void _abRequest(String path, Map<String, dynamic> map, IOnAction action) {
-  var request = new http.Request("POST", HOST_NAME + path);
+  var request = new http.Request("POST", Uri.parse(HOST_NAME + path));
   request.body = json.encode(map);
   request.headers['Content-Type'] = "application/json";
   request.headers['Accept'] = "application/json";
@@ -73,11 +73,11 @@ void _abRequest(String path, Map<String, dynamic> map, IOnAction action) {
     throw new FormatException("NetWork Error", null, state);
   }).then((response) {
     var body = json.decode(response);
-    var code = body['code'];
-    if (code == 200) {
+    var success = body['success'] as bool;
+    if (success) {
       action.onNext(body['body']);
     } else {
-      action.onError(new FormatException(body['message'], null, code));
+      action.onError(new FormatException(body['message'], null, -1));
     }
   }).whenComplete(() {
     _client.close();

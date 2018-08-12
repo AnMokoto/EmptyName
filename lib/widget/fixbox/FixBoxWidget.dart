@@ -3,6 +3,8 @@ library FixBoxWidget;
 import 'package:flutter/material.dart';
 import 'package:lowlottery/widget/fixbox/FixBoxModel.dart';
 
+typedef void OnFixBoxOnItemClick(FixBoxModel model, int position);
+
 /// @auther An'Mokoto
 /// @desc item to show container
 @immutable
@@ -11,14 +13,18 @@ class FixBoxWidget extends StatefulWidget {
   final Axis direction;
 
   List<FixBoxModel> models;
+  OnFixBoxOnItemClick _onItemClick;
 
   FixBoxWidget(
       {Key key,
       this.count = 3,
       this.direction = Axis.vertical,
-      @required this.models})
+      @required this.models,
+      OnFixBoxOnItemClick onItemClick})
       : assert(models != null),
-        super(key: key);
+        super(key: key) {
+    this._onItemClick = onItemClick ?? (context, model, position) {};
+  }
 
   @override
   FixBoxState createState() => new FixBoxState();
@@ -30,9 +36,12 @@ class FixBoxState extends State<FixBoxWidget> {
     return new GridView.count(
       crossAxisCount: widget.count,
       scrollDirection: widget.direction,
-      children: widget.models.map((f) {
-        return new FixBoxWidgetItem(model: f);
-      }).toList(),
+      children: new List.generate(widget.models.length, (index) {
+        return new FixBoxWidgetItem(
+            model: widget.models[index],
+            position: index,
+            onItemClick: widget._onItemClick);
+      }),
       padding: const EdgeInsets.all(5.0),
       mainAxisSpacing: 5.0,
       crossAxisSpacing: 5.0,
@@ -42,20 +51,21 @@ class FixBoxState extends State<FixBoxWidget> {
 
 class FixBoxWidgetItem extends StatefulWidget {
   final FixBoxModel model;
-
+  final OnFixBoxOnItemClick onItemClick;
+  final int position;
   @override
   FixBoxWidgetItemState createState() => new FixBoxWidgetItemState();
 
-  FixBoxWidgetItem({Key key, this.model})
+  FixBoxWidgetItem(
+      {Key key,
+      @required this.model,
+      @required this.position,
+      @required this.onItemClick})
       : assert(model != null),
         super(key: key);
 }
 
 class FixBoxWidgetItemState extends State<FixBoxWidgetItem> {
-  void _onFixBoxTopClick(int id) {
-    
-  }
-
   @override
   Widget build(BuildContext context) {
     return new FittedBox(
@@ -63,7 +73,7 @@ class FixBoxWidgetItemState extends State<FixBoxWidgetItem> {
       alignment: AlignmentDirectional.center,
       child: new InkWell(
         onTap: () {
-          _onFixBoxTopClick(widget.model.id);
+          widget.onItemClick(widget.model, widget.position);
         },
         child: new Column(
           children: <Widget>[

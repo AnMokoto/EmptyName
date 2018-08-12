@@ -28,7 +28,7 @@ class SplashState extends State<SplashLayer>
     controller = AnimationController(
         vsync: this,
         duration: const Duration(
-          milliseconds: 5000,
+          milliseconds: 3000,
         ));
 
     animation = new Tween(
@@ -42,8 +42,10 @@ class SplashState extends State<SplashLayer>
       //     (route) => route = null);
 
       //Navigator.of(context).pushNamed("/home");
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new HomeLayer()));
+      if (state == AnimationStatus.completed) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new HomeLayer()));
+      }
     };
 
     animation.addStatusListener(animationStateListener);
