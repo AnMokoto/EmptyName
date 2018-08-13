@@ -7,84 +7,113 @@ import 'dart:convert';
 import 'package:lowlottery/common/models.dart';
 
 const dynamic HOST_NAME = "http://178.128.21.119:10003/";
-var _client = new http.Client();
-
+/// REQUEST - RESPONSE FINISH .
 typedef void onComplete();
 
+/// REQUEST FAILURE . ALSE SEE [Exception]
 typedef void onError(Exception e);
 
+/// REQUEST SUCCESS . ALSE SEE [IModel]
 typedef void onNext<T>(T t);
 
-class IOnAction<T> {
-  void onNext(T t) {}
+abstract class IOnAction<T> {
+  /// 数据请求成功后的数据
 
-  void onError(Exception e) {}
+  void OnNext(T t) {}
 
-  void onComplete() {}
+  /// 请求失败
+
+  void OnError(Exception e) {}
+
+  /// 请求完成
+
+  void OnComplete() {}
 }
 
-class OnAction<T> extends IOnAction<T> {
+class OnAction<T> implements IOnAction<T> {
   onNext next;
   onError error;
 
   onComplete c;
 
-  OnAction.onNext(onNext next) {
-    OnAction.onError(next, (e) {});
+  factory OnAction.onNext(onNext next) {
+    return OnAction.onError(next, (e) {});
   }
 
-  OnAction.onError(onNext next, onError error) {
-    OnAction.onComplete(next, error, () {});
+  factory OnAction.onError(onNext next, onError error) {
+    return OnAction.onComplete(next, error, () {});
   }
 
-  OnAction.onComplete(onNext next, onError error, onComplete complete) {
+  factory OnAction.onComplete(onNext next, onError error, onComplete complete) {
+    return new OnAction(next, error, complete);
+  }
+
+  OnAction(onNext next, onError error, onComplete complete) {
     this.next = next;
     this.error = error;
     this.c = complete;
   }
 
+  @override
   void OnNext(T t) {
+    print("onNext");
     this.next(t);
   }
 
+  @override
   void OnError(Exception e) {
+    print("onError");
     this.error(e);
   }
 
+  @override
   void OnComplete() {
+    print("onComplete");
     this.c();
   }
 }
 
+const REQUEST_HEAD = {
+  "Content-Type": "application/json",
+  "Accept": "application/json"
+};
+
 void _abRequest(String path, Map<String, dynamic> map, IOnAction action) {
-  var request = new http.Request("POST", Uri.parse(HOST_NAME + path));
-  request.body = json.encode(map);
-  request.headers['Content-Type'] = "application/json";
-  request.headers['Accept'] = "application/json";
-  _client
-      .send(request)
+  // var request = new http.Request("POST", Uri.parse(HOST_NAME + path));
+  // request.body = json.encode(map);
+  // request.headers["Content-Type"] = "application/json";
+  // request.headers["Accept"] = "application/json";
+  // var _client = new http.Client();
+  print(map.toString());
+  var url = HOST_NAME + path;
+  print(url);
+  http
+      .post(url, headers: REQUEST_HEAD, body: json.encode(map))
+      // _client
+      // .send(request)
       //.post(HOST_NAME+path, body: map)
-      .timeout(Duration(milliseconds: 1000), onTimeout: () {})
+      .timeout(Duration(milliseconds: 1000 * 10), onTimeout: () {})
       .then((response) {
     var state = response.statusCode;
     if (state == 200) {
-      return response.stream.transform(utf8.decoder).join();
+      return response.body;
     }
     throw new FormatException("NetWork Error", null, state);
   }).then((response) {
     var body = json.decode(response);
     var success = body['success'] as bool;
     if (success) {
-      action.onNext(body['body']);
+      action.OnNext(body['data']);
+      action.OnComplete();
     } else {
-      action.onError(new FormatException(body['message'], null, -1));
+      new FormatException(body['message'], null, -1);
     }
-  }).whenComplete(() {
-    _client.close();
-    action.onComplete();
-  }).catchError((error) {
-    action.onError(error);
-    action.onComplete();
+    // }).whenComplete(() {
+    //  action.onComplete();
+  }).catchError((e) {
+    print(e);
+    //action.OnError(e);
+    action.OnComplete();
   });
 }
 

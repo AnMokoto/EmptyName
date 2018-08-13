@@ -59,34 +59,38 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
   }
 
   void _initCacheChoice() {
-    _titles.map((index) {
+    for (var index = 0; index < _titles.length; index++) {
       _isChoice[index] = List.generate(10, (i) {
         return -1;
       });
-    });
+    }
   }
 
   void _updateCacheChoice(dynamic m, int index) {
-    var _id = m["id"];
-    var able = data[index][_id]["able"] as bool;
-
-    var _inx = _isChoice[index];
-    _inx[_id] = able ? -1 : index;
-
-    data[index][_id]["able"] = !able;
-
-    var _count = 0;
-
-    _isChoice.map((key, value) {
-      value.forEach((i) {
-        if (i >= 0) {
-          ++_count;
-        }
-      });
-    });
     setState(() {
+      debugPrint("index==${index}");
+
+      var _id = m["id"];
+      var able = data[index][_id]["able"] as bool;
+
+      var _inx = _isChoice[index];
+      _inx[_id] = able ? -1 : index;
+
+      data[index][_id]["able"] = !able;
+
+      var _count = 0;
+      _isChoice.forEach((_, value) {
+        print(value);
+        value.forEach((i) {
+          if (i >= 0) {
+            ++_count;
+          }
+        });
+      });
       count = _count;
+      debugPrint("count==${count}");
       money = count * 2.0;
+      debugPrint("money==${money}");
     });
   }
 
@@ -102,7 +106,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
 
   void requestLotteryWithExpectNowSuccess(LotteryModel data) {
     setState(() {
-      currentNum = data.gameEn ?? "";
+      currentNum = data.expectNo ?? "";
       currentNumEnding = data.remainTime;
     });
   }
@@ -119,14 +123,14 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
   void initState() {
     // TODO: implement initState
     super.initState();
-    //presenter.requestLotteryWithExpectNow();
-    //presenter.requestLotteryLastCurrent();
+    presenter.requestLotteryWithExpectNow();
+    presenter.requestLotteryLastCurrent();
   }
 
   @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
+  void didUpdateWidget(LotteryLayer oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -167,6 +171,9 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
           constraints: new BoxConstraints.expand(),
           child: new Column(
             children: <Widget>[
+
+            
+              /// header
               new Container(
                 child: new Row(children: <Widget>[
                   // child: new Padding(
@@ -177,9 +184,10 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                       child: new Column(
                         children: <Widget>[
                           new Text(
-                            history.length > 0
-                                ? history[0].expectNo ?? ""
-                                : "" + "期开奖号码",
+                            (history.length > 0
+                                    ? history[0].expectNo ?? ""
+                                    : "") +
+                                "期开奖号码",
                             style: headStyle,
                           ),
                           new Container(
@@ -240,32 +248,91 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                   ),
                 ]),
               ),
+
+              /// list
               new Expanded(
                   child: new Container(
-                child: new Column(
-                  children: <Widget>[
-                    new Container(
-                      child: new Text(
-                        '从万位、千位、百位,十位、个位��意意位置上至少选择1个号码，号码与相同位置的开奖号码一致。���������������������������励现金${money}元',
-                        style: const TextStyle(color: Colors.black),
+                child: new CustomScrollView(
+                  controller: new ScrollController(keepScrollOffset: false),
+                  shrinkWrap: true,
+                  slivers: <Widget>[
+                    new SliverPadding(
+                      padding: EdgeInsets.all(10.0),
+                      sliver: new SliverList(
+                        delegate:
+                            new SliverChildBuilderDelegate((context, index) {
+                          return new Container(
+                            child: new Text(
+                              "从万位、千位、百位,十位、个位��意意位置上至少选择1个号码，号码与相同位置的开奖号码一致。���������������������������励现金${money}元",
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          );
+                        }, childCount: 1),
                       ),
                     ),
-                    new Expanded(
-                      child: new ListView.builder(
-                        itemBuilder: (context, index) {
-                          return new LotteryItem(
-                            this._titles[index] ?? "a",
-                            index,
-                            items: data[index],
-                            callback: _updateCacheChoice,
-                          );
-                        },
-                        itemCount: _titles.length,
+                
+                    new SliverPadding(
+                      padding: EdgeInsets.all(10.0),
+                      sliver: new SliverList(
+                        delegate: new SliverChildBuilderDelegate(
+                          (context, index) {
+                            
+                            return new Column(
+                              children: <Widget>[
+                                new LotteryItem(
+                              this._titles[index] ?? "a",
+                              index,
+                              items: data[index],
+                              callback: _updateCacheChoice,
+                            ),
+                            new Divider(),
+                          
+                              ],
+                            );
+                          },
+                          childCount: _titles.length,
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ))
+              )),
+
+              /// footer
+              new Container(
+                color: Colors.white,
+                constraints: new BoxConstraints.tightFor(),
+                child: new Offstage(
+                  offstage: count <= 0,
+                  child: new Container(
+                    height: 80.0,
+                    child: new Row(
+                      children: <Widget>[
+                        new Expanded(
+                            flex: 2,
+                            child: new Container(
+                              color: Colors.red,
+                              child: new Center(
+                                child: new Text("aaaaaa"),
+                              ),
+                            )),
+                        new Expanded(
+                            child: new Container(
+                          color: Colors.green,
+                          child: new Center(
+                            child:new IconButton(
+                              onPressed: (){
+                                /// turn to pay layer
+                              },
+                              icon: Icon(Icons.card_giftcard),
+                            ),
+                          ),
+                        ))
+                      ],
+                    ),
+                  ),
+                ),
+              )
             ],
           )),
     );
@@ -286,17 +353,16 @@ class LotteryItem extends StatefulWidget {
   _LotteryItemState createState() => new _LotteryItemState();
 }
 
-class _LotteryItemState extends State<LotteryItem>
-    with SingleTickerProviderStateMixin<LotteryItem> {
+class _LotteryItemState extends State<LotteryItem> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     var value = widget.items;
     return new Container(
-      // constraints: new BoxConstraints.expand(),
+       constraints: new BoxConstraints.tightFor(),
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          /// left
           new Container(
             width: 50.0,
             height: 30.0,
@@ -305,7 +371,6 @@ class _LotteryItemState extends State<LotteryItem>
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(4.0),
             ),
-            padding: EdgeInsets.fromLTRB(2.0, 5.0, 2.0, 5.0),
             child: new Center(
               child: new Text(
                 widget.title ?? "",
@@ -318,9 +383,10 @@ class _LotteryItemState extends State<LotteryItem>
             ),
             margin: EdgeInsets.only(right: 20.0),
           ),
+          /// right
           new Expanded(
             child: new Container(
-              height: 150.0,
+             constraints: new BoxConstraints(maxHeight: 120.0),
               child: new GridView.count(
                   //controller: new FixedExtentScrollController(),
                   physics: new NeverScrollableScrollPhysics(),
@@ -332,22 +398,21 @@ class _LotteryItemState extends State<LotteryItem>
                         // color: value["able"] as bool
                         //     ? Colors.red[400]
                         //     : Colors.green[100],
-                        alignment: Alignment.topCenter,
-                        padding: EdgeInsets.all(5.0),
-                        margin: EdgeInsets.all(5.0),
+                        alignment: Alignment.center,
                         child: new Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+                            ///数字按钮
                             new Container(
                               constraints: new BoxConstraints(
-                                  minWidth: 40.0, minHeight: 40.0),
+                                  minWidth: 50.0, minHeight: 50.0),
                               decoration: new BoxDecoration(
                                   color: value[index]["able"] as bool
                                       ? Colors.red[400]
                                       : Colors.grey[300],
                                   shape: BoxShape.circle),
-                              child: new Center(
-                                child: new InkWell(
+                              child: new InkWell(
+                                  child: new Center(
                                     child: new Text(
                                       value[index]["value"] ?? "",
                                       maxLines: 1,
@@ -357,14 +422,15 @@ class _LotteryItemState extends State<LotteryItem>
                                               : Colors.red[400],
                                           fontSize: 15.0),
                                     ),
-                                    onTap: () {
-                                      widget.callback(
-                                        value[index],
-                                        widget.position,
-                                      );
-                                    }),
-                              ),
+                                  ),
+                                  onTap: () {
+                                    widget.callback(
+                                      value[index],
+                                      widget.position,
+                                    );
+                                  }),
                             ),
+                            /// 预留位置
                             // new Text(
                             //   (value["sub"] as String) ?? "1",
                             // )

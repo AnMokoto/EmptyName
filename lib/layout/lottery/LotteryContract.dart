@@ -5,11 +5,9 @@ import 'package:lowlottery/layout/lottery/LotteryModel.dart';
 
 abstract class LotteryIView extends IView {
   /// 当前期数信息
-
   void requestLotteryWithExpectNowSuccess(LotteryModel data);
 
   ///历史档期
-
   void requestLotteryLastCurrentSuccess(List<Lottery> history);
 }
 
