@@ -1,6 +1,6 @@
 import 'package:lowlottery/common/mvp.dart';
-import 'package:lowlottery/net/HttpFactory.dart';
-import 'dart:convert';
+import 'package:lowlottery/net/net.dart' show HttpRetrofit;
+// import 'dart:convert';s
 import 'package:lowlottery/layout/lottery/LotteryModel.dart';
 
 abstract class LotteryIView extends IView {
@@ -19,7 +19,7 @@ class LotteryPresenter extends Presenter<LotteryIView> {
   }
 
   void requestLotteryLastCurrent() {
-    HttpRetrofit.request("opencodeList", {"gameEn": "cqssc", "total": 10},
+    HttpRetrofit.request("opencodeList", {"gameEn": "cqssc", "total": 1},
         (data) {
       view.requestLotteryLastCurrentSuccess(Lottery.fromJsonToList(data));
     });

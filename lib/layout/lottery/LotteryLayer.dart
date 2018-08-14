@@ -6,8 +6,6 @@ import 'package:lowlottery/common/mvp.dart';
 import 'LotteryContract.dart';
 import 'LotteryModel.dart';
 
-enum LotteryAction { INITIAL, UPDATE, CLEAR, FINISH }
-
 /// callback when who preclick the item.
 /// [position] item count position
 /// [m] anything
@@ -145,12 +143,18 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
     var currentLastCode = _str.split(",");
 
     return new Scaffold(
-      appBar: new CupertinoNavigationBar(
-        middle: new ExpansionPanelList(
-          children: <ExpansionPanel>[],
-          expansionCallback: _onHeadExpansionChoice,
-        ),
-        trailing: new Text("data"),
+      appBar: new AppBar(
+        centerTitle: true,
+        title: new Text("data"),
+        actions: <Widget>[
+          new IconButton(
+            icon: new Icon(
+              Icons.favorite,
+              color: Colors.red,
+            ),
+            onPressed: () {},
+          )
+        ],
       ),
       // child: new Container(
       //     padding: EdgeInsets.all(10.0),
@@ -171,8 +175,6 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
           constraints: new BoxConstraints.expand(),
           child: new Column(
             children: <Widget>[
-
-            
               /// header
               new Container(
                 child: new Row(children: <Widget>[
@@ -225,6 +227,18 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                     ),
                   ),
 
+                  new Container(
+                    width: 1.0,
+                    height: double.infinity,
+                    color: Colors.grey[200],
+                    // constraints: const BoxConstraints.tightFor(),
+                    //   decoration: new BoxDecoration(
+                    //       border: new Border(
+                    //           left: new BorderSide(
+                    //               width: 1.0, color: Colors.grey[200]))),
+                  ),
+
+// new SizedBox()
                   new Expanded(
                     child: new Container(
                       child: new Column(
@@ -251,52 +265,45 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
 
               /// list
               new Expanded(
-                  child: new Container(
-                child: new CustomScrollView(
-                  controller: new ScrollController(keepScrollOffset: false),
-                  shrinkWrap: true,
-                  slivers: <Widget>[
-                    new SliverPadding(
-                      padding: EdgeInsets.all(10.0),
-                      sliver: new SliverList(
-                        delegate:
-                            new SliverChildBuilderDelegate((context, index) {
-                          return new Container(
-                            child: new Text(
-                              "从万位、千位、百位,十位、个位��意意位置上至少选择1个号码，号码与相同位置的开奖号码一致。���������������������������励现金${money}元",
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          );
-                        }, childCount: 1),
-                      ),
-                    ),
-                
-                    new SliverPadding(
-                      padding: EdgeInsets.all(10.0),
-                      sliver: new SliverList(
-                        delegate: new SliverChildBuilderDelegate(
-                          (context, index) {
-                            
-                            return new Column(
-                              children: <Widget>[
-                                new LotteryItem(
-                              this._titles[index] ?? "a",
-                              index,
-                              items: data[index],
-                              callback: _updateCacheChoice,
-                            ),
-                            new Divider(),
-                          
-                              ],
-                            );
-                          },
-                          childCount: _titles.length,
+                child: new Container(
+                  child: new CustomScrollView(
+                    controller: new ScrollController(keepScrollOffset: false),
+                    shrinkWrap: true,
+                    slivers: <Widget>[
+                      new SliverPadding(
+                        padding: EdgeInsets.all(10.0),
+                        sliver: new SliverPersistentHeader(
+                          delegate:
+                              new LotteryHeadSliverPersistentHeaderDelegate(),
+                          pinned: true,
+                          floating: true,
                         ),
                       ),
-                    ),
-                  ],
+                      new SliverPadding(
+                        padding: EdgeInsets.all(10.0),
+                        sliver: new SliverList(
+                          delegate: new SliverChildBuilderDelegate(
+                            (context, index) {
+                              return new Column(
+                                children: <Widget>[
+                                  new LotteryItem(
+                                    this._titles[index] ?? "a",
+                                    index,
+                                    items: data[index],
+                                    callback: _updateCacheChoice,
+                                  ),
+                                  new Divider(),
+                                ],
+                              );
+                            },
+                            childCount: _titles.length,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              )),
+              ),
 
               /// footer
               new Container(
@@ -320,8 +327,8 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                             child: new Container(
                           color: Colors.green,
                           child: new Center(
-                            child:new IconButton(
-                              onPressed: (){
+                            child: new IconButton(
+                              onPressed: () {
                                 /// turn to pay layer
                               },
                               icon: Icon(Icons.card_giftcard),
@@ -336,6 +343,34 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
             ],
           )),
     );
+  }
+}
+
+class LotteryHeadSliverPersistentHeaderDelegate
+    extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return new Semantics(
+      child: new Text(
+        "从万位、千位、百位,十位、个位��意意位置上至少选择1个号码，号码与相同位置的开奖号码一致。���������������������������励现金${money}元",
+        style: const TextStyle(color: Colors.black),
+      ),
+    );
+  }
+
+  @override
+  // TODO: implement maxExtent
+  double get maxExtent => 150.0;
+
+  @override
+  // TODO: implement minExtent
+  double get minExtent => 0.0;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    // TODO: implement shouldRebuild
+    return true;
   }
 }
 
@@ -358,7 +393,7 @@ class _LotteryItemState extends State<LotteryItem> {
   Widget build(BuildContext context) {
     var value = widget.items;
     return new Container(
-       constraints: new BoxConstraints.tightFor(),
+      constraints: new BoxConstraints.tightFor(),
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -383,10 +418,11 @@ class _LotteryItemState extends State<LotteryItem> {
             ),
             margin: EdgeInsets.only(right: 20.0),
           ),
+
           /// right
           new Expanded(
             child: new Container(
-             constraints: new BoxConstraints(maxHeight: 120.0),
+              constraints: new BoxConstraints(maxHeight: 120.0),
               child: new GridView.count(
                   //controller: new FixedExtentScrollController(),
                   physics: new NeverScrollableScrollPhysics(),
@@ -430,6 +466,7 @@ class _LotteryItemState extends State<LotteryItem> {
                                     );
                                   }),
                             ),
+
                             /// 预留位置
                             // new Text(
                             //   (value["sub"] as String) ?? "1",

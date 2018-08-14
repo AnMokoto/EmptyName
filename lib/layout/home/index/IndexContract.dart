@@ -1,5 +1,5 @@
 import 'package:lowlottery/common/mvp.dart';
-import 'package:lowlottery/net/HttpFactory.dart';
+import 'package:lowlottery/net/net.dart';
 
 abstract class IndexFragIView extends IView {}
 
