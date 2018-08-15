@@ -55,6 +55,7 @@ class SplashState extends State<SplashLayer>
 
   @override
   Widget build(BuildContext context) {
+    /// todo will be check-in the state for login or sign up.
     return new FadeTransition(
       opacity: animation,
       child: new Image.asset(

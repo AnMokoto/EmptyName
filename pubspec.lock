@@ -301,12 +301,26 @@ packages:
     source: hosted
     version: "1.0.0"
   redux:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: redux
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.0"
+  redux_logging:
+    dependency: "direct main"
+    description:
+      name: redux_logging
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.3.0"
+  shared_preferences:
+    dependency: "direct main"
+    description:
+      name: shared_preferences
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.4.2"
   shelf:
     dependency: transitive
     description:
@@ -368,13 +382,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.5"
-  url_launcher:
-    dependency: "direct main"
-    description:
-      name: url_launcher
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "3.0.3"
   utf:
     dependency: transitive
     description:
