@@ -10,6 +10,8 @@ import 'package:lowlottery/layout/bet/LotteryBetLayer.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:lowlottery/store/AppStore.dart' show AppState;
+import 'package:lowlottery/layout/bet/LotteryBetState.dart'
+    show LotterBetAdd, LotteryBetModelItem;
 
 import 'dart:async';
 
@@ -69,7 +71,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
       var able = data[index][_id]["able"] as bool;
 
       var _inx = _isChoice[index];
-      _inx[_id] = able ? -1 : index;
+      _inx[_id] = able ? -1 : _id;
 
       data[index][_id]["able"] = !able;
 
@@ -127,9 +129,27 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
   @override
   Widget build(BuildContext context) {
     var headStyle = const TextStyle(
-      fontSize: 12.0,
+      fontSize: 15.0,
       color: Colors.black26,
     );
+
+    var _code = new List<String>();
+    _isChoice.values.forEach((i) {
+      StringBuffer sb = new StringBuffer();
+      i.where((f) => f != -1).forEach((r) {
+        sb.write(r);
+        sb.write(" ");
+      });
+
+      if (sb.isEmpty) {
+        _code.add("-");
+        sb.clear();
+      } else {
+        var str = sb.toString();
+        _code.add(str.substring(0, str.lastIndexOf(" ")));
+      }
+    });
+
     return new Scaffold(
       appBar: new AppBar(
         centerTitle: true,
@@ -165,6 +185,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
             children: <Widget>[
               /// header
               new Container(
+                color: Colors.brown[200],
                 child: new Row(children: <Widget>[
                   // child: new Padding(
                   //     padding: EdgeInsets.symmetric(
@@ -241,7 +262,14 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                   //   //           left: new BorderSide(
                   //   //               width: 1.0, color: Colors.grey[200]))),
                   // ),
-
+                  new Padding(
+                    padding: EdgeInsets.symmetric(vertical: 5.0),
+                    child: new Container(
+                      color: Colors.grey,
+                      width: 1.0,
+                      height: 50.0,
+                    ),
+                  ),
 // new SizedBox()
                   new Expanded(
                     child: new Container(
@@ -287,8 +315,8 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                           delegate:
                               new LotteryHeadSliverPersistentHeaderDelegate(
                                   money: money),
-                          pinned: true,
-                          floating: true,
+                          pinned: false,
+                          floating: false,
                         ),
                       ),
                       new SliverPadding(
@@ -328,29 +356,98 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                     child: new Row(
                       children: <Widget>[
                         new Expanded(
-                            flex: 2,
                             child: new Container(
-                              color: Colors.red,
-                              child: new Center(
-                                child: new Text("aaaaaa"),
-                              ),
-                            )),
-                        new Expanded(
-                            child: new Container(
-                          color: Colors.green,
-                          child: new Center(
-                            child: new IconButton(
-                              onPressed: () {
-                                /// turn to pay layer
-                                Navigator.of(context).push(
-                                    new MaterialPageRoute(
-                                        builder: (context) =>
-                                            new LotteryBetLayer()));
-                              },
-                              icon: Icon(Icons.card_giftcard),
-                            ),
+                                constraints: new BoxConstraints.expand(),
+                                color: Colors.red,
+                                child: new Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: new Row(
+                                    children: <Widget>[
+                                      new IconButton(
+                                        icon: new Icon(
+                                          Icons.add,
+                                          size: 40.0,
+                                          color: Colors.white,
+                                        ),
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return new AlertDialog(
+                                                title: new Text("data"),
+                                              ).build(context);
+                                            },
+                                          );
+                                        },
+                                      ),
+                                      new Container(
+                                        margin: EdgeInsets.only(left: 15.0),
+                                        constraints:
+                                            new BoxConstraints.tightForFinite(),
+                                        child: new Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: <Widget>[
+                                            new SafeArea(
+                                              child: new Text(
+                                                "共${count}注，${money}元",
+                                                style: new TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 25.0,
+                                                ),
+                                              ),
+                                            ),
+                                            new Container(
+                                              constraints: new BoxConstraints(
+                                                  maxWidth: 200.0),
+                                              child: new Text(
+                                                  _code.toString().replaceAll(
+                                                          new RegExp(
+                                                              r"(\]|\[)*"),
+                                                          "") ??
+                                                      "",
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  softWrap: false,
+                                                  style: new TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 15.0,
+                                                  )),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ))),
+                        new ConstrainedBox(
+                          constraints:
+                              new BoxConstraints(minHeight: double.infinity),
+                          child: new RaisedButton.icon(
+                            textColor: Colors.white,
+                            elevation: 0.0,
+                            // highlightColor: Colors.transparent,
+                            // splashColor: Colors.transparent,
+                            color: Colors.black87,
+                            label: new Text("号码篮"),
+                            icon: new Icon(Icons.card_giftcard),
+                            onPressed: () {
+                              /// turn to pay layer
+                              StoreProvider.of<AppState>(context).dispatch(
+                                  new LotterBetAdd(
+                                      item: new LotteryBetModelItem(
+                                          code: _code,
+                                          zhushu: count,
+                                          money: money,
+                                          playEn: "cqssc")));
+                              Navigator.of(context).push(new MaterialPageRoute(
+                                  builder: (context) => new LotteryBetLayer()));
+                            },
                           ),
-                        ))
+                        ),
                       ],
                     ),
                   ),
@@ -371,25 +468,24 @@ class LotteryHeadSliverPersistentHeaderDelegate
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return new Semantics(
-      child: new Text(
-        "从万位、千位、百位,十位、个位��意意位置上至少选择1个号码，号码与相同位置的开奖号码一致。���������������������������励现金${money}元",
-        style: const TextStyle(color: Colors.black),
+    return new SafeArea(
+      child: new Semantics(
+        child: new Text(
+          "从万位、千位、百位,十位、个位任意位置上至少选择1个号码，号码与相同位置的开奖号码一致。励现金${money}元",
+          style: const TextStyle(color: Colors.black),
+        ),
       ),
     );
   }
 
   @override
-  // TODO: implement maxExtent
-  double get maxExtent => 150.0;
+  double get maxExtent => 50.0;
 
   @override
-  // TODO: implement minExtent
   double get minExtent => 0.0;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    // TODO: implement shouldRebuild
     return true;
   }
 }

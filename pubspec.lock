@@ -7,14 +7,21 @@ packages:
       name: analyzer
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.31.1"
+    version: "0.29.5"
+  ansicolor:
+    dependency: transitive
+    description:
+      name: ansicolor
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.10"
   args:
     dependency: transitive
     description:
       name: args
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.5.0"
+    version: "0.13.7"
   async:
     dependency: transitive
     description:
@@ -42,14 +49,14 @@ packages:
       name: build_resolvers
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.1+1"
+    version: "0.1.1"
   build_runner:
     dependency: "direct dev"
     description:
       name: build_runner
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.7.13+1"
+    version: "0.7.11+1"
   built_collection:
     dependency: transitive
     description:
@@ -126,7 +133,14 @@ packages:
       name: dart_style
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.9+1"
+    version: "1.0.1"
+  dye:
+    dependency: transitive
+    description:
+      name: dye
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.2"
   fixnum:
     dependency: transitive
     description:
@@ -146,13 +160,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.5.2"
-  front_end:
-    dependency: transitive
-    description:
-      name: front_end
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.1.0-alpha.9"
   glob:
     dependency: transitive
     description:
@@ -181,13 +188,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.11.3+16"
-  http_multi_server:
-    dependency: transitive
-    description:
-      name: http_multi_server
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "2.0.5"
   http_parser:
     dependency: transitive
     description:
@@ -208,28 +208,21 @@ packages:
       name: isolate
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.0"
+    version: "0.2.3"
   json_annotation:
     dependency: "direct dev"
     description:
       name: json_annotation
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.2"
-  json_serializable:
-    dependency: "direct dev"
+    version: "0.2.9+1"
+  log:
+    dependency: "direct main"
     description:
-      name: json_serializable
+      name: log
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.4.0"
-  kernel:
-    dependency: transitive
-    description:
-      name: kernel
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.3.0-alpha.9"
+    version: "0.0.6"
   logging:
     dependency: transitive
     description:
@@ -333,13 +326,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  source_gen:
-    dependency: transitive
-    description:
-      name: source_gen
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.7.6"
   source_span:
     dependency: transitive
     description:

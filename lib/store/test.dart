@@ -7,12 +7,12 @@ import 'package:redux/redux.dart';
 
 /// [store.diapath(TestStoreAction)]
 List<Middleware<_AppState>> createAuthMiddleware() {
-  return combineTypedMiddleware([
-    new MiddlewareBinding<_AppState, TestStoreAction>(
+  [
+    new TypedMiddleware<_AppState, TestStoreAction>(
         (store, action, NextDispatcher next) {
       next(action);
     }),
-  ]);
+  ];
 }
 
 
@@ -20,8 +20,8 @@ List<Middleware<_AppState>> createAuthMiddleware() {
 /// 实际数据转换
 /// [TestStoreAction.redurce(AppState)]
 class TestReducerLogin {
-  static final authReducer = combineTypedReducers<TestAppModel>([
-    new ReducerBinding<TestAppModel, TestStoreAction>((state, action) {
+  static final authReducer = combineReducers<TestAppModel>([
+    new TypedReducer<TestAppModel, TestStoreAction>((state, action) {
       return state;
     })
   ]);

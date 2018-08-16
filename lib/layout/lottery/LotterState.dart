@@ -3,6 +3,8 @@ import 'package:lowlottery/store/AppStore.dart'
 import 'LotteryModel.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'dart:async';
+import '../bet/LotteryBetState.dart' show LotterBetQuery;
 
 class LotteryState {
   /// 当前记录信息 remainTime
@@ -25,7 +27,7 @@ class LotteryInitQueryAction extends StoreAction {
   /// 历史记录
   List<Lottery> history;
   LotteryInitQueryAction({this.lottery, List<Lottery> history}) {
-    this.history = new List();
+    this.history = history ?? new List();
   }
 
   @override
@@ -38,14 +40,20 @@ class LotteryInitQueryAction extends StoreAction {
 final lotteryReducer = combineReducers<LotteryState>([
   new TypedReducer<LotteryState, LotteryInitQueryAction>((state, action) {
     state.lottery = action.lottery ?? state.lottery;
-    state.history =  new List();
+    state.history = new List();
     return state;
   }),
 ]);
 
-final lotterMiddleware = [
-  new TypedMiddleware<LotteryState, LotteryQueryAction>(
-      (store, action, NextDispatcher next) {
+final List<Middleware<AppState>> lotterMiddleware = [
+  new TypedMiddleware<AppState, LotteryInitQueryAction>(
+      (store, action, NextDispatcher next) async {
+    if (action.lottery != null) {
+      print("action.lottery----------------");
+      print(action.lottery);
+      await store.dispatch(new LotterBetQuery(
+          gameEn: action.lottery.gameEn, expectNo: action.lottery.expectNo));
+    }
     next(action);
   }),
 ];

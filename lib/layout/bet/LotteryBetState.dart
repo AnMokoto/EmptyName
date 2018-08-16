@@ -16,6 +16,7 @@ import 'package:redux/redux.dart';
 // zhushu (integer): 方案总注数 ,
 // content (Array[ProjectContent])
 // }
+
 class LotteryBetModel extends AppModel {
   String gameEn;
   String expectNo;
@@ -24,7 +25,17 @@ class LotteryBetModel extends AppModel {
   List<LotteryBetModelItem> content;
 
   LotteryBetModel() {
-    this.content = [new LotteryBetModelItem(), new LotteryBetModelItem()];
+    this.content = [];
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "gameEn": gameEn,
+      "expectNo": expectNo,
+      "money": money,
+      "zhushu": zhushu,
+      "content": content.map((f) => f.toMap()).toList()
+    };
   }
 }
 
@@ -35,12 +46,34 @@ class LotteryBetModel extends AppModel {
 // playEn (string): 玩法编码 ,
 // zhushu (integer): 购彩注数
 // }
+
 class LotteryBetModelItem extends Object {
-  List<String> code = ["1", "1", "1", "1", "1"];
-  double beishu = 1.0;
+  List<String> code;
+  double beishu;
   String playEn;
-  int zhushu = 0;
-  double money = 0.0;
+  int zhushu;
+  double money;
+
+  LotteryBetModelItem(
+      {this.code,
+      this.beishu: 1.0,
+      this.playEn: "",
+      this.zhushu: 0,
+      this.money: 0.0}) {
+    if (this.code == null) {
+      this.code = [];
+    }
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "code": code,
+      "beishu": beishu,
+      "playEn": playEn,
+      "zhushu": zhushu,
+      "money": money
+    };
+  }
 }
 
 ///// action
@@ -71,6 +104,10 @@ class LotterBetAdd extends StoreAction {
 }
 
 class LotterBetQuery extends StoreAction {
+  String gameEn;
+  String expectNo;
+  LotterBetQuery({this.gameEn, this.expectNo});
+
   @override
   AppState reducer(AppState t) {
     t.betModel = betReducer(null, this);
@@ -83,14 +120,14 @@ class LotterBetQuery extends StoreAction {
 
 final betReducer = combineReducers<LotteryBetModel>([
   new TypedReducer<LotteryBetModel, LotterBetQuery>((state, action) {
-    if (state == null) {
-      state = new LotteryBetModel();
-    }
-    return state;
+    return new LotteryBetModel()
+      ..gameEn = action.gameEn ?? ""
+      ..expectNo = action.expectNo ?? "";
   }),
   new TypedReducer<LotteryBetModel, LotterBetAdd>((state, action) {
     state.content..add(action.item);
-    return state;
+
+    return _initContentWithDetail(state);
   }),
   new TypedReducer<LotteryBetModel, LotterBetDelete>((state, action) {
     var data = state.content;
@@ -98,6 +135,20 @@ final betReducer = combineReducers<LotteryBetModel>([
       data.removeAt(action.index);
       state.content = data;
     }
-    return state;
+    return _initContentWithDetail(state);
   }),
 ]);
+
+LotteryBetModel _initContentWithDetail(LotteryBetModel state) {
+  var money = 0.0;
+  var count = 0;
+
+  state.content.forEach((f) {
+    money += f.money;
+    count += f.zhushu;
+  });
+  state.money = money.toString();
+  state.zhushu = count;
+
+  return state;
+}

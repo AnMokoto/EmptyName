@@ -4,19 +4,20 @@ import 'package:lowlottery/layout/home/HomeLayer.dart';
 import 'package:lowlottery/store/AppStore.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:redux_logging/redux_logging.dart';
-import 'package:logging/logging.dart';
+import 'package:lowlottery/layout/lottery/LotterState.dart' show lotterMiddleware;
 
 final Store<AppState> store = new Store<AppState>(
     (state, action) => AppReducer.reducer(state, action),
     initialState: AppState.from(),
     middleware: [AppMiddleware.from()]
+    ..addAll(lotterMiddleware),
     //..addAll(AppMiddleware.createAuthMiddleware())
     );
 
 void main() => runApp(new MyApp(store: store));
 
 class MyApp extends StatelessWidget {
+  
   final Store<AppState> store;
   MyApp({this.store});
   // This widget is the root of your application.
