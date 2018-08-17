@@ -9,10 +9,10 @@ import 'action.dart';
 
 const dynamic HOST_NAME = "http://178.128.21.119:10003/";
 
-
 const REQUEST_HEAD = {
   "Content-Type": "application/json",
-  "Accept": "application/json"
+  "Accept": "application/json",
+  "Authorization": "test_token",
 };
 
 void abRequest(String path, Map<String, dynamic> map, IOnAction action) {
@@ -37,8 +37,7 @@ void abRequest(String path, Map<String, dynamic> map, IOnAction action) {
     }
     throw new FormatException("NetWork Error", null, state);
   }).then((response) {
-
-/// 考虑以下内容移动到action内处理
+    /// 考虑以下内容移动到action内处理
 
     var body = json.decode(response);
     var success = body['success'] as bool;
@@ -46,7 +45,7 @@ void abRequest(String path, Map<String, dynamic> map, IOnAction action) {
       action.OnNext(body['data']);
       action.OnComplete();
     } else {
-      new FormatException(body['message'], null, -1);
+      throw new FormatException(body['message'], body, 0);
     }
     // }).whenComplete(() {
     //  action.onComplete();

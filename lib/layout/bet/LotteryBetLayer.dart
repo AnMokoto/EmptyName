@@ -7,6 +7,7 @@ import 'package:redux/redux.dart';
 import 'package:lowlottery/store/AppStore.dart' show AppState;
 import 'LotteryBetState.dart';
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 
 /// 立即下注界面
 class LotteryBetLayer extends StatefulWidget {
@@ -22,6 +23,41 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  @override
+  void requestWhenwhohasreallytoPaySuccess(dynamic data) {
+    var style = new TextStyle(fontSize: 10.0, color: Colors.lightBlue);
+    showDialog(
+      context: context,
+      builder: (context) => new CupertinoAlertDialog(
+            title: new Text("title"),
+            content: new Text("success"),
+            actions: <Widget>[
+              new CupertinoDialogAction(
+                isDefaultAction: true,
+                onPressed: () {
+                  //this.dispose();
+                  Navigator.of(context).pop();
+                },
+                child: new Text(
+                  "left",
+                  style: style,
+                ),
+              ),
+              new CupertinoDialogAction(
+                onPressed: () {
+                  //this.dispose();
+                  Navigator.of(context).pop();
+                },
+                child: new Text(
+                  "right",
+                  style: style,
+                ),
+              ),
+            ],
+          ),
+    );
   }
 
   @override
@@ -205,7 +241,8 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
                                 ),
                                 onPressed: () {
                                   /// 立即投注
-                                  presenter.requestWhenwhohasreallytoAdd(model.toMap());
+                                  presenter.requestWhenwhohasreallytoAdd(
+                                      model.toMap());
                                 },
                               ),
                             )

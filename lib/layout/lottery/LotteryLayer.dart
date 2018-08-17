@@ -442,7 +442,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                                           code: _code,
                                           zhushu: count,
                                           money: money,
-                                          playEn: "cqssc")));
+                                          playEn: "1xfx")));
                               Navigator.of(context).push(new MaterialPageRoute(
                                   builder: (context) => new LotteryBetLayer()));
                             },

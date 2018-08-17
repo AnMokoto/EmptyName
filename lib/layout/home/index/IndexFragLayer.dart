@@ -10,10 +10,17 @@ import 'package:lowlottery/layout/lottery/LotteryLayer.dart';
 class IndexFragLayer extends StatefulWidget {
   List<FixBoxModel> models;
 
+  final index_type = [
+    "assets/lottery/cqssc.png",
+    "assets/lottery/pk10.png",
+    "assets/lottery/tjssc.png",
+    "assets/lottery/xjssc.png",
+    "assets/lottery/cqssc.png",
+  ];
+
   IndexFragLayer({Key key}) : super(key: key) {
-    this.models = List.generate(6, (index) {
-      return new FixBoxModel(
-          id: index, name: "$index", url: "assets/images/move.png");
+    this.models = List.generate(index_type.length, (index) {
+      return new FixBoxModel(id: index, name: "$index", url: index_type[index]);
     });
   }
 

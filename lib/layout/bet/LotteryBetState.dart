@@ -67,7 +67,8 @@ class LotteryBetModelItem extends Object {
 
   Map<String, dynamic> toMap() {
     return {
-      "code": code,
+      "code": code.toString().replaceAll(new RegExp(r"(\[|\])"), ""),
+      //"code":code.toString(),
       "beishu": beishu,
       "playEn": playEn,
       "zhushu": zhushu,

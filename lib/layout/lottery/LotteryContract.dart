@@ -21,6 +21,8 @@ class LotteryPresenter extends Presenter<LotteryIView> {
   void requestLotteryLastCurrent() {
     HttpRetrofit.request("opencodeList", {"gameEn": "cqssc", "total": 1},
         (data) {
+      print("opencodeList----------------------");
+      print(data);
       view.requestLotteryLastCurrentSuccess(Lottery.fromJsonToList(data));
     });
   }

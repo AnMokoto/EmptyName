@@ -40,7 +40,7 @@ class LotteryInitQueryAction extends StoreAction {
 final lotteryReducer = combineReducers<LotteryState>([
   new TypedReducer<LotteryState, LotteryInitQueryAction>((state, action) {
     state.lottery = action.lottery ?? state.lottery;
-    state.history = new List();
+    state.history = action.history ?? state.history;
     return state;
   }),
 ]);
