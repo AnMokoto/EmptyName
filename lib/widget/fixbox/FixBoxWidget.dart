@@ -34,6 +34,7 @@ class FixBoxState extends State<FixBoxWidget> {
   @override
   Widget build(BuildContext context) {
     return new GridView.count(
+      shrinkWrap: false,
       crossAxisCount: widget.count,
       scrollDirection: widget.direction,
       children: new List.generate(widget.models.length, (index) {
@@ -77,10 +78,17 @@ class FixBoxWidgetItemState extends State<FixBoxWidgetItem> {
         },
         child: new Column(
           children: <Widget>[
-            CircleAvatar(
-              backgroundImage: AssetImage(widget.model.url ??
-                  ""), //NetworkImage(widget.model.url ?? "")
-              radius: 90.0,
+            new Container(
+              constraints: BoxConstraints(
+                maxHeight: 100.0,
+                maxWidth: 100.0,
+              ),
+              padding: EdgeInsets.all(10.0),
+              child: CircleAvatar(
+                backgroundImage: AssetImage(widget.model.url ??
+                    ""), //NetworkImage(widget.model.url ?? "")
+                radius: 90.0,
+              ),
             ),
             Text(
               widget.model.name ?? "",

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:lowlottery/common/mvp.dart';
 import 'package:lowlottery/layout/home/HomeContract.dart';
 import 'package:lowlottery/layout/home/index/IndexFragLayer.dart';
+import 'package:lowlottery/layout/home/mine/MineLayer.dart';
 
-class HomeLayer extends StatefulWidget  {
+class HomeLayer extends StatefulWidget {
   @override
   _HomeState createState() => new _HomeState(new HomePresenter());
 }
 
-class _HomeState extends MVPState<HomePresenter, HomeLayer> implements HomeIView{
+class _HomeState extends MVPState<HomePresenter, HomeLayer>
+    implements HomeIView {
   PageController _pageController;
 
   int _currentIndex = 0;
@@ -52,7 +54,7 @@ class _HomeState extends MVPState<HomePresenter, HomeLayer> implements HomeIView
             ),
             new ConstrainedBox(
               constraints: const BoxConstraints.expand(),
-              child: new IndexFragLayer(),
+              child: new MineLayer(),
             )
           ])[index];
         },

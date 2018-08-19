@@ -1,7 +1,9 @@
 library mvp;
 
+import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show State, StatefulWidget;
+import 'dart:async';
 
 abstract class IPresenter<V> {
   @protected
@@ -11,7 +13,35 @@ abstract class IPresenter<V> {
   V get() => this.view;
 }
 
-abstract class IView {}
+abstract class IView {
+  @override
+  BuildContext get context;
+}
+
+class NetIView {
+  /// 开始请求
+  ///
+  ///
+  void OnStart() {
+    print("OnStart");
+  }
+
+  static void OnError(BuildContext context, dynamic e) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return new AlertDialog(
+            title: new Text("$e"),
+          );
+        });
+  }
+
+  /// 请求完成
+
+  void OnComplete() {
+    print("OnComplete");
+  }
+}
 
 abstract class Presenter<V extends IView> extends IPresenter<V> {
   @mustCallSuper

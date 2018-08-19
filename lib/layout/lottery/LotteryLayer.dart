@@ -13,88 +13,24 @@ import 'package:lowlottery/store/AppStore.dart' show AppState;
 import 'package:lowlottery/layout/bet/LotteryBetState.dart'
     show LotterBetAdd, LotteryBetModelItem;
 
-import 'dart:async';
+import 'package:lowlottery/style/index.dart';
 
 /// callback when who preclick the item.
 /// [position] item count position
 /// [m] anything
-typedef void OnLotteryPushClick(dynamic m, int position);
+typedef void OnLotteryPushClick(int index, int position);
 
 class LotteryLayer extends StatefulWidget {
+  PlayStyle style;
+  LotteryLayer({this.style}) : assert(style != null);
   @override
   _LotteryState createState() => new _LotteryState(new LotteryPresenter());
 }
 
 class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
     implements LotteryIView {
-  /// 存储选中的数据
-  final Map<int, List<dynamic>> _isChoice = Map.identity();
-  var money = 0.0;
-  var count = 0;
-
-  /// 模拟数据
-  ///
-  final List _titles = ["万位", "千位", "百位", "十位", "个位"];
-  List<List<Map<String, dynamic>>> data;
-
   _LotteryState(LotteryPresenter presenter) : super(presenter) {
     /// 初始化原有数据
-    data = new List.generate(_titles.length, (index) {
-      return new List.generate(
-        10,
-        (position) {
-          return {
-            "id": position,
-            "value": "$position",
-            "sub": "",
-            "able": false
-          };
-        },
-      );
-    });
-    _initCacheChoice();
-  }
-
-  void _initCacheChoice() {
-    for (var index = 0; index < _titles.length; index++) {
-      _isChoice[index] = List.generate(10, (i) {
-        return -1;
-      });
-    }
-  }
-
-  void _updateCacheChoice(dynamic m, int index) {
-    setState(() {
-      debugPrint("index==${index}");
-
-      var _id = m["id"];
-      var able = data[index][_id]["able"] as bool;
-
-      var _inx = _isChoice[index];
-      _inx[_id] = able ? -1 : _id;
-
-      data[index][_id]["able"] = !able;
-
-      var _count = 0;
-      _isChoice.forEach((_, value) {
-        print(value);
-        value.forEach((i) {
-          if (i >= 0) {
-            ++_count;
-          }
-        });
-      });
-      count = _count;
-      debugPrint("count==${count}");
-      money = count * 2.0;
-      debugPrint("money==${money}");
-    });
-  }
-
-  void _clearCacheChoice() {
-    setState(() {
-      _initCacheChoice();
-    });
   }
 
   void _onHeadExpansionChoice(int index, bool isChoice) {}
@@ -117,8 +53,9 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
   @override
   void initState() {
     super.initState();
-    presenter.requestLotteryWithExpectNow();
-    presenter.requestLotteryLastCurrent();
+    presenter.requestLotteryWithExpectNow().then((e) {
+      presenter.requestLotteryLastCurrent();
+    });
   }
 
   @override
@@ -133,27 +70,37 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
       color: Colors.black26,
     );
 
-    var _code = new List<String>();
-    _isChoice.values.forEach((i) {
-      StringBuffer sb = new StringBuffer();
-      i.where((f) => f != -1).forEach((r) {
-        sb.write(r);
-        sb.write(" ");
-      });
+    var style = widget.style;
 
-      if (sb.isEmpty) {
-        _code.add("-");
-        sb.clear();
-      } else {
-        var str = sb.toString();
-        _code.add(str.substring(0, str.lastIndexOf(" ")));
-      }
-    });
+    var _code = style.transform.code;
+
+    var model = style.transform;
 
     return new Scaffold(
       appBar: new AppBar(
         centerTitle: true,
-        title: new Text("data"),
+        title: new PopupMenuButton(
+          child: new Text(
+            style.name,
+            style: new TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          onSelected: (str) {},
+          // icon: Icon(Icons.arrow_drop_down),
+          itemBuilder: (context) => Style.all().map((f) {
+                return PopupMenuItem(
+                    value: f.desc ?? "",
+                    child: new OutlineButton(
+                      onPressed: () {
+                        setState(() {
+                          widget.style = f;
+                        });
+                      },
+                      child: new Text(f.name ?? ""),
+                    ));
+              }).toList(),
+        ),
         actions: <Widget>[
           new IconButton(
             icon: new Icon(
@@ -209,8 +156,8 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                               child: new Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
-                                  children: new List.generate(_titles.length,
-                                      (index) {
+                                  children: new List.generate(
+                                      style.initialType().length, (index) {
                                     var _str = (state.history.length > 0
                                             ? (state.history[0].opencode
                                                     as String) ??
@@ -227,8 +174,8 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                                                 color: Colors.black26,
                                                 offset: const Offset(2.0, 2.0)),
                                           ]),
-                                      width: 30.0,
-                                      height: 30.0,
+                                      width: 25.0,
+                                      height: 25.0,
                                       child: new Center(
                                         child: new Text(
                                           _str.length > 1 ? _str[index] : "-",
@@ -314,7 +261,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                         sliver: new SliverPersistentHeader(
                           delegate:
                               new LotteryHeadSliverPersistentHeaderDelegate(
-                                  money: money),
+                                  money: 0.0),
                           pinned: false,
                           floating: false,
                         ),
@@ -327,16 +274,19 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                               return new Column(
                                 children: <Widget>[
                                   new LotteryItem(
-                                    this._titles[index] ?? "a",
-                                    index,
-                                    items: data[index],
-                                    callback: _updateCacheChoice,
+                                    position: index,
+                                    style: style,
+                                    callback: (index, position) {
+                                      setState(() {
+                                        style.toBet2System(index, position);
+                                      });
+                                    },
                                   ),
                                   new Divider(),
                                 ],
                               );
                             },
-                            childCount: _titles.length,
+                            childCount: style.initialType().length,
                           ),
                         ),
                       ),
@@ -350,7 +300,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                 color: Colors.white,
                 constraints: new BoxConstraints.tightFor(),
                 child: new Offstage(
-                  offstage: count <= 0,
+                  offstage: model.zhushu <= 0,
                   child: new Container(
                     height: 80.0,
                     child: new Row(
@@ -392,7 +342,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                                           children: <Widget>[
                                             new SafeArea(
                                               child: new Text(
-                                                "共${count}注，${money}元",
+                                                "共${model.zhushu}注，${model.money}元",
                                                 style: new TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 25.0,
@@ -402,12 +352,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                                             new Container(
                                               constraints: new BoxConstraints(
                                                   maxWidth: 200.0),
-                                              child: new Text(
-                                                  _code.toString().replaceAll(
-                                                          new RegExp(
-                                                              r"(\]|\[)*"),
-                                                          "") ??
-                                                      "",
+                                              child: new Text(_code ?? "",
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   maxLines: 1,
@@ -437,12 +382,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                             onPressed: () {
                               /// turn to pay layer
                               StoreProvider.of<AppState>(context).dispatch(
-                                  new LotterBetAdd(
-                                      item: new LotteryBetModelItem(
-                                          code: _code,
-                                          zhushu: count,
-                                          money: money,
-                                          playEn: "1xfx")));
+                                  new LotterBetAdd(item: style.transform));
                               Navigator.of(context).push(new MaterialPageRoute(
                                   builder: (context) => new LotteryBetLayer()));
                             },
@@ -491,14 +431,12 @@ class LotteryHeadSliverPersistentHeaderDelegate
 }
 
 class LotteryItem extends StatefulWidget {
-  final String title;
+  final PlayStyle style;
   final int position;
-  final List<Map<String, dynamic>> items;
   final OnLotteryPushClick callback;
 
-  LotteryItem(this.title, this.position, {Key key, this.items, this.callback})
-      : assert(title != null),
-        assert(items != null),
+  LotteryItem({Key key, this.style, this.position, this.callback})
+      : assert(style != null),
         super(key: key);
 
   _LotteryItemState createState() => new _LotteryItemState();
@@ -507,9 +445,14 @@ class LotteryItem extends StatefulWidget {
 class _LotteryItemState extends State<LotteryItem> {
   @override
   Widget build(BuildContext context) {
-    var value = widget.items;
+    var value = widget.style;
+    int position = widget.position;
+    var left = value.initialType();
+    var data = value.initialArray()[widget.position];
+    var height = value.type.endsWith("hz") ? 500.0 : 100.0;
     return new Container(
-      constraints: new BoxConstraints.tightFor(),
+      constraints:
+          new BoxConstraints(minHeight: 80.0, minWidth: double.infinity),
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -524,7 +467,7 @@ class _LotteryItemState extends State<LotteryItem> {
             ),
             child: new Center(
               child: new Text(
-                widget.title ?? "",
+                left[position] ?? "",
                 style: new TextStyle(
                   color: Colors.red[200],
                   fontSize: 13.0,
@@ -538,58 +481,72 @@ class _LotteryItemState extends State<LotteryItem> {
           /// right
           new Expanded(
             child: new Container(
-              constraints: new BoxConstraints(maxHeight: 120.0),
+              constraints: new BoxConstraints.tightFor(height: height),
               child: new GridView.count(
-                  //controller: new FixedExtentScrollController(),
-                  physics: new NeverScrollableScrollPhysics(),
-                  crossAxisCount: 5,
-                  childAspectRatio: 1.0,
-                  scrollDirection: Axis.vertical,
-                  children: new List.generate(widget.items.length, (index) {
+                //controller: new FixedExtentScrollController(),
+                physics: new NeverScrollableScrollPhysics(),
+                crossAxisCount: 5,
+                childAspectRatio: 1.0,
+                scrollDirection: Axis.vertical,
+                children: new List.generate(
+                  data.length,
+                  (index) {
                     return new Container(
-                        // color: value["able"] as bool
-                        //     ? Colors.red[400]
-                        //     : Colors.green[100],
-                        alignment: Alignment.center,
-                        child: new Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            ///数字按钮
-                            new Container(
-                              constraints: new BoxConstraints(
-                                  minWidth: 50.0, minHeight: 50.0),
-                              decoration: new BoxDecoration(
-                                  color: value[index]["able"] as bool
-                                      ? Colors.red[400]
-                                      : Colors.grey[300],
-                                  shape: BoxShape.circle),
-                              child: new InkWell(
+                      // color: value["able"] as bool
+                      //     ? Colors.red[400]
+                      //     : Colors.green[100],
+                      constraints: BoxConstraints.tightForFinite(),
+                      alignment: Alignment.center,
+                      child: new Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          ///数字按钮
+                          ///
+                          new InkWell(
+                              child: new Container(
+                                constraints: BoxConstraints.tightForFinite(),
+                                // padding: EdgeInsets.all(5.0),
+                                child: new Container(
+                                  constraints: new BoxConstraints(
+                                      minHeight: 35.0, minWidth: 35.0),
+
+                                  // constraints: new BoxConstraints(
+                                  //     minWidth: 40.0, minHeight: 40.0),
+                                  decoration: new BoxDecoration(
+                                      color: data[index] != -1
+                                          ? Colors.red[400]
+                                          : Colors.grey[300],
+                                      shape: BoxShape.circle),
                                   child: new Center(
                                     child: new Text(
-                                      value[index]["value"] ?? "",
+                                      "$index",
                                       maxLines: 1,
                                       style: new TextStyle(
-                                          color: (value[index]["able"])
+                                          color: data[index] != -1
                                               ? Colors.white
                                               : Colors.red[400],
                                           fontSize: 15.0),
                                     ),
                                   ),
-                                  onTap: () {
-                                    widget.callback(
-                                      value[index],
-                                      widget.position,
-                                    );
-                                  }),
-                            ),
+                                ),
+                              ),
+                              onTap: () {
+                                widget.callback(
+                                  widget.position,
+                                  index,
+                                );
+                              }),
 
-                            /// 预留位置
-                            // new Text(
-                            //   (value["sub"] as String) ?? "1",
-                            // )
-                          ],
-                        ));
-                  })),
+                          /// 预留位���
+                          // new Text(
+                          //   (value["sub"] as String) ?? "1",
+                          // )
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
           )
         ],

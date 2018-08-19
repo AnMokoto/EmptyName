@@ -6,6 +6,7 @@ import 'IndexContract.dart';
 import 'package:lowlottery/widget/fixbox/FixBoxWidget.dart';
 import 'package:lowlottery/widget/fixbox/FixBoxModel.dart';
 import 'package:lowlottery/layout/lottery/LotteryLayer.dart';
+import 'package:lowlottery/style/index.dart' show Style;
 
 class IndexFragLayer extends StatefulWidget {
   List<FixBoxModel> models;
@@ -71,7 +72,9 @@ class _IndexFragState extends MVPState<IndexFragPresenter, IndexFragLayer>
                 models: widget.models,
                 onItemClick: (model, position) {
                   Navigator.of(context).push(new MaterialPageRoute(
-                      builder: (context) => new LotteryLayer()));
+                      builder: (context) => new LotteryLayer(
+                            style: Style.cqssc1xfx(),
+                          )));
                 }))
       ],
     );

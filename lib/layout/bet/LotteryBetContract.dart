@@ -9,14 +9,14 @@ abstract class LotteryBetIView implements IView {
 }
 
 abstract class LotteryBetIPresenter implements IPresenter<LotteryBetIView> {
-  void requestWhenwhohasreallytoPay(Map<String, dynamic> map);
-  void requestWhenwhohasreallytoAdd(Map<String, dynamic> map);
+  void _requestWhenwhohasreallytoPay(Map<String, dynamic> map);
+  Future<dynamic> requestWhenwhohasreallytoAdd(Map<String, dynamic> map);
 }
 
 class LotteryBetPresenter extends Presenter<LotteryBetIView>
     with LotteryBetIPresenter {
   @override
-  void requestWhenwhohasreallytoPay(Map<String, dynamic> map) {
+  void _requestWhenwhohasreallytoPay(Map<String, dynamic> map) {
     Log.message("requestWhenwhohasreallytoPay-------------");
     Log.message(map.toString());
     HttpRetrofit.request("projectPay", map, (data) {
@@ -27,13 +27,13 @@ class LotteryBetPresenter extends Presenter<LotteryBetIView>
   }
 
   @override
-  void requestWhenwhohasreallytoAdd(Map<String, dynamic> map) {
+  Future<dynamic> requestWhenwhohasreallytoAdd(Map<String, dynamic> map) {
     Log.message("requestWhenwhohasreallytoAdd-------------");
     Log.message(map.toString());
-    HttpRetrofit.request("projectAdd", map, (data) {
+    return HttpRetrofit.request("projectAdd", map, (data) {
       Log.message("projectAdd-------");
       Log.message(data);
-      requestWhenwhohasreallytoPay({"projectEn": data["projectEn"]});
+      _requestWhenwhohasreallytoPay({"projectEn": data["projectEn"]});
     });
   }
 }

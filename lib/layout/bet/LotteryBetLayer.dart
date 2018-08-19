@@ -6,6 +6,7 @@ import 'package:redux/redux.dart';
 
 import 'package:lowlottery/store/AppStore.dart' show AppState;
 import 'LotteryBetState.dart';
+import 'package:lowlottery/style/index.dart';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 
@@ -78,8 +79,8 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               new Expanded(
-                child: new StoreConnector<AppState, LotteryBetModel>(
-                  builder: (context, LotteryBetModel model) {
+                child: new StoreConnector<AppState, PlayModel>(
+                  builder: (context, PlayModel model) {
                     print("model====");
                     print(model.content);
                     return new CustomScrollView(
@@ -116,16 +117,15 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
                                         return ListTile(
                                           // contentPadding: EdgeInsets.all(10.0),
                                           title: new Text(
-                                            data.code.toString().replaceAll(
-                                                    new RegExp(r"(\]|\[)*"),
-                                                    "") ??
-                                                "",
+                                            data.code ?? "",
                                             style: new TextStyle(
                                                 color: Colors.red[800],
                                                 fontSize: 12.0),
                                           ),
                                           subtitle: new Text(
-                                            "${data.playEn} ${data.zhushu}注x${AppState.price}元x${data.beishu}倍 = ${data.money}元",
+                                            ///x${model.beishu}倍
+                                            "${data.playEn} ${data.zhushu}注x${AppState.price}元 = ${data.money}元 ",
+
                                             style: new TextStyle(
                                                 color: Colors.black45),
                                           ),
@@ -180,7 +180,7 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
               ),
               new Container(
                 constraints: new BoxConstraints.tightFor(),
-                child: new StoreConnector<AppState, LotteryBetModel>(
+                child: new StoreConnector<AppState, PlayModel>(
                   builder: (context, model) {
                     print("-----------------------------");
                     print(model.toString());
@@ -241,8 +241,12 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
                                 ),
                                 onPressed: () {
                                   /// 立即投注
-                                  presenter.requestWhenwhohasreallytoAdd(
-                                      model.toMap());
+                                  presenter
+                                      .requestWhenwhohasreallytoAdd(
+                                          model.toMap())
+                                      .then((e) {
+                                    ////
+                                  });
                                 },
                               ),
                             )

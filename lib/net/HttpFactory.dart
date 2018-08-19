@@ -15,7 +15,8 @@ const REQUEST_HEAD = {
   "Authorization": "test_token",
 };
 
-void abRequest(String path, Map<String, dynamic> map, IOnAction action) {
+Future<dynamic> abRequest(
+    String path, Map<String, dynamic> map, IOnAction action) async {
   // var request = new http.Request("POST", Uri.parse(HOST_NAME + path));
   // request.body = json.encode(map);
   // request.headers["Content-Type"] = "application/json";
@@ -24,7 +25,7 @@ void abRequest(String path, Map<String, dynamic> map, IOnAction action) {
   print(map.toString());
   var url = HOST_NAME + path;
   print(url);
-  http
+  return await http
       .post(url, headers: REQUEST_HEAD, body: json.encode(map))
       // _client
       // .send(request)
@@ -49,7 +50,7 @@ void abRequest(String path, Map<String, dynamic> map, IOnAction action) {
     }
     // }).whenComplete(() {
     //  action.onComplete();
-  }).catchError((e) {
+  }, onError: (e) {
     print(e);
     //action.OnError(e);
     action.OnComplete();

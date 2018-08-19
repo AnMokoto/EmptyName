@@ -1,6 +1,5 @@
 library net.action;
 
-
 /// REQUEST - RESPONSE FINISH .
 typedef void onComplete();
 
@@ -13,19 +12,16 @@ typedef void onNext<T>(T t);
 abstract class IOnAction<T> {
   /// 数据请求成功后的数据
 
-  void OnNext(T t) {}
+  void OnNext(T t);
 
   /// 请求失败
 
-  void OnError(Exception e) {}
+  void OnError(Exception e);
 
   /// 请求完成
 
-  void OnComplete() {}
+  void OnComplete();
 }
-
-
-
 
 class OnAction<T> implements IOnAction<T> {
   onNext next;
