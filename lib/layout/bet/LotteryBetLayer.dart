@@ -120,14 +120,14 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
                                             data.code ?? "",
                                             style: new TextStyle(
                                                 color: Colors.red[800],
-                                                fontSize: 12.0),
+                                                fontSize: 15.0),
                                           ),
                                           subtitle: new Text(
                                             ///x${model.beishu}倍
                                             "${data.playEn} ${data.zhushu}注x${AppState.price}元 = ${data.money}元 ",
 
                                             style: new TextStyle(
-                                                color: Colors.black45),
+                                                color: Colors.black45 ,fontSize: 15.0),
                                           ),
                                           trailing: new IconButton(
                                             icon: new Icon(Icons.delete),
@@ -190,7 +190,7 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
                     return new Offstage(
                       offstage: isOffset,
                       child: new Container(
-                        height: 80.0,
+                        height: 55.0,
                         color: Colors.transparent,
                         child: new Row(
                           children: <Widget>[
@@ -237,7 +237,7 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
                                 textColor: Colors.white,
                                 child: new Text(
                                   "立即投注",
-                                  style: new TextStyle(fontSize: 20.0),
+                                  style: new TextStyle(fontSize: 18.0),
                                 ),
                                 onPressed: () {
                                   /// 立即投注

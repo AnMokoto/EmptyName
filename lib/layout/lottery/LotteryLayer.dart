@@ -302,7 +302,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                 child: new Offstage(
                   offstage: model.zhushu <= 0,
                   child: new Container(
-                    height: 80.0,
+                    height: 55.0,
                     child: new Row(
                       children: <Widget>[
                         new Expanded(
@@ -345,7 +345,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                                                 "共${model.zhushu}注，${model.money}元",
                                                 style: new TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: 25.0,
+                                                  fontSize: 15.0,
                                                 ),
                                               ),
                                             ),

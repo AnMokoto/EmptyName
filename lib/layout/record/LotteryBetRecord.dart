@@ -15,7 +15,7 @@ class _LotterBetRecordState
     "全部",
     "已中奖",
     "待开奖",
-    "未成功",
+
   ];
 
   @protected
@@ -52,7 +52,7 @@ class _LotterBetRecordState
           ),
           centerTitle: true,
           backgroundColor: Colors.red,
-          title: new Text("Record"),
+          title: new Text("投注记录"),
         ),
         body: new Column(
           children: <Widget>[
@@ -62,6 +62,7 @@ class _LotterBetRecordState
                 children: titles.map((s) {
                   return new LotterBetRecorderFragLayer();
                 }).toList(),
+
               ),
             )
           ],
@@ -165,19 +166,22 @@ class _LotterBetRecorderFragState
                                         left: 0.0,
                                         top: 0.0,
                                         child: new Text(
-                                            "${value["statusDesc"]??"-"}"),
+                                            "${value["statusDesc"]??"-"}" ,style: new TextStyle(
+                                          color: Colors.red,
+                                        ), ),
+
                                       ),
                                       new Positioned(
                                         right: 0.0,
                                         top: 0.0,
                                         child: new Text(
-                                            "${value["zhushu"]??"-"}注${value["money"]??"-"}元"),
+                                            "自购"),
                                       ),
                                       new Positioned(
                                         right: 0.0,
                                         bottom: 0.0,
                                         child: new Text(
-                                            "合计投注${value["awardMoney"]??"-"}元"),
+                                            "投注${value["money"]??"-"}元"),
                                       ),
                                       new Positioned(
                                         left: 0.0,
@@ -244,7 +248,7 @@ class _LotteryBetRecordDetailsState
     try {
       code = _map["tickets"] != null
           ? _map["tickets"].map((l) {
-              return l["code"].toString();
+              return l["code"].toString() +"\n";
             }).toList()
           : "";
     } catch (e) {
@@ -256,7 +260,7 @@ class _LotteryBetRecordDetailsState
     return new Scaffold(
       appBar: new AppBar(
         centerTitle: true,
-        title: new Text("Details"),
+        title: new Text("方案详情"),
       ),
       body: new Container(
         constraints: new BoxConstraints.expand(),
@@ -278,7 +282,10 @@ class _LotteryBetRecordDetailsState
                   ),
                   new Positioned(
                     right: 0.0,
-                    child: new Text("${_map["awardDesc"]??"未中奖"}"),
+                    child: new Text("${_map["awardDesc"]??"未中奖"}" ,style: new TextStyle(
+                      color: Colors.red,
+                    ), ),
+
                   ),
                 ],
               ),
@@ -300,11 +307,12 @@ class _LotteryBetRecordDetailsState
                     style: style,
                   ),
                   new Text(
-                    "投注金额：${_map["awardMoney"]??""}元",
+                    "投注金额：${_map["money"]??""}元",
                     style: style,
+
                   ),
                   new Text(
-                    "投注玩法：${_map["gameEn"]??""}",
+                    "投注玩法：${_map["playDesc"]??""}",
                     style: style,
                   ),
                   new Text(
