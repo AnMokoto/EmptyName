@@ -1,6 +1,6 @@
 import 'style.dart';
 import 'package:flutter/foundation.dart';
-import 'package:log/log.dart';
+import 'package:lowlottery/log.dart';
 
 ///  重庆时时彩分类
 @protected

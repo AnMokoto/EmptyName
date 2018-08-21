@@ -2,7 +2,7 @@ import 'package:lowlottery/common/mvp.dart';
 import 'package:lowlottery/net/net.dart' show HttpRetrofit;
 import 'dart:async';
 import 'dart:io';
-import 'package:log/log.dart';
+import 'package:lowlottery/log.dart';
 
 abstract class RegisterIView implements IView {
   void registerSuccess();

@@ -72,6 +72,7 @@ class _LoginPageState extends MVPState<RegisterPresenter, RegisterLayer>
                     maxLines: 1,
                     keyboardType: TextInputType.text,
                     controller: _userNameController,
+                    textInputAction: TextInputAction.next,
                     decoration: new InputDecoration(
                       hintText: "手机号或者邮箱",
                       border: new UnderlineInputBorder(),
@@ -86,6 +87,7 @@ class _LoginPageState extends MVPState<RegisterPresenter, RegisterLayer>
                   child: new TextField(
                     style: hintTips,
                     controller: _userPassController,
+                    textInputAction: TextInputAction.done,
                     decoration: new InputDecoration(
                         hintText: "设置6-12位密码",
                         border: new UnderlineInputBorder(),

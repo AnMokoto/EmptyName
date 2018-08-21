@@ -69,6 +69,7 @@ class _LoginPageState extends MVPState<LoginPresenter, LoginLayer>
                     style: hintTips,
                     maxLines: 1,
                     controller: _userNameController,
+                    textInputAction: TextInputAction.next,
                     decoration: new InputDecoration(
                         hintText: "账号",
                         border: new UnderlineInputBorder(),
@@ -84,6 +85,7 @@ class _LoginPageState extends MVPState<LoginPresenter, LoginLayer>
                     style: hintTips,
                     controller: _userPassController,
                     maxLines: 1,
+                    textInputAction: TextInputAction.done,
                     decoration: new InputDecoration(
                       icon: Icon(AppIcons.passwd),
                       hintText: "密码",

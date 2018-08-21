@@ -51,7 +51,7 @@ final List<Middleware<AppState>> lotterMiddleware = [
     if (action.lottery != null) {
       print("action.lottery----------------");
       print(action.lottery);
-      await store.dispatch(new LotterBetQuery(
+      store.dispatch(new LotterBetQuery(
           gameEn: action.lottery.gameEn, expectNo: action.lottery.expectNo));
     }
     next(action);
