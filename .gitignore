@@ -10,3 +10,7 @@ build/
 .flutter-plugins
 
 *.iml
+gen/
+pubspec.lock
+lowlottery.iml
+.idea
