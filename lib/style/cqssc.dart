@@ -217,6 +217,8 @@ class cqssc_hz3 extends cqssc_hz {
 }
 
 class Style {
+  Style._();
+
   static PlayStyle cqssc1xfx() => cqssc_1xfx();
 
   static PlayStyle cqssq2zxfx() =>

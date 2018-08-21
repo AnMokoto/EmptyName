@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:log/log.dart';
 
 abstract class RegisterIView implements IView {
+  void registerSuccess();
 }
 
 abstract class LoginIPresenter implements IPresenter<RegisterIView> {
@@ -19,9 +20,9 @@ class RegisterPresenter extends Presenter<RegisterIView>
   Future<dynamic> register(Map<String, dynamic> map) {
     Log.message("user regist-------------");
     Log.message(map.toString());
-    return HttpRetrofit.request("/user/login", map, (data) {
+    return HttpRetrofit.request("user/register", map, (data) {
       Log.message("login-------");
       Log.message(data);
-    });
+    }); 
   }
 }

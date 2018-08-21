@@ -72,6 +72,7 @@ class _MineState extends MVPState<MinePresenter, MineLayer>
           ),
           new Container(
             color: Colors.white,
+            margin: EdgeInsets.only(top: 10.0),
             child: new ListTile(
               onTap: () {
                 Navigator.of(context).push(new MaterialPageRoute(
@@ -84,6 +85,7 @@ class _MineState extends MVPState<MinePresenter, MineLayer>
             ),
           ),
           new Container(
+            margin: EdgeInsets.only(top: 10.0),
             color: Colors.white,
             child: new ListTile(
               onTap: () {

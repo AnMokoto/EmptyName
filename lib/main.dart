@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:lowlottery/layout/splash/SplashLayer.dart';
 import 'package:lowlottery/layout/home/HomeLayer.dart';
-import 'package:lowlottery/store/AppStore.dart';
+import 'package:lowlottery/store/AppStore.dart' show AppState,AppReducer,AppMiddleware;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:lowlottery/layout/lottery/LotterState.dart' show lotterMiddleware;
+import 'intercept.dart';
 
 final Store<AppState> store = new Store<AppState>(
     (state, action) => AppReducer.reducer(state, action),
     initialState: AppState.from(),
     middleware: [AppMiddleware.from()]
-    ..addAll(lotterMiddleware),
+    ..addAll(UserMiddleware),
     //..addAll(AppMiddleware.createAuthMiddleware())
     );
 

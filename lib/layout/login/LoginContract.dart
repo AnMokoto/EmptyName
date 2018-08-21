@@ -19,7 +19,7 @@ class LoginPresenter extends Presenter<LoginBetIView>
   Future<dynamic> login(Map<String, dynamic> map) {
     Log.message("user login-------------");
     Log.message(map.toString());
-    return HttpRetrofit.request("/user/login", map, (data) {
+    return HttpRetrofit.request("user/login", map, (data) {
       Log.message("login-------");
       Log.message(data);
     });

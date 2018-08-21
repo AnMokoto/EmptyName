@@ -7,6 +7,7 @@ const price = 2.0;
 
 class AppState {
   static double price = 2.0;
+  String token = "";
 
   PlayModel betModel;
   LotteryState lottery;
