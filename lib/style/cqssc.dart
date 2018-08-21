@@ -104,23 +104,20 @@ class cqssc_q2fx extends _cqssc {
     _data.forEach((item) {
       List<String> choice = new List();
       int _count = 0;
+
+      /// 当前列表内有效注数
       item.forEach((index) {
         if (index > -1) {
           _count++;
           choice.add(index.toString());
         }
       });
-
-      if (acount == 0) {
-        acount = _count;
-      } else {
-        acount = acount * _count;
-      }
-
+      acount = acount * _count;
       String code = transformToWithPoint(choice);
       Log.message("${type}_item===$code");
       value.add(code);
     });
+
     state.zhushu = acount;
     state.money = state.zhushu * price;
 
@@ -167,10 +164,14 @@ class cqssc_h3fx extends cqssc_h2fx {
 
 @protected
 class cqssc_hz extends _cqssc {
+  @protected
+  List<int> _zhushu;
+
   cqssc_hz(
       {String len, @required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc) {
-    this._data = initialData(18);
+    this._data = initialData(19);
+    this._zhushu = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
   }
 
   @override
@@ -183,12 +184,11 @@ class cqssc_hz extends _cqssc {
   @override
   PlayModelItem transformWithType(PlayModelItem state) {
     var count = 0;
-
     state.code = "";
     List<String> value = new List();
     _data[0].forEach((f) {
       if (f > -1) {
-        count++;
+        count += this._zhushu[f];
         value.add(f.toString());
       }
     });
@@ -212,7 +212,37 @@ class cqssc_hz extends _cqssc {
 class cqssc_hz3 extends cqssc_hz {
   cqssc_hz3({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc) {
-    this._data = initialData(27);
+    this._data = initialData(28);
+    this._zhushu = [
+      1,
+      3,
+      6,
+      10,
+      15,
+      21,
+      28,
+      36,
+      45,
+      55,
+      63,
+      69,
+      73,
+      75,
+      75,
+      73,
+      69,
+      63,
+      55,
+      45,
+      36,
+      28,
+      21,
+      15,
+      10,
+      6,
+      3,
+      1
+    ];
   }
 }
 
@@ -265,7 +295,7 @@ class Style {
 //   //后二
 //   factory style.cqssc_h2zxfx() => style(type: "h2zxfx", desc: "后二直选复选");
 //   factory style.cqssc_h2zxhz() => style(type: "h2zxhz", desc: "后二直选和值");
-//   factory style.cqssc_h2zxkd() => style(type: "h2zxkd", desc: "后二直选跨度");
+//   factory style.cqssc_h2zxkd() => style(type: "h2zxkd", desc: "后二��选跨度");
 //   factory style.cqssc_h2zuxfx() => style(type: "h2zuxfx", desc: "后二组选复选");
 //   factory style.cqssc_h2zuxhz() => style(type: "h2zuxhz", desc: "后二组选和值");
 //   factory style.cqssc_h2zuxbd() => style(type: "h2zuxbd", desc: "后二组选包胆");
