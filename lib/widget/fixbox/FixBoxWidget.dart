@@ -87,7 +87,7 @@ class FixBoxWidgetItemState extends State<FixBoxWidgetItem> {
               child: CircleAvatar(
                 backgroundImage: AssetImage(widget.model.url ??
                     ""), //NetworkImage(widget.model.url ?? "")
-                radius: 90.0,
+                radius: 20.0,
               ),
             ),
             Text(
