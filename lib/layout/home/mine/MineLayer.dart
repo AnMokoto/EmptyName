@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lowlottery/common/mvp.dart';
 import 'MineContract.dart';
 import 'package:lowlottery/layout/record/LotteryBetRecord.dart';
+import 'package:lowlottery/layout/login/LoginLayer.dart';
+import 'package:lowlottery/layout/register/RegisterLayer.dart';
 
 class MineLayer extends StatefulWidget {
   _MineState createState() => new _MineState(new MinePresenter());
@@ -78,6 +80,31 @@ class _MineState extends MVPState<MinePresenter, MineLayer>
               },
               leading: Icon(Icons.history),
               title: new Text("投注记录"),
+              trailing: Icon(Icons.navigate_next),
+            ),
+          ),
+          new Container(
+            color: Colors.white,
+            child: new ListTile(
+              onTap: () {
+                Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (context) => new LoginLayer(),
+                    ));
+              },
+              leading: Icon(Icons.history),
+              title: new Text("用户登陆"),
+              trailing: Icon(Icons.navigate_next),
+            ),
+          ),new Container(
+            color: Colors.white,
+            child: new ListTile(
+              onTap: () {
+                Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (context) => new RegisterLayer(),
+                    ));
+              },
+              leading: Icon(Icons.history),
+              title: new Text("用户注册"),
               trailing: Icon(Icons.navigate_next),
             ),
           ),
