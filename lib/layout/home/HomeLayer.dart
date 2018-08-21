@@ -3,7 +3,7 @@ import 'package:lowlottery/common/mvp.dart';
 import 'package:lowlottery/layout/home/HomeContract.dart';
 import 'package:lowlottery/layout/home/index/IndexFragLayer.dart';
 import 'package:lowlottery/layout/home/mine/MineLayer.dart';
-
+import 'package:lowlottery/layout/opencode/OpencodeRecord.dart';
 class HomeLayer extends StatefulWidget {
   @override
   _HomeState createState() => new _HomeState(new HomePresenter());
@@ -51,6 +51,9 @@ class _HomeState extends MVPState<HomePresenter, HomeLayer>
             new ConstrainedBox(
               constraints: const BoxConstraints.expand(),
               child: new IndexFragLayer(),
+            ),new ConstrainedBox(
+              constraints: const BoxConstraints.expand(),
+              child: new OpencodeRecordLayer(),
             ),
             new ConstrainedBox(
               constraints: const BoxConstraints.expand(),
@@ -58,13 +61,14 @@ class _HomeState extends MVPState<HomePresenter, HomeLayer>
             )
           ])[index];
         },
-        itemCount: 2,
+        itemCount: 3,
       ),
       bottomNavigationBar: new BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Home")),
+          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("首页")),
+          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("开奖号码")),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: Text("Person")),
+              icon: Icon(Icons.person), title: Text("个人中心")),
         ],
         currentIndex: _currentIndex,
         onTap: (index) {
