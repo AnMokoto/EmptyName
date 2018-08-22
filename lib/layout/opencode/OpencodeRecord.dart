@@ -13,7 +13,9 @@ class _OpencodeRecordState
     implements LotterBetRecordIVew {
   final titles = [
     "全部",
-
+    "时时彩",
+    "快三",
+    "11选5",
   ];
 
   @protected
@@ -52,7 +54,7 @@ class _OpencodeRecordState
           ),
           centerTitle: true,
           backgroundColor: Colors.red,
-          title: new Text("开奖号码"),
+          title: new Text("开奖号码" ,),
         ),
         body: new Column(
           children: <Widget>[
@@ -144,6 +146,7 @@ class _LotterBetRecorderFragState
                       new Text("${value["gameEn"] ?? "-"}"),
                       new Text("${value["expectNo"] ?? "-"}" + " | " +
                           "${value['createTime'] ?? '-'}"),
+                      new Text("${value["opencode"] ?? "-"}"),
                     ],
                   ),
                 ),
