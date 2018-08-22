@@ -7,12 +7,26 @@ part of fixboxModel;
 // **************************************************************************
 
 FixBoxModel _$FixBoxModelFromJson(Map<String, dynamic> json) =>
-    new FixBoxModel(id: json['id'], name: json['name'], url: json['url']);
+
+    ///this.gameEn, this.name, this.iconUnicode,this.desc,this.totalExpect
+    new FixBoxModel(
+        gameEn: json['gameEn'],
+        name: json['name'],
+        iconUnicode: json['iconUnicode'],
+        desc: json['desc'],
+        totalExpect: json['totalExpect']);
 
 abstract class _$FixBoxModelSerializerMixin {
-  dynamic get id;
+  dynamic get gameEn;
   dynamic get name;
-  dynamic get url;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'id': id, 'name': name, 'url': url};
+  dynamic get iconUnicode;
+  dynamic get desc;
+  dynamic get totalExpect;
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'gameEn': gameEn,
+        'name': name,
+        'iconUnicode': iconUnicode,
+        'desc': desc,
+        'totalExpect': totalExpect
+      };
 }

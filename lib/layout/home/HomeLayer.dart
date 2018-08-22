@@ -3,7 +3,7 @@ import 'package:lowlottery/common/mvp.dart';
 import 'package:lowlottery/layout/home/HomeContract.dart';
 import 'package:lowlottery/layout/home/index/IndexFragLayer.dart';
 import 'package:lowlottery/layout/home/mine/MineLayer.dart';
-import 'package:lowlottery/layout/opencode/OpencodeRecord.dart';
+import 'package:lowlottery/layout/home/opencode/OpencodeRecord.dart';
 class HomeLayer extends StatefulWidget {
   @override
   _HomeState createState() => new _HomeState(new HomePresenter());

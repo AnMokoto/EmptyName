@@ -6,23 +6,21 @@ import 'IndexContract.dart';
 import 'package:lowlottery/widget/fixbox/FixBoxWidget.dart';
 import 'package:lowlottery/widget/fixbox/FixBoxModel.dart';
 import 'package:lowlottery/layout/lottery/LotteryLayer.dart';
-import 'package:lowlottery/style/index.dart' show Style;
+import 'package:lowlottery/style/index.dart' show StyleSplit;
 
 class IndexFragLayer extends StatefulWidget {
   List<FixBoxModel> models;
 
-  final index_type = [
-    "assets/lottery/cqssc.png",
-    "assets/lottery/pk10.png",
-    "assets/lottery/tjssc.png",
-    "assets/lottery/xjssc.png",
-    "assets/lottery/cqssc.png",
-  ];
+  // final index_type = [
+  //   "assets/lottery/cqssc.png",
+  //   "assets/lottery/pk10.png",
+  //   "assets/lottery/tjssc.png",
+  //   "assets/lottery/xjssc.png",
+  //   "assets/lottery/cqssc.png",
+  // ];
 
   IndexFragLayer({Key key}) : super(key: key) {
-    this.models = List.generate(index_type.length, (index) {
-      return new FixBoxModel(id: index, name: "$index", url: index_type[index]);
-    });
+    this.models = [];
   }
 
   @override
@@ -38,7 +36,14 @@ class _IndexFragState extends MVPState<IndexFragPresenter, IndexFragLayer>
   void initState() {
     // TODO: implement initState
     super.initState();
-    //presenter.requestIndexFragLottery();
+    presenter.requestIndexFragLottery();
+  }
+
+  @override
+  void requestIndexFragLotterySuccess(List<FixBoxModel> data) {
+    setState(() {
+      widget..models.addAll(data);
+    });
   }
 
   @override
@@ -72,9 +77,10 @@ class _IndexFragState extends MVPState<IndexFragPresenter, IndexFragLayer>
                 models: widget.models,
                 onItemClick: (model, position) {
                   Navigator.of(context).push(new MaterialPageRoute(
-                      builder: (context) => new LotteryLayer(
-                            style: Style.cqssc1xfx(),
-                          )));
+                    builder: (context) => new LotteryLayer(
+                          impl: StyleSplit.of(model.gameEn),
+                        ),
+                  ));
                 }))
       ],
     );

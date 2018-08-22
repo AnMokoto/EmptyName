@@ -246,41 +246,48 @@ class cqssc_hz3 extends cqssc_hz {
   }
 }
 
-class Style {
-  Style._();
 
-  static PlayStyle cqssc1xfx() => cqssc_1xfx();
 
-  static PlayStyle cqssq2zxfx() =>
+class Style extends StyleManagerIMPL{
+  const Style();
+
+  factory Style.of(String str) {
+    return str == "cqssc" ? const Style() : null;
+  }
+
+  PlayStyle get cqssc1xfx => cqssc_1xfx();
+
+  PlayStyle get cqssq2zxfx =>
       cqssc_q2fx(type: "q2zxfx", name: "前二直选复选", desc: "前二直选复选");
-  static PlayStyle cqssq2zxhz() =>
+  PlayStyle get cqssq2zxhz =>
       cqssc_hz(type: "q2zxhz", name: "前二直选和值", desc: "前二直选和值");
 
-  static PlayStyle cqssh2zxfx() =>
+  PlayStyle get cqssh2zxfx =>
       cqssc_h2fx(type: "h2zxfx", name: "后二直选复选", desc: "后二直选复选");
-  static PlayStyle cqssh2zxhz() =>
+  PlayStyle get cqssh2zxhz =>
       cqssc_hz(type: "h2zxhz", name: "后二直选和值", desc: "后二直选和值");
 
-  static PlayStyle cqssq3zxfx() =>
+  PlayStyle get cqssq3zxfx =>
       cqssc_q3fx(type: "q3zxfx", name: "前三直选复选", desc: "前三直选复选");
-  static PlayStyle cqssq3zxhz() =>
+  PlayStyle get cqssq3zxhz =>
       cqssc_hz3(type: "q3zxhz", name: "前三直选和值", desc: "前三直选和值");
 
-  static PlayStyle cqssh3zxfx() =>
+  PlayStyle get cqssh3zxfx =>
       cqssc_h3fx(type: "h3zxfx", name: "后三直选复选", desc: "后三直选复选");
-  static PlayStyle cqssh3zxhz() =>
+  PlayStyle get cqssh3zxhz =>
       cqssc_hz3(type: "h3zxhz", name: "后三直选和值", desc: "后三直选和值");
 
-  static List<PlayStyle> all() => [
-        cqssc1xfx(),
-        cqssq2zxfx(),
-        cqssq2zxhz(),
-        cqssh2zxfx(),
-        cqssh2zxhz(),
-        cqssq3zxfx(),
-        cqssq3zxhz(),
-        cqssh3zxfx(),
-        cqssh3zxhz()
+ @override
+  List<PlayStyle> get all => [
+        cqssc1xfx,
+        cqssq2zxfx,
+        cqssq2zxhz,
+        cqssh2zxfx,
+        cqssh2zxhz,
+        cqssq3zxfx,
+        cqssq3zxhz,
+        cqssh3zxfx,
+        cqssh3zxhz
       ];
 }
 

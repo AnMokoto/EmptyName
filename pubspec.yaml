@@ -86,3 +86,4 @@ flutter:
     - family: Alibaba
       fonts:
         - asset: assets/ttf/iconfont.ttf
+        - asset: assets/ttf/afont.ttf

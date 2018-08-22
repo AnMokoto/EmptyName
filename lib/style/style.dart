@@ -164,6 +164,14 @@ String transformToWithOutPoint(List<dynamic> choice) {
   return code;
 }
 
+/// 彩种控制
+abstract class StyleManagerIMPL {
+  const StyleManagerIMPL();
+
+  /// 返回当前彩种的所有玩法
+  List<PlayStyle> get all;
+}
+
 // class style {
 //   factory style.cqssc_1xfx() => style(type: "1xfx", desc: "1星复选");
 //   //前二

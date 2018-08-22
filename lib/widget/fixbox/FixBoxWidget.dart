@@ -2,6 +2,7 @@ library FixBoxWidget;
 
 import 'package:flutter/material.dart';
 import 'package:lowlottery/widget/fixbox/FixBoxModel.dart';
+import 'package:lowlottery/font/index.dart';
 
 typedef void OnFixBoxOnItemClick(FixBoxModel model, int position);
 
@@ -81,14 +82,12 @@ class FixBoxWidgetItemState extends State<FixBoxWidgetItem> {
             new Container(
               constraints: BoxConstraints(
                 maxHeight: 100.0,
+                minWidth: 80.0,
+                minHeight: 80.0,
                 maxWidth: 100.0,
               ),
               padding: EdgeInsets.all(10.0),
-              child: CircleAvatar(
-                backgroundImage: AssetImage(widget.model.url ??
-                    ""), //NetworkImage(widget.model.url ?? "")
-                radius: 20.0,
-              ),
+              child: Icon(AppIcons.fromStr(widget.model.iconUnicode))
             ),
             Text(
               widget.model.name ?? "",

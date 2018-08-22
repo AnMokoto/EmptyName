@@ -41,12 +41,13 @@ Future<dynamic> abRequest(
     /// 考虑以下内容移动到action内处理
 
     var body = json.decode(response);
-    var success = body['success'] as bool;
+    var success = body['success'] as bool && body['code'] == 200;
     if (success) {
       action.OnNext(body['data']);
       action.OnComplete();
     } else {
-      throw new FormatException(body['message'], body, 0);
+      throw new FormatException(
+          "${body['message']}===> ${body['code']}", body, 0);
     }
     // }).whenComplete(() {
     //  action.onComplete();

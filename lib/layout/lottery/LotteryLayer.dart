@@ -21,8 +21,11 @@ import 'package:lowlottery/style/index.dart';
 typedef void OnLotteryPushClick(int index, int position);
 
 class LotteryLayer extends StatefulWidget {
+  StyleManagerIMPL impl;
   PlayStyle style;
-  LotteryLayer({this.style}) : assert(style != null);
+  LotteryLayer({this.impl}) : assert(impl != null){
+  this.style = impl.all[0];
+  }
   @override
   _LotteryState createState() => new _LotteryState(new LotteryPresenter());
 }
@@ -88,7 +91,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
           ),
           onSelected: (str) {},
           // icon: Icon(Icons.arrow_drop_down),
-          itemBuilder: (context) => Style.all().map((f) {
+          itemBuilder: (context) => widget.impl.all.map((f) {
                 return PopupMenuItem(
                     value: f.desc ?? "",
                     child: new OutlineButton(
