@@ -28,9 +28,13 @@ class IndexFragLayer extends StatefulWidget {
       new _IndexFragState(new IndexFragPresenter());
 }
 
-class _IndexFragState extends MVPState<IndexFragPresenter, IndexFragLayer>
+class _IndexFragState extends MVPState<IndexFragPresenter, IndexFragLayer> with AutomaticKeepAliveClientMixin<IndexFragLayer>
     implements IndexFragIView {
   _IndexFragState(IndexFragPresenter presenter) : super(presenter);
+
+  @override
+    // TODO: implement wantKeepAlive
+    bool get wantKeepAlive => true;
 
   @override
   void initState() {

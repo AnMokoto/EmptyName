@@ -9,9 +9,13 @@ class MineLayer extends StatefulWidget {
   _MineState createState() => new _MineState(new MinePresenter());
 }
 
-class _MineState extends MVPState<MinePresenter, MineLayer>
+class _MineState extends MVPState<MinePresenter, MineLayer> with AutomaticKeepAliveClientMixin<MineLayer>
     implements MineIView {
   _MineState(MinePresenter presenter) : super(presenter);
+
+@override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
