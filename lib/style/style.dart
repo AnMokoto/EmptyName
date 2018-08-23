@@ -170,6 +170,8 @@ abstract class StyleManagerIMPL {
 
   /// 返回当前彩种的所有玩法
   List<PlayStyle> get all;
+
+  String get name;
 }
 
 // class style {

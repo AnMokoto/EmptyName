@@ -251,6 +251,7 @@ class cqssc_hz3 extends cqssc_hz {
 class Style extends StyleManagerIMPL{
   const Style();
 
+
   factory Style.of(String str) {
     return str == "cqssc" ? const Style() : null;
   }
@@ -276,6 +277,11 @@ class Style extends StyleManagerIMPL{
       cqssc_h3fx(type: "h3zxfx", name: "后三直选复选", desc: "后三直选复选");
   PlayStyle get cqssh3zxhz =>
       cqssc_hz3(type: "h3zxhz", name: "后三直选和值", desc: "后三直选和值");
+
+@override
+  String get name=>"重庆时时彩";
+
+
 
  @override
   List<PlayStyle> get all => [
