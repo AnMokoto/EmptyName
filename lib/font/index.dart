@@ -5,17 +5,15 @@ import 'package:flutter/widgets.dart' show IconData;
 class AppIcons {
   AppIcons._();
 
-<<<<<<< HEAD
   static IconData passwd = IconData(0xe630, fontFamily: "Alibaba");
 
   static IconData from(int codePoint) =>
       IconData(codePoint, fontFamily: "Alibaba");
 
-  static IconData fromStr(String codePoint) =>
+  static IconData fromStr(String codePoint) =>/*
       IconData(int.parse(codePoint.replaceFirst("&#", "0"), radix: 16),
-          fontFamily: "Alibaba");
-=======
-  static IconData passwd = IconData(0xe61d, fontFamily: "Alibaba");
+          fontFamily: "Alibaba");*/
+      getLot(codePoint) ;
 
   /**
    * 获取彩种logo
@@ -33,5 +31,4 @@ class AppIcons {
     if (gameEn.contains("pk10")) return IconData(0xe604, fontFamily: "Alibaba");
     if (gameEn.contains("k3")) return IconData(0xe607, fontFamily: "Alibaba");
   }
->>>>>>> 6351ddde488f28e5440773a2a33f48e847a20474
 }

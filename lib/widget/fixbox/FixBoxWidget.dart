@@ -87,7 +87,7 @@ class FixBoxWidgetItemState extends State<FixBoxWidgetItem> {
                 maxWidth: 100.0,
               ),
               padding: EdgeInsets.all(10.0),
-              child: Icon(AppIcons.fromStr(widget.model.iconUnicode))
+              child: Icon(AppIcons.fromStr(widget.model.gameEn))
             ),
             Text(
               widget.model.name ?? "",
