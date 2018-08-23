@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     return new StoreProvider<AppState>(
       store: store,
       child: new MaterialApp(
-        title: 'Lottery',
+        title: '天天赢',
         theme: new ThemeData(
           // This is the theme of your application.
           //

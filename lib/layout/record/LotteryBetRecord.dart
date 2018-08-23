@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lowlottery/common/mvp.dart';
 import 'LotterBetRecordContract.dart';
-
+import 'package:lowlottery/font/index.dart';
+import 'package:lowlottery/font/Lot.dart';
 class LotterBetRecordLayer extends StatefulWidget {
   _LotterBetRecordState createState() =>
       new _LotterBetRecordState(new LotterBetRecordPresenter());
@@ -143,8 +144,8 @@ class _LotterBetRecorderFragState
                   child: new Column(
                     children: <Widget>[
                       // Image.network(""),
-                      new Icon(Icons.navigate_next),
-                      new Text("${value["gameEn"]??"-"}")
+                      new Icon(AppIcons.getLot("${value["gameEn"]}")),
+                      new Text(LotConfig.getLotName("${value["gameEn"]??"-"}"))
                     ],
                   ),
                 ),
@@ -269,7 +270,7 @@ class _LotteryBetRecordDetailsState
           children: <Widget>[
             new Container(
               constraints: new BoxConstraints(
-                  minWidth: double.infinity, maxHeight: 40.0),
+                  minWidth: double.infinity, maxHeight: 55.0),
               padding: EdgeInsets.all(10.0),
               color: Colors.grey[200],
               child: new Stack(
@@ -278,7 +279,14 @@ class _LotteryBetRecordDetailsState
                 children: <Widget>[
                   new Positioned(
                     left: 0.0,
-                    child: Icon(Icons.ac_unit),
+                    child: new Column(
+                      children: <Widget>[
+                        // Image.network(""),
+                        new Icon(AppIcons.getLot("${_map["gameEn"]}")),
+                        new Text(LotConfig.getLotName("${_map["gameEn"]??"-"}"))
+                      ],
+                    ),
+//                    child:  Icon(AppIcons.getLot("${_map["gameEn"]}")),
                   ),
                   new Positioned(
                     right: 0.0,

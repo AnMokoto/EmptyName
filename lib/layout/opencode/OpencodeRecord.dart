@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lowlottery/common/mvp.dart';
 import 'OpencodeRecordContract.dart';
-
+import 'package:lowlottery/font/index.dart';
+import 'package:lowlottery/font/Lot.dart';
 class OpencodeRecordLayer extends StatefulWidget {
   _OpencodeRecordState createState() =>
       new _OpencodeRecordState(new LotterBetRecordPresenter());
@@ -138,18 +139,6 @@ class _LotterBetRecorderFragState
             child: new Row(
               children: <Widget>[
 
-                ///左边的
-                new Container(
-                  padding: EdgeInsets.all(10.0),
-                  child: new Column(
-                    children: <Widget>[
-                      new Text("${value["gameEn"] ?? "-"}"),
-                      new Text("${value["expectNo"] ?? "-"}" + " | " +
-                          "${value['createTime'] ?? '-'}"),
-                      new Text("${value["opencode"] ?? "-"}"),
-                    ],
-                  ),
-                ),
 
                 new Expanded(
                   child: new Column(
@@ -159,27 +148,11 @@ class _LotterBetRecorderFragState
                           padding: EdgeInsets.all(10.0),
                           child: new Row(
                             children: <Widget>[
-                              new Expanded(
-                                child: new Container(
-                                  margin: EdgeInsets.only(right: 20.0),
-                                  child: new Stack(
-                                    children: <Widget>[
-                                      new Positioned(
-                                        left: 0.0,
-                                        top: 0.0,
-                                        child: new Text(
-                                          "${value["statusDesc"] ?? "-"}",
-                                          style: new TextStyle(
-                                            color: Colors.red,
-                                          ),),
-
-                                      ),
-
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              new Icon(Icons.navigate_next)
+                              new Text(LotConfig.getLotName("${value['gameEn']}")),
+                              new Text("${value["expectNo"] ?? "-"}" + " | " +
+                                  "${value['createTime'] ?? '-'}"),
+                              new Text("${value["opencode"] ?? "-"}"),
+                              new Icon(AppIcons.getLot("${value['gameEn']}"), size: 60.0)
                             ],
                           ),
                         ),
