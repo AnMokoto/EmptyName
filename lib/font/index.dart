@@ -11,6 +11,6 @@ class AppIcons {
       IconData(codePoint, fontFamily: "Alibaba");
 
   static IconData fromStr(String codePoint) =>
-      IconData(int.parse(codePoint.replaceFirst("&#x", ""), radix: 16) + 0xFFFFFF,
+      IconData(int.parse(codePoint.replaceAll("&#x", "0x"), radix: 16),
           fontFamily: "Alibaba");
 }
