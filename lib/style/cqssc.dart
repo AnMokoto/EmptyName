@@ -26,6 +26,10 @@ abstract class _cqssc extends PlayStyle {
   }
 
   @override
+  // TODO: implement count
+  int get count => 5;
+
+  @override
   List<List<int>> toBet2System(int index, int position) {
     /// 长度拦截
     if (index >= _data.length) return _data;
@@ -246,11 +250,8 @@ class cqssc_hz3 extends cqssc_hz {
   }
 }
 
-
-
-class Style extends StyleManagerIMPL{
+class Style extends StyleManagerIMPL {
   const Style();
-
 
   factory Style.of(String str) {
     return str.contains("ssc") ? const Style() : null;
@@ -278,12 +279,10 @@ class Style extends StyleManagerIMPL{
   PlayStyle get cqssh3zxhz =>
       cqssc_hz3(type: "h3zxhz", name: "后三直选和值", desc: "后三直选和值");
 
-@override
-  String get name=>"重庆时时彩";
+  @override
+  String get name => "重庆时时彩";
 
-
-
- @override
+  @override
   List<PlayStyle> get all => [
         cqssc1xfx,
         cqssq2zxfx,

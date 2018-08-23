@@ -89,7 +89,7 @@ class FixBoxWidgetItemState extends State<FixBoxWidgetItem> {
               padding: EdgeInsets.all(10.0),
               child: new FittedBox(
                   fit: BoxFit.fill,
-                  child: Icon(AppIcons.fromStr(widget.model.gameEn))),
+                  child: Icon(AppIcons.fromStr(widget.model.gameEn),color: Colors.red,)),
             ),
             Text(
               widget.model.name ?? "",
