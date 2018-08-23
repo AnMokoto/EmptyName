@@ -81,13 +81,15 @@ class FixBoxWidgetItemState extends State<FixBoxWidgetItem> {
           children: <Widget>[
             new Container(
               constraints: BoxConstraints(
-                maxHeight: 100.0,
-                minWidth: 80.0,
-                minHeight: 80.0,
-                maxWidth: 100.0,
+                maxHeight: 150.0,
+                minWidth: 120.0,
+                minHeight: 120.0,
+                maxWidth: 150.0,
               ),
               padding: EdgeInsets.all(10.0),
-              child: Icon(AppIcons.fromStr(widget.model.gameEn))
+              child: new FittedBox(
+                  fit: BoxFit.fill,
+                  child: Icon(AppIcons.fromStr(widget.model.gameEn))),
             ),
             Text(
               widget.model.name ?? "",
