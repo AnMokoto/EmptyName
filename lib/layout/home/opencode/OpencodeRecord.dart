@@ -10,7 +10,7 @@ class OpencodeRecordLayer extends StatefulWidget {
 
 class _OpencodeRecordState
     extends MVPState<LotterBetRecordPresenter, OpencodeRecordLayer>
-    with SingleTickerProviderStateMixin<OpencodeRecordLayer>
+    with SingleTickerProviderStateMixin<OpencodeRecordLayer>,AutomaticKeepAliveClientMixin<OpencodeRecordLayer>
     implements LotterBetRecordIVew {
   final titles = [
     "全部",
@@ -18,6 +18,10 @@ class _OpencodeRecordState
     "快三",
     "11选5",
   ];
+
+  @override
+    // TODO: implement wantKeepAlive
+    bool get wantKeepAlive => true;
 
   @protected
   TabController _tabController;
