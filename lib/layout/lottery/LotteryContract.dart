@@ -13,13 +13,13 @@ abstract class LotteryIView extends IView {
 }
 
 class LotteryPresenter extends Presenter<LotteryIView> {
-  Future<dynamic> requestLotteryWithExpectNow() =>
-      HttpRetrofit.request("expectNow", {"gameEn": "cqssc"}, (data) {
+  Future<dynamic> requestLotteryWithExpectNow(String gameEn) =>
+      HttpRetrofit.request("expectNow", {"gameEn": gameEn}, (data) {
         view.requestLotteryWithExpectNowSuccess(LotteryModel.fromJson(data));
       });
 
-  Future<dynamic> requestLotteryLastCurrent() => HttpRetrofit
-          .request("opencodeList", {"gameEn": "cqssc", "total": 1}, (data) {
+  Future<dynamic> requestLotteryLastCurrent(String gameEn) => HttpRetrofit
+          .request("opencodeList", {"gameEn": gameEn, "total": 1}, (data) {
         print("opencodeList----------------------");
         print(data);
         view.requestLotteryLastCurrentSuccess(Lottery.fromJsonToList(data));

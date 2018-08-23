@@ -81,10 +81,10 @@ class FixBoxWidgetItemState extends State<FixBoxWidgetItem> {
           children: <Widget>[
             new Container(
               constraints: BoxConstraints(
-                maxHeight: 150.0,
-                minWidth: 120.0,
-                minHeight: 120.0,
-                maxWidth: 150.0,
+                maxHeight: 80.0,
+                minWidth: 80.0,
+                minHeight: 80.0,
+                maxWidth: 80.0,
               ),
               padding: EdgeInsets.all(10.0),
               child: new FittedBox(

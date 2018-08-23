@@ -253,7 +253,7 @@ class Style extends StyleManagerIMPL{
 
 
   factory Style.of(String str) {
-    return str == "cqssc" ? const Style() : null;
+    return str.contains("ssc") ? const Style() : null;
   }
 
   PlayStyle get cqssc1xfx => cqssc_1xfx();

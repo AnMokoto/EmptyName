@@ -79,6 +79,7 @@ class _IndexFragState extends MVPState<IndexFragPresenter, IndexFragLayer>
                   Navigator.of(context).push(new MaterialPageRoute(
                     builder: (context) => new LotteryLayer(
                           impl: StyleSplit.of(model.gameEn),
+                           gameEn:model.gameEn ,
                         ),
                   ));
                 }))

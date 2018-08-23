@@ -22,18 +22,24 @@ typedef void OnLotteryPushClick(int index, int position);
 
 class LotteryLayer extends StatefulWidget {
   StyleManagerIMPL impl;
+  String gameEn ;
   PlayStyle style;
-  LotteryLayer({this.impl}) : assert(impl != null){
+  LotteryLayer({this.impl ,this.gameEn}) : assert(impl != null){
   this.style = impl.all[0];
+  this.gameEn = gameEn
+  print("..............."+gameEn);
+
   }
   @override
-  _LotteryState createState() => new _LotteryState(new LotteryPresenter());
+  _LotteryState createState() => new _LotteryState(new LotteryPresenter() ,gameEn);
 }
 
 class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
     implements LotteryIView {
-  _LotteryState(LotteryPresenter presenter) : super(presenter) {
+  String gameEn ;
+  _LotteryState(LotteryPresenter presenter  ,String gameEn) : super(presenter) {
     /// 初始化原有数据
+    this.gameEn =gameEn ;
   }
 
   void _onHeadExpansionChoice(int index, bool isChoice) {}
@@ -56,8 +62,8 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
   @override
   void initState() {
     super.initState();
-    presenter.requestLotteryWithExpectNow().then((e) {
-      presenter.requestLotteryLastCurrent();
+    presenter.requestLotteryWithExpectNow(gameEn).then((e) {
+      presenter.requestLotteryLastCurrent(gameEn);
     });
   }
 
