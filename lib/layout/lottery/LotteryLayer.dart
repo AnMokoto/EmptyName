@@ -26,7 +26,7 @@ class LotteryLayer extends StatefulWidget {
   PlayStyle style;
   LotteryLayer({this.impl ,this.gameEn}) : assert(impl != null){
   this.style = impl.all[0];
-  this.gameEn = gameEn
+  this.gameEn = gameEn ;
   print("..............."+gameEn);
 
   }
