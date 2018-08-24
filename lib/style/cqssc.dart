@@ -313,6 +313,56 @@ class cqssc_zuxhz extends _cqssc {
   }
 }
 /**
+ *前二后二组选包胆
+ */
+@protected
+class cqssc_zuxbd extends _cqssc {
+  @protected
+  List<int> _zhushu;
+
+  cqssc_zuxbd(
+      {  @required String type, @required String name, String desc ,String initLeftDesc})
+      : super(type: type, name: name, desc: desc) {
+    this._data = initialData(10);
+
+  }
+
+  @override
+  List<List<int>> toBet2System(int index, int position) {
+    if (position >= _data[0].length) return _data;
+    for(int i=0;i<_data[0].length;++i){
+      _data[0][i]=-1;
+    }
+    _data[0][position] = _data[0][position] == -1 ? position : -1;
+    return _data;
+  }
+
+  @override
+  PlayModelItem transformWithType(PlayModelItem state) {
+    state.code = "";
+    List<String> value = new List();
+    _data[0].forEach((f) {
+      if (f > -1) {
+        value.add(f.toString());
+      }
+    });
+    //前二后二组选包胆固定注数 9
+    state.zhushu = 9;
+    state.money = state.zhushu * price;
+
+    String code = transformToString(value, type);
+    Log.message("${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
+    state.code = code;
+
+    return state;
+  }
+
+  @override
+  List<String> initialType() {
+    return ["包胆"];
+  }
+}
+/**
  * 前二后二,前三中三后三 跨度
  */
 @protected
@@ -426,8 +476,8 @@ class Style extends StyleManagerIMPL{
       cqssc_zuxfx(len:2 ,type: "q2zuxfx", name: "前二组选复选", desc: "前二组选复选");
   PlayStyle get cqssq2zuxhz =>
       cqssc_zuxhz(type: "q2zuxhz", name: "前二组选和值", desc: "前二组选和值");
-  PlayStyle get cqssq2zuxkd =>
-      cqssc_kd(type: "q2zuxkd", name: "前二组选跨度", desc: "前二组选跨度");
+  PlayStyle get cqssq2zuxbd =>
+      cqssc_zuxbd(type: "q2zuxbd", name: "前二组选包胆", desc: "前二组选包胆");
 
 
   PlayStyle get cqssh2zxfx =>
@@ -440,8 +490,8 @@ class Style extends StyleManagerIMPL{
       cqssc_zuxfx(len:2 ,type: "h2zuxfx", name: "后二组选复选", desc: "后二组选复选");
   PlayStyle get cqssh2zuxhz =>
       cqssc_zuxhz(type: "h2zuxhz", name: "后二组选和值", desc: "后二组选和值");
-  PlayStyle get cqssh2zuxkd =>
-      cqssc_kd( type: "h2zuxkd", name: "后二组选跨度", desc: "后二组选跨度");
+  PlayStyle get cqssh2zuxbd =>
+      cqssc_zuxbd( type: "h2zuxbd", name: "后二组选包胆", desc: "后二组选包胆");
 
   PlayStyle get cqssq3zxfx =>
       cqssc_q3fx(type: "q3zxfx", name: "前三直选复选", desc: "前三直选复选");
@@ -477,12 +527,12 @@ class Style extends StyleManagerIMPL{
         cqssq2zxkd,
         cqssq2zuxfx,
         cqssq2zuxhz,
-        cqssq2zuxkd,
+        cqssq2zuxbd,
         cqssh2zxfx,
         cqssh2zxkd,
         cqssh2zxhz,
         cqssh2zuxfx,
-        cqssh2zuxkd,
+        cqssh2zuxbd,
         cqssh2zuxhz,
         cqssq3zxfx,
         cqssq3zxhz,
