@@ -22,15 +22,14 @@ class OpencodeRecordFragPresenter extends Presenter<OpencodeRecordFragIVew> {
   }
 }
 
-abstract class LotterBetRecordDetailIVew extends IView {
-  void requestDetailsSuccess(Map<String, dynamic> map);
+abstract class LotOpencodelistIVew extends IView {
+  void requestDetailsSuccess(List<dynamic> list);
 }
 
-class LotterBetRecordDetailPresenter
-    extends Presenter<LotterBetRecordDetailIVew> {
+class LotOpencodeDetailPresenter extends Presenter<LotOpencodelistIVew> {
   Future<dynamic> requestDetails(String projectEn) {
-    return HttpRetrofit
-        .requestError("allLotOpencodeList", {}, (data) {
+    print(projectEn);
+    return HttpRetrofit.requestError("allLotOpencodeList", {}, (data) {
       print(data);
       view.requestDetailsSuccess(data);
     }, (e) => NetIView.OnError(view.context, e));

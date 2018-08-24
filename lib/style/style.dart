@@ -133,7 +133,7 @@ abstract class PlayStyle {
 
 /// 替换数据格式
 String transformToString(List<dynamic> choice, String type) {
-  if (type.endsWith("hz")) {
+  if (type.endsWith("hz") || type.endsWith("kd")) {
     return transformToWithOutPoint(choice);
   }
   return choice.toString().replaceAll(new RegExp(r"(\]|\[)"), "");
