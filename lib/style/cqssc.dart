@@ -217,19 +217,18 @@ class cqssc_hz extends _cqssc {
     return ["和值"];
   }
 }
+/**
+ * 前二后二组选复选
+ */
 @protected
 class cqssc_zuxfx extends _cqssc {
   @protected
-//  List<int> _zhushu;
-
   int len =0;
   cqssc_zuxfx(
       {int len, @required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc) {
     this._data = initialData(10);
     this.len = len ;
-
-//    this._zhushu = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
   }
 
   @override
@@ -252,7 +251,6 @@ class cqssc_zuxfx extends _cqssc {
     var count = ZuheUtil.combination(value.length,len );
     state.zhushu = count.toInt();
     state.money = state.zhushu * price;
-
     String code = transformToString(value, type);
     Log.message("${type}_value===$code");
     state.code = code;
@@ -263,6 +261,55 @@ class cqssc_zuxfx extends _cqssc {
   @override
   List<String> initialType() {
     return ["组选"];
+  }
+}
+/**
+ *前二后二组选和值
+ */
+@protected
+class cqssc_zuxhz extends _cqssc {
+  @protected
+  List<int> _zhushu;
+
+  cqssc_zuxhz(
+      {  @required String type, @required String name, String desc ,String initLeftDesc})
+      : super(type: type, name: name, desc: desc) {
+    this._data = initialData(17);
+    if(type.contains("2"))
+      this._zhushu = [1, 1, 2, 2, 3, 3, 4, 4, 5, 4, 4, 3, 3, 2, 2, 1, 1];
+  }
+
+  @override
+  List<List<int>> toBet2System(int index, int position) {
+    if (position >= _data[0].length) return _data;
+    _data[0][position] = _data[0][position] == -1 ? position : -1;
+    return _data;
+  }
+
+  @override
+  PlayModelItem transformWithType(PlayModelItem state) {
+    var count = 0;
+    state.code = "";
+    List<String> value = new List();
+    _data[0].forEach((f) {
+      if (f > -1) {
+        count += this._zhushu[f];
+        value.add(f.toString());
+      }
+    });
+    state.zhushu = count;
+    state.money = state.zhushu * price;
+
+    String code = transformToString(value, type);
+    Log.message("${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
+    state.code = code;
+
+    return state;
+  }
+
+  @override
+  List<String> initialType() {
+    return ["和值"];
   }
 }
 /**
@@ -378,7 +425,7 @@ class Style extends StyleManagerIMPL{
   PlayStyle get cqssq2zuxfx =>
       cqssc_zuxfx(len:2 ,type: "q2zuxfx", name: "前二组选复选", desc: "前二组选复选");
   PlayStyle get cqssq2zuxhz =>
-      cqssc_hz(type: "q2zuxhz", name: "前二组选和值", desc: "前二组选和值");
+      cqssc_zuxhz(type: "q2zuxhz", name: "前二组选和值", desc: "前二组选和值");
   PlayStyle get cqssq2zuxkd =>
       cqssc_kd(type: "q2zuxkd", name: "前二组选跨度", desc: "前二组选跨度");
 
@@ -392,7 +439,7 @@ class Style extends StyleManagerIMPL{
   PlayStyle get cqssh2zuxfx =>
       cqssc_zuxfx(len:2 ,type: "h2zuxfx", name: "后二组选复选", desc: "后二组选复选");
   PlayStyle get cqssh2zuxhz =>
-      cqssc_hz(type: "h2zuxhz", name: "后二组选和值", desc: "后二组选和值");
+      cqssc_zuxhz(type: "h2zuxhz", name: "后二组选和值", desc: "后二组选和值");
   PlayStyle get cqssh2zuxkd =>
       cqssc_kd( type: "h2zuxkd", name: "后二组选跨度", desc: "后二组选跨度");
 
