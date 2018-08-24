@@ -2,6 +2,7 @@
 
 class ZuheUtil {
   /**
+   * log
    * 计算阶乘数，即n! = n * (n-1) * ... * 2 * 1
    */
   static double factorial(int n) {
