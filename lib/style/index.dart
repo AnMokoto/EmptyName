@@ -12,6 +12,6 @@ class StyleSplit {
   /// 返回彩种 实务
   static StyleManagerIMPL of(String str) {
     if (str.contains("ssc")) if (Style.of(str) != null) return Style.of(str);
-    if (str.contains("11x5")) if (Style11x5.of(str) != null) return Style.of(str);
+    if (str.contains("11x5")) return Style11x5.of(str) ;
   }
 }

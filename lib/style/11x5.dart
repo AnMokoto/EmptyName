@@ -2,7 +2,9 @@ import 'style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lowlottery/log.dart';
 import 'ZuheUtil.dart';
-///  重庆时时彩分类
+import 'Pk10Zhushuzxfx.dart';
+
+///  十一选五
 @protected
 abstract class _11x5 extends PlayStyle {
   List<List<int>> _data;
@@ -97,10 +99,10 @@ class cqssc_5xzxfx extends _11x5 {
 
   @override
   List<String> initialType() {
-    if(type.endsWith("5xzxfx"))
-    return ["万位", "千位" ,"百位" ,"十位" ,"个位"];
-    else if(type.endsWith("4xzxfx")) {
-    return ["千位" ,"百位" ,"十位" ,"个位"];
+    if (type.endsWith("5xzxfx"))
+      return ["万位", "千位", "百位", "十位", "个位"];
+    else if (type.endsWith("4xzxfx")) {
+      return ["千位", "百位", "十位", "个位"];
     }
   }
 
@@ -112,6 +114,7 @@ class cqssc_5xzxfx extends _11x5 {
     _data.forEach((item) {
       List<String> choice = new List();
       int _count = 0;
+
       /// 当前列表内有效注数
       item.forEach((index) {
         if (index > -1) {
@@ -132,14 +135,16 @@ class cqssc_5xzxfx extends _11x5 {
     return state;
   }
 }
+
 @protected
-class cqssc_q2fx extends _11x5 {
-  cqssc_q2fx({@required String type, @required String name, String desc})
+class cqssc_zxfx extends _11x5 {
+  cqssc_zxfx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
 
   @override
   List<String> initialType() {
-    return ["万位", "千位"];
+    if (type.contains("3")) return ["第一位", "第二位", "第三位"];
+    if (type.contains("2")) return ["第一位", "第二位"];
   }
 
   @override
@@ -164,10 +169,11 @@ class cqssc_q2fx extends _11x5 {
       value.add(code);
     });
 
-    state.zhushu = acount;
+    String code = transformToString(value, type);
+    int zhushu = Pk10Zhushuzxfx.calZhushu(code);
+    state.zhushu = zhushu;
     state.money = state.zhushu * price;
 
-    String code = transformToString(value, type);
     Log.message("${type}_value===$code");
     state.code = code;
 
@@ -176,7 +182,7 @@ class cqssc_q2fx extends _11x5 {
 }
 
 @protected
-class cqssc_h2fx extends cqssc_q2fx {
+class cqssc_h2fx extends cqssc_zxfx {
   cqssc_h2fx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
 
@@ -187,7 +193,7 @@ class cqssc_h2fx extends cqssc_q2fx {
 }
 
 @protected
-class cqssc_q3fx extends cqssc_q2fx {
+class cqssc_q3fx extends cqssc_zxfx {
   cqssc_q3fx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
 
@@ -207,6 +213,7 @@ class cqssc_h3fx extends cqssc_h2fx {
     return ["百位", "十位", "个位"];
   }
 }
+
 @protected
 class cqssc_z3fx extends cqssc_h2fx {
   cqssc_z3fx({@required String type, @required String name, String desc})
@@ -218,16 +225,37 @@ class cqssc_z3fx extends cqssc_h2fx {
   }
 }
 
+/**
+    任选
+ */
 @protected
-class cqssc_hz extends _11x5 {
+class gd11x5_rx extends _11x5 {
   @protected
   List<int> _zhushu;
+  int zuheCount = 2;
 
-  cqssc_hz(
-      {String len, @required String type, @required String name, String desc})
+  gd11x5_rx(
+      {@required String type,
+      @required String name,
+      String desc,
+      String initLeftDesc})
       : super(type: type, name: name, desc: desc) {
-    this._data = initialData(19);
-    this._zhushu = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+    this._data = initialData(12);
+    if (type.endsWith("2")) {
+      zuheCount = 2;
+    } else if (type.endsWith("3")) {
+      zuheCount = 3;
+    } else if (type.endsWith("4")) {
+      zuheCount = 4;
+    } else if (type.endsWith("5")) {
+      zuheCount = 5;
+    } else if (type.endsWith("6")) {
+      zuheCount = 6;
+    } else if (type.endsWith("7")) {
+      zuheCount = 7;
+    } else if (type.endsWith("8")) {
+      zuheCount = 8;
+    }
   }
 
   @override
@@ -244,15 +272,17 @@ class cqssc_hz extends _11x5 {
     List<String> value = new List();
     _data[0].forEach((f) {
       if (f > -1) {
-        count += this._zhushu[f];
+        count += 1;
         value.add(f.toString());
       }
     });
-    state.zhushu = count;
+    var com = ZuheUtil.combination(value.length, zuheCount);
+    state.zhushu = com.toInt();
     state.money = state.zhushu * price;
 
     String code = transformToString(value, type);
-    Log.message("${type}_value===$code");
+    Log.message(
+        "${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
     state.code = code;
 
     return state;
@@ -260,21 +290,31 @@ class cqssc_hz extends _11x5 {
 
   @override
   List<String> initialType() {
-    return ["和值"];
+    return ["任选$zuheCount"];
   }
 }
+
 /**
- * 前二后二组选复选
+    组选
  */
 @protected
-class cqssc_zuxfx extends _11x5 {
+class gd11x5_zux extends _11x5 {
   @protected
-  int len =0;
-  cqssc_zuxfx(
-      {int len, @required String type, @required String name, String desc})
+  List<int> _zhushu;
+  int zuheCount = 2;
+
+  gd11x5_zux(
+      {@required String type,
+      @required String name,
+      String desc,
+      String initLeftDesc})
       : super(type: type, name: name, desc: desc) {
-    this._data = initialData(10);
-    this.len = len ;
+    this._data = initialData(12);
+    if (type.contains("2")) {
+      zuheCount = 2;
+    } else if (type.contains("3")) {
+      zuheCount = 3;
+    }
   }
 
   @override
@@ -286,19 +326,22 @@ class cqssc_zuxfx extends _11x5 {
 
   @override
   PlayModelItem transformWithType(PlayModelItem state) {
+    var count = 0;
     state.code = "";
     List<String> value = new List();
     _data[0].forEach((f) {
       if (f > -1) {
+        count += 1;
         value.add(f.toString());
       }
     });
-
-    var count = ZuheUtil.combination(value.length,len );
-    state.zhushu = count.toInt();
+    var com = ZuheUtil.combination(value.length, zuheCount);
+    state.zhushu = com.toInt();
     state.money = state.zhushu * price;
+
     String code = transformToString(value, type);
-    Log.message("${type}_value===$code");
+    Log.message(
+        "${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
     state.code = code;
 
     return state;
@@ -309,313 +352,68 @@ class cqssc_zuxfx extends _11x5 {
     return ["组选"];
   }
 }
-/**
- *前二后二组选和值
- */
-@protected
-class cqssc_zuxhz extends _11x5 {
-  @protected
-  List<int> _zhushu;
-
-  cqssc_zuxhz(
-      {  @required String type, @required String name, String desc ,String initLeftDesc})
-      : super(type: type, name: name, desc: desc) {
-    this._data = initialData(17);
-    if(type.contains("2"))
-      this._zhushu = [1, 1, 2, 2, 3, 3, 4, 4, 5, 4, 4, 3, 3, 2, 2, 1, 1];
-  }
-
-  @override
-  List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
-  }
-
-  @override
-  PlayModelItem transformWithType(PlayModelItem state) {
-    var count = 0;
-    state.code = "";
-    List<String> value = new List();
-    _data[0].forEach((f) {
-      if (f > -1) {
-        count += this._zhushu[f];
-        value.add(f.toString());
-      }
-    });
-    state.zhushu = count;
-    state.money = state.zhushu * price;
-
-    String code = transformToString(value, type);
-    Log.message("${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
-    state.code = code;
-
-    return state;
-  }
-
-  @override
-  List<String> initialType() {
-    return ["和值"];
-  }
-}
-/**
- *前二后二组选包胆
- */
-@protected
-class cqssc_zuxbd extends _11x5 {
-  @protected
-  List<int> _zhushu;
-
-  cqssc_zuxbd(
-      {  @required String type, @required String name, String desc ,String initLeftDesc})
-      : super(type: type, name: name, desc: desc) {
-    //todo 包胆起始位置从1开始，需要特殊处理，暂时未处理
-    this._data = initialData(10);
-
-  }
-//包胆只能选择一位号码
-  @override
-  List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    for(int i=0;i<_data[0].length;++i){
-      _data[0][i]=-1;
-    }
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
-  }
-
-  @override
-  PlayModelItem transformWithType(PlayModelItem state) {
-    state.code = "";
-    List<String> value = new List();
-    _data[0].forEach((f) {
-      if (f > -1) {
-        value.add(f.toString());
-      }
-    });
-    //前二后二组选包胆固定注数 9
-    state.zhushu = 9;
-    state.money = state.zhushu * price;
-
-    String code = transformToString(value, type);
-    Log.message("${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
-    state.code = code;
-
-    return state;
-  }
-
-  @override
-  List<String> initialType() {
-    return ["包胆"];
-  }
-}
-/**
- *  一不定
- */
-@protected
-class cqssc_bd1 extends _11x5 {
-  @protected
-  List<int> _zhushu;
-
-  cqssc_bd1(
-      {  @required String type, @required String name, String desc ,String initLeftDesc})
-      : super(type: type, name: name, desc: desc) {
-    this._data = initialData(10);
-
-  }
-
-  @override
-  List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
-  }
-
-  @override
-  PlayModelItem transformWithType(PlayModelItem state) {
-    var count = 0;
-    state.code = "";
-    List<String> value = new List();
-    _data[0].forEach((f) {
-      if (f > -1) {
-        count += 1;
-        value.add(f.toString());
-      }
-    });
-    state.zhushu = value.length;
-    state.money = state.zhushu * price;
-
-    String code = transformToString(value, type);
-    Log.message("${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
-    state.code = code;
-
-    return state;
-  }
-
-  @override
-  List<String> initialType() {
-    return ["不定位"];
-  }
-}
-/**
- *  二不定，三不定
- */
-@protected
-class cqssc_bd2 extends _11x5 {
-  @protected
-  List<int> _zhushu;
-  int zuheCount = 2;
-  cqssc_bd2(
-      { @required String type, @required String name, String desc ,String initLeftDesc})
-      : super(type: type, name: name, desc: desc) {
-    this._data = initialData(10);
-    if(type.endsWith("5xsbd")){
-      zuheCount = 3 ;
-    }
-  }
-
-  @override
-  List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
-  }
-
-  @override
-  PlayModelItem transformWithType(PlayModelItem state) {
-    var count = 0;
-    state.code = "";
-    List<String> value = new List();
-    _data[0].forEach((f) {
-      if (f > -1) {
-        count += 1;
-        value.add(f.toString());
-      }
-    });
-    var com = ZuheUtil.combination(value.length, zuheCount) ;
-    state.zhushu = com.toInt();
-    state.money = state.zhushu * price;
-
-    String code = transformToString(value, type);
-    Log.message("${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
-    state.code = code;
-
-    return state;
-  }
-
-  @override
-  List<String> initialType() {
-    return ["不定位"];
-  }
-}
-/**
- * 前二后二,前三中三后三 跨度
- */
-@protected
-class cqssc_kd extends _11x5 {
-  @protected
-  List<int> _zhushu;
-
-  cqssc_kd(
-      {  @required String type, @required String name, String desc ,String initLeftDesc})
-      : super(type: type, name: name, desc: desc) {
-    this._data = initialData(10);
-    if(type.contains("2"))
-    this._zhushu = [10, 18, 16, 14, 12, 10, 8, 6, 4, 2];
-    else if(type.contains("3"))
-    this._zhushu = [10, 54, 96, 126, 144, 150, 144, 126,96, 54];
-
-  }
-
-  @override
-  List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
-  }
-
-  @override
-  PlayModelItem transformWithType(PlayModelItem state) {
-    var count = 0;
-    state.code = "";
-    List<String> value = new List();
-    _data[0].forEach((f) {
-      if (f > -1) {
-        count += this._zhushu[f];
-        value.add(f.toString());
-      }
-    });
-    state.zhushu = count;
-    state.money = state.zhushu * price;
-
-    String code = transformToString(value, type);
-    Log.message("${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
-    state.code = code;
-
-    return state;
-  }
-
-  @override
-  List<String> initialType() {
-    return ["跨度"];
-  }
-}
-
-@protected
-class cqssc_hz3 extends cqssc_hz {
-  cqssc_hz3({@required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc) {
-    this._data = initialData(28);
-    this._zhushu = [
-      1,
-      3,
-      6,
-      10,
-      15,
-      21,
-      28,
-      36,
-      45,
-      55,
-      63,
-      69,
-      73,
-      75,
-      75,
-      73,
-      69,
-      63,
-      55,
-      45,
-      36,
-      28,
-      21,
-      15,
-      10,
-      6,
-      3,
-      1
-    ];
-  }
-}
 
 class Style11x5 extends StyleManagerIMPL {
   const Style11x5();
 
   factory Style11x5.of(String str) {
-    return   const Style11x5();
+    return const Style11x5();
 //    return   const Style();
   }
 
   PlayStyle get gd11x5rx2 =>
-      cqssc_q2fx(type: "q2zxfx", name: "任选二", desc: "任选二");
+      gd11x5_rx(type: "11x5_rx2", name: "任选二", desc: "任选二");
+
+  PlayStyle get gd11x5rx3 =>
+      gd11x5_rx(type: "11x5_rx3", name: "任选三", desc: "任选三");
+
+  PlayStyle get gd11x5rx4 =>
+      gd11x5_rx(type: "11x5_rx4", name: "任选四", desc: "任选四");
+
+  PlayStyle get gd11x5rx5 =>
+      gd11x5_rx(type: "11x5_rx5", name: "任选五", desc: "任选五");
+
+  PlayStyle get gd11x5rx6 =>
+      gd11x5_rx(type: "11x5_rx6", name: "任选六", desc: "任选六");
+
+  PlayStyle get gd11x5rx7 =>
+      gd11x5_rx(type: "11x5_rx7", name: "任选七", desc: "任选七");
+
+  PlayStyle get gd11x5rx8 =>
+      gd11x5_rx(type: "11x5_rx8", name: "任选八", desc: "任选八");
+
+  PlayStyle get gd11x5q1zxfx =>
+      gd11x5_rx(type: "11x5_q1zxfx", name: "前一直选复选", desc: "前一直选复选");
+
+  PlayStyle get gd11x5q2zxfx =>
+      cqssc_zxfx(type: "11x5_q2zxfx", name: "前二直选复选", desc: "前二直选复选");
+
+  PlayStyle get gd11x5q3zxfx =>
+      cqssc_zxfx(type: "11x5_q3zxfx", name: "前三直选复选", desc: "前三直选复选");
+
+  PlayStyle get gd11x5q2zuxfx =>
+      gd11x5_zux(type: "11x5_q2zuxfx", name: "前二组选复选", desc: "前二组选复选");
+
+  PlayStyle get gd11x5q3zuxfx =>
+      gd11x5_zux(type: "11x5_q3zuxfx", name: "前三组选复选", desc: "前三组选复选");
 
   @override
   String get name => "十一选五";
 
   @override
   List<PlayStyle> get all => [
-         gd11x5rx2 ,
+        gd11x5rx2,
+        gd11x5rx3,
+        gd11x5rx4,
+        gd11x5rx5,
+        gd11x5rx6,
+        gd11x5rx7,
+        gd11x5rx8,
+        gd11x5q1zxfx,
+        gd11x5q2zxfx,
+        gd11x5q3zxfx,
+        gd11x5q2zuxfx,
+        gd11x5q3zuxfx,
       ];
 }
 /*

@@ -52,7 +52,7 @@ abstract class _cqssc extends PlayStyle {
 
 @protected
 class cqssc_1xfx extends _cqssc {
-  cqssc_1xfx() : super(type: "1xfx", desc: "1星复选", name: "1星复选");
+  cqssc_1xfx() : super(type: "ssc_1xfx", desc: "1星复选", name: "1星复选");
 
   @override
   List<String> initialType() {
@@ -610,83 +610,83 @@ class Style extends StyleManagerIMPL {
   PlayStyle get cqssc1xfx => cqssc_1xfx();
 
   PlayStyle get cqssq2zxfx =>
-      cqssc_q2fx(type: "q2zxfx", name: "前二直选复选", desc: "前二直选复选");
+      cqssc_q2fx(type: "ssc_q2zxfx", name: "前二直选复选", desc: "前二直选复选");
   PlayStyle get cqssq2zxhz =>
-      cqssc_hz(type: "q2zxhz", name: "前二直选和值", desc: "前二直选和值");
+      cqssc_hz(type: "ssc_q2zxhz", name: "前二直选和值", desc: "前二直选和值");
   PlayStyle get cqssq2zxkd =>
-      cqssc_kd(type: "q2zxkd", name: "前二直选跨度", desc: "前二直选跨度");
+      cqssc_kd(type: "ssc_q2zxkd", name: "前二直选跨度", desc: "前二直选跨度");
   PlayStyle get cqssq2zuxfx =>
-      cqssc_zuxfx(len:2 ,type: "q2zuxfx", name: "前二组选复选", desc: "前二组选复选");
+      cqssc_zuxfx(len:2 ,type: "ssc_q2zuxfx", name: "前二组选复选", desc: "前二组选复选");
   PlayStyle get cqssq2zuxhz =>
-      cqssc_zuxhz(type: "q2zuxhz", name: "前二组选和值", desc: "前二组选和值");
+      cqssc_zuxhz(type: "ssc_q2zuxhz", name: "前二组选和值", desc: "前二组选和值");
   PlayStyle get cqssq2zuxbd =>
-      cqssc_zuxbd(type: "q2zuxbd", name: "前二组选包胆", desc: "前二组选包胆");
+      cqssc_zuxbd(type: "ssc_q2zuxbd", name: "前二组选包胆", desc: "前二组选包胆");
 
 
   PlayStyle get cqssh2zxfx =>
-      cqssc_h2fx(type: "h2zxfx", name: "后二直选复选", desc: "后二直选复选");
+      cqssc_h2fx(type: "ssc_h2zxfx", name: "后二直选复选", desc: "后二直选复选");
   PlayStyle get cqssh2zxhz =>
-      cqssc_hz(type: "h2zxhz", name: "后二直选和值", desc: "后二直选和值");
+      cqssc_hz(type: "ssc_h2zxhz", name: "后二直选和值", desc: "后二直选和值");
   PlayStyle get cqssh2zxkd =>
-      cqssc_kd( type: "h2zxkd", name: "后二直选跨度", desc: "后二直选跨度");
+      cqssc_kd( type: "ssc_h2zxkd", name: "后二直选跨度", desc: "后二直选跨度");
   PlayStyle get cqssh2zuxfx =>
-      cqssc_zuxfx(len:2 ,type: "h2zuxfx", name: "后二组选复选", desc: "后二组选复选");
+      cqssc_zuxfx(len:2 ,type: "ssc_h2zuxfx", name: "后二组选复选", desc: "后二组选复选");
   PlayStyle get cqssh2zuxhz =>
-      cqssc_zuxhz(type: "h2zuxhz", name: "后二组选和值", desc: "后二组选和值");
+      cqssc_zuxhz(type: "ssc_h2zuxhz", name: "后二组选和值", desc: "后二组选和值");
   PlayStyle get cqssh2zuxbd =>
-      cqssc_zuxbd( type: "h2zuxbd", name: "后二组选包胆", desc: "后二组选包胆");
+      cqssc_zuxbd( type: "ssc_h2zuxbd", name: "后二组选包胆", desc: "后二组选包胆");
 
   PlayStyle get cqssq3zxfx =>
-      cqssc_q3fx(type: "q3zxfx", name: "前三直选复选", desc: "前三直选复选");
+      cqssc_q3fx(type: "ssc_q3zxfx", name: "前三直选复选", desc: "前三直选复选");
   PlayStyle get cqssq3zxhz =>
-      cqssc_hz3(type: "q3zxhz", name: "前三直选和值", desc: "前三直选和值");
+      cqssc_hz3(type: "ssc_q3zxhz", name: "前三直选和值", desc: "前三直选和值");
   PlayStyle get cqssq3zxkd =>
-      cqssc_kd( type: "z3zxkd", name: "前三直选跨度", desc: "前三直选跨度");
+      cqssc_kd( type: "ssc_z3zxkd", name: "前三直选跨度", desc: "前三直选跨度");
   PlayStyle get cqssq3ybd =>
-      cqssc_bd1(type: "q3ybd", name: "前三一不定码", desc: "前三一不定码");
+      cqssc_bd1(type: "ssc_q3ybd", name: "前三一不定码", desc: "前三一不定码");
   PlayStyle get cqssq3ebd =>
-      cqssc_bd2(type: "q3ebd", name: "前三二不定码", desc: "前三二不定码");
+      cqssc_bd2(type: "ssc_q3ebd", name: "前三二不定码", desc: "前三二不定码");
 
   PlayStyle get cqssh3zxfx =>
-      cqssc_h3fx(type: "h3zxfx", name: "后三直选复选", desc: "后三直选复选");
+      cqssc_h3fx(type: "ssc_h3zxfx", name: "后三直选复选", desc: "后三直选复选");
   PlayStyle get cqssh3zxhz =>
-      cqssc_hz3(type: "h3zxhz", name: "后三直选和值", desc: "后三直选和值");
+      cqssc_hz3(type: "ssc_h3zxhz", name: "后三直选和值", desc: "后三直选和值");
   PlayStyle get cqssh3zxkd =>
-      cqssc_kd( type: "h3zxkd", name: "后三直选跨度", desc: "后三直选跨度");
+      cqssc_kd( type: "ssc_h3zxkd", name: "后三直选跨度", desc: "后三直选跨度");
   PlayStyle get cqssh3ybd =>
-      cqssc_bd1( type: "h3ybd", name: "后三一不定码", desc: "后三一不定码");
+      cqssc_bd1( type: "ssc_h3ybd", name: "后三一不定码", desc: "后三一不定码");
   PlayStyle get cqssh3ebd =>
-      cqssc_bd2( type: "h3ebd", name: "后三二不定码", desc: "后三二不定码");
+      cqssc_bd2( type: "ssc_h3ebd", name: "后三二不定码", desc: "后三二不定码");
 
   PlayStyle get cqssz3zxfx =>
-      cqssc_z3fx(type: "z3zxfx", name: "中三直选复选", desc: "中三直选复选");
+      cqssc_z3fx(type: "ssc_z3zxfx", name: "中三直选复选", desc: "中三直选复选");
   PlayStyle get cqssz3zxhz =>
-      cqssc_hz3(type: "z3zxhz", name: "中三直选和值", desc: "中三直选和值");
+      cqssc_hz3(type: "ssc_z3zxhz", name: "中三直选和值", desc: "中三直选和值");
   PlayStyle get cqssz3zxkd =>
-      cqssc_kd( type: "z3zxkd", name: "中三直选跨度", desc: "中三直选跨度");
+      cqssc_kd( type: "ssc_z3zxkd", name: "中三直选跨度", desc: "中三直选跨度");
   PlayStyle get cqssz3ybd =>
-      cqssc_bd1( type: "z3ybd", name: "中三一不定码", desc: "中三一不定码");
+      cqssc_bd1( type: "ssc_z3ybd", name: "中三一不定码", desc: "中三一不定码");
   PlayStyle get cqssz3ebd =>
-      cqssc_bd2( type: "z3ebd", name: "中三二不定码", desc: "中三二不定码");
+      cqssc_bd2( type: "ssc_z3ebd", name: "中三二不定码", desc: "中三二不定码");
 
 
 
   PlayStyle get cqssc4xzxfx =>
-      cqssc_5xzxfx( type: "4xzxfx", name: "四星直选复选", desc: "四星直选复选");
+      cqssc_5xzxfx( type: "ssc_4xzxfx", name: "四星直选复选", desc: "四星直选复选");
   PlayStyle get cqss4xybd =>
-      cqssc_bd1( type: "4xybd", name: "四星一不定码", desc: "四星一不定码");
+      cqssc_bd1( type: "ssc_4xybd", name: "四星一不定码", desc: "四星一不定码");
   PlayStyle get cqss4xebd =>
-      cqssc_bd2( type: "4xebd", name: "四星二不定码", desc: "四星二不定码");
+      cqssc_bd2( type: "ssc_4xebd", name: "四星二不定码", desc: "四星二不定码");
 
 
   PlayStyle get cqssc5xzxfx =>
-      cqssc_5xzxfx( type: "5xzxfx", name: "五星直选复选", desc: "五星直选复选");
+      cqssc_5xzxfx( type: "ssc_5xzxfx", name: "五星直选复选", desc: "五星直选复选");
   PlayStyle get cqss5xybd =>
-      cqssc_bd1( type: "5xybd", name: "五星一不定码", desc: "五星一不定码");
+      cqssc_bd1( type: "ssc_5xybd", name: "五星一不定码", desc: "五星一不定码");
   PlayStyle get cqss5xebd =>
-      cqssc_bd2( type: "5xebd", name: "五星二不定码", desc: "五星二不定码");
+      cqssc_bd2( type: "ssc_5xebd", name: "五星二不定码", desc: "五星二不定码");
  PlayStyle get cqss5xsbd =>
-      cqssc_bd2( type: "5xsbd", name: "五星三不定码", desc: "五星三不定码");
+      cqssc_bd2( type: "ssc_5xsbd", name: "五星三不定码", desc: "五星三不定码");
 
   @override
   String get name => "重庆时时彩";
