@@ -142,7 +142,7 @@ class cqssc_q2fx extends _cqssc {
   PlayModelItem transformWithType(PlayModelItem state) {
     state.code = "";
     List<String> value = new List();
-    int acount = 0;
+    int acount = 1;
     _data.forEach((item) {
       List<String> choice = new List();
       int _count = 0;
