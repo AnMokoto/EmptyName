@@ -323,10 +323,11 @@ class cqssc_zuxbd extends _cqssc {
   cqssc_zuxbd(
       {  @required String type, @required String name, String desc ,String initLeftDesc})
       : super(type: type, name: name, desc: desc) {
+    //todo 包胆起始位置从1开始，需要特殊处理，暂时未处理
     this._data = initialData(10);
 
   }
-
+//包胆只能选择一位号码
   @override
   List<List<int>> toBet2System(int index, int position) {
     if (position >= _data[0].length) return _data;
