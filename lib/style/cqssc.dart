@@ -161,6 +161,16 @@ class cqssc_h3fx extends cqssc_h2fx {
     return ["百位", "十位", "个位"];
   }
 }
+@protected
+class cqssc_z3fx extends cqssc_h2fx {
+  cqssc_z3fx({@required String type, @required String name, String desc})
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  List<String> initialType() {
+    return ["千位", "白位", "十位"];
+  }
+}
 
 @protected
 class cqssc_hz extends _cqssc {
@@ -277,6 +287,10 @@ class Style extends StyleManagerIMPL{
       cqssc_h3fx(type: "h3zxfx", name: "后三直选复选", desc: "后三直选复选");
   PlayStyle get cqssh3zxhz =>
       cqssc_hz3(type: "h3zxhz", name: "后三直选和值", desc: "后三直选和值");
+ PlayStyle get cqssz3zxfx =>
+      cqssc_z3fx(type: "z3zxfx", name: "中三直选复选", desc: "后三直选复选");
+  PlayStyle get cqssz3zxhz =>
+      cqssc_hz3(type: "z3zxhz", name: "中三直选和值", desc: "后三直选和值");
 
 @override
   String get name=>"重庆时时彩";
@@ -293,7 +307,9 @@ class Style extends StyleManagerIMPL{
         cqssq3zxfx,
         cqssq3zxhz,
         cqssh3zxfx,
-        cqssh3zxhz
+        cqssh3zxhz ,
+        cqssz3zxfx,
+        cqssz3zxhz ,
       ];
 }
 
