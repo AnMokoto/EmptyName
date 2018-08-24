@@ -1,8 +1,9 @@
-import 'style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lowlottery/log.dart';
-import 'ZuheUtil.dart';
+
 import 'Pk10Zhushuzxfx.dart';
+import 'ZuheUtil.dart';
+import 'style.dart';
 
 ///  十一选五
 @protected
@@ -52,90 +53,9 @@ abstract class _11x5 extends PlayStyle {
   }
 }
 
-@protected
-class cqssc_1xfx extends _11x5 {
-  cqssc_1xfx() : super(type: "1xfx", desc: "1星复选", name: "1星复选");
-
-  @override
-  List<String> initialType() {
-    return ["万位", "千位", "百位", "十位", "个位"];
-  }
-
-  @override
-  PlayModelItem transformWithType(PlayModelItem state) {
-    var count = 0;
-
-    state.code = "";
-
-    List<String> value = new List();
-    _data.forEach((item) {
-      List<String> choice = new List();
-      item.forEach((index) {
-        if (index > -1) {
-          ++count;
-          choice.add(index.toString());
-        }
-      });
-      state.zhushu = count;
-      state.money = count * price;
-
-      String code = transformToWithPoint(choice);
-      Log.message("${type}_item===$code");
-      value.add(code);
-    });
-
-    String code = transformToString(value, type);
-    Log.message("${type}_value===$code");
-    state.code = code;
-
-    return state;
-  }
-}
-
-@protected
-class cqssc_5xzxfx extends _11x5 {
-  cqssc_5xzxfx({@required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc);
-
-  @override
-  List<String> initialType() {
-    if (type.endsWith("5xzxfx"))
-      return ["万位", "千位", "百位", "十位", "个位"];
-    else if (type.endsWith("4xzxfx")) {
-      return ["千位", "百位", "十位", "个位"];
-    }
-  }
-
-  @override
-  PlayModelItem transformWithType(PlayModelItem state) {
-    state.code = "";
-    List<String> value = new List();
-    int acount = 1;
-    _data.forEach((item) {
-      List<String> choice = new List();
-      int _count = 0;
-
-      /// 当前列表内有效注数
-      item.forEach((index) {
-        if (index > -1) {
-          _count++;
-          choice.add(index.toString());
-        }
-      });
-      acount = acount * _count;
-      String code = transformToWithPoint(choice);
-      Log.message("${type}_item===$code");
-      value.add(code);
-    });
-    state.zhushu = acount;
-    state.money = state.zhushu * price;
-    String code = transformToString(value, type);
-    Log.message("${type}_value===$code");
-    state.code = code;
-    return state;
-  }
-}
-
+/**
+ * 直选复选
+ */
 @protected
 class cqssc_zxfx extends _11x5 {
   cqssc_zxfx({@required String type, @required String name, String desc})
@@ -178,50 +98,6 @@ class cqssc_zxfx extends _11x5 {
     state.code = code;
 
     return state;
-  }
-}
-
-@protected
-class cqssc_h2fx extends cqssc_zxfx {
-  cqssc_h2fx({@required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc);
-
-  @override
-  List<String> initialType() {
-    return ["十位", "个位"];
-  }
-}
-
-@protected
-class cqssc_q3fx extends cqssc_zxfx {
-  cqssc_q3fx({@required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc);
-
-  @override
-  List<String> initialType() {
-    return ["万位", "千位", "百位"];
-  }
-}
-
-@protected
-class cqssc_h3fx extends cqssc_h2fx {
-  cqssc_h3fx({@required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc);
-
-  @override
-  List<String> initialType() {
-    return ["百位", "十位", "个位"];
-  }
-}
-
-@protected
-class cqssc_z3fx extends cqssc_h2fx {
-  cqssc_z3fx({@required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc);
-
-  @override
-  List<String> initialType() {
-    return ["千位", "白位", "十位"];
   }
 }
 
