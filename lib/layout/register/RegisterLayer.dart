@@ -110,7 +110,7 @@ class _LoginPageState extends MVPState<RegisterPresenter, RegisterLayer>
                         print("the pass is" + _userPassController.text);
                         presenter.register({
                           "username": _userNameController.text,
-                          "pwd": _userPassController.text
+                          "password": _userPassController.text
                         }).then((e) {
                           ////
                         });
