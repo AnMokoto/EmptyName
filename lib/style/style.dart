@@ -135,7 +135,9 @@ abstract class PlayStyle {
 String transformToString(List<dynamic> choice, String type) {
   List<String> contains = ["zuxfx" , "zuxhz" ,"zuxkd"];
   if (type.endsWith("hz") || type.endsWith("kd")
-      || type.endsWith("zuxfx") || type.contains("zuxhz") || type.contains("zuxkd"))  {
+      || type.endsWith("zuxfx") || type.contains("zuxhz") || type.contains("zuxkd")
+      || type.endsWith("ybd") || type.endsWith("ebd") || type.contains("zuxbd")
+  )  {
     return transformToWithOutPoint(choice);
   }
   return choice.toString().replaceAll(new RegExp(r"(\]|\[)"), "");

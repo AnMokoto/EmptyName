@@ -364,6 +364,102 @@ class cqssc_zuxbd extends _cqssc {
   }
 }
 /**
+ *  一不定
+ */
+@protected
+class cqssc_bd1 extends _cqssc {
+  @protected
+  List<int> _zhushu;
+
+  cqssc_bd1(
+      {  @required String type, @required String name, String desc ,String initLeftDesc})
+      : super(type: type, name: name, desc: desc) {
+    this._data = initialData(10);
+
+  }
+
+  @override
+  List<List<int>> toBet2System(int index, int position) {
+    if (position >= _data[0].length) return _data;
+    _data[0][position] = _data[0][position] == -1 ? position : -1;
+    return _data;
+  }
+
+  @override
+  PlayModelItem transformWithType(PlayModelItem state) {
+    var count = 0;
+    state.code = "";
+    List<String> value = new List();
+    _data[0].forEach((f) {
+      if (f > -1) {
+        count += 1;
+        value.add(f.toString());
+      }
+    });
+    state.zhushu = value.length;
+    state.money = state.zhushu * price;
+
+    String code = transformToString(value, type);
+    Log.message("${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
+    state.code = code;
+
+    return state;
+  }
+
+  @override
+  List<String> initialType() {
+    return ["不定位"];
+  }
+}
+/**
+ *  二不定
+ */
+@protected
+class cqssc_bd2 extends _cqssc {
+  @protected
+  List<int> _zhushu;
+
+  cqssc_bd2(
+      {  @required String type, @required String name, String desc ,String initLeftDesc})
+      : super(type: type, name: name, desc: desc) {
+    this._data = initialData(10);
+  }
+
+  @override
+  List<List<int>> toBet2System(int index, int position) {
+    if (position >= _data[0].length) return _data;
+    _data[0][position] = _data[0][position] == -1 ? position : -1;
+    return _data;
+  }
+
+  @override
+  PlayModelItem transformWithType(PlayModelItem state) {
+    var count = 0;
+    state.code = "";
+    List<String> value = new List();
+    _data[0].forEach((f) {
+      if (f > -1) {
+        count += 1;
+        value.add(f.toString());
+      }
+    });
+    var com = ZuheUtil.combination(value.length, 2) ;
+    state.zhushu = com.toInt();
+    state.money = state.zhushu * price;
+
+    String code = transformToString(value, type);
+    Log.message("${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
+    state.code = code;
+
+    return state;
+  }
+
+  @override
+  List<String> initialType() {
+    return ["不定位"];
+  }
+}
+/**
  * 前二后二,前三中三后三 跨度
  */
 @protected
@@ -500,6 +596,10 @@ class Style extends StyleManagerIMPL{
       cqssc_hz3(type: "q3zxhz", name: "前三直选和值", desc: "前三直选和值");
   PlayStyle get cqssq3zxkd =>
       cqssc_kd( type: "z3zxkd", name: "前三直选跨度", desc: "前三直选跨度");
+  PlayStyle get cqssq3ybd =>
+      cqssc_bd1(type: "q3ybd", name: "前三一不定码", desc: "前三一不定码");
+  PlayStyle get cqssq3ebd =>
+      cqssc_bd2(type: "q3ebd", name: "前三二不定码", desc: "前三二不定码");
 
   PlayStyle get cqssh3zxfx =>
       cqssc_h3fx(type: "h3zxfx", name: "后三直选复选", desc: "后三直选复选");
@@ -507,13 +607,21 @@ class Style extends StyleManagerIMPL{
       cqssc_hz3(type: "h3zxhz", name: "后三直选和值", desc: "后三直选和值");
   PlayStyle get cqssh3zxkd =>
       cqssc_kd( type: "h3zxkd", name: "后三直选跨度", desc: "后三直选跨度");
+  PlayStyle get cqssh3ybd =>
+      cqssc_bd1( type: "h3ybd", name: "后三一不定码", desc: "后三一不定码");
+  PlayStyle get cqssh3ebd =>
+      cqssc_bd2( type: "h3ebd", name: "后三二不定码", desc: "后三二不定码");
 
   PlayStyle get cqssz3zxfx =>
-      cqssc_z3fx(type: "z3zxfx", name: "中三直选复选", desc: "后三直选复选");
+      cqssc_z3fx(type: "z3zxfx", name: "中三直选复选", desc: "中三直选复选");
   PlayStyle get cqssz3zxhz =>
-      cqssc_hz3(type: "z3zxhz", name: "中三直选和值", desc: "后三直选和值");
+      cqssc_hz3(type: "z3zxhz", name: "中三直选和值", desc: "中三直选和值");
   PlayStyle get cqssz3zxkd =>
       cqssc_kd( type: "z3zxkd", name: "中三直选跨度", desc: "中三直选跨度");
+  PlayStyle get cqssz3ybd =>
+      cqssc_bd1( type: "z3ybd", name: "中三一不定码", desc: "中三一不定码");
+  PlayStyle get cqssz3ebd =>
+      cqssc_bd2( type: "z3ebd", name: "中三二不定码", desc: "中三二不定码");
 
 @override
   String get name=>"重庆时时彩";
@@ -538,12 +646,18 @@ class Style extends StyleManagerIMPL{
         cqssq3zxfx,
         cqssq3zxhz,
         cqssq3zxkd,
+        cqssq3ybd ,
+        cqssq3ebd ,
         cqssh3zxfx,
         cqssh3zxhz ,
         cqssh3zxkd ,
+        cqssh3ybd ,
+        cqssh3ebd ,
         cqssz3zxfx,
         cqssz3zxhz ,
         cqssz3zxkd ,
+        cqssz3ybd ,
+        cqssz3ebd ,
       ];
 }
 
