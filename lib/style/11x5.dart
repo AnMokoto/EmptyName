@@ -2,12 +2,12 @@ import 'style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lowlottery/log.dart';
 import 'ZuheUtil.dart';
-///  重庆时时彩分类
+///  11x5彩分类
 @protected
-abstract class _cqssc extends PlayStyle {
+abstract class _11x5 extends PlayStyle {
   List<List<int>> _data;
 
-  _cqssc({@required String type, @required String name, String desc})
+  _11x5({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc) {
     _data = initialData(10);
   }
@@ -47,7 +47,7 @@ abstract class _cqssc extends PlayStyle {
 }
 
 @protected
-class cqssc_1xfx extends _cqssc {
+class cqssc_1xfx extends _11x5 {
   cqssc_1xfx() : super(type: "1xfx", desc: "1星复选", name: "1星复选");
 
   @override
@@ -87,7 +87,7 @@ class cqssc_1xfx extends _cqssc {
 }
 
 @protected
-class cqssc_5xzxfx extends _cqssc {
+class cqssc_5xzxfx extends _11x5 {
   cqssc_5xzxfx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
 
@@ -129,7 +129,7 @@ class cqssc_5xzxfx extends _cqssc {
   }
 }
 @protected
-class cqssc_q2fx extends _cqssc {
+class cqssc_q2fx extends _11x5 {
   cqssc_q2fx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
 
@@ -215,7 +215,7 @@ class cqssc_z3fx extends cqssc_h2fx {
 }
 
 @protected
-class cqssc_hz extends _cqssc {
+class cqssc_hz extends _11x5 {
   @protected
   List<int> _zhushu;
 
@@ -263,7 +263,7 @@ class cqssc_hz extends _cqssc {
  * 前二后二组选复选
  */
 @protected
-class cqssc_zuxfx extends _cqssc {
+class cqssc_zuxfx extends _11x5 {
   @protected
   int len =0;
   cqssc_zuxfx(
@@ -309,7 +309,7 @@ class cqssc_zuxfx extends _cqssc {
  *前二后二组选和值
  */
 @protected
-class cqssc_zuxhz extends _cqssc {
+class cqssc_zuxhz extends _11x5 {
   @protected
   List<int> _zhushu;
 
@@ -358,7 +358,7 @@ class cqssc_zuxhz extends _cqssc {
  *前二后二组选包胆
  */
 @protected
-class cqssc_zuxbd extends _cqssc {
+class cqssc_zuxbd extends _11x5 {
   @protected
   List<int> _zhushu;
 
@@ -409,7 +409,7 @@ class cqssc_zuxbd extends _cqssc {
  *  一不定
  */
 @protected
-class cqssc_bd1 extends _cqssc {
+class cqssc_bd1 extends _11x5 {
   @protected
   List<int> _zhushu;
 
@@ -457,7 +457,7 @@ class cqssc_bd1 extends _cqssc {
  *  二不定，三不定
  */
 @protected
-class cqssc_bd2 extends _cqssc {
+class cqssc_bd2 extends _11x5 {
   @protected
   List<int> _zhushu;
   int zuheCount = 2;
@@ -508,7 +508,7 @@ class cqssc_bd2 extends _cqssc {
  * 前二后二,前三中三后三 跨度
  */
 @protected
-class cqssc_kd extends _cqssc {
+class cqssc_kd extends _11x5 {
   @protected
   List<int> _zhushu;
 
@@ -602,7 +602,7 @@ class Style extends StyleManagerIMPL{
 
 
   factory Style.of(String str) {
-    return   const Style();
+    return const Style();
 //    return   const Style();
   }
 
