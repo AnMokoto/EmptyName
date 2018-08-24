@@ -17,9 +17,9 @@ class Pk10Zhushuzxfx {
     int len = arr.length;
     int zhushu = 0;
     switch (len) {
-      /* case 1:
+       case 1:
         zhushu = r1(arr);
-        break;*/
+        break;
       case 2:
         zhushu = r2(arr);
         break;
@@ -41,10 +41,11 @@ class Pk10Zhushuzxfx {
     return code.replaceAll("-", "").trim().split(char);
   }
 
-/*  static int r1(List<String> arr) {
-    Set<String> f1 = split(arr[0], spce).stream().collect(Collectors.toSet());
-    return f1.length();
-  }*/
+  static int r1(List<String> arr) {
+
+    Set<String> f1 = split(arr[0], spce).toSet();
+    return f1.length;
+  }
 
   static int r2(List<String> arr) {
     List<String> f1 = split(arr[0], spce);
