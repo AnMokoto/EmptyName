@@ -133,7 +133,9 @@ abstract class PlayStyle {
 
 /// 替换数据格式
 String transformToString(List<dynamic> choice, String type) {
-  if (type.endsWith("hz") || type.endsWith("kd")) {
+  List<String> contains = ["zuxfx" , "zuxhz" ,"zuxkd"];
+  if (type.endsWith("hz") || type.endsWith("kd")
+      || type.endsWith("zuxfx") || type.contains("zuxhz") || type.contains("zuxkd"))  {
     return transformToWithOutPoint(choice);
   }
   return choice.toString().replaceAll(new RegExp(r"(\]|\[)"), "");

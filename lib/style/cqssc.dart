@@ -1,7 +1,7 @@
 import 'style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lowlottery/log.dart';
-
+import 'ZuheUtil.dart';
 ///  重庆时时彩分类
 @protected
 abstract class _cqssc extends PlayStyle {
@@ -217,6 +217,54 @@ class cqssc_hz extends _cqssc {
     return ["和值"];
   }
 }
+@protected
+class cqssc_zuxfx extends _cqssc {
+  @protected
+//  List<int> _zhushu;
+
+  int len =0;
+  cqssc_zuxfx(
+      {int len, @required String type, @required String name, String desc})
+      : super(type: type, name: name, desc: desc) {
+    this._data = initialData(10);
+    this.len = len ;
+
+//    this._zhushu = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+  }
+
+  @override
+  List<List<int>> toBet2System(int index, int position) {
+    if (position >= _data[0].length) return _data;
+    _data[0][position] = _data[0][position] == -1 ? position : -1;
+    return _data;
+  }
+
+  @override
+  PlayModelItem transformWithType(PlayModelItem state) {
+    state.code = "";
+    List<String> value = new List();
+    _data[0].forEach((f) {
+      if (f > -1) {
+        value.add(f.toString());
+      }
+    });
+
+    var count = ZuheUtil.combination(value.length,len );
+    state.zhushu = count.toInt();
+    state.money = state.zhushu * price;
+
+    String code = transformToString(value, type);
+    Log.message("${type}_value===$code");
+    state.code = code;
+
+    return state;
+  }
+
+  @override
+  List<String> initialType() {
+    return ["组选"];
+  }
+}
 /**
  * 前二后二,前三中三后三 跨度
  */
@@ -325,8 +373,15 @@ class Style extends StyleManagerIMPL{
       cqssc_q2fx(type: "q2zxfx", name: "前二直选复选", desc: "前二直选复选");
   PlayStyle get cqssq2zxhz =>
       cqssc_hz(type: "q2zxhz", name: "前二直选和值", desc: "前二直选和值");
- PlayStyle get cqssq2zxkd =>
+  PlayStyle get cqssq2zxkd =>
       cqssc_kd(type: "q2zxkd", name: "前二直选跨度", desc: "前二直选跨度");
+  PlayStyle get cqssq2zuxfx =>
+      cqssc_zuxfx(len:2 ,type: "q2zuxfx", name: "前二组选复选", desc: "前二组选复选");
+  PlayStyle get cqssq2zuxhz =>
+      cqssc_hz(type: "q2zuxhz", name: "前二组选和值", desc: "前二组选和值");
+  PlayStyle get cqssq2zuxkd =>
+      cqssc_kd(type: "q2zuxkd", name: "前二组选跨度", desc: "前二组选跨度");
+
 
   PlayStyle get cqssh2zxfx =>
       cqssc_h2fx(type: "h2zxfx", name: "后二直选复选", desc: "后二直选复选");
@@ -334,6 +389,12 @@ class Style extends StyleManagerIMPL{
       cqssc_hz(type: "h2zxhz", name: "后二直选和值", desc: "后二直选和值");
   PlayStyle get cqssh2zxkd =>
       cqssc_kd( type: "h2zxkd", name: "后二直选跨度", desc: "后二直选跨度");
+  PlayStyle get cqssh2zuxfx =>
+      cqssc_zuxfx(len:2 ,type: "h2zuxfx", name: "后二组选复选", desc: "后二组选复选");
+  PlayStyle get cqssh2zuxhz =>
+      cqssc_hz(type: "h2zuxhz", name: "后二组选和值", desc: "后二组选和值");
+  PlayStyle get cqssh2zuxkd =>
+      cqssc_kd( type: "h2zuxkd", name: "后二组选跨度", desc: "后二组选跨度");
 
   PlayStyle get cqssq3zxfx =>
       cqssc_q3fx(type: "q3zxfx", name: "前三直选复选", desc: "前三直选复选");
@@ -367,9 +428,15 @@ class Style extends StyleManagerIMPL{
         cqssq2zxfx,
         cqssq2zxhz,
         cqssq2zxkd,
+        cqssq2zuxfx,
+        cqssq2zuxhz,
+        cqssq2zuxkd,
         cqssh2zxfx,
         cqssh2zxkd,
         cqssh2zxhz,
+        cqssh2zuxfx,
+        cqssh2zuxkd,
+        cqssh2zuxhz,
         cqssq3zxfx,
         cqssq3zxhz,
         cqssq3zxkd,
