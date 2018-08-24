@@ -115,6 +115,10 @@ abstract class PlayStyle {
   @protected
   PlayModelItem transformWithType(PlayModelItem model);
 
+  /// 当前期号显示个数
+  /// return int
+  int get count;
+
   /// 列表描述
   /// 列表前缀
   List<String> initialType();

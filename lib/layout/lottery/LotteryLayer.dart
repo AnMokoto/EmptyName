@@ -166,7 +166,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: new List.generate(
-                                      style.initialType().length, (index) {
+                                      style.count, (index) {
                                     var _str = (state.history.length > 0
                                             ? (state.history[0].opencode
                                                     as String) ??
