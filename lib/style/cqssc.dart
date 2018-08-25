@@ -631,11 +631,11 @@ class cqssc_hz3 extends cqssc_hz {
   }
 }
 
-class Style extends StyleManagerIMPL {
-  const Style();
+class Stylessc extends StyleManagerIMPL {
+  const Stylessc();
 
-  factory Style.of(String str) {
-    return const Style();
+  factory Stylessc.of(String str) {
+    return const Stylessc();
 //    return   const Style();
   }
 
