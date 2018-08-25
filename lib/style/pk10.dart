@@ -51,6 +51,12 @@ abstract class _pk10 extends PlayStyle {
     /// 默认无处理，根据游戏玩法 自己计算
     return model;
   }
+
+  @override
+  forceTransform(d) {
+    if(d<10) return "0$d"  ;
+    return d;
+  }
 }
 
 /**
@@ -83,7 +89,9 @@ class cqssc_zxfx extends _pk10 {
       item.forEach((index) {
         if (index > -1) {
           _count++;
-          choice.add(index.toString());
+//          var  str = index.toString()+""
+          choice.add(forceTransform(index));
+
         }
       });
       acount = acount * _count;
@@ -130,7 +138,7 @@ class pk10_dwd extends _pk10 {
       item.forEach((index) {
         if (index > -1) {
           _count++;
-          choice.add(index.toString());
+          choice.add(forceTransform(index));
         }
       });
       acount = acount + _count;

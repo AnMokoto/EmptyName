@@ -51,6 +51,11 @@ abstract class _11x5 extends PlayStyle {
     /// 默认无处理，根据游戏玩法 自己计算
     return model;
   }
+
+  @override
+  forceTransform(d) {
+    return d;
+  }
 }
 
 /**

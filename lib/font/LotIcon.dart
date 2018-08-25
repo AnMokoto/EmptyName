@@ -7,9 +7,9 @@ class LotIcon {
   LotIcon._();
 
   static Icon home(String gameEn) =>
-      Icon(getLot(gameEn),color: _homeIconColor(gameEn));
+      Icon(getLot(gameEn), color: _homeIconColor(gameEn));
 
-  static _homeIconColor(String gameEn){
+  static _homeIconColor(String gameEn) {
     if (gameEn.contains("ssc5")) return Colors.green;
     if (gameEn.contains("ssc3")) return Colors.red;
     if (gameEn.contains("ssc1")) return Colors.redAccent[100];
@@ -21,11 +21,16 @@ class LotIcon {
     if (gameEn.contains("k3")) return Colors.red;
   }
 
+  static Icon logo(String gameEn, double size) => Icon(
+        getLot(gameEn),
+        color: _homeIconColor(gameEn),
+        size: size,
+      );
   /**
    * 获取彩种logo
    */
   static IconData getLot(String gameEn) {
-    print(gameEn) ;
+    print(gameEn);
     if (gameEn.contains("ssc5")) return IconData(0xe609, fontFamily: "Alibaba");
     if (gameEn.contains("ssc3")) return IconData(0xe610, fontFamily: "Alibaba");
     if (gameEn.contains("ssc1")) return IconData(0xe611, fontFamily: "Alibaba");

@@ -3,6 +3,7 @@ import 'package:lowlottery/common/mvp.dart';
 import 'LotterBetRecordContract.dart';
 import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/font/Lot.dart';
+import 'package:lowlottery/font/LotIcon.dart';
 class LotterBetRecordLayer extends StatefulWidget {
   _LotterBetRecordState createState() =>
       new _LotterBetRecordState(new LotterBetRecordPresenter());
@@ -144,7 +145,8 @@ class _LotterBetRecorderFragState
                   child: new Column(
                     children: <Widget>[
                       // Image.network(""),
-                      new Icon(AppIcons.getLot("${value["gameEn"]}"),size: 33.0,),
+//                      new Icon(AppIcons.getLot("${value["gameEn"]}"),size: 33.0,),
+                      LotIcon.logo("${value["gameEn"]}" ,33.0) ,
                       new Text(LotConfig.getLotName("${value["gameEn"]??"-"}") ,style: new TextStyle(fontSize: 11.0 ,color: Colors.black54))
                     ],
                   ),
@@ -282,11 +284,10 @@ class _LotteryBetRecordDetailsState
                     child: new Column(
                       children: <Widget>[
                         // Image.network(""),
-                        new Icon(AppIcons.getLot("${_map["gameEn"]}")),
-                        new Text(LotConfig.getLotName("${_map["gameEn"]??"-"}"))
+                        LotIcon.logo("${_map["gameEn"]}", 33.0) ,
+//                        new Text(LotConfig.getLotName("${_map["gameEn"]??"-"}"))
                       ],
                     ),
-//                    child:  Icon(AppIcons.getLot("${_map["gameEn"]}")),
                   ),
                   new Positioned(
                     right: 0.0,
@@ -310,8 +311,8 @@ class _LotteryBetRecordDetailsState
               child: new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  new Text(
-                    "期        号：第${_map["expectNo"]??""}期",
+                  new Text("彩        种："+LotConfig.getLotName("${_map["gameEn"]??"-"}")),
+                  new Text("期        号：第${_map["expectNo"]??""}期",
                     style: style,
                   ),
                   new Text(
