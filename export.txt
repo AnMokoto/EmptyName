@@ -1,3 +1,11 @@
 export ANDROID_HOME=/e/tsh/Android/SDK \
 export PUB_HOSTED_URL=https://pub.flutter-io.cn \
 export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+
+
+# mac
+xcrun instruments -s
+xcrun instruments -w "iPhone 8 (11.2)"
+xcrun simctl install booted <app path>
+xcrun simctl launch booted <app identifier>
+xcrun simctl uninstall booted <app identifier>

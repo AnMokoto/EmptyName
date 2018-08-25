@@ -3,6 +3,9 @@ library app.font;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart' show IconData;
 
+/**
+ * 彩种icon 配置信息
+ */
 class LotIcon {
   LotIcon._();
 
