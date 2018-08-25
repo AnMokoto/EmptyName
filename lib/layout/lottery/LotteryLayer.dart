@@ -456,7 +456,7 @@ class _LotteryItemState extends State<LotteryItem> {
     int position = widget.position;
     var left = value.initialType();
     var data = value.initialArray()[widget.position];
-    var height = value.type.endsWith("hz") ? 500.0 : 100.0;
+    var height = value.height;
     return new Container(
       constraints:
           new BoxConstraints(minHeight: 80.0, minWidth: double.infinity),
