@@ -181,14 +181,14 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                                                 color: Colors.black26,
                                                 offset: const Offset(2.0, 2.0)),
                                           ]),
-                                      width: 25.0,
-                                      height: 25.0,
+                                      width: 22.0,
+                                      height: 22.0,
                                       child: new Center(
                                         child: new Text(
                                           _str.length > 1 ? _str[index] : "-",
                                           // _str[index] ?? "-",
                                           style: const TextStyle(
-                                              fontSize: 12.0,
+                                              fontSize: 14.0,
                                               color: Colors.white),
                                           textAlign: TextAlign.center,
                                           textDirection: TextDirection.ltr,
@@ -521,7 +521,7 @@ class _LotteryItemState extends State<LotteryItem> {
                                   //     minWidth: 40.0, minHeight: 40.0),
                                   decoration: new BoxDecoration(
                                       color: data[index] != -1
-                                          ? Colors.red[400]
+                                          ? Colors.red
                                           : Colors.grey[300],
                                       shape: BoxShape.circle),
                                   child: new Center(
@@ -531,8 +531,8 @@ class _LotteryItemState extends State<LotteryItem> {
                                       style: new TextStyle(
                                           color: data[index] != -1
                                               ? Colors.white
-                                              : Colors.red[400],
-                                          fontSize: 15.0),
+                                              : Colors.red,
+                                          fontSize: 18.0),
                                     ),
                                   ),
                                 ),

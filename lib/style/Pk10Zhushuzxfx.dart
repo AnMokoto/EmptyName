@@ -17,9 +17,9 @@ class Pk10Zhushuzxfx {
     int len = arr.length;
     int zhushu = 0;
     switch (len) {
-      /* case 1:
+      case 1:
         zhushu = r1(arr);
-        break;*/
+        break;
       case 2:
         zhushu = r2(arr);
         break;
@@ -41,10 +41,11 @@ class Pk10Zhushuzxfx {
     return code.replaceAll("-", "").trim().split(char);
   }
 
-/*  static int r1(List<String> arr) {
-    Set<String> f1 = split(arr[0], spce).stream().collect(Collectors.toSet());
-    return f1.length();
-  }*/
+  static int r1(List<String> arr) {
+    Set<String> f1 = split(arr[0], spce).toSet();
+    if(valid(f1)==1) return 0 ;
+    return f1.length;
+  }
 
   static int r2(List<String> arr) {
     List<String> f1 = split(arr[0], spce);
@@ -52,7 +53,8 @@ class Pk10Zhushuzxfx {
     int zhushu = 0;
     for (int i = 0; i < f1.length; i++) {
       for (int j = 0; j < f2.length; j++) {
-        if (f1[i] != (f2[j])) {
+        Set<String> set = [f1[i], f2[j]].toSet();
+        if (valid(set)==0 && set.length == 2) {
           zhushu++;
         }
       }
@@ -70,7 +72,7 @@ class Pk10Zhushuzxfx {
         for (int k = 0; k < f3.length; k++) {
 //          print("{},{},{}", f1.get(i), f2.get(j), f3.get(k));
           Set<String> set = [f1[i], f2[j], f3[k]].toSet();
-          if (set.length == 3) {
+          if (valid(set)==0 &&set.length == 3) {
             zhushu = zhushu + 1;
           }
         }
@@ -91,7 +93,7 @@ class Pk10Zhushuzxfx {
           for (int l = 0; l < f4.length; l++) {
 //            log.info("{},{},{},{}", f1.get(i), f2.get(j), f3.get(k), f4.get(l));
             Set<String> set = [f1[i], f2[j], f3[k], f4[l]].toSet();
-            if (set.length == 4) {
+            if (valid(set)==0 &&set.length == 4) {
               zhushu++;
             }
           }
@@ -114,7 +116,7 @@ class Pk10Zhushuzxfx {
           for (int l = 0; l < f4.length; l++) {
             for (int m = 0; m < f5.length; m++) {
               Set<String> set = [f1[i], f2[j], f3[k], f4[l], f5[m]].toSet();
-              if (set.length == 5) {
+              if (valid(set)==0 && set.length == 5) {
                 zhushu++;
               }
             }
@@ -123,5 +125,13 @@ class Pk10Zhushuzxfx {
       }
     }
     return zhushu;
+  }
+
+  static int valid(Set<String> set) {
+    for (var value in set) {
+      if (value == null || value.trim() == '')
+        return 1;
+    }
+    return 0;
   }
 }

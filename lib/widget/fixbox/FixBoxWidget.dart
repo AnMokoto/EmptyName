@@ -3,6 +3,7 @@ library FixBoxWidget;
 import 'package:flutter/material.dart';
 import 'package:lowlottery/widget/fixbox/FixBoxModel.dart';
 import 'package:lowlottery/font/index.dart';
+import 'package:lowlottery/font/LotIcon.dart';
 
 typedef void OnFixBoxOnItemClick(FixBoxModel model, int position);
 
@@ -89,13 +90,24 @@ class FixBoxWidgetItemState extends State<FixBoxWidgetItem> {
               padding: EdgeInsets.all(10.0),
               child: new FittedBox(
                   fit: BoxFit.fill,
-                  child: Icon(AppIcons.fromStr(widget.model.gameEn),color: Colors.red,)),
+                  child: LotIcon.home(widget.model.gameEn)
+              ),
             ),
             Text(
               widget.model.name ?? "",
               style: new TextStyle(
-                  fontSize: 14.0,
+                  fontSize: 12.0,
                   color: Colors.black87,
+                  decoration: TextDecoration.none),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            )
+            ,Text(
+              widget.model.desc ?? "",
+              style: new TextStyle(
+                  fontSize: 10.0,
+                  color: Colors.black45,
                   decoration: TextDecoration.none),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,

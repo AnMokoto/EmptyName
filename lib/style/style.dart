@@ -149,7 +149,8 @@ String transformToString(List<dynamic> choice, String type) {
       type.endsWith("ybd") ||
       type.endsWith("ebd") ||
       type.endsWith("sbd") ||
-      type.contains("zuxbd")) {
+      type.contains("zuxbd") ||
+      type.contains("rx")) {
     return transformToWithOutPoint(choice);
   }
   return choice.toString().replaceAll(new RegExp(r"(\]|\[)"), "");

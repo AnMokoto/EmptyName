@@ -7,10 +7,10 @@ import 'style.dart';
 
 ///  十一选五
 @protected
-abstract class _11x5 extends PlayStyle {
+abstract class _kl10 extends PlayStyle {
   List<List<int>> _data;
 
-  _11x5({@required String type, @required String name, String desc})
+  _kl10({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc) {
     _data = initialData(10);
   }
@@ -57,7 +57,7 @@ abstract class _11x5 extends PlayStyle {
  * 直选复选
  */
 @protected
-class cqssc_zxfx extends _11x5 {
+class cqssc_zxfx extends _kl10 {
   cqssc_zxfx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
 
@@ -105,12 +105,12 @@ class cqssc_zxfx extends _11x5 {
     任选
  */
 @protected
-class gd11x5_rx extends _11x5 {
+class kl10_rx extends _kl10 {
   @protected
   List<int> _zhushu;
   int zuheCount = 2;
 
-  gd11x5_rx(
+  kl10_rx(
       {@required String type,
       @required String name,
       String desc,
@@ -174,12 +174,12 @@ class gd11x5_rx extends _11x5 {
     组选
  */
 @protected
-class gd11x5_zux extends _11x5 {
+class kl10_zux extends _kl10 {
   @protected
   List<int> _zhushu;
   int zuheCount = 2;
 
-  gd11x5_zux(
+  kl10_zux(
       {@required String type,
       @required String name,
       String desc,
@@ -229,81 +229,81 @@ class gd11x5_zux extends _11x5 {
   }
 }
 
-class Style11x5 extends StyleManagerIMPL {
-  const Style11x5();
+class Stylekl10 extends StyleManagerIMPL {
+  const Stylekl10();
 
-  factory Style11x5.of(String str) {
-    return const Style11x5();
+  factory Stylekl10.of(String str) {
+    return const Stylekl10();
 //    return   const Style();
   }
 
-  PlayStyle get gd11x5rx2 =>
-      gd11x5_rx(type: "11x5_rx2", name: "任选二", desc: "任选二");
+  PlayStyle get kl10rx2 =>
+      kl10_rx(type: "kl10_rx2", name: "任选二", desc: "任选二");
 
-  PlayStyle get gd11x5rx3 =>
-      gd11x5_rx(type: "11x5_rx3", name: "任选三", desc: "任选三");
+  PlayStyle get kl10rx3 =>
+      kl10_rx(type: "kl10_rx3", name: "任选三", desc: "任选三");
 
-  PlayStyle get gd11x5rx4 =>
-      gd11x5_rx(type: "11x5_rx4", name: "任选四", desc: "任选四");
+  PlayStyle get kl10rx4 =>
+      kl10_rx(type: "kl10_rx4", name: "任选四", desc: "任选四");
 
-  PlayStyle get gd11x5rx5 =>
-      gd11x5_rx(type: "11x5_rx5", name: "任选五", desc: "任选五");
+  PlayStyle get kl10rx5 =>
+      kl10_rx(type: "kl10_rx5", name: "任选五", desc: "任选五");
 
-  PlayStyle get gd11x5rx6 =>
-      gd11x5_rx(type: "11x5_rx6", name: "任选六", desc: "任选六");
+ /* PlayStyle get kl10rx6 =>
+      kl10_rx(type: "kl10_rx6", name: "任选六", desc: "任选六");
 
-  PlayStyle get gd11x5rx7 =>
-      gd11x5_rx(type: "11x5_rx7", name: "任选七", desc: "任选七");
+  PlayStyle get kl10rx7 =>
+      kl10_rx(type: "kl10_rx7", name: "任选七", desc: "任选七");
 
-  PlayStyle get gd11x5rx8 =>
-      gd11x5_rx(type: "11x5_rx8", name: "任选八", desc: "任选八");
+  PlayStyle get kl10rx8 =>
+      kl10_rx(type: "kl10_rx8", name: "任选八", desc: "任选八");
 
-  PlayStyle get gd11x5q1zxfx =>
-      gd11x5_rx(type: "11x5_q1zxfx", name: "前一直选复选", desc: "前一直选复选");
+  PlayStyle get kl10q1zxfx =>
+      kl10_rx(type: "kl10_q1zxfx", name: "前一直选复选", desc: "前一直选复选");
 
-  PlayStyle get gd11x5q2zxfx =>
-      cqssc_zxfx(type: "11x5_q2zxfx", name: "前二直选复选", desc: "前二直选复选");
+  PlayStyle get kl10q2zxfx =>
+      cqssc_zxfx(type: "kl10_q2zxfx", name: "前二直选复选", desc: "前二直选复选");
 
-  PlayStyle get gd11x5q3zxfx =>
-      cqssc_zxfx(type: "11x5_q3zxfx", name: "前三直选复选", desc: "前三直选复选");
+  PlayStyle get kl10q3zxfx =>
+      cqssc_zxfx(type: "kl10_q3zxfx", name: "前三直选复选", desc: "前三直选复选");
 
-  PlayStyle get gd11x5q2zuxfx =>
-      gd11x5_zux(type: "11x5_q2zuxfx", name: "前二组选复选", desc: "前二组选复选");
+  PlayStyle get kl10q2zuxfx =>
+      kl10_zux(type: "kl10_q2zuxfx", name: "前二组选复选", desc: "前二组选复选");
 
-  PlayStyle get gd11x5q3zuxfx =>
-      gd11x5_zux(type: "11x5_q3zuxfx", name: "前三组选复选", desc: "前三组选复选");
-
+  PlayStyle get kl10q3zuxfx =>
+      kl10_zux(type: "kl10_q3zuxfx", name: "前三组选复选", desc: "前三组选复选");
+*/
   @override
-  String get name => "十一选五";
+  String get name => "快乐十分";
 
   @override
   List<PlayStyle> get all => [
-        gd11x5rx2,
-        gd11x5rx3,
-        gd11x5rx4,
-        gd11x5rx5,
-        gd11x5rx6,
-        gd11x5rx7,
-        gd11x5rx8,
-        gd11x5q1zxfx,
-        gd11x5q2zxfx,
-        gd11x5q3zxfx,
-        gd11x5q2zuxfx,
-        gd11x5q3zuxfx,
+    kl10rx2,
+        kl10rx3,
+        kl10rx4,
+        kl10rx5,/*
+        kl10rx6,
+        kl10rx7,
+        kl10rx8,
+        kl10q1zxfx,
+        kl10q2zxfx,
+        kl10q3zxfx,
+        kl10q2zuxfx,
+        kl10q3zuxfx,*/
       ];
 }
 /*
 * //广东11选5
-  gd11x5_rx2("rx2", "任选二"),
-  gd11x5_rx3("rx3", "任选三"),
-  gd11x5_rx4("rx4", "任选四"),
-  gd11x5_rx5("rx5", "任选五"),
-  gd11x5_rx6("rx6", "任选六"),
-  gd11x5_rx7("rx7", "任选七"),
-  gd11x5_rx8("rx8", "任选八"),
-  gd11x5_q1zxfx("q1zxfx", "前一直选复选"),
-  gd11x5_q2zxfx("q2zxfx", "前二直选复选"),
-  gd11x5_q3zxfx("q3zxfx", "前三直选复选"),
-  gd11x5_q2zuxfx("q2zuxfx", "前二组选复选"),
-  gd11x5_q3zuxfx("q3zuxfx", "前三组选复选"),
+  kl10_rx2("rx2", "任选二"),
+  kl10_rx3("rx3", "任选三"),
+  kl10_rx4("rx4", "任选四"),
+  kl10_rx5("rx5", "任选五"),
+  kl10_rx6("rx6", "任选六"),
+  kl10_rx7("rx7", "任选七"),
+  kl10_rx8("rx8", "任选八"),
+  kl10_q1zxfx("q1zxfx", "前一直选复选"),
+  kl10_q2zxfx("q2zxfx", "前二直选复选"),
+  kl10_q3zxfx("q3zxfx", "前三直选复选"),
+  kl10_q2zuxfx("q2zuxfx", "前二组选复选"),
+  kl10_q3zuxfx("q3zuxfx", "前三组选复选"),
 * */

@@ -87,7 +87,7 @@ class _LotterBetRecorderFragState
   List<dynamic> data = new List();
   _LotterBetRecorderFragState(LotterBetRecordFragPresenter presenter)
       : super(presenter);
-
+  TextStyle small = new TextStyle(fontSize: 90.0);
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
@@ -144,8 +144,8 @@ class _LotterBetRecorderFragState
                   child: new Column(
                     children: <Widget>[
                       // Image.network(""),
-                      new Icon(AppIcons.getLot("${value["gameEn"]}")),
-                      new Text(LotConfig.getLotName("${value["gameEn"]??"-"}"))
+                      new Icon(AppIcons.getLot("${value["gameEn"]}"),size: 33.0,),
+                      new Text(LotConfig.getLotName("${value["gameEn"]??"-"}") ,style: new TextStyle(fontSize: 11.0 ,color: Colors.black54))
                     ],
                   ),
                 ),
@@ -176,19 +176,19 @@ class _LotterBetRecorderFragState
                                         right: 0.0,
                                         top: 0.0,
                                         child: new Text(
-                                            "自购"),
+                                            "自购" ),
                                       ),
                                       new Positioned(
                                         right: 0.0,
                                         bottom: 0.0,
                                         child: new Text(
-                                            "投注${value["money"]??"-"}元"),
+                                            "投注${value["money"]??"-"}元" ,style: new TextStyle(fontSize: 11.0 ,color: Colors.black54),),
                                       ),
                                       new Positioned(
                                         left: 0.0,
                                         bottom: 0.0,
                                         child: new Text(
-                                            "${value["createTimeStr"]??"-"}"),
+                                            "${value["createTimeStr"]??"-"}" ,style: new TextStyle(fontSize: 11.0 ,color: Colors.black54),),
                                       )
                                     ],
                                   ),
