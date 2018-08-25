@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lowlottery/common/mvp.dart';
 import 'LotterBetRecordContract.dart';
 import 'package:lowlottery/font/index.dart';
-import 'package:lowlottery/font/Lot.dart';
-import 'package:lowlottery/font/LotIcon.dart';
+import 'package:lowlottery/conf/Lot.dart';
+import 'package:lowlottery/conf/LotIcon.dart';
 class LotterBetRecordLayer extends StatefulWidget {
   _LotterBetRecordState createState() =>
       new _LotterBetRecordState(new LotterBetRecordPresenter());

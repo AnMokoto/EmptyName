@@ -3,7 +3,7 @@ library FixBoxWidget;
 import 'package:flutter/material.dart';
 import 'package:lowlottery/widget/fixbox/FixBoxModel.dart';
 import 'package:lowlottery/font/index.dart';
-import 'package:lowlottery/font/LotIcon.dart';
+import 'package:lowlottery/conf/LotIcon.dart';
 
 typedef void OnFixBoxOnItemClick(FixBoxModel model, int position);
 

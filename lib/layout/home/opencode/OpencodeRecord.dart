@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lowlottery/common/mvp.dart';
 import 'OpencodeRecordContract.dart';
 import 'package:lowlottery/font/index.dart';
-import 'package:lowlottery/font/Lot.dart';
+import 'package:lowlottery/conf/Lot.dart';
 class OpencodeRecordLayer extends StatefulWidget {
   _OpencodeRecordState createState() =>
       new _OpencodeRecordState(new LotterBetRecordPresenter());

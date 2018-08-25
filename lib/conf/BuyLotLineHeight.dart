@@ -10,7 +10,8 @@ class LotLineHeight {
     if (playEn.endsWith("hz")) {
       return 500.0;
     }
-    if (playEn.contains("zmz1t") ||
+    if (playEn.contains("tmzx") ||
+        playEn.contains("zmz1t") ||
         playEn.contains("zmz2t") ||
         playEn.contains("zmz3t") ||
         playEn.contains("zmz4t") ||

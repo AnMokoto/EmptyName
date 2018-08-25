@@ -179,7 +179,7 @@ class cqssc_hz extends _xglhc {
     List<String> value = new List();
     _data[0].forEach((f) {
       if (f > -1) {
-        value.add(f.toString());
+        value.add(forceTransform(f.toString()));
       }
     });
     state.zhushu = value.length;
@@ -205,6 +205,7 @@ class Stylexglhc extends StyleManagerIMPL {
     return const Stylexglhc();
   }
 
+  PlayStyle get tmzx => cqssc_hz(type: "tmzx", name: "特码直选", desc: "特码直选");
   PlayStyle get zmz1t => cqssc_hz(type: "zmz1t", name: "正1特码", desc: "正1特码");
 
   PlayStyle get zmz2t => cqssc_hz(type: "zmz2t", name: "正2特码", desc: "正2特码");
@@ -222,6 +223,7 @@ class Stylexglhc extends StyleManagerIMPL {
 
   @override
   List<PlayStyle> get all => [
+        tmzx,
         zmz1t,
         zmz2t,
         zmz3t,
