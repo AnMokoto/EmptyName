@@ -127,7 +127,7 @@ abstract class PlayStyle {
   int get count;
 
   /// 强制转换数据显示
-  dynamic forceTransform(dynamic d);
+  dynamic forceTransform(dynamic d) => d;
 
   /// 列表描述
   /// 列表前缀

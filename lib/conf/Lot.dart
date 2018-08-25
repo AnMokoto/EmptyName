@@ -1,5 +1,8 @@
 library app.font;
 
+/**
+ * 彩种配置信息
+ */
 class LotConfig {
   LotConfig._();
   static Map<String, String> _lot = {
