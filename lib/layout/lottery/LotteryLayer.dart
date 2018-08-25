@@ -22,40 +22,38 @@ typedef void OnLotteryPushClick(int index, int position);
 
 class LotteryLayer extends StatefulWidget {
   StyleManagerIMPL impl;
-  String gameEn ;
+  String gameEn;
   PlayStyle style;
-  LotteryLayer({this.impl ,this.gameEn}) : assert(impl != null){
-  this.style = impl.all[0];
-  this.gameEn = gameEn ;
-  print("..............."+gameEn);
-
+  LotteryLayer({this.impl, this.gameEn}) : assert(impl != null) {
+    this.style = impl.all[0];
+    this.gameEn = gameEn;
+    print("..............." + gameEn);
   }
   @override
-  _LotteryState createState() => new _LotteryState(new LotteryPresenter() ,gameEn);
+  _LotteryState createState() =>
+      new _LotteryState(new LotteryPresenter(), gameEn);
 }
 
 class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
     implements LotteryIView {
-  String gameEn ;
-  _LotteryState(LotteryPresenter presenter  ,String gameEn) : super(presenter) {
+  String gameEn;
+  _LotteryState(LotteryPresenter presenter, String gameEn) : super(presenter) {
     /// 初始化原有数据
-    this.gameEn =gameEn ;
+    this.gameEn = gameEn;
   }
 
   void _onHeadExpansionChoice(int index, bool isChoice) {}
 
   /// 当前期数信息
   void requestLotteryWithExpectNowSuccess(LotteryModel data) {
-    StoreProvider
-        .of<AppState>(context)
+    StoreProvider.of<AppState>(context)
         .dispatch(new LotteryInitQueryAction(lottery: data));
     // Future.sync(() => {}).whenComplete(() {}).catchError((e) {});
   }
 
   ///历史档期
   void requestLotteryLastCurrentSuccess(List<Lottery> history) {
-    StoreProvider
-        .of<AppState>(context)
+    StoreProvider.of<AppState>(context)
         .dispatch(new LotteryInitQueryAction(history: history));
   }
 
@@ -165,8 +163,8 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                               child: new Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
-                                  children: new List.generate(
-                                      style.count, (index) {
+                                  children:
+                                      new List.generate(style.count, (index) {
                                     var _str = (state.history.length > 0
                                             ? (state.history[0].opencode
                                                     as String) ??
@@ -234,7 +232,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                         return new Column(
                           children: <Widget>[
                             new Text(
-                              "${state==null?"":state.expectNo??""}期投注截止",
+                              "${state == null ? "" : state.expectNo ?? ""}期投注截止",
                               style: headStyle,
                             ),
 
@@ -528,7 +526,7 @@ class _LotteryItemState extends State<LotteryItem> {
                                       shape: BoxShape.circle),
                                   child: new Center(
                                     child: new Text(
-                                      "$index",
+                                      "${value.forceTransform(index)}",
                                       maxLines: 1,
                                       style: new TextStyle(
                                           color: data[index] != -1

@@ -119,6 +119,9 @@ abstract class PlayStyle {
   /// return int
   int get count;
 
+  /// 强制转换数据显示
+  dynamic forceTransform(dynamic d);
+
   /// 列表描述
   /// 列表前缀
   List<String> initialType();
@@ -137,11 +140,16 @@ abstract class PlayStyle {
 
 /// 替换数据格式
 String transformToString(List<dynamic> choice, String type) {
-  List<String> contains = ["zuxfx" , "zuxhz" ,"zuxkd"];
-  if (type.endsWith("hz") || type.endsWith("kd")
-      || type.endsWith("zuxfx") || type.contains("zuxhz") || type.contains("zuxkd")
-      || type.endsWith("ybd") || type.endsWith("ebd") ||type.endsWith("sbd") || type.contains("zuxbd")
-  )  {
+  List<String> contains = ["zuxfx", "zuxhz", "zuxkd"];
+  if (type.endsWith("hz") ||
+      type.endsWith("kd") ||
+      type.endsWith("zuxfx") ||
+      type.contains("zuxhz") ||
+      type.contains("zuxkd") ||
+      type.endsWith("ybd") ||
+      type.endsWith("ebd") ||
+      type.endsWith("sbd") ||
+      type.contains("zuxbd")) {
     return transformToWithOutPoint(choice);
   }
   return choice.toString().replaceAll(new RegExp(r"(\]|\[)"), "");
@@ -227,7 +235,7 @@ abstract class StyleManagerIMPL {
 //   factory style.cqssc_5xybd() => style(type: "5xybd", desc: "五星一码不定位");
 //   factory style.cqssc_5xebd() => style(type: "5xebd", desc: "五星二码不定位");
 //   factory style.cqssc_5xsbd() => style(type: "5xsbd", desc: "五星三码不定位");
-//   //大小单双
+//   //大小���双
 //   factory style.cqssc_q2dxds() => style(type: "q2dxds", desc: "前二大小单双");
 //   factory style.cqssc_h2dxds() => style(type: "h2dxds", desc: "后二大小单双");
 //   factory style.cqssc_q3dxds() => style(type: "q3dxds", desc: "前三大小单双");

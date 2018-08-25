@@ -2,6 +2,7 @@ import 'style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lowlottery/log.dart';
 import 'ZuheUtil.dart';
+
 ///  重庆时时彩分类
 @protected
 abstract class _cqssc extends PlayStyle {
@@ -28,6 +29,11 @@ abstract class _cqssc extends PlayStyle {
   @override
   // TODO: implement count
   int get count => 5;
+
+  @override
+  forceTransform(d) {
+    return d;
+  }
 
   @override
   List<List<int>> toBet2System(int index, int position) {
@@ -97,10 +103,10 @@ class cqssc_5xzxfx extends _cqssc {
 
   @override
   List<String> initialType() {
-    if(type.endsWith("5xzxfx"))
-    return ["万位", "千位" ,"百位" ,"十位" ,"个位"];
-    else if(type.endsWith("4xzxfx")) {
-    return ["千位" ,"百位" ,"十位" ,"个位"];
+    if (type.endsWith("5xzxfx"))
+      return ["万位", "千位", "百位", "十位", "个位"];
+    else if (type.endsWith("4xzxfx")) {
+      return ["千位", "百位", "十位", "个位"];
     }
   }
 
@@ -112,6 +118,7 @@ class cqssc_5xzxfx extends _cqssc {
     _data.forEach((item) {
       List<String> choice = new List();
       int _count = 0;
+
       /// 当前列表内有效注数
       item.forEach((index) {
         if (index > -1) {
@@ -132,6 +139,7 @@ class cqssc_5xzxfx extends _cqssc {
     return state;
   }
 }
+
 @protected
 class cqssc_q2fx extends _cqssc {
   cqssc_q2fx({@required String type, @required String name, String desc})
@@ -207,6 +215,7 @@ class cqssc_h3fx extends cqssc_h2fx {
     return ["百位", "十位", "个位"];
   }
 }
+
 @protected
 class cqssc_z3fx extends cqssc_h2fx {
   cqssc_z3fx({@required String type, @required String name, String desc})
@@ -263,18 +272,19 @@ class cqssc_hz extends _cqssc {
     return ["和值"];
   }
 }
+
 /**
  * 前二后二组选复选
  */
 @protected
 class cqssc_zuxfx extends _cqssc {
   @protected
-  int len =0;
+  int len = 0;
   cqssc_zuxfx(
       {int len, @required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc) {
     this._data = initialData(10);
-    this.len = len ;
+    this.len = len;
   }
 
   @override
@@ -294,7 +304,7 @@ class cqssc_zuxfx extends _cqssc {
       }
     });
 
-    var count = ZuheUtil.combination(value.length,len );
+    var count = ZuheUtil.combination(value.length, len);
     state.zhushu = count.toInt();
     state.money = state.zhushu * price;
     String code = transformToString(value, type);
@@ -309,6 +319,7 @@ class cqssc_zuxfx extends _cqssc {
     return ["组选"];
   }
 }
+
 /**
  *前二后二组选和值
  */
@@ -318,10 +329,13 @@ class cqssc_zuxhz extends _cqssc {
   List<int> _zhushu;
 
   cqssc_zuxhz(
-      {  @required String type, @required String name, String desc ,String initLeftDesc})
+      {@required String type,
+      @required String name,
+      String desc,
+      String initLeftDesc})
       : super(type: type, name: name, desc: desc) {
     this._data = initialData(17);
-    if(type.contains("2"))
+    if (type.contains("2"))
       this._zhushu = [1, 1, 2, 2, 3, 3, 4, 4, 5, 4, 4, 3, 3, 2, 2, 1, 1];
   }
 
@@ -347,7 +361,8 @@ class cqssc_zuxhz extends _cqssc {
     state.money = state.zhushu * price;
 
     String code = transformToString(value, type);
-    Log.message("${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
+    Log.message(
+        "${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
     state.code = code;
 
     return state;
@@ -358,6 +373,7 @@ class cqssc_zuxhz extends _cqssc {
     return ["和值"];
   }
 }
+
 /**
  *前二后二组选包胆
  */
@@ -367,18 +383,20 @@ class cqssc_zuxbd extends _cqssc {
   List<int> _zhushu;
 
   cqssc_zuxbd(
-      {  @required String type, @required String name, String desc ,String initLeftDesc})
+      {@required String type,
+      @required String name,
+      String desc,
+      String initLeftDesc})
       : super(type: type, name: name, desc: desc) {
     //todo 包胆起始位置从1开始，需要特殊处理，暂时未处理
     this._data = initialData(10);
-
   }
 //包胆只能选择一位号码
   @override
   List<List<int>> toBet2System(int index, int position) {
     if (position >= _data[0].length) return _data;
-    for(int i=0;i<_data[0].length;++i){
-      _data[0][i]=-1;
+    for (int i = 0; i < _data[0].length; ++i) {
+      _data[0][i] = -1;
     }
     _data[0][position] = _data[0][position] == -1 ? position : -1;
     return _data;
@@ -398,7 +416,8 @@ class cqssc_zuxbd extends _cqssc {
     state.money = state.zhushu * price;
 
     String code = transformToString(value, type);
-    Log.message("${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
+    Log.message(
+        "${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
     state.code = code;
 
     return state;
@@ -409,6 +428,7 @@ class cqssc_zuxbd extends _cqssc {
     return ["包胆"];
   }
 }
+
 /**
  *  一不定
  */
@@ -418,10 +438,12 @@ class cqssc_bd1 extends _cqssc {
   List<int> _zhushu;
 
   cqssc_bd1(
-      {  @required String type, @required String name, String desc ,String initLeftDesc})
+      {@required String type,
+      @required String name,
+      String desc,
+      String initLeftDesc})
       : super(type: type, name: name, desc: desc) {
     this._data = initialData(10);
-
   }
 
   @override
@@ -446,7 +468,8 @@ class cqssc_bd1 extends _cqssc {
     state.money = state.zhushu * price;
 
     String code = transformToString(value, type);
-    Log.message("${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
+    Log.message(
+        "${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
     state.code = code;
 
     return state;
@@ -457,6 +480,7 @@ class cqssc_bd1 extends _cqssc {
     return ["不定位"];
   }
 }
+
 /**
  *  二不定，三不定
  */
@@ -466,11 +490,14 @@ class cqssc_bd2 extends _cqssc {
   List<int> _zhushu;
   int zuheCount = 2;
   cqssc_bd2(
-      { @required String type, @required String name, String desc ,String initLeftDesc})
+      {@required String type,
+      @required String name,
+      String desc,
+      String initLeftDesc})
       : super(type: type, name: name, desc: desc) {
     this._data = initialData(10);
-    if(type.endsWith("5xsbd")){
-      zuheCount = 3 ;
+    if (type.endsWith("5xsbd")) {
+      zuheCount = 3;
     }
   }
 
@@ -492,12 +519,13 @@ class cqssc_bd2 extends _cqssc {
         value.add(f.toString());
       }
     });
-    var com = ZuheUtil.combination(value.length, zuheCount) ;
+    var com = ZuheUtil.combination(value.length, zuheCount);
     state.zhushu = com.toInt();
     state.money = state.zhushu * price;
 
     String code = transformToString(value, type);
-    Log.message("${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
+    Log.message(
+        "${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
     state.code = code;
 
     return state;
@@ -508,6 +536,7 @@ class cqssc_bd2 extends _cqssc {
     return ["不定位"];
   }
 }
+
 /**
  * 前二后二,前三中三后三 跨度
  */
@@ -517,14 +546,16 @@ class cqssc_kd extends _cqssc {
   List<int> _zhushu;
 
   cqssc_kd(
-      {  @required String type, @required String name, String desc ,String initLeftDesc})
+      {@required String type,
+      @required String name,
+      String desc,
+      String initLeftDesc})
       : super(type: type, name: name, desc: desc) {
     this._data = initialData(10);
-    if(type.contains("2"))
-    this._zhushu = [10, 18, 16, 14, 12, 10, 8, 6, 4, 2];
-    else if(type.contains("3"))
-    this._zhushu = [10, 54, 96, 126, 144, 150, 144, 126,96, 54];
-
+    if (type.contains("2"))
+      this._zhushu = [10, 18, 16, 14, 12, 10, 8, 6, 4, 2];
+    else if (type.contains("3"))
+      this._zhushu = [10, 54, 96, 126, 144, 150, 144, 126, 96, 54];
   }
 
   @override
@@ -549,7 +580,8 @@ class cqssc_kd extends _cqssc {
     state.money = state.zhushu * price;
 
     String code = transformToString(value, type);
-    Log.message("${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
+    Log.message(
+        "${type}_value===$code  shushu:${state.zhushu} money:${state.money}");
     state.code = code;
 
     return state;
@@ -603,7 +635,7 @@ class Style extends StyleManagerIMPL {
   const Style();
 
   factory Style.of(String str) {
-    return   const Style();
+    return const Style();
 //    return   const Style();
   }
 
@@ -616,32 +648,31 @@ class Style extends StyleManagerIMPL {
   PlayStyle get cqssq2zxkd =>
       cqssc_kd(type: "ssc_q2zxkd", name: "前二直选跨度", desc: "前二直选跨度");
   PlayStyle get cqssq2zuxfx =>
-      cqssc_zuxfx(len:2 ,type: "ssc_q2zuxfx", name: "前二组选复选", desc: "前二组选复选");
+      cqssc_zuxfx(len: 2, type: "ssc_q2zuxfx", name: "前二组选复选", desc: "前二组选复选");
   PlayStyle get cqssq2zuxhz =>
       cqssc_zuxhz(type: "ssc_q2zuxhz", name: "前二组选和值", desc: "前二组选和值");
   PlayStyle get cqssq2zuxbd =>
       cqssc_zuxbd(type: "ssc_q2zuxbd", name: "前二组选包胆", desc: "前二组选包胆");
-
 
   PlayStyle get cqssh2zxfx =>
       cqssc_h2fx(type: "ssc_h2zxfx", name: "后二直选复选", desc: "后二直选复选");
   PlayStyle get cqssh2zxhz =>
       cqssc_hz(type: "ssc_h2zxhz", name: "后二直选和值", desc: "后二直选和值");
   PlayStyle get cqssh2zxkd =>
-      cqssc_kd( type: "ssc_h2zxkd", name: "后二直选跨度", desc: "后二直选跨度");
+      cqssc_kd(type: "ssc_h2zxkd", name: "后二直选跨度", desc: "后二直选跨度");
   PlayStyle get cqssh2zuxfx =>
-      cqssc_zuxfx(len:2 ,type: "ssc_h2zuxfx", name: "后二组选复选", desc: "后二组选复选");
+      cqssc_zuxfx(len: 2, type: "ssc_h2zuxfx", name: "后二组选复选", desc: "后二组选复选");
   PlayStyle get cqssh2zuxhz =>
       cqssc_zuxhz(type: "ssc_h2zuxhz", name: "后二组选和值", desc: "后二组选和值");
   PlayStyle get cqssh2zuxbd =>
-      cqssc_zuxbd( type: "ssc_h2zuxbd", name: "后二组选包胆", desc: "后二组选包胆");
+      cqssc_zuxbd(type: "ssc_h2zuxbd", name: "后二组选包胆", desc: "后二组选包胆");
 
   PlayStyle get cqssq3zxfx =>
       cqssc_q3fx(type: "ssc_q3zxfx", name: "前三直选复选", desc: "前三直选复选");
   PlayStyle get cqssq3zxhz =>
       cqssc_hz3(type: "ssc_q3zxhz", name: "前三直选和值", desc: "前三直选和值");
   PlayStyle get cqssq3zxkd =>
-      cqssc_kd( type: "ssc_z3zxkd", name: "前三直选跨度", desc: "前三直选跨度");
+      cqssc_kd(type: "ssc_z3zxkd", name: "前三直选跨度", desc: "前三直选跨度");
   PlayStyle get cqssq3ybd =>
       cqssc_bd1(type: "ssc_q3ybd", name: "前三一不定码", desc: "前三一不定码");
   PlayStyle get cqssq3ebd =>
@@ -652,41 +683,38 @@ class Style extends StyleManagerIMPL {
   PlayStyle get cqssh3zxhz =>
       cqssc_hz3(type: "ssc_h3zxhz", name: "后三直选和值", desc: "后三直选和值");
   PlayStyle get cqssh3zxkd =>
-      cqssc_kd( type: "ssc_h3zxkd", name: "后三直选跨度", desc: "后三直选跨度");
+      cqssc_kd(type: "ssc_h3zxkd", name: "后三直选跨度", desc: "后三直选跨度");
   PlayStyle get cqssh3ybd =>
-      cqssc_bd1( type: "ssc_h3ybd", name: "后三一不定码", desc: "后三一不定码");
+      cqssc_bd1(type: "ssc_h3ybd", name: "后三一不定码", desc: "后三一不定码");
   PlayStyle get cqssh3ebd =>
-      cqssc_bd2( type: "ssc_h3ebd", name: "后三二不定码", desc: "后三二不定码");
+      cqssc_bd2(type: "ssc_h3ebd", name: "后三二不定码", desc: "后三二不定码");
 
   PlayStyle get cqssz3zxfx =>
       cqssc_z3fx(type: "ssc_z3zxfx", name: "中三直选复选", desc: "中三直选复选");
   PlayStyle get cqssz3zxhz =>
       cqssc_hz3(type: "ssc_z3zxhz", name: "中三直选和值", desc: "中三直选和值");
   PlayStyle get cqssz3zxkd =>
-      cqssc_kd( type: "ssc_z3zxkd", name: "中三直选跨度", desc: "中三直选跨度");
+      cqssc_kd(type: "ssc_z3zxkd", name: "中三直选跨度", desc: "中三直选跨度");
   PlayStyle get cqssz3ybd =>
-      cqssc_bd1( type: "ssc_z3ybd", name: "中三一不定码", desc: "中三一不定码");
+      cqssc_bd1(type: "ssc_z3ybd", name: "中三一不定码", desc: "中三一不定码");
   PlayStyle get cqssz3ebd =>
-      cqssc_bd2( type: "ssc_z3ebd", name: "中三二不定码", desc: "中三二不定码");
-
-
+      cqssc_bd2(type: "ssc_z3ebd", name: "中三二不定码", desc: "中三二不定码");
 
   PlayStyle get cqssc4xzxfx =>
-      cqssc_5xzxfx( type: "ssc_4xzxfx", name: "四星直选复选", desc: "四星直选复选");
+      cqssc_5xzxfx(type: "ssc_4xzxfx", name: "四星直选复选", desc: "四星直选复选");
   PlayStyle get cqss4xybd =>
-      cqssc_bd1( type: "ssc_4xybd", name: "四星一不定码", desc: "四星一不定码");
+      cqssc_bd1(type: "ssc_4xybd", name: "四星一不定码", desc: "四星一不定码");
   PlayStyle get cqss4xebd =>
-      cqssc_bd2( type: "ssc_4xebd", name: "四星二不定码", desc: "四星二不定码");
-
+      cqssc_bd2(type: "ssc_4xebd", name: "四星二不定码", desc: "四星二不定码");
 
   PlayStyle get cqssc5xzxfx =>
-      cqssc_5xzxfx( type: "ssc_5xzxfx", name: "五星直选复选", desc: "五星直选复选");
+      cqssc_5xzxfx(type: "ssc_5xzxfx", name: "五星直选复选", desc: "五星直选复选");
   PlayStyle get cqss5xybd =>
-      cqssc_bd1( type: "ssc_5xybd", name: "五星一不定码", desc: "五星一不定码");
+      cqssc_bd1(type: "ssc_5xybd", name: "五星一不定码", desc: "五星一不定码");
   PlayStyle get cqss5xebd =>
-      cqssc_bd2( type: "ssc_5xebd", name: "五星二不定码", desc: "五星二不定码");
- PlayStyle get cqss5xsbd =>
-      cqssc_bd2( type: "ssc_5xsbd", name: "五星三不定码", desc: "五星三不定码");
+      cqssc_bd2(type: "ssc_5xebd", name: "五星二不定码", desc: "五星二不定码");
+  PlayStyle get cqss5xsbd =>
+      cqssc_bd2(type: "ssc_5xsbd", name: "五星三不定码", desc: "五星三不定码");
 
   @override
   String get name => "重庆时时彩";
@@ -709,27 +737,25 @@ class Style extends StyleManagerIMPL {
         cqssq3zxfx,
         cqssq3zxhz,
         cqssq3zxkd,
-        cqssq3ybd ,
-        cqssq3ebd ,
+        cqssq3ybd,
+        cqssq3ebd,
         cqssh3zxfx,
-        cqssh3zxhz ,
-        cqssh3zxkd ,
-        cqssh3ybd ,
-        cqssh3ebd ,
+        cqssh3zxhz,
+        cqssh3zxkd,
+        cqssh3ybd,
+        cqssh3ebd,
         cqssz3zxfx,
-        cqssz3zxhz ,
-        cqssz3zxkd ,
-        cqssz3ybd ,
-        cqssz3ebd ,
-
+        cqssz3zxhz,
+        cqssz3zxkd,
+        cqssz3ybd,
+        cqssz3ebd,
         cqssc4xzxfx,
-        cqss4xybd ,
-        cqss4xebd ,
-
-        cqssc5xzxfx ,
-        cqss5xybd ,
-        cqss5xebd ,
-        cqss5xsbd ,
+        cqss4xybd,
+        cqss4xebd,
+        cqssc5xzxfx,
+        cqss5xybd,
+        cqss5xebd,
+        cqss5xsbd,
       ];
 }
 
