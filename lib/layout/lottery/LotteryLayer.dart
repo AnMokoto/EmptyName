@@ -464,25 +464,28 @@ class _LotteryItemState extends State<LotteryItem> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           /// left
-          new Container(
-            width: 50.0,
-            height: 30.0,
-            decoration: new BoxDecoration(
-              color: Colors.grey[300],
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(4.0),
-            ),
-            child: new Center(
-              child: new Text(
-                left[position] ?? "",
-                style: new TextStyle(
-                  color: Colors.red[200],
-                  fontSize: 13.0,
-                ),
-                maxLines: 1,
+          new Offstage(
+            offstage: left[position] == "",
+            child: new Container(
+              width: 50.0,
+              height: 30.0,
+              decoration: new BoxDecoration(
+                color: Colors.grey[300],
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(4.0),
               ),
+              child: new Center(
+                child: new Text(
+                  left[position] ?? "",
+                  style: new TextStyle(
+                    color: Colors.red[200],
+                    fontSize: 13.0,
+                  ),
+                  maxLines: 1,
+                ),
+              ),
+              margin: EdgeInsets.only(right: 20.0),
             ),
-            margin: EdgeInsets.only(right: 20.0),
           ),
 
           /// right
