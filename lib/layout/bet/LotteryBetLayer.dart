@@ -32,8 +32,8 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
     showDialog(
       context: context,
       builder: (context) => new CupertinoAlertDialog(
-            title: new Text("title"),
-            content: new Text("success"),
+            title: new Text(""),
+            content: new Text("成功下注"),
             actions: <Widget>[
               new CupertinoDialogAction(
                 isDefaultAction: true,
@@ -42,7 +42,7 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
                   Navigator.of(context).pop();
                 },
                 child: new Text(
-                  "left",
+                  "继续投注",
                   style: style,
                 ),
               ),
@@ -52,7 +52,7 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
                   Navigator.of(context).pop();
                 },
                 child: new Text(
-                  "right",
+                  "查看方案",
                   style: style,
                 ),
               ),
