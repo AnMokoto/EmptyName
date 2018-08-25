@@ -55,7 +55,7 @@ abstract class _xglhc extends PlayStyle {
   @override
   forceTransform(d) {
     if (d < 9) return "0${d+1}";
-    return d+1;
+    return "${d+1}";
   }
 }
 
@@ -179,7 +179,7 @@ class cqssc_hz extends _xglhc {
     List<String> value = new List();
     _data[0].forEach((f) {
       if (f > -1) {
-        value.add(forceTransform(f.toString()));
+        value.add(forceTransform(f));
       }
     });
     state.zhushu = value.length;
