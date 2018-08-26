@@ -4,7 +4,7 @@ import 'package:lowlottery/log.dart';
 import 'Pk10Zhushuzxfx.dart';
 import 'ZuheUtil.dart';
 import 'style.dart';
-
+import 'package:lowlottery/conf/LotPlay.dart';
 ///  十一选五
 @protected
 abstract class _11x5 extends PlayStyle {
@@ -114,7 +114,7 @@ class gd11x5_rx extends _11x5 {
   @protected
   List<int> _zhushu;
   int zuheCount = 2;
-
+var leftName = "任选" ;
   gd11x5_rx(
       {@required String type,
       @required String name,
@@ -122,6 +122,9 @@ class gd11x5_rx extends _11x5 {
       String initLeftDesc})
       : super(type: type, name: name, desc: desc) {
     this._data = initialData(12);
+    if(type.endsWith("zxfx")){
+      leftName="第一位";
+    }
     if (type.endsWith("2")) {
       zuheCount = 2;
     } else if (type.endsWith("3")) {
@@ -171,6 +174,9 @@ class gd11x5_rx extends _11x5 {
 
   @override
   List<String> initialType() {
+    if(type.endsWith("zxfx")){
+      return ["${leftName}"];
+    }
     return ["任选$zuheCount"];
   }
 }
@@ -238,45 +244,46 @@ class Style11x5 extends StyleManagerIMPL {
   const Style11x5();
 
   factory Style11x5.of(String str) {
+
     return const Style11x5();
 //    return   const Style();
   }
 
   PlayStyle get gd11x5rx2 =>
-      gd11x5_rx(type: "11x5_rx2", name: "任选二", desc: "任选二");
+      gd11x5_rx(type: "11x5_rx2", name: LotPlayConfig.getName("11x5_rx2"), desc: "任选二");
 
   PlayStyle get gd11x5rx3 =>
-      gd11x5_rx(type: "11x5_rx3", name: "任选三", desc: "任选三");
+      gd11x5_rx(type: "11x5_rx3", name:  LotPlayConfig.getName("11x5_rx3"), desc: "任选三");
 
   PlayStyle get gd11x5rx4 =>
-      gd11x5_rx(type: "11x5_rx4", name: "任选四", desc: "任选四");
+      gd11x5_rx(type: "11x5_rx4", name:  LotPlayConfig.getName("11x5_rx4"), desc: "任选四");
 
   PlayStyle get gd11x5rx5 =>
-      gd11x5_rx(type: "11x5_rx5", name: "任选五", desc: "任选五");
+      gd11x5_rx(type: "11x5_rx5", name:  LotPlayConfig.getName("11x5_rx5"), desc: "任选五");
 
   PlayStyle get gd11x5rx6 =>
-      gd11x5_rx(type: "11x5_rx6", name: "任选六", desc: "任选六");
+      gd11x5_rx(type: "11x5_rx6", name:  LotPlayConfig.getName("11x5_rx6"), desc: "任选六");
 
   PlayStyle get gd11x5rx7 =>
-      gd11x5_rx(type: "11x5_rx7", name: "任选七", desc: "任选七");
+      gd11x5_rx(type: "11x5_rx7", name:  LotPlayConfig.getName("11x5_rx7"), desc: "任选七");
 
   PlayStyle get gd11x5rx8 =>
-      gd11x5_rx(type: "11x5_rx8", name: "任选八", desc: "任选八");
+      gd11x5_rx(type: "11x5_rx8", name:  LotPlayConfig.getName("11x5_rx8"), desc: "任选八");
 
   PlayStyle get gd11x5q1zxfx =>
-      gd11x5_rx(type: "11x5_q1zxfx", name: "前一直选复选", desc: "前一直选复选");
+      gd11x5_rx(type: "11x5_q1zxfx", name:LotPlayConfig.getName("11x5_q1zxfx"), desc: "前一直选复选");
 
   PlayStyle get gd11x5q2zxfx =>
-      cqssc_zxfx(type: "11x5_q2zxfx", name: "前二直选复选", desc: "前二直选复选");
+      cqssc_zxfx(type: "11x5_q2zxfx", name: LotPlayConfig.getName("11x5_q2zxfx"), desc: "前二直选复选");
 
   PlayStyle get gd11x5q3zxfx =>
-      cqssc_zxfx(type: "11x5_q3zxfx", name: "前三直选复选", desc: "前三直选复选");
+      cqssc_zxfx(type: "11x5_q3zxfx", name: LotPlayConfig.getName("11x5_q3zxfx"), desc: "前三直选复选");
 
   PlayStyle get gd11x5q2zuxfx =>
-      gd11x5_zux(type: "11x5_q2zuxfx", name: "前二组选复选", desc: "前二组选复选");
+      gd11x5_zux(type: "11x5_q2zuxfx", name:LotPlayConfig.getName("11x5_q2zuxfx"), desc: "前二组选复选");
 
   PlayStyle get gd11x5q3zuxfx =>
-      gd11x5_zux(type: "11x5_q3zuxfx", name: "前三组选复选", desc: "前三组选复选");
+      gd11x5_zux(type: "11x5_q3zuxfx", name: LotPlayConfig.getName("11x5_q3zuxfx"), desc: "前三组选复选");
 
   @override
   String get name => "十一选五";

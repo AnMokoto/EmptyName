@@ -8,6 +8,7 @@ import '11x5.dart';
 import 'pk10.dart';
 import 'kl10.dart';
 import 'xglhc.dart';
+import 'k3.dart';
 class StyleSplit {
   StyleSplit._();
 
@@ -18,5 +19,6 @@ class StyleSplit {
     if (str.contains("pk10")) return Stylepk10.of(str) ;
     if (str.contains("kl10")) return Stylekl10.of(str) ;
     if (str.contains("lhc")) return Stylexglhc.of(str) ;
+    if (str.contains("k3")) return Stylek3.of(str) ;
   }
 }

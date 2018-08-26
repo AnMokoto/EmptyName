@@ -6,10 +6,12 @@ part 'LotteryModel.g.dart';
 
 @JsonSerializable()
 class Lottery extends Object with _$LotterySerializerMixin {
-  var gameEn;
-  var openTime;
-  var opencode;
-  var expectNo;
+  var gameEn;   //彩种编码
+  var openTime; //开奖时间
+  var opencode;  //开奖号码
+  var expectNo;//期号数据
+  var buyEndTime; //购买截止时间
+  var remainTime;//倒计时时长
 
   factory Lottery.fromJson(Map<String, dynamic> json) =>
       _$LotteryFromJson(json);

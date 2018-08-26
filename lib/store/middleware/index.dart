@@ -24,4 +24,5 @@ final List<Middleware<AppState>> _appMiddleware = <Middleware<AppState>>[
   ..addAll(userMiddleware)
   ..addAll(lotterMiddleware)
   ..addAll(betMiddleware)
+  ..addAll(recordMiddleware)
   ..addAll(homeMiddleware);

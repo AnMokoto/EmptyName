@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
-import 'package:lowlottery/common/mvp.dart';
 import 'package:lowlottery/layout/bet/LotteryBetLayer.dart';
 import 'package:lowlottery/store/appStore.dart';
 import 'package:lowlottery/style/index.dart';
+
 import 'dart:async';
+
+import 'package:lowlottery/font/index.dart';
 
 /// callback when who preclick the item.
 /// [position] item count position
@@ -101,6 +103,7 @@ class _LotteryState extends State<LotteryLayer> {
             )
           ],
         ),
+
         // child: new Container(
         //     padding: EdgeInsets.all(10.0),
         //     child: new ListView.custom(
@@ -204,11 +207,12 @@ class _LotteryState extends State<LotteryLayer> {
                       padding: EdgeInsets.symmetric(vertical: 5.0),
                       child: new Container(
                         color: Colors.grey,
-                        width: 1.0,
+                        width: .5,
                         height: 50.0,
                       ),
                     ),
 // new SizedBox()
+
                     new Expanded(
                       child: new Container(
                           child: new StoreConnector<AppState, Lottery>(
@@ -218,6 +222,16 @@ class _LotteryState extends State<LotteryLayer> {
                               new Text(
                                 "${state == null ? "" : state.expectNo ?? ""}期投注截止",
                                 style: headStyle,
+                              ),
+
+                              new Container(
+                                margin: EdgeInsets.all(4.0),
+                                child: new Text(
+                                  //data
+                                  "${state == null ? "" : state.remainTime ?? ""}",
+
+                                  style: headStyle,
+                                ),
                               ),
 
                               new Container(
@@ -290,102 +304,89 @@ class _LotteryState extends State<LotteryLayer> {
                 new Container(
                   color: Colors.white,
                   constraints: new BoxConstraints.tightFor(),
-                  child: new Offstage(
-                    offstage: model.zhushu <= 0,
-                    child: new Container(
-                      height: 55.0,
-                      child: new Row(
-                        children: <Widget>[
-                          new Expanded(
-                              child: new Container(
-                                  constraints: new BoxConstraints.expand(),
-                                  color: Colors.red,
-                                  child: new Padding(
-                                    padding: EdgeInsets.all(5.0),
-                                    child: new Row(
-                                      children: <Widget>[
-                                        new IconButton(
-                                          icon: new Icon(
-                                            Icons.add,
-                                            size: 40.0,
-                                            color: Colors.white,
-                                          ),
-                                          onPressed: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return new AlertDialog(
-                                                  title: new Text("data"),
-                                                ).build(context);
-                                              },
-                                            );
-                                          },
+//                child: new Offstage(
+//                  offstage: model.zhushu <= 0,
+                  child: new Container(
+                    height: 55.0,
+                    child: new Row(
+                      children: <Widget>[
+                        new Expanded(
+                            child: new Container(
+                                constraints: new BoxConstraints.expand(),
+                                color: Colors.red,
+                                child: new Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: new Row(
+                                    children: <Widget>[
+                                      new IconButton(
+                                        icon: new Icon(
+                                          Icons.add,
+                                          size: 40.0,
+                                          color: Colors.white,
                                         ),
-                                        new Container(
-                                          margin: EdgeInsets.only(left: 15.0),
-                                          constraints: new BoxConstraints
-                                              .tightForFinite(),
-                                          child: new Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: <Widget>[
-                                              new SafeArea(
-                                                child: new Text(
-                                                  "共${model.zhushu}注，${model.money}元",
+                                      ),
+                                      new Container(
+                                        margin: EdgeInsets.only(left: 15.0),
+                                        constraints:
+                                            new BoxConstraints.tightForFinite(),
+                                        child: new Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: <Widget>[
+                                            new SafeArea(
+                                              child: new Text(
+                                                "共${model.zhushu}注，${model.money}元",
+                                                style: new TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                            ),
+                                            new Container(
+                                              constraints: new BoxConstraints(
+                                                  maxWidth: 200.0),
+                                              child: new Text(_code ?? "",
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  softWrap: false,
                                                   style: new TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 15.0,
-                                                  ),
-                                                ),
-                                              ),
-                                              new Container(
-                                                constraints: new BoxConstraints(
-                                                    maxWidth: 200.0),
-                                                child: new Text(_code ?? "",
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    maxLines: 1,
-                                                    softWrap: false,
-                                                    style: new TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 15.0,
-                                                    )),
-                                              )
-                                            ],
-                                          ),
+                                                  )),
+                                            )
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ))),
-                          new ConstrainedBox(
-                            constraints:
-                                new BoxConstraints(minHeight: double.infinity),
-                            child: new RaisedButton.icon(
-                              textColor: Colors.white,
-                              elevation: 0.0,
-                              // highlightColor: Colors.transparent,
-                              // splashColor: Colors.transparent,
-                              color: Colors.black87,
-                              label: new Text("号码篮"),
-                              icon: new Icon(Icons.card_giftcard),
-                              onPressed: () {
-                                /// turn to pay layer
-                                StoreProvider.of<AppState>(context).dispatch(
-                                    new LotterBetAdd(item: style.transform));
-                                Navigator.of(context).push(
-                                    new MaterialPageRoute(
-                                        builder: (context) =>
-                                            new LotteryBetLayer()));
-                              },
-                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ))),
+                        new ConstrainedBox(
+                          constraints:
+                              new BoxConstraints(minHeight: double.infinity),
+                          child: new RaisedButton.icon(
+                            textColor: Colors.white,
+                            elevation: 0.0,
+                            // highlightColor: Colors.transparent,
+                            // splashColor: Colors.transparent,
+                            color: Colors.black87,
+                            label: new Text("号码篮"),
+                            icon: new Icon(AppIcons.codelanzi),
+                            onPressed: () {
+                              /// turn to pay layer
+                              StoreProvider.of<AppState>(context).dispatch(
+                                  new LotterBetAdd(item: style.transform));
+                              Navigator.of(context).push(new MaterialPageRoute(
+                                  builder: (context) => new LotteryBetLayer()));
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                )
+                ),
               ],
             )),
       ),
@@ -466,7 +467,7 @@ class _LotteryItemState extends State<LotteryItem> {
                 child: new Text(
                   left[position] ?? "",
                   style: new TextStyle(
-                    color: Colors.red[200],
+                    color: Colors.black26,
                     fontSize: 13.0,
                   ),
                   maxLines: 1,

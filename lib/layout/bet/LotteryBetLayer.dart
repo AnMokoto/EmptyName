@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lowlottery/store/appStore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:lowlottery/conf/LotPlay.dart';
 
 /// 立即下注界面
 class LotteryBetLayer extends StatefulWidget {
@@ -59,6 +60,7 @@ class _LotteryState extends State<LotteryBetLayer> {
                             /// 选择的样式
                             delegate: new SliverChildListDelegate(
                               // 创建带划线的ListView
+
                               ListTile.divideTiles(
                                 color: Colors.grey,
                                 tiles: new List.generate(
@@ -71,15 +73,17 @@ class _LotteryState extends State<LotteryBetLayer> {
                                         data.code ?? "",
                                         style: new TextStyle(
                                             color: Colors.red[800],
-                                            fontSize: 15.0),
+                                            fontSize: 17.0),
                                       ),
                                       subtitle: new Text(
                                         ///x${model.beishu}倍
-                                        "${data.playEn} ${data.zhushu}注x${AppState.price}元 = ${data.money}元 ",
+                                        LotPlayConfig.getName(
+                                                "${data.playEn}") +
+                                            "  ${data.zhushu}注x${AppState.price}元 = ${data.money}元 ",
 
                                         style: new TextStyle(
                                             color: Colors.black45,
-                                            fontSize: 15.0),
+                                            fontSize: 13.0),
                                       ),
                                       trailing: new IconButton(
                                         icon: new Icon(Icons.delete),
@@ -109,16 +113,7 @@ class _LotteryState extends State<LotteryBetLayer> {
                         ),
 
                         /// list 底部操作栏
-                        new SliverToBoxAdapter(
-                          child: new Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 30.0),
-                            child: new Container(
-                              height: 50.0,
-                              color: Colors.orange,
-                              child: new Text("afeeeeeeeeee"),
-                            ),
-                          ),
-                        )
+
                         // new Text("data")
                       ],
                     );

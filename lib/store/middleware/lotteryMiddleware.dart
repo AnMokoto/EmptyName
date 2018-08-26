@@ -130,7 +130,7 @@ final recordMiddleware = <Middleware<AppState>>[
     transform(response, next).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
-        next(LotteryRecordResponseAction(value));
+        next(LotteryRecordResponseAction(value['dataList']));
       }
     });
     next(HttpProgressAction(action.context, false));

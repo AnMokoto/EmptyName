@@ -30,7 +30,7 @@ abstract class _pk10 extends PlayStyle {
 
   @override
   // TODO: implement count
-  int get count => 5;
+  int get count => 10;
 
   @override
   List<List<int>> toBet2System(int index, int position) {
@@ -54,8 +54,9 @@ abstract class _pk10 extends PlayStyle {
 
   @override
   forceTransform(d) {
-    if (d < 10) return "0$d";
-    return d;
+    var dd = "${d + 1}";
+    if (d < 10) return "0${dd}";
+    return "${dd}";
   }
 }
 
@@ -121,7 +122,7 @@ class pk10_dwd extends _pk10 {
 
   @override
   List<String> initialType() {
-    return ["冠军", "亚军", "季军", "第四", "第五"];
+    return ["冠军", "亚军", "季军", "第四", "第五", "第六", "第七", "第八", "第九", "第十"];
   }
 
   @override

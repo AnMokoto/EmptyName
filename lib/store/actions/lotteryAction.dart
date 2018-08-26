@@ -80,7 +80,7 @@ class LotteryRecordAction extends HttpStoreAction {
 }
 
 class LotteryRecordResponseAction extends StoreAction {
-  dynamic data;
+  List<dynamic> data;
   LotteryRecordResponseAction(this.data);
 }
 

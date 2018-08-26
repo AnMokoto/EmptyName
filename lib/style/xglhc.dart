@@ -4,7 +4,7 @@ import 'package:lowlottery/log.dart';
 import 'Pk10Zhushuzxfx.dart';
 import 'ZuheUtil.dart';
 import 'style.dart';
-
+import 'package:lowlottery/conf/LotPlay.dart';
 ///  香港六合彩
 @protected
 abstract class _xglhc extends PlayStyle {
@@ -30,7 +30,7 @@ abstract class _xglhc extends PlayStyle {
 
   @override
   // TODO: implement count
-  int get count => 5;
+  int get count => 7;
 
   @override
   List<List<int>> toBet2System(int index, int position) {
@@ -205,18 +205,13 @@ class Stylexglhc extends StyleManagerIMPL {
     return const Stylexglhc();
   }
 
-  PlayStyle get tmzx => cqssc_hz(type: "tmzx", name: "特码直选", desc: "特码直选");
-  PlayStyle get zmz1t => cqssc_hz(type: "zmz1t", name: "正1特码", desc: "正1特码");
-
-  PlayStyle get zmz2t => cqssc_hz(type: "zmz2t", name: "正2特码", desc: "正2特码");
-
-  PlayStyle get zmz3t => cqssc_hz(type: "zmz3t", name: "正3特码", desc: "正3特码");
-
-  PlayStyle get zmz4t => cqssc_hz(type: "zmz4t", name: "正4特码", desc: "正4特码");
-
-  PlayStyle get zmz5t => cqssc_hz(type: "zmz5t", name: "正5特码", desc: "正5特码");
-
-  PlayStyle get zmz6t => cqssc_hz(type: "zmz6t", name: "正6特码", desc: "正6特码");
+  PlayStyle get tmzx => cqssc_hz(type: "xglhc_tmzx", name: LotPlayConfig.getName("xglhc_tmzx"), desc: "特码直选");
+  PlayStyle get zmz1t => cqssc_hz(type: "xglhc_zmz1t", name:LotPlayConfig.getName("xglhc_zmz1t"), desc: "正1特码");
+  PlayStyle get zmz2t => cqssc_hz(type: "xglhc_zmz2t", name:LotPlayConfig.getName("xglhc_zmz2t"), desc: "正2特码");
+  PlayStyle get zmz3t => cqssc_hz(type: "xglhc_zmz3t", name:LotPlayConfig.getName("xglhc_zmz3t"), desc: "正3特码");
+  PlayStyle get zmz4t => cqssc_hz(type: "xglhc_zmz4t", name:LotPlayConfig.getName("xglhc_zmz4t"), desc: "正4特码");
+  PlayStyle get zmz5t => cqssc_hz(type: "xglhc_zmz5t", name:LotPlayConfig.getName("xglhc_zmz5t"), desc: "正5特码");
+  PlayStyle get zmz6t => cqssc_hz(type: "xglhc_zmz6t", name: LotPlayConfig.getName("xglhc_zmz6t"), desc: "正6特码");
 
   @override
   String get name => "六合彩";
@@ -235,23 +230,22 @@ class Stylexglhc extends StyleManagerIMPL {
 /*
 * 
 
-  //  香港六合彩特码
-  xglhc_tmzx("tmzx", "特码直选"),
-  xglhc_tmlm("tmlm", "特码两面"),
-  //香港六合彩正码
-  xglhc_zmrx("rxzm", "正码任选"),
-  xglhc_zmz1t("rxzm", "正码正1特"),
-  xglhc_zmz1lm("rxzm", "正码正1两面"),
-  xglhc_zmz2t("rxzm", "正码正2特"),
-  xglhc_zmz2lm("rxzm", "正码正2两面"),
-  xglhc_zmz3t("rxzm", "正码正3特"),
-  xglhc_zmz3lm("rxzm", "正码正3两面"),
-  xglhc_zmz4t("rxzm", "正码正4特"),
-  xglhc_zmz4lm("rxzm", "正码正4两面"),
-  xglhc_zmz5t("rxzm", "正码正5特"),
-  xglhc_zmz5lm("rxzm", "正码正5两面"),
-  xglhc_zmz6t("rxzm", "正码正6特"),
-  xglhc_zmz6lm("rxzm", "正码正6两面"),
+ "xglhc_tmzx": "特码直选",
+"xglhc_tmlm": "特码两面",
+"xglhc_zmrx": "正码任选",
+"xglhc_zmz1t": "正码正1特",
+"xglhc_zmz1lm": "正码正1两面",
+"xglhc_zmz2t": "正码正2特",
+"xglhc_zmz2lm": "正码正2两面",
+"xglhc_zmz3t": "正码正3特",
+"xglhc_zmz3lm": "正码正3两面",
+"xglhc_zmz4t": "正码正4特",
+"xglhc_zmz4lm": "正码正4两面",
+"xglhc_zmz5t": "正码正5特",
+"xglhc_zmz5lm": "正码正5两面",
+"xglhc_zmz6t": "正码正6特",
+"xglhc_zmz6lm": "正码正6两面",
+
 
 
 * */
