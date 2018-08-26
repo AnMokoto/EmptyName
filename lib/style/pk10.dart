@@ -122,7 +122,7 @@ class pk10_dwd extends _pk10 {
 
   @override
   List<String> initialType() {
-    return ["冠军", "亚军", "季军", "第四", "第五"];
+    return ["冠军", "亚军", "季军", "第四", "第五", "第六", "第七", "第八", "第九", "第十"];
   }
 
   @override
