@@ -220,7 +220,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                     padding: EdgeInsets.symmetric(vertical: 5.0),
                     child: new Container(
                       color: Colors.grey,
-                      width: 1.0,
+                      width: .5,
                       height: 50.0,
                     ),
                   ),

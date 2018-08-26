@@ -58,7 +58,7 @@ class _MineState extends MVPState<MinePresenter, MineLayer> with AutomaticKeepAl
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       new Container(
-                        margin: EdgeInsets.only(top: 20.0, bottom: 10.0),
+                        margin: EdgeInsets.only(top: 5.0, bottom: 10.0),
                         child: new Column(
                           children: <Widget>[
                             Icon(Icons.whatshot),
@@ -107,8 +107,8 @@ class _MineState extends MVPState<MinePresenter, MineLayer> with AutomaticKeepAl
                                               // highlightColor: Colors.transparent,
                                               // splashColor: Colors.transparent,
                                               color: Colors.red,
-                                              label: new Text("充值" , style: new TextStyle(fontSize: 18.0),),
-                                              icon: new Icon(AppIcons.codelanzi ),
+                                              label: new Text("充值"  ),
+                                              icon: new Icon(AppIcons.chongzhi ),
                                               onPressed: () {
                                                 /// turn to pay layer
                                                 /*StoreProvider.of<AppState>(context).dispatch(
@@ -148,8 +148,8 @@ class _MineState extends MVPState<MinePresenter, MineLayer> with AutomaticKeepAl
                                               // highlightColor: Colors.transparent,
                                               // splashColor: Colors.transparent,
                                               color: Colors.orange,
-                                              label: new Text("提现", style: new TextStyle(fontSize: 18.0)),
-                                              icon: new Icon(AppIcons.codelanzi ),
+                                              label: new Text("提现" ),
+                                              icon: new Icon(AppIcons.tixian ),
                                               onPressed: () {
                                                 /// turn to pay layer
                                                 /*StoreProvider.of<AppState>(context).dispatch(
