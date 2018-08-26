@@ -478,7 +478,7 @@ class _LotteryItemState extends State<LotteryItem> {
                 child: new Text(
                   left[position] ?? "",
                   style: new TextStyle(
-                    color: Colors.red[200],
+                    color: Colors.black26,
                     fontSize: 13.0,
                   ),
                   maxLines: 1,
