@@ -84,9 +84,22 @@ class LotPlayConfig {
     "11x5_q3zxfx": "前三直选复选",
     "11x5_q2zuxfx": "前二组选复选",
     "11x5_q3zuxfx": "前三组选复选",
-    "tmzx": "特码直选",
-    "tmlm": "特码两面",
-    "rxzm": "正码任选",
+    "xglhc_tmzx": "特码直选",
+    "xglhc_tmlm": "特码两面",
+    "xglhc_zmrx": "正码任选",
+    "xglhc_zmz1t": "正码正1特",
+    "xglhc_zmz1lm": "正码正1两面",
+    "xglhc_zmz2t": "正码正2特",
+    "xglhc_zmz2lm": "正码正2两面",
+    "xglhc_zmz3t": "正码正3特",
+    "xglhc_zmz3lm": "正码正3两面",
+    "xglhc_zmz4t": "正码正4特",
+    "xglhc_zmz4lm": "正码正4两面",
+    "xglhc_zmz5t": "正码正5特",
+    "xglhc_zmz5lm": "正码正5两面",
+    "xglhc_zmz6t": "正码正6特",
+    "xglhc_zmz6lm": "正码正6两面",
+
   };
 
   /**
