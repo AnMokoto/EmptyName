@@ -159,16 +159,7 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
                         ),
 
                         /// list 底部操作栏
-                        new SliverToBoxAdapter(
-                          child: new Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 30.0),
-                            child: new Container(
-                              height: 50.0,
-                              color: Colors.orange,
-                              child: new Text("afeeeeeeeeee"),
-                            ),
-                          ),
-                        )
+
                         // new Text("data")
                       ],
                     );
