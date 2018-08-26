@@ -164,6 +164,9 @@ String transformToString(List<dynamic> choice, String type) {
       ||type.contains("zmz4t")
       ||type.contains("zmz5t")
       ||type.contains("zmz6t")
+      ||type.contains("thdx")
+      ||type.contains("2thfx")
+      ||type.contains("2bth")
 
   ) {
     return transformToWithOutPoint(choice);
