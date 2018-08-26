@@ -55,3 +55,16 @@ class LotteryModel extends Lottery with _$LotteryModelSerializerMixin {
       this.buyStartTime, this.buyEndTime, this.remainTime)
       : super(gameEn, openTime, opencode, expectNo);
 }
+
+class LotteryState {
+  /// 当前记录信息 remainTime
+  LotteryModel lottery;
+
+  /// 历史记录
+  List<Lottery> history = new List();
+}
+
+class LotteryRecord {
+  List<dynamic> data;
+  Map<String, dynamic> detail;
+}

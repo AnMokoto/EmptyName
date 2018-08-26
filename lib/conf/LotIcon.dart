@@ -33,7 +33,6 @@ class LotIcon {
    * 获取彩种logo
    */
   static IconData getLot(String gameEn) {
-    print(gameEn);
     if (gameEn.contains("ssc5")) return IconData(0xe609, fontFamily: "Alibaba");
     if (gameEn.contains("ssc3")) return IconData(0xe610, fontFamily: "Alibaba");
     if (gameEn.contains("ssc1")) return IconData(0xe611, fontFamily: "Alibaba");

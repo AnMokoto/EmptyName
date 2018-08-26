@@ -1,21 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'LoginContract.dart';
-import 'package:lowlottery/common/mvp.dart';
 import 'package:lowlottery/font/index.dart';
 import 'package:flutter/services.dart';
+import 'package:lowlottery/store/appStore.dart';
 
 class LoginLayer extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _LoginPageState(new LoginPresenter());
+    return new _LoginPageState();
   }
 }
 
-class _LoginPageState extends MVPState<LoginPresenter, LoginLayer>
-    with LoginBetIView {
-  _LoginPageState(LoginPresenter p) : super(p);
-
+class _LoginPageState extends State<LoginLayer> {
   var leftRightPadding = 30.0;
   var topBottomPadding = 4.0;
   var textTips = new TextStyle(fontSize: 16.0, color: Colors.black);
@@ -106,12 +102,15 @@ class _LoginPageState extends MVPState<LoginPresenter, LoginLayer>
                       onPressed: () {
                         print("the username is" + _userNameController.text);
                         print("the pass is" + _userPassController.text);
-                        presenter.login({
-                          "username": _userNameController.text,
-                          "pwd": _userPassController.text
-                        }).then((e) {
-                          ////
-                        });
+                        StoreProvider.of<AppState>(context).dispatch(
+                          new LoginRequestAction(
+                            context,
+                            {
+                              "username": _userNameController.text,
+                              "pwd": _userPassController.text
+                            },
+                          ),
+                        );
                       },
                       child: new Text(
                         '马上登录',

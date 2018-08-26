@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:lowlottery/common/mvp.dart';
-import 'OpencodeRecordContract.dart';
 import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/conf/Lot.dart';
+import 'package:lowlottery/store/appStore.dart';
+import 'dart:async';
+
 class OpencodeRecordLayer extends StatefulWidget {
-  _OpencodeRecordState createState() =>
-      new _OpencodeRecordState(new LotterBetRecordPresenter());
+  _OpencodeRecordState createState() => new _OpencodeRecordState();
 }
 
-class _OpencodeRecordState
-    extends MVPState<LotterBetRecordPresenter, OpencodeRecordLayer>
-    with SingleTickerProviderStateMixin<OpencodeRecordLayer>,AutomaticKeepAliveClientMixin<OpencodeRecordLayer>
-    implements LotterBetRecordIVew {
+class _OpencodeRecordState extends State<OpencodeRecordLayer>
+    with SingleTickerProviderStateMixin<OpencodeRecordLayer> {
   final titles = [
     "全部",
     "时时彩",
@@ -19,16 +17,12 @@ class _OpencodeRecordState
     "11选5",
   ];
 
-  @override
-    // TODO: implement wantKeepAlive
-    bool get wantKeepAlive => true;
-
   @protected
   TabController _tabController;
 
-  _OpencodeRecordState(LotterBetRecordPresenter presenter) : super(presenter) {
+  _OpencodeRecordState() {
     this._tabController =
-    new TabController(length: titles.length, vsync: this, initialIndex: 0);
+        new TabController(length: titles.length, vsync: this, initialIndex: 0);
   }
 
   @override
@@ -50,16 +44,16 @@ class _OpencodeRecordState
               return new Tab(
                 child: new Text(
                   s,
-                  style: new TextStyle(color: Theme
-                      .of(context)
-                      .primaryColor),
+                  style: new TextStyle(color: Theme.of(context).primaryColor),
                 ),
               );
             }).toList(),
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
-          title: new Text("开奖号码" ,),
+          title: new Text(
+            "开奖号码",
+          ),
         ),
         body: new Column(
           children: <Widget>[
@@ -69,7 +63,6 @@ class _OpencodeRecordState
                 children: titles.map((s) {
                   return new OpencodeRecorderFragLayer();
                 }).toList(),
-
               ),
             )
           ],
@@ -83,94 +76,78 @@ class _OpencodeRecordState
 class OpencodeRecorderFragLayer extends StatefulWidget {
   @override
   _LotterBetRecorderFragState createState() =>
-      new _LotterBetRecorderFragState(new OpencodeRecordFragPresenter());
+      new _LotterBetRecorderFragState();
 }
 
-class _LotterBetRecorderFragState
-    extends MVPState<OpencodeRecordFragPresenter, OpencodeRecorderFragLayer>
-    with AutomaticKeepAliveClientMixin<OpencodeRecorderFragLayer>
-    implements OpencodeRecordFragIVew {
-  List<dynamic> data = new List();
-
-  _LotterBetRecorderFragState(OpencodeRecordFragPresenter presenter)
-      : super(presenter);
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
-
-  @override
-  void requestBetRecordSuccess(List<dynamic> data) {
-    assert(data != null);
-
-    setState(() {
-      this.data.addAll(data);
-    });
-  }
-
+class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
   var style = const TextStyle(
     fontSize: 15.0,
     color: Colors.black26,
   );
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    presenter.opencodeList();
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    dispatch(context,
+        new SecondRequestAction(context, {"pageIndex": 0, "pageSize": 100}));
   }
 
   @override
   Widget build(BuildContext context) {
-    return new ListView.builder(
-      itemCount: data.length,
-      itemBuilder: (context, index) {
-        var value = data[index];
-        return new Container(
-          constraints: new BoxConstraints(
-            maxHeight: 80.0,
-          ),
-          child: new InkWell(
-
-            onTap: () {
-              print("onTop");
-             /* Navigator.of(context).push(new MaterialPageRoute(
+    return new StoreConnector<AppState, List<dynamic>>(
+      builder: (context, state) {
+        return new ListView.builder(
+          itemCount: state.length,
+          itemBuilder: (context, index) {
+            var value = state[index];
+            return new Container(
+              constraints: new BoxConstraints(
+                maxHeight: 80.0,
+              ),
+              child: new InkWell(
+                onTap: () {
+                  print("onTop");
+                  /* Navigator.of(context).push(new MaterialPageRoute(
                   builder: (context) =>
                   new LotOpencodelistDetails(
                     gameEn: "${value["gameEn"]}",
                   )));*/
-            },
-            child: new Row(
-              children: <Widget>[
-
-
-                new Expanded(
-                  child: new Column(
-                    children: <Widget>[
-                      new Expanded(
-                        child: new Container(
-                          padding: EdgeInsets.all(10.0),
-                          child: new Row(
-                            children: <Widget>[
-                              new Text(LotConfig.getLotName("${value['gameEn']}")),
-                              new Text("${value["expectNo"] ?? "-"}" + " | " +
-                                  "${value['createTime'] ?? '-'}"),
-                              new Text("${value["opencode"] ?? "-"}"),
+                },
+                child: new Row(
+                  children: <Widget>[
+                    new Expanded(
+                      child: new Column(
+                        children: <Widget>[
+                          new Expanded(
+                            child: new Container(
+                              padding: EdgeInsets.all(10.0),
+                              child: new Row(
+                                children: <Widget>[
+                                  new Text(LotConfig.getLotName(
+                                      "${value['gameEn']}")),
+                                  new Text("${value["expectNo"] ?? "-"}" +
+                                      " | " +
+                                      "${value['createTime'] ?? '-'}"),
+                                  new Text("${value["opencode"] ?? "-"}"),
 //                              new Icon(AppIcons.getLot("${value['gameEn']}"), size: 60.0)
-                            ],
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
+                          new Divider(),
+                        ],
                       ),
-                      new Divider(),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            )
-            ,
-          )
-          ,
+              ),
+            );
+          },
         );
+      },
+      converter: (state) {
+        return state.state.homeModel.second;
       },
     );
   }

@@ -1,72 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:lowlottery/conf/BuyLotLineHeight.dart';
-/////////
-/// @author An'Mokoto
-/// [bet] 下注的数字 [0,1,-,-,-] 共计 五位
-/// 其中 `Value` 每一位置区间长度`(0-10]`, 长度为 `-` 时表示 `0`
-/// @desc 玩法 注数 x 单注价格 x 倍数 = Total
-//////// 一下数据为用户选择的数据
-
-// {
-// expectNo (string): 当前期号 ,
-// gameEn (string): 彩种编码 ,
-// money (number): 方案总金额 ,
-// zhushu (integer): 方案总注数 ,
-// content (Array[ProjectContent])
-// }
-/// 传递类型
-class PlayModel extends Object {
-  String gameEn;
-  String expectNo;
-  String money;
-  int zhushu;
-  double beishu;
-  List<PlayModelItem> content;
-  PlayModel({
-    this.beishu: 1.0,
-  }) {
-    this.content = new List();
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      "gameEn": gameEn,
-      "expectNo": expectNo,
-      "money": money,
-      "beishu": beishu,
-      "zhushu": zhushu,
-      "content": content.map((f) => f.toMap()).toList()
-    };
-  }
-}
-
-// {
-// beishu (integer): 倍数 ,
-// code (string): 当前用户选号 ,
-// money (number): 购彩金额 ,
-// playEn (string): 玩法编码 ,
-// zhushu (integer): 购彩注数
-// }
-/// 选中类型
-class PlayModelItem extends Object {
-  String code;
-  String playEn;
-  int zhushu;
-  double money;
-
-  PlayModelItem({this.code, this.playEn: "", this.zhushu: 0, this.money: 0.0});
-
-  Map<String, dynamic> toMap() {
-    return {
-      "code": code,
-      //"code":code.toString(),
-
-      "playEn": playEn,
-      "zhushu": zhushu,
-      "money": money
-    };
-  }
-}
+import 'package:lowlottery/store/models/playModel.dart';
+export 'package:lowlottery/store/models/playModel.dart';
 
 /// 对玩法数据实际操作的工具类
 abstract class PlayStyle {
@@ -85,7 +20,7 @@ abstract class PlayStyle {
   String _showName;
   String get name => _showName;
 
- @protected
+  @protected
   double _height;
   double get height => _height;
 
@@ -107,8 +42,7 @@ abstract class PlayStyle {
     this._desc = desc ?? "";
     this.model = new PlayModelItem()..playEn = type;
     this._price = price;
-    this._height=LotLineHeight.calHeight("", type);
-
+    this._height = LotLineHeight.calHeight("", type);
   }
 
   @protected
@@ -157,15 +91,13 @@ String transformToString(List<dynamic> choice, String type) {
       type.endsWith("ebd") ||
       type.endsWith("sbd") ||
       type.contains("zuxbd") ||
-      type.contains("rx")
-      ||type.contains("zmz1t")
-      ||type.contains("zmz2t")
-      ||type.contains("zmz3t")
-      ||type.contains("zmz4t")
-      ||type.contains("zmz5t")
-      ||type.contains("zmz6t")
-
-  ) {
+      type.contains("rx") ||
+      type.contains("zmz1t") ||
+      type.contains("zmz2t") ||
+      type.contains("zmz3t") ||
+      type.contains("zmz4t") ||
+      type.contains("zmz5t") ||
+      type.contains("zmz6t")) {
     return transformToWithOutPoint(choice);
   }
   return choice.toString().replaceAll(new RegExp(r"(\]|\[)"), "");

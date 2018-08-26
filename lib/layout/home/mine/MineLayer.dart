@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:lowlottery/common/mvp.dart';
-import 'MineContract.dart';
+
 import 'package:lowlottery/layout/record/LotteryBetRecord.dart';
 import 'package:lowlottery/layout/login/LoginLayer.dart';
 import 'package:lowlottery/layout/register/RegisterLayer.dart';
 
 class MineLayer extends StatefulWidget {
-  _MineState createState() => new _MineState(new MinePresenter());
+  _MineState createState() => new _MineState();
 }
 
-class _MineState extends MVPState<MinePresenter, MineLayer> with AutomaticKeepAliveClientMixin<MineLayer>
-    implements MineIView {
-  _MineState(MinePresenter presenter) : super(presenter);
-
-@override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
-
+class _MineState extends State<MineLayer> {
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -80,8 +72,8 @@ class _MineState extends MVPState<MinePresenter, MineLayer> with AutomaticKeepAl
             child: new ListTile(
               onTap: () {
                 Navigator.of(context).push(new MaterialPageRoute(
-                      builder: (context) => new LotterBetRecordLayer(),
-                    ));
+                  builder: (context) => new LotterBetRecordLayer(),
+                ));
               },
               leading: Icon(Icons.history),
               title: new Text("投注记录"),
@@ -94,20 +86,21 @@ class _MineState extends MVPState<MinePresenter, MineLayer> with AutomaticKeepAl
             child: new ListTile(
               onTap: () {
                 Navigator.of(context).push(new MaterialPageRoute(
-                      builder: (context) => new LoginLayer(),
-                    ));
+                  builder: (context) => new LoginLayer(),
+                ));
               },
               leading: Icon(Icons.history),
               title: new Text("用户登陆"),
               trailing: Icon(Icons.navigate_next),
             ),
-          ),new Container(
+          ),
+          new Container(
             color: Colors.white,
             child: new ListTile(
               onTap: () {
                 Navigator.of(context).push(new MaterialPageRoute(
-                      builder: (context) => new RegisterLayer(),
-                    ));
+                  builder: (context) => new RegisterLayer(),
+                ));
               },
               leading: Icon(Icons.history),
               title: new Text("用户注册"),

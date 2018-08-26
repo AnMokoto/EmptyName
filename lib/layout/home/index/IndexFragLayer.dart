@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
-import 'package:lowlottery/common/mvp.dart';
-import 'IndexContract.dart';
 import 'package:lowlottery/widget/fixbox/FixBoxWidget.dart';
 import 'package:lowlottery/widget/fixbox/FixBoxModel.dart';
 import 'package:lowlottery/layout/lottery/LotteryLayer.dart';
 import 'package:lowlottery/style/index.dart' show StyleSplit;
+import 'package:lowlottery/store/appStore.dart';
+import 'dart:async';
 
 class IndexFragLayer extends StatefulWidget {
-  List<FixBoxModel> models;
-
   // final index_type = [
   //   "assets/lottery/cqssc.png",
   //   "assets/lottery/pk10.png",
@@ -19,35 +17,23 @@ class IndexFragLayer extends StatefulWidget {
   //   "assets/lottery/cqssc.png",
   // ];
 
-  IndexFragLayer({Key key}) : super(key: key) {
-    this.models = [];
-  }
-
+  IndexFragLayer({Key key}) : super(key: key);
   @override
-  _IndexFragState createState() =>
-      new _IndexFragState(new IndexFragPresenter());
+  _IndexFragState createState() => new _IndexFragState();
 }
 
-class _IndexFragState extends MVPState<IndexFragPresenter, IndexFragLayer> with AutomaticKeepAliveClientMixin<IndexFragLayer>
-    implements IndexFragIView {
-  _IndexFragState(IndexFragPresenter presenter) : super(presenter);
-
-  @override
-    // TODO: implement wantKeepAlive
-    bool get wantKeepAlive => true;
-
+class _IndexFragState extends State<IndexFragLayer> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    presenter.requestIndexFragLottery();
   }
 
   @override
-  void requestIndexFragLotterySuccess(List<FixBoxModel> data) {
-    setState(() {
-      widget..models.addAll(data);
-    });
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    dispatch(context, new IndexRequestAction(context, new Map()));
   }
 
   @override
@@ -77,16 +63,24 @@ class _IndexFragState extends MVPState<IndexFragPresenter, IndexFragLayer> with 
           ),
         ),
         new Expanded(
-            child: new FixBoxWidget(
-                models: widget.models,
-                onItemClick: (model, position) {
-                  Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new LotteryLayer(
-                          impl: StyleSplit.of(model.gameEn),
-                           gameEn:model.gameEn ,
-                        ),
-                  ));
-                }))
+          child: new StoreConnector<AppState, List<FixBoxModel>>(
+            builder: (context, state) {
+              return new FixBoxWidget(
+                  models: state ?? [],
+                  onItemClick: (model, position) {
+                    Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (context) => new LotteryLayer(
+                            impl: StyleSplit.of(model.gameEn),
+                            gameEn: model.gameEn,
+                          ),
+                    ));
+                  });
+            },
+            converter: (state) {
+              return state.state.homeModel.model;
+            },
+          ),
+        ),
       ],
     );
   }

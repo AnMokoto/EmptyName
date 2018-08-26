@@ -57,8 +57,6 @@ class LotConfig {
    * 获取彩种logo
    */
   static String getLotName(String gameEn) {
-
-//    print(gameEn);
-    return _lot["$gameEn"]??'--';
+    return _lot["$gameEn"] ?? '--';
   }
 }

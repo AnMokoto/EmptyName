@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:lowlottery/common/mvp.dart';
-import 'LotterBetRecordContract.dart';
-import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/conf/Lot.dart';
 import 'package:lowlottery/conf/LotIcon.dart';
+import 'package:lowlottery/store/appStore.dart';
+
 class LotterBetRecordLayer extends StatefulWidget {
-  _LotterBetRecordState createState() =>
-      new _LotterBetRecordState(new LotterBetRecordPresenter());
+  _LotterBetRecordState createState() => new _LotterBetRecordState();
 }
 
-class _LotterBetRecordState
-    extends MVPState<LotterBetRecordPresenter, LotterBetRecordLayer>
-    with SingleTickerProviderStateMixin<LotterBetRecordLayer>
-    implements LotterBetRecordIVew {
+class _LotterBetRecordState extends State<LotterBetRecordLayer>
+    with SingleTickerProviderStateMixin<LotterBetRecordLayer> {
   final titles = [
     "全部",
     "已中奖",
     "待开奖",
-
   ];
 
   @protected
   TabController _tabController;
 
-  _LotterBetRecordState(LotterBetRecordPresenter presenter) : super(presenter) {
+  _LotterBetRecordState() {
     this._tabController =
         new TabController(length: titles.length, vsync: this, initialIndex: 0);
   }
@@ -64,7 +59,6 @@ class _LotterBetRecordState
                 children: titles.map((s) {
                   return new LotterBetRecorderFragLayer();
                 }).toList(),
-
               ),
             )
           ],
@@ -78,16 +72,12 @@ class _LotterBetRecordState
 class LotterBetRecorderFragLayer extends StatefulWidget {
   @override
   _LotterBetRecorderFragState createState() =>
-      new _LotterBetRecorderFragState(new LotterBetRecordFragPresenter());
+      new _LotterBetRecorderFragState();
 }
 
-class _LotterBetRecorderFragState
-    extends MVPState<LotterBetRecordFragPresenter, LotterBetRecorderFragLayer>
-    with AutomaticKeepAliveClientMixin<LotterBetRecorderFragLayer>
-    implements LotterBetRecordFragIVew {
+class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer>
+    with AutomaticKeepAliveClientMixin<LotterBetRecorderFragLayer> {
   List<dynamic> data = new List();
-  _LotterBetRecorderFragState(LotterBetRecordFragPresenter presenter)
-      : super(presenter);
   TextStyle small = new TextStyle(fontSize: 90.0);
   @override
   // TODO: implement wantKeepAlive
@@ -106,7 +96,8 @@ class _LotterBetRecorderFragState
   void initState() {
     // TODO: implement initState
     super.initState();
-    presenter.requestBetRecord("0");
+    dispatch(context,
+        new LotteryRecordAction(context, {"pageIndex": 0, "pageSize": 100}));
   }
 
   @override
@@ -146,8 +137,11 @@ class _LotterBetRecorderFragState
                     children: <Widget>[
                       // Image.network(""),
 //                      new Icon(AppIcons.getLot("${value["gameEn"]}"),size: 33.0,),
-                      LotIcon.logo("${value["gameEn"]}" ,33.0) ,
-                      new Text(LotConfig.getLotName("${value["gameEn"]??"-"}") ,style: new TextStyle(fontSize: 11.0 ,color: Colors.black54))
+                      LotIcon.logo("${value["gameEn"]}", 33.0),
+                      new Text(
+                          LotConfig.getLotName("${value["gameEn"] ?? "-"}"),
+                          style: new TextStyle(
+                              fontSize: 11.0, color: Colors.black54))
                     ],
                   ),
                 ),
@@ -169,28 +163,36 @@ class _LotterBetRecorderFragState
                                         left: 0.0,
                                         top: 0.0,
                                         child: new Text(
-                                            "${value["statusDesc"]??"-"}" ,style: new TextStyle(
-                                          color: Colors.red,
-                                        ), ),
-
+                                          "${value["statusDesc"] ?? "-"}",
+                                          style: new TextStyle(
+                                            color: Colors.red,
+                                          ),
+                                        ),
                                       ),
                                       new Positioned(
                                         right: 0.0,
                                         top: 0.0,
-                                        child: new Text(
-                                            "自购" ),
+                                        child: new Text("自购"),
                                       ),
                                       new Positioned(
                                         right: 0.0,
                                         bottom: 0.0,
                                         child: new Text(
-                                            "投注${value["money"]??"-"}元" ,style: new TextStyle(fontSize: 11.0 ,color: Colors.black54),),
+                                          "投注${value["money"] ?? "-"}元",
+                                          style: new TextStyle(
+                                              fontSize: 11.0,
+                                              color: Colors.black54),
+                                        ),
                                       ),
                                       new Positioned(
                                         left: 0.0,
                                         bottom: 0.0,
                                         child: new Text(
-                                            "${value["createTimeStr"]??"-"}" ,style: new TextStyle(fontSize: 11.0 ,color: Colors.black54),),
+                                          "${value["createTimeStr"] ?? "-"}",
+                                          style: new TextStyle(
+                                              fontSize: 11.0,
+                                              color: Colors.black54),
+                                        ),
                                       )
                                     ],
                                   ),
@@ -220,15 +222,11 @@ class LotteryBetRecordDetails extends StatefulWidget {
   LotteryBetRecordDetails({this.projectEn}) : assert(projectEn != null);
 
   _LotteryBetRecordDetailsState createState() =>
-      new _LotteryBetRecordDetailsState(new LotterBetRecordDetailPresenter());
+      new _LotteryBetRecordDetailsState();
 }
 
-class _LotteryBetRecordDetailsState
-    extends MVPState<LotterBetRecordDetailPresenter, LotteryBetRecordDetails>
-    implements LotterBetRecordDetailIVew {
+class _LotteryBetRecordDetailsState extends State<LotteryBetRecordDetails> {
   Map<String, dynamic> _map = new Map();
-  _LotteryBetRecordDetailsState(LotterBetRecordDetailPresenter presenter)
-      : super(presenter);
 
   @override
   void requestDetailsSuccess(Map<String, dynamic> map) {
@@ -239,9 +237,11 @@ class _LotteryBetRecordDetailsState
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    presenter.requestDetails(widget.projectEn);
+    dispatch(
+        context,
+        new LotteryRecordDetailAction(
+            context, {"projectEn": widget.projectEn ?? ""}));
   }
 
   @override
@@ -251,7 +251,7 @@ class _LotteryBetRecordDetailsState
     try {
       code = _map["tickets"] != null
           ? _map["tickets"].map((l) {
-              return l["code"].toString() +"\n";
+              return l["code"].toString() + "\n";
             }).toList()
           : "";
     } catch (e) {
@@ -284,17 +284,19 @@ class _LotteryBetRecordDetailsState
                     child: new Column(
                       children: <Widget>[
                         // Image.network(""),
-                        LotIcon.logo("${_map["gameEn"]}", 33.0) ,
+                        LotIcon.logo("${_map["gameEn"]}", 33.0),
 //                        new Text(LotConfig.getLotName("${_map["gameEn"]??"-"}"))
                       ],
                     ),
                   ),
                   new Positioned(
                     right: 0.0,
-                    child: new Text("${_map["awardDesc"]??"未中奖"}" ,style: new TextStyle(
-                      color: Colors.red,
-                    ), ),
-
+                    child: new Text(
+                      "${_map["awardDesc"] ?? "未中奖"}",
+                      style: new TextStyle(
+                        color: Colors.red,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -311,17 +313,18 @@ class _LotteryBetRecordDetailsState
               child: new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  new Text("彩        种："+LotConfig.getLotName("${_map["gameEn"]??"-"}")),
-                  new Text("期        号：第${_map["expectNo"]??""}期",
+                  new Text("彩        种：" +
+                      LotConfig.getLotName("${_map["gameEn"] ?? "-"}")),
+                  new Text(
+                    "期        号：第${_map["expectNo"] ?? ""}期",
                     style: style,
                   ),
                   new Text(
-                    "投注金额：${_map["money"]??""}元",
+                    "投注金额：${_map["money"] ?? ""}元",
                     style: style,
-
                   ),
                   new Text(
-                    "投注玩法：${_map["playDesc"]??""}",
+                    "投注玩法：${_map["playDesc"] ?? ""}",
                     style: style,
                   ),
                   new Text(
@@ -329,11 +332,11 @@ class _LotteryBetRecordDetailsState
                     style: style,
                   ),
                   new Text(
-                    "投注信息：${_map["zhushu"]??""}注  ${_map["beishu"]??""}倍",
+                    "投注信息：${_map["zhushu"] ?? ""}注  ${_map["beishu"] ?? ""}倍",
                     style: style,
                   ),
                   new Text(
-                    "开奖号码：${_map["opencode"]??""}",
+                    "开奖号码：${_map["opencode"] ?? ""}",
                     style: style,
                   ),
                 ],
@@ -341,11 +344,11 @@ class _LotteryBetRecordDetailsState
             ),
             new Container(
               padding: EdgeInsets.all(10.0),
-              child: new Text("投注时间：${_map["createTime"]??""}"),
+              child: new Text("投注时间：${_map["createTime"] ?? ""}"),
             ),
             new Container(
               padding: EdgeInsets.all(10.0),
-              child: new Text("方案编号：${_map["projectEn"]??""}"),
+              child: new Text("方案编号：${_map["projectEn"] ?? ""}"),
             )
           ],
         ),

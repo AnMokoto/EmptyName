@@ -1,64 +1,18 @@
 import 'package:flutter/material.dart';
-import 'LotteryBetContract.dart';
-import 'package:lowlottery/common/mvp.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
-
-import 'package:lowlottery/store/AppStore.dart' show AppState;
-import 'LotteryBetState.dart';
-import 'package:lowlottery/style/index.dart';
-import 'dart:async';
+import 'package:lowlottery/store/appStore.dart';
 import 'package:flutter/cupertino.dart';
 
 /// 立即下注界面
 class LotteryBetLayer extends StatefulWidget {
   @override
-  _LotteryState createState() => new _LotteryState(new LotteryBetPresenter());
+  _LotteryState createState() => new _LotteryState();
 }
 
-class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
-    with LotteryBetIView {
-  _LotteryState(LotteryBetPresenter p) : super(p);
-
+class _LotteryState extends State<LotteryBetLayer> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-  }
-
-  @override
-  void requestWhenwhohasreallytoPaySuccess(dynamic data) {
-    var style = new TextStyle(fontSize: 10.0, color: Colors.lightBlue);
-    showDialog(
-      context: context,
-      builder: (context) => new CupertinoAlertDialog(
-            title: new Text("title"),
-            content: new Text("success"),
-            actions: <Widget>[
-              new CupertinoDialogAction(
-                isDefaultAction: true,
-                onPressed: () {
-                  //this.dispose();
-                  Navigator.of(context).pop();
-                },
-                child: new Text(
-                  "left",
-                  style: style,
-                ),
-              ),
-              new CupertinoDialogAction(
-                onPressed: () {
-                  //this.dispose();
-                  Navigator.of(context).pop();
-                },
-                child: new Text(
-                  "right",
-                  style: style,
-                ),
-              ),
-            ],
-          ),
-    );
   }
 
   @override
@@ -81,8 +35,6 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
               new Expanded(
                 child: new StoreConnector<AppState, PlayModel>(
                   builder: (context, PlayModel model) {
-                    print("model====");
-                    print(model.content);
                     return new CustomScrollView(
                       controller: new ScrollController(keepScrollOffset: true),
                       shrinkWrap: true,
@@ -107,44 +59,42 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
                             /// 选择的样式
                             delegate: new SliverChildListDelegate(
                               // 创建带划线的ListView
-                              ListTile
-                                  .divideTiles(
-                                    color: Colors.grey,
-                                    tiles: new List.generate(
-                                      model.content.length,
-                                      (index) {
-                                        var data = model.content[index];
-                                        return ListTile(
-                                          // contentPadding: EdgeInsets.all(10.0),
-                                          title: new Text(
-                                            data.code ?? "",
-                                            style: new TextStyle(
-                                                color: Colors.red[800],
-                                                fontSize: 15.0),
-                                          ),
-                                          subtitle: new Text(
-                                            ///x${model.beishu}倍
-                                            "${data.playEn} ${data.zhushu}注x${AppState.price}元 = ${data.money}元 ",
+                              ListTile.divideTiles(
+                                color: Colors.grey,
+                                tiles: new List.generate(
+                                  model.content.length,
+                                  (index) {
+                                    var data = model.content[index];
+                                    return ListTile(
+                                      // contentPadding: EdgeInsets.all(10.0),
+                                      title: new Text(
+                                        data.code ?? "",
+                                        style: new TextStyle(
+                                            color: Colors.red[800],
+                                            fontSize: 15.0),
+                                      ),
+                                      subtitle: new Text(
+                                        ///x${model.beishu}倍
+                                        "${data.playEn} ${data.zhushu}注x${AppState.price}元 = ${data.money}元 ",
 
-                                            style: new TextStyle(
-                                                color: Colors.black45 ,fontSize: 15.0),
-                                          ),
-                                          trailing: new IconButton(
-                                            icon: new Icon(Icons.delete),
-                                            onPressed: () {
-                                              /// list 中的减号  赋值 [store.dispath(ACTIONS.REMOVE)]
-                                              StoreProvider
-                                                  .of<AppState>(context)
-                                                  .dispatch(new LotterBetDelete(
-                                                      index: index));
-                                            },
-                                          ),
-                                          //dense: true,
-                                        );
-                                      },
-                                    ),
-                                  )
-                                  .toList(),
+                                        style: new TextStyle(
+                                            color: Colors.black45,
+                                            fontSize: 15.0),
+                                      ),
+                                      trailing: new IconButton(
+                                        icon: new Icon(Icons.delete),
+                                        onPressed: () {
+                                          /// list 中的减号  赋值 [store.dispath(ACTIONS.REMOVE)]
+                                          StoreProvider.of<AppState>(context)
+                                              .dispatch(new LotterBetDelete(
+                                                  index: index));
+                                        },
+                                      ),
+                                      //dense: true,
+                                    );
+                                  },
+                                ),
+                              ).toList(),
                             ),
                           ),
                         ),
@@ -182,9 +132,6 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
                 constraints: new BoxConstraints.tightFor(),
                 child: new StoreConnector<AppState, PlayModel>(
                   builder: (context, model) {
-                    print("-----------------------------");
-                    print(model.toString());
-                    print("-----------------------------");
                     var isOffset =
                         model.content == null || model.content.length <= 0;
                     return new Offstage(
@@ -241,12 +188,10 @@ class _LotteryState extends MVPState<LotteryBetPresenter, LotteryBetLayer>
                                 ),
                                 onPressed: () {
                                   /// 立即投注
-                                  presenter
-                                      .requestWhenwhohasreallytoAdd(
-                                          model.toMap())
-                                      .then((e) {
-                                    ////
-                                  });
+                                  dispatch(
+                                      context,
+                                      new LotterBetRequestAction(
+                                          context, model.toMap()));
                                 },
                               ),
                             )

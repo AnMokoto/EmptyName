@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:lowlottery/common/mvp.dart';
-import 'package:lowlottery/layout/home/HomeContract.dart';
+
 import 'package:lowlottery/layout/home/index/IndexFragLayer.dart';
 import 'package:lowlottery/layout/home/mine/MineLayer.dart';
 import 'package:lowlottery/layout/home/opencode/OpencodeRecord.dart';
-import 'package:flutter/foundation.dart';
 
 class HomeLayer extends StatefulWidget {
   @override
-  _HomeState createState() => new _HomeState(new HomePresenter());
+  _HomeState createState() => new _HomeState();
 }
 
-class _HomeState extends MVPState<HomePresenter, HomeLayer>
-    with AutomaticKeepAliveClientMixin<HomeLayer>
-    implements HomeIView {
+class _HomeState extends State<HomeLayer> {
   PageController _pageController;
 
   int _currentIndex = 0;
-
-  _HomeState(HomePresenter presenter) : super(presenter);
 
   List<Widget> layer = <Widget>[
     new ConstrainedBox(
@@ -34,10 +28,6 @@ class _HomeState extends MVPState<HomePresenter, HomeLayer>
       child: new MineLayer(),
     )
   ];
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
 
   @override
   void initState() {

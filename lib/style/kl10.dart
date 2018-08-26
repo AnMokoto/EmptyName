@@ -242,19 +242,15 @@ class Stylekl10 extends StyleManagerIMPL {
 //    return   const Style();
   }
 
-  PlayStyle get kl10rx2 =>
-      kl10_rx(type: "kl10_rx2", name: "任选二", desc: "任选二");
+  PlayStyle get kl10rx2 => kl10_rx(type: "kl10_rx2", name: "任选二", desc: "任选二");
 
-  PlayStyle get kl10rx3 =>
-      kl10_rx(type: "kl10_rx3", name: "任选三", desc: "任选三");
+  PlayStyle get kl10rx3 => kl10_rx(type: "kl10_rx3", name: "任选三", desc: "任选三");
 
-  PlayStyle get kl10rx4 =>
-      kl10_rx(type: "kl10_rx4", name: "任选四", desc: "任选四");
+  PlayStyle get kl10rx4 => kl10_rx(type: "kl10_rx4", name: "任选四", desc: "任选四");
 
-  PlayStyle get kl10rx5 =>
-      kl10_rx(type: "kl10_rx5", name: "任选五", desc: "任选五");
+  PlayStyle get kl10rx5 => kl10_rx(type: "kl10_rx5", name: "任选五", desc: "任选五");
 
- /* PlayStyle get kl10rx6 =>
+  /* PlayStyle get kl10rx6 =>
       kl10_rx(type: "kl10_rx6", name: "任选六", desc: "任选六");
 
   PlayStyle get kl10rx7 =>
@@ -283,10 +279,10 @@ class Stylekl10 extends StyleManagerIMPL {
 
   @override
   List<PlayStyle> get all => [
-    kl10rx2,
+        kl10rx2,
         kl10rx3,
         kl10rx4,
-        kl10rx5,/*
+        kl10rx5, /*
         kl10rx6,
         kl10rx7,
         kl10rx8,

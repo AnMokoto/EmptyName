@@ -10,16 +10,16 @@ class AppIcons {
   static IconData from(int codePoint) =>
       IconData(codePoint, fontFamily: "Alibaba");
 
-  static IconData fromStr(String codePoint) =>/*
+  static IconData fromStr(String codePoint) =>
+      /*
       IconData(int.parse(codePoint.replaceFirst("&#", "0"), radix: 16),
           fontFamily: "Alibaba");*/
-      getLot(codePoint) ;
+      getLot(codePoint);
 
   /**
    * 获取彩种logo
    */
   static IconData getLot(String gameEn) {
-    print(gameEn) ;
     if (gameEn.contains("ssc5")) return IconData(0xe609, fontFamily: "Alibaba");
     if (gameEn.contains("ssc3")) return IconData(0xe610, fontFamily: "Alibaba");
     if (gameEn.contains("ssc1")) return IconData(0xe611, fontFamily: "Alibaba");

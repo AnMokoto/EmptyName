@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:lowlottery/layout/home/HomeLayer.dart';
+import 'package:lowlottery/store/appStore.dart';
 
 /// @author An'Mokoto
 /// @desc splash layer
@@ -43,8 +42,9 @@ class SplashState extends State<SplashLayer>
 
       //Navigator.of(context).pushNamed("/home");
       if (state == AnimationStatus.completed) {
-        Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => new HomeLayer()));
+        dispatch(context, new LogStateAction(context: context));
+        // Navigator.of(context).pushReplacement(
+        //     new MaterialPageRoute(builder: (context) => new HomeLayer()));
       }
     };
 
@@ -52,6 +52,8 @@ class SplashState extends State<SplashLayer>
     //启动动画
     controller.forward();
   }
+
+  void startNext() {}
 
   @override
   Widget build(BuildContext context) {

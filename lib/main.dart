@@ -1,25 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lowlottery/layout/splash/SplashLayer.dart';
 import 'package:lowlottery/layout/home/HomeLayer.dart';
-import 'package:lowlottery/store/AppStore.dart' show AppState,AppReducer,AppMiddleware;
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
-import 'intercept.dart';
+import 'package:lowlottery/store/appStore.dart';
 
-final Store<AppState> store = new Store<AppState>(
-    (state, action) => AppReducer.reducer(state, action),
-    initialState: AppState.from(),
-    middleware: [AppMiddleware.from()]
-    ..addAll(UserMiddleware),
-    //..addAll(AppMiddleware.createAuthMiddleware())
-    );
-
-void main() => runApp(new MyApp(store: store));
+void main() => runApp(new MyApp(store: appStore));
 
 class MyApp extends StatelessWidget {
-  
   final Store<AppState> store;
-  MyApp({this.store});
+  MyApp({this.store}) : assert(store != null) {
+    print("store=====$store");
+  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

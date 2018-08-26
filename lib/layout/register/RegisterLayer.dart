@@ -1,21 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'RegisterContract.dart';
-import 'package:lowlottery/common/mvp.dart';
 import 'package:flutter/services.dart';
 import 'package:lowlottery/font/index.dart';
+import 'package:lowlottery/store/appStore.dart';
 
 class RegisterLayer extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _LoginPageState(new RegisterPresenter());
+    return new _LoginPageState();
   }
 }
 
-class _LoginPageState extends MVPState<RegisterPresenter, RegisterLayer>
-    with RegisterIView {
-  _LoginPageState(RegisterPresenter p) : super(p);
-
+class _LoginPageState extends State<RegisterLayer> {
   var leftRightPadding = 30.0;
   var topBottomPadding = 4.0;
   var textTips = new TextStyle(fontSize: 16.0, color: Colors.black);
@@ -108,12 +104,11 @@ class _LoginPageState extends MVPState<RegisterPresenter, RegisterLayer>
                       onPressed: () {
                         print("the username is" + _userNameController.text);
                         print("the pass is" + _userPassController.text);
-                        presenter.register({
+                        StoreProvider.of<AppState>(context).dispatch(
+                            new RegisterRequestAction(context, {
                           "username": _userNameController.text,
                           "password": _userPassController.text
-                        }).then((e) {
-                          ////
-                        });
+                        }));
                       },
                       child: new Text(
                         '立即注册',

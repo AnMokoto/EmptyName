@@ -3,17 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'package:lowlottery/common/mvp.dart';
-import 'LotteryContract.dart';
-import 'LotteryModel.dart';
-import 'LotterState.dart';
 import 'package:lowlottery/layout/bet/LotteryBetLayer.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
-import 'package:lowlottery/store/AppStore.dart' show AppState;
-import 'package:lowlottery/layout/bet/LotteryBetState.dart'
-    show LotterBetAdd, LotteryBetModelItem;
-
+import 'package:lowlottery/store/appStore.dart';
 import 'package:lowlottery/style/index.dart';
+import 'dart:async';
 
 /// callback when who preclick the item.
 /// [position] item count position
@@ -30,39 +23,28 @@ class LotteryLayer extends StatefulWidget {
     print("..............." + gameEn);
   }
   @override
-  _LotteryState createState() =>
-      new _LotteryState(new LotteryPresenter(), gameEn);
+  _LotteryState createState() => new _LotteryState();
 }
 
-class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
-    implements LotteryIView {
-  String gameEn;
-  _LotteryState(LotteryPresenter presenter, String gameEn) : super(presenter) {
-    /// 初始化原有数据
-    this.gameEn = gameEn;
-  }
-
-  void _onHeadExpansionChoice(int index, bool isChoice) {}
-
-  /// 当前期数信息
-  void requestLotteryWithExpectNowSuccess(LotteryModel data) {
-    StoreProvider.of<AppState>(context)
-        .dispatch(new LotteryInitQueryAction(lottery: data));
-    // Future.sync(() => {}).whenComplete(() {}).catchError((e) {});
-  }
-
-  ///历史档期
-  void requestLotteryLastCurrentSuccess(List<Lottery> history) {
-    StoreProvider.of<AppState>(context)
-        .dispatch(new LotteryInitQueryAction(history: history));
-  }
-
+class _LotteryState extends State<LotteryLayer> {
   @override
   void initState() {
     super.initState();
-    presenter.requestLotteryWithExpectNow(gameEn).then((e) {
-      presenter.requestLotteryLastCurrent(gameEn);
-    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    StoreProvider.of<AppState>(context).dispatch(
+        new LotteryExpectNowAction(context, {"gameEn": widget.gameEn}));
+    StoreProvider.of<AppState>(context).dispatch(new LotteryExpectRecordAction(
+        context, {"gameEn": widget.gameEn, "total": 1}));
+  }
+
+  Future<bool> _onPopToPreview() {
+    dispatch(context, new LotteryClearAction());
+    return Future.value(true);
   }
 
   @override
@@ -83,325 +65,331 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
 
     var model = style.transform;
 
-    return new Scaffold(
-      appBar: new AppBar(
-        centerTitle: true,
-        title: new PopupMenuButton(
-          child: new Text(
-            style.name,
-            style: new TextStyle(
-              color: Colors.white,
+    return new WillPopScope(
+      child: new Scaffold(
+        appBar: new AppBar(
+          centerTitle: true,
+          title: new PopupMenuButton(
+            child: new Text(
+              style.name,
+              style: new TextStyle(
+                color: Colors.white,
+              ),
             ),
+            onSelected: (str) {},
+            // icon: Icon(Icons.arrow_drop_down),
+            itemBuilder: (context) => widget.impl.all.map((f) {
+                  return PopupMenuItem(
+                      value: f.desc ?? "",
+                      child: new OutlineButton(
+                        onPressed: () {
+                          setState(() {
+                            widget.style = f;
+                          });
+                        },
+                        child: new Text(f.name ?? ""),
+                      ));
+                }).toList(),
           ),
-          onSelected: (str) {},
-          // icon: Icon(Icons.arrow_drop_down),
-          itemBuilder: (context) => widget.impl.all.map((f) {
-                return PopupMenuItem(
-                    value: f.desc ?? "",
-                    child: new OutlineButton(
-                      onPressed: () {
-                        setState(() {
-                          widget.style = f;
-                        });
-                      },
-                      child: new Text(f.name ?? ""),
-                    ));
-              }).toList(),
+          actions: <Widget>[
+            new IconButton(
+              icon: new Icon(
+                Icons.favorite,
+                color: Colors.red,
+              ),
+              onPressed: () {},
+            )
+          ],
         ),
-        actions: <Widget>[
-          new IconButton(
-            icon: new Icon(
-              Icons.favorite,
-              color: Colors.red,
-            ),
-            onPressed: () {},
-          )
-        ],
-      ),
-      // child: new Container(
-      //     padding: EdgeInsets.all(10.0),
-      //     child: new ListView.custom(
-      //         childrenDelegate:
-      //             new SliverChildBuilderDelegate((context, index) {
-      //       return new LotteryItem(
-      //         this._titles[index],
-      //         index,
-      //         items: new List.generate(10, (i) {
-      //           return {i: ""};
-      //         }),
-      //       );
-      //     }, childCount: _titles.length))),
-      backgroundColor: Colors.white,
-      body: new Container(
-          padding: EdgeInsets.all(2.0),
-          constraints: new BoxConstraints.expand(),
-          child: new Column(
-            children: <Widget>[
-              /// header
-              new Container(
-                color: Colors.brown[200],
-                child: new Row(children: <Widget>[
-                  // child: new Padding(
-                  //     padding: EdgeInsets.symmetric(
-                  //         horizontal: 10.0, vertical: 5.0),
-                  new Expanded(
-                    child: new Container(
-                        child: new StoreConnector<AppState, LotteryState>(
-                      builder: (context, state) {
-                        return new Column(
-                          children: <Widget>[
-                            new Text(
-                              (state.history != null
-                                      ? (state.history.length > 0
-                                          ? state.history[0].expectNo ?? ""
-                                          : "")
-                                      : "") +
-                                  "期开奖号码",
-                              style: headStyle,
-                            ),
-                            new Container(
-                              child: new Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children:
-                                      new List.generate(style.count, (index) {
-                                    var _str = (state.history.length > 0
-                                            ? (state.history[0].opencode
-                                                    as String) ??
-                                                ""
+        // child: new Container(
+        //     padding: EdgeInsets.all(10.0),
+        //     child: new ListView.custom(
+        //         childrenDelegate:
+        //             new SliverChildBuilderDelegate((context, index) {
+        //       return new LotteryItem(
+        //         this._titles[index],
+        //         index,
+        //         items: new List.generate(10, (i) {
+        //           return {i: ""};
+        //         }),
+        //       );
+        //     }, childCount: _titles.length))),
+        backgroundColor: Colors.white,
+        body: new Container(
+            padding: EdgeInsets.all(2.0),
+            constraints: new BoxConstraints.expand(),
+            child: new Column(
+              children: <Widget>[
+                /// header
+                new Container(
+                  color: Colors.brown[200],
+                  child: new Row(children: <Widget>[
+                    // child: new Padding(
+                    //     padding: EdgeInsets.symmetric(
+                    //         horizontal: 10.0, vertical: 5.0),
+                    new Expanded(
+                      child: new Container(
+                          child: new StoreConnector<AppState, LotteryState>(
+                        builder: (context, state) {
+                          return new Column(
+                            children: <Widget>[
+                              new Text(
+                                (state.history != null
+                                        ? (state.history.length > 0
+                                            ? state.history[0].expectNo ?? ""
                                             : "")
-                                        .split(",");
-                                    print(_str);
-                                    return new Container(
-                                      decoration: new BoxDecoration(
-                                          color: Colors.red,
-                                          shape: BoxShape.circle,
-                                          boxShadow: <BoxShadow>[
-                                            new BoxShadow(
-                                                color: Colors.black26,
-                                                offset: const Offset(2.0, 2.0)),
-                                          ]),
-                                      width: 22.0,
-                                      height: 22.0,
-                                      child: new Center(
-                                        child: new Text(
-                                          _str.length > 1 ? _str[index] : "-",
-                                          // _str[index] ?? "-",
-                                          style: const TextStyle(
-                                              fontSize: 14.0,
-                                              color: Colors.white),
-                                          textAlign: TextAlign.center,
-                                          textDirection: TextDirection.ltr,
-                                        ),
-                                      ),
-                                    );
-                                  })),
-                            ),
-                          ],
-                        );
-                      },
-                      converter: (state) {
-                        return state.state.lottery;
-                      },
-                    )),
-                  ),
-
-                  // new Container(
-                  //   width: 1.0,
-                  //   height: double.infinity,
-                  //   color: Colors.grey[200],
-                  //   // constraints: const BoxConstraints.tightFor(),
-                  //   //   decoration: new BoxDecoration(
-                  //   //       border: new Border(
-                  //   //           left: new BorderSide(
-                  //   //               width: 1.0, color: Colors.grey[200]))),
-                  // ),
-                  new Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5.0),
-                    child: new Container(
-                      color: Colors.grey,
-                      width: 1.0,
-                      height: 50.0,
-                    ),
-                  ),
-// new SizedBox()
-                  new Expanded(
-                    child: new Container(
-                        child: new StoreConnector<AppState, Lottery>(
-                      builder: (context, state) {
-                        return new Column(
-                          children: <Widget>[
-                            new Text(
-                              "${state == null ? "" : state.expectNo ?? ""}期投注截止",
-                              style: headStyle,
-                            ),
-
-                            new Container(
-                              margin: EdgeInsets.all(4.0),
-                              child: new Text(
-                                //data
-                                "--:--:--",
+                                        : "") +
+                                    "期开奖号码",
                                 style: headStyle,
                               ),
-                            )
-                            //new Spacer(),
-                          ],
-                        );
-                      },
-                      converter: (state) {
-                        return state.state.lottery.lottery;
-                      },
-                    )),
-                  ),
-                ]),
-              ),
+                              new Container(
+                                child: new Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children:
+                                        new List.generate(style.count, (index) {
+                                      var _str = (state.history.length > 0
+                                              ? (state.history[0].opencode
+                                                      as String) ??
+                                                  ""
+                                              : "")
+                                          .split(",");
+                                      print(_str);
+                                      return new Container(
+                                        decoration: new BoxDecoration(
+                                            color: Colors.red,
+                                            shape: BoxShape.circle,
+                                            boxShadow: <BoxShadow>[
+                                              new BoxShadow(
+                                                  color: Colors.black26,
+                                                  offset:
+                                                      const Offset(2.0, 2.0)),
+                                            ]),
+                                        width: 22.0,
+                                        height: 22.0,
+                                        child: new Center(
+                                          child: new Text(
+                                            _str.length > 1 ? _str[index] : "-",
+                                            // _str[index] ?? "-",
+                                            style: const TextStyle(
+                                                fontSize: 14.0,
+                                                color: Colors.white),
+                                            textAlign: TextAlign.center,
+                                            textDirection: TextDirection.ltr,
+                                          ),
+                                        ),
+                                      );
+                                    })),
+                              ),
+                            ],
+                          );
+                        },
+                        converter: (state) {
+                          return state.state.lottery;
+                        },
+                      )),
+                    ),
 
-              /// list
-              new Expanded(
-                child: new Container(
-                  child: new CustomScrollView(
-                    controller: new ScrollController(keepScrollOffset: false),
-                    shrinkWrap: true,
-                    slivers: <Widget>[
-                      new SliverPadding(
-                        padding: EdgeInsets.all(10.0),
-                        sliver: new SliverPersistentHeader(
-                          delegate:
-                              new LotteryHeadSliverPersistentHeaderDelegate(
-                                  money: 0.0),
-                          pinned: false,
-                          floating: false,
-                        ),
+                    // new Container(
+                    //   width: 1.0,
+                    //   height: double.infinity,
+                    //   color: Colors.grey[200],
+                    //   // constraints: const BoxConstraints.tightFor(),
+                    //   //   decoration: new BoxDecoration(
+                    //   //       border: new Border(
+                    //   //           left: new BorderSide(
+                    //   //               width: 1.0, color: Colors.grey[200]))),
+                    // ),
+                    new Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5.0),
+                      child: new Container(
+                        color: Colors.grey,
+                        width: 1.0,
+                        height: 50.0,
                       ),
-                      new SliverPadding(
-                        padding: EdgeInsets.all(10.0),
-                        sliver: new SliverList(
-                          delegate: new SliverChildBuilderDelegate(
-                            (context, index) {
-                              return new Column(
-                                children: <Widget>[
-                                  new LotteryItem(
-                                    position: index,
-                                    style: style,
-                                    callback: (index, position) {
-                                      setState(() {
-                                        style.toBet2System(index, position);
-                                      });
-                                    },
-                                  ),
-                                  new Divider(),
-                                ],
-                              );
-                            },
-                            childCount: style.initialType().length,
+                    ),
+// new SizedBox()
+                    new Expanded(
+                      child: new Container(
+                          child: new StoreConnector<AppState, Lottery>(
+                        builder: (context, state) {
+                          return new Column(
+                            children: <Widget>[
+                              new Text(
+                                "${state == null ? "" : state.expectNo ?? ""}期投注截止",
+                                style: headStyle,
+                              ),
+
+                              new Container(
+                                margin: EdgeInsets.all(4.0),
+                                child: new Text(
+                                  //data
+                                  "--:--:--",
+                                  style: headStyle,
+                                ),
+                              )
+                              //new Spacer(),
+                            ],
+                          );
+                        },
+                        converter: (state) {
+                          return state.state.lottery.lottery;
+                        },
+                      )),
+                    ),
+                  ]),
+                ),
+
+                /// list
+                new Expanded(
+                  child: new Container(
+                    child: new CustomScrollView(
+                      controller: new ScrollController(keepScrollOffset: false),
+                      shrinkWrap: true,
+                      slivers: <Widget>[
+                        new SliverPadding(
+                          padding: EdgeInsets.all(10.0),
+                          sliver: new SliverPersistentHeader(
+                            delegate:
+                                new LotteryHeadSliverPersistentHeaderDelegate(
+                                    money: 0.0),
+                            pinned: false,
+                            floating: false,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              /// footer
-              new Container(
-                color: Colors.white,
-                constraints: new BoxConstraints.tightFor(),
-                child: new Offstage(
-                  offstage: model.zhushu <= 0,
-                  child: new Container(
-                    height: 55.0,
-                    child: new Row(
-                      children: <Widget>[
-                        new Expanded(
-                            child: new Container(
-                                constraints: new BoxConstraints.expand(),
-                                color: Colors.red,
-                                child: new Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: new Row(
-                                    children: <Widget>[
-                                      new IconButton(
-                                        icon: new Icon(
-                                          Icons.add,
-                                          size: 40.0,
-                                          color: Colors.white,
-                                        ),
-                                        onPressed: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return new AlertDialog(
-                                                title: new Text("data"),
-                                              ).build(context);
-                                            },
-                                          );
-                                        },
-                                      ),
-                                      new Container(
-                                        margin: EdgeInsets.only(left: 15.0),
-                                        constraints:
-                                            new BoxConstraints.tightForFinite(),
-                                        child: new Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: <Widget>[
-                                            new SafeArea(
-                                              child: new Text(
-                                                "共${model.zhushu}注，${model.money}元",
-                                                style: new TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 15.0,
-                                                ),
-                                              ),
-                                            ),
-                                            new Container(
-                                              constraints: new BoxConstraints(
-                                                  maxWidth: 200.0),
-                                              child: new Text(_code ?? "",
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  softWrap: false,
-                                                  style: new TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 15.0,
-                                                  )),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ))),
-                        new ConstrainedBox(
-                          constraints:
-                              new BoxConstraints(minHeight: double.infinity),
-                          child: new RaisedButton.icon(
-                            textColor: Colors.white,
-                            elevation: 0.0,
-                            // highlightColor: Colors.transparent,
-                            // splashColor: Colors.transparent,
-                            color: Colors.black87,
-                            label: new Text("号码篮"),
-                            icon: new Icon(Icons.card_giftcard),
-                            onPressed: () {
-                              /// turn to pay layer
-                              StoreProvider.of<AppState>(context).dispatch(
-                                  new LotterBetAdd(item: style.transform));
-                              Navigator.of(context).push(new MaterialPageRoute(
-                                  builder: (context) => new LotteryBetLayer()));
-                            },
+                        new SliverPadding(
+                          padding: EdgeInsets.all(10.0),
+                          sliver: new SliverList(
+                            delegate: new SliverChildBuilderDelegate(
+                              (context, index) {
+                                return new Column(
+                                  children: <Widget>[
+                                    new LotteryItem(
+                                      position: index,
+                                      style: style,
+                                      callback: (index, position) {
+                                        setState(() {
+                                          style.toBet2System(index, position);
+                                        });
+                                      },
+                                    ),
+                                    new Divider(),
+                                  ],
+                                );
+                              },
+                              childCount: style.initialType().length,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-              )
-            ],
-          )),
+
+                /// footer
+                new Container(
+                  color: Colors.white,
+                  constraints: new BoxConstraints.tightFor(),
+                  child: new Offstage(
+                    offstage: model.zhushu <= 0,
+                    child: new Container(
+                      height: 55.0,
+                      child: new Row(
+                        children: <Widget>[
+                          new Expanded(
+                              child: new Container(
+                                  constraints: new BoxConstraints.expand(),
+                                  color: Colors.red,
+                                  child: new Padding(
+                                    padding: EdgeInsets.all(5.0),
+                                    child: new Row(
+                                      children: <Widget>[
+                                        new IconButton(
+                                          icon: new Icon(
+                                            Icons.add,
+                                            size: 40.0,
+                                            color: Colors.white,
+                                          ),
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return new AlertDialog(
+                                                  title: new Text("data"),
+                                                ).build(context);
+                                              },
+                                            );
+                                          },
+                                        ),
+                                        new Container(
+                                          margin: EdgeInsets.only(left: 15.0),
+                                          constraints: new BoxConstraints
+                                              .tightForFinite(),
+                                          child: new Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              new SafeArea(
+                                                child: new Text(
+                                                  "共${model.zhushu}注，${model.money}元",
+                                                  style: new TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 15.0,
+                                                  ),
+                                                ),
+                                              ),
+                                              new Container(
+                                                constraints: new BoxConstraints(
+                                                    maxWidth: 200.0),
+                                                child: new Text(_code ?? "",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    softWrap: false,
+                                                    style: new TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 15.0,
+                                                    )),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ))),
+                          new ConstrainedBox(
+                            constraints:
+                                new BoxConstraints(minHeight: double.infinity),
+                            child: new RaisedButton.icon(
+                              textColor: Colors.white,
+                              elevation: 0.0,
+                              // highlightColor: Colors.transparent,
+                              // splashColor: Colors.transparent,
+                              color: Colors.black87,
+                              label: new Text("号码篮"),
+                              icon: new Icon(Icons.card_giftcard),
+                              onPressed: () {
+                                /// turn to pay layer
+                                StoreProvider.of<AppState>(context).dispatch(
+                                    new LotterBetAdd(item: style.transform));
+                                Navigator.of(context).push(
+                                    new MaterialPageRoute(
+                                        builder: (context) =>
+                                            new LotteryBetLayer()));
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            )),
+      ),
+      onWillPop: _onPopToPreview,
     );
   }
 }
