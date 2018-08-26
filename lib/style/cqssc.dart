@@ -32,6 +32,9 @@ abstract class _cqssc extends PlayStyle {
 
   @override
   forceTransform(d) {
+    if(type.endsWith("zuxhz")){
+      return "${d+1}";
+    }
     return d;
   }
 

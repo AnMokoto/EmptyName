@@ -114,7 +114,7 @@ class gd11x5_rx extends _11x5 {
   @protected
   List<int> _zhushu;
   int zuheCount = 2;
-
+var leftName = "任选" ;
   gd11x5_rx(
       {@required String type,
       @required String name,
@@ -122,6 +122,9 @@ class gd11x5_rx extends _11x5 {
       String initLeftDesc})
       : super(type: type, name: name, desc: desc) {
     this._data = initialData(12);
+    if(type.endsWith("zxfx")){
+      leftName="第一位";
+    }
     if (type.endsWith("2")) {
       zuheCount = 2;
     } else if (type.endsWith("3")) {
@@ -171,6 +174,9 @@ class gd11x5_rx extends _11x5 {
 
   @override
   List<String> initialType() {
+    if(type.endsWith("zxfx")){
+      return ["${leftName}"];
+    }
     return ["任选$zuheCount"];
   }
 }

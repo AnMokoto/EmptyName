@@ -54,8 +54,9 @@ abstract class _pk10 extends PlayStyle {
 
   @override
   forceTransform(d) {
-    if(d<10) return "0$d"  ;
-    return d;
+    var dd = "${d+1}" ;
+    if(d<10) return "0${dd}"  ;
+    return "${dd}";
   }
 }
 
