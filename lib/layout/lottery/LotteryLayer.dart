@@ -14,7 +14,7 @@ import 'package:lowlottery/layout/bet/LotteryBetState.dart'
     show LotterBetAdd, LotteryBetModelItem;
 
 import 'package:lowlottery/style/index.dart';
-
+import 'package:lowlottery/font/index.dart';
 /// callback when who preclick the item.
 /// [position] item count position
 /// [m] anything
@@ -131,15 +131,15 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
       //         }),
       //       );
       //     }, childCount: _titles.length))),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[100],
       body: new Container(
-          padding: EdgeInsets.all(2.0),
+//          padding: EdgeInsets.all(2.0),
           constraints: new BoxConstraints.expand(),
           child: new Column(
             children: <Widget>[
               /// header
               new Container(
-                color: Colors.brown[200],
+                color: Colors.grey[300],
                 child: new Row(children: <Widget>[
                   // child: new Padding(
                   //     padding: EdgeInsets.symmetric(
@@ -240,7 +240,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                               margin: EdgeInsets.all(4.0),
                               child: new Text(
                                 //data
-                                "--:--:--",
+                                "${state == null ? "" : state.remainTime ?? ""}",
                                 style: headStyle,
                               ),
                             )
@@ -306,8 +306,8 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
               new Container(
                 color: Colors.white,
                 constraints: new BoxConstraints.tightFor(),
-                child: new Offstage(
-                  offstage: model.zhushu <= 0,
+//                child: new Offstage(
+//                  offstage: model.zhushu <= 0,
                   child: new Container(
                     height: 55.0,
                     child: new Row(
@@ -385,7 +385,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                             // splashColor: Colors.transparent,
                             color: Colors.black87,
                             label: new Text("号码篮"),
-                            icon: new Icon(Icons.card_giftcard),
+                            icon: new Icon(AppIcons.codelanzi ),
                             onPressed: () {
                               /// turn to pay layer
                               StoreProvider.of<AppState>(context).dispatch(
@@ -398,7 +398,7 @@ class _LotteryState extends MVPState<LotteryPresenter, LotteryLayer>
                       ],
                     ),
                   ),
-                ),
+//                ),
               )
             ],
           )),
