@@ -30,7 +30,7 @@ abstract class _xglhc extends PlayStyle {
 
   @override
   // TODO: implement count
-  int get count => 5;
+  int get count => 7;
 
   @override
   List<List<int>> toBet2System(int index, int position) {

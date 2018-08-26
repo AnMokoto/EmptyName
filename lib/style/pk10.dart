@@ -30,7 +30,7 @@ abstract class _pk10 extends PlayStyle {
 
   @override
   // TODO: implement count
-  int get count => 5;
+  int get count => 10;
 
   @override
   List<List<int>> toBet2System(int index, int position) {
