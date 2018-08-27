@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lowlottery/layout/home/index/IndexFragLayer.dart';
 import 'package:lowlottery/layout/home/mine/MineLayer.dart';
 import 'package:lowlottery/layout/home/opencode/OpencodeRecord.dart';
-
+import 'package:lowlottery/font/index.dart';
 class HomeLayer extends StatefulWidget {
   @override
   _HomeState createState() => new _HomeState();
@@ -66,7 +66,7 @@ class _HomeState extends State<HomeLayer> {
       bottomNavigationBar: new BottomNavigationBar(
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("首页")),
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("开奖号码")),
+          BottomNavigationBarItem(icon: Icon(AppIcons.jiangbei ,size: 22.0,), title: Text("开奖号码")),
           BottomNavigationBarItem(
               icon: Icon(Icons.person), title: Text("个人中心")),
         ],
