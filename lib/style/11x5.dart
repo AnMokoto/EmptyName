@@ -297,7 +297,7 @@ class Style11x5 extends StyleManagerIMPL {
         gd11x5rx6,
         gd11x5rx7,
         gd11x5rx8,
-        gd11x5q1zxfx,
+//        gd11x5q1zxfx,
         gd11x5q2zxfx,
         gd11x5q3zxfx,
         gd11x5q2zuxfx,
