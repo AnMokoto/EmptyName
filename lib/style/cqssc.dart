@@ -357,7 +357,7 @@ class cqssc_zuxhz extends _cqssc {
     _data[0].forEach((f) {
       if (f > -1) {
         count += this._zhushu[f];
-        value.add(f.toString());
+        value.add(forceTransform(f));
       }
     });
     state.zhushu = count;

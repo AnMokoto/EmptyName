@@ -90,7 +90,7 @@ class cqssc_zxfx extends _11x5 {
       item.forEach((index) {
         if (index > -1) {
           _count++;
-          choice.add(index.toString());
+          choice.add(forceTransform(index));
         }
       });
       acount = acount * _count;
@@ -162,7 +162,7 @@ var leftName = "任选" ;
     _data[0].forEach((f) {
       if (f > -1) {
         count += 1;
-        value.add(f.toString());
+        value.add(forceTransform(f));
       }
     });
     var com = ZuheUtil.combination(value.length, zuheCount);
@@ -224,7 +224,7 @@ class gd11x5_zux extends _11x5 {
     _data[0].forEach((f) {
       if (f > -1) {
         count += 1;
-        value.add(f.toString());
+        value.add(forceTransform(f));
       }
     });
     var com = ZuheUtil.combination(value.length, zuheCount);

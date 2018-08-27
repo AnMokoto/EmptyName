@@ -517,7 +517,7 @@ class _LotteryItemState extends State<LotteryItem> {
                                           color: data[index] != -1
                                               ? Colors.white
                                               : Colors.red,
-                                          fontSize: 18.0),
+                                          fontSize: 17.0),
                                     ),
                                   ),
                                 ),
