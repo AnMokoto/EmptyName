@@ -54,7 +54,7 @@ abstract class _11x5 extends PlayStyle {
 
   @override
   forceTransform(d) {
-    return d;
+      return "${d+1} " ;
   }
 }
 
@@ -64,7 +64,12 @@ abstract class _11x5 extends PlayStyle {
 @protected
 class cqssc_zxfx extends _11x5 {
   cqssc_zxfx({@required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc);
+      : super(type: type, name: name, desc: desc)
+  {
+
+
+    this._data = initialData(11);
+  }
 
   @override
   List<String> initialType() {
@@ -121,7 +126,7 @@ var leftName = "任选" ;
       String desc,
       String initLeftDesc})
       : super(type: type, name: name, desc: desc) {
-    this._data = initialData(12);
+    this._data = initialData(11);
     if(type.endsWith("zxfx")){
       leftName="第一位";
     }
@@ -196,7 +201,7 @@ class gd11x5_zux extends _11x5 {
       String desc,
       String initLeftDesc})
       : super(type: type, name: name, desc: desc) {
-    this._data = initialData(12);
+    this._data = initialData(11);
     if (type.contains("2")) {
       zuheCount = 2;
     } else if (type.contains("3")) {

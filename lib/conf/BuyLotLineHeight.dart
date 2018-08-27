@@ -9,6 +9,8 @@ class LotLineHeight {
   static double calHeight(String gameEn, String playEn) {
     if (playEn.endsWith("hz")) {
       return 500.0;
+    }if (playEn.contains("11x5")) {
+      return 170.0;
     }
     if (playEn.contains("tmzx") ||
         playEn.contains("zmz1t") ||
