@@ -119,13 +119,13 @@ class _LotteryState extends State<LotteryLayer> {
         //     }, childCount: _titles.length))),
         backgroundColor: Colors.white,
         body: new Container(
-            padding: EdgeInsets.all(2.0),
+
             constraints: new BoxConstraints.expand(),
             child: new Column(
               children: <Widget>[
                 /// header
                 new Container(
-                  color: Colors.brown[200],
+                  color: Colors.grey[100],
                   child: new Row(children: <Widget>[
                     // child: new Padding(
                     //     padding: EdgeInsets.symmetric(
@@ -234,14 +234,7 @@ class _LotteryState extends State<LotteryLayer> {
                                 ),
                               ),
 
-                              new Container(
-                                margin: EdgeInsets.all(4.0),
-                                child: new Text(
-                                  //data
-                                  "--:--:--",
-                                  style: headStyle,
-                                ),
-                              )
+
                               //new Spacer(),
                             ],
                           );

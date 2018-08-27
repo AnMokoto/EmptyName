@@ -14,7 +14,7 @@ class LotIcon {
       Icon(AppIcons.getLot(gameEn), color: _homeIconColor(gameEn));
 
   static _homeIconColor(String gameEn) {
-    if (gameEn.contains("ssc5")) return Colors.green;
+    if (gameEn.contains("ssc5")) return Colors.deepOrange;
     if (gameEn.contains("ssc3")) return Colors.red;
     if (gameEn.contains("ssc1")) return Colors.redAccent[100];
     if (gameEn.contains("ssc")) return Colors.orange;
