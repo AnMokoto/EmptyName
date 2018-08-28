@@ -61,8 +61,18 @@ abstract class _k3 extends PlayStyle {
     if (type == 'k3_2thfx') {
       return "${d + 1}${d + 1}";
     }
-    if (type == 'k3_hz')
-      return "${d + 3}";
+    if (type == 'k3_hz') {
+      if(d == 0){
+        return "大";
+      }if(d == 1){
+        return "小";
+      }if(d == 2){
+        return "单";
+      }if(d == 3){
+        return "双";
+      }
+      return "${d -1 }";
+    }
     if (type == 'k3_3thtx') {
       return "111 222 333 444 555 666";
     }
@@ -80,7 +90,7 @@ class cqssc_hz extends _k3 {
   cqssc_hz(
       {String len, @required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc) {
-    this._data = initialData(16);
+    this._data = initialData(20);
   }
 
   @override
