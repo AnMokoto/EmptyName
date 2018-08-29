@@ -30,3 +30,17 @@ class SecondResponseAction extends StoreAction {
   List<dynamic> model;
   SecondResponseAction(this.model);
 }
+
+
+class OpencodeRequestAction extends HttpStoreAction {
+  OpencodeRequestAction(BuildContext context, Map<String, dynamic> body)
+      : super(context: context, body: body);
+
+  @override
+  String get path => "opencodeList";
+}
+
+class OpencodeResponseAction extends StoreAction {
+  List<dynamic> model;
+  OpencodeResponseAction(this.model);
+}

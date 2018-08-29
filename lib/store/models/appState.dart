@@ -4,7 +4,7 @@ import 'index.dart';
 import '../net/index.dart';
 import 'playModel.dart';
 import 'homeModel.dart';
-
+import 'OpencodeModel.dart';
 const price = 2.0;
 const dynamic HOST_NAME = "http://178.128.21.119:10003/";
 
@@ -18,6 +18,7 @@ class AppState {
   static double price = 2.0;
   String _token = "";
 
+  OpencodeModel opencodeModel;
   PlayModel betModel;
   LotteryState lottery;
   LotteryRecord record;
@@ -25,6 +26,7 @@ class AppState {
   HttpRetrofit httpRetrofit;
 
   AppState() {
+    this.opencodeModel = new OpencodeModel();
     this.homeModel = HomeModel();
     this.lottery = new LotteryState();
     this.betModel = new PlayModel();

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/conf/Lot.dart';
 import 'package:lowlottery/store/appStore.dart';
-import 'dart:async';
-import 'LotOpencodeRecord.dart';
-class OpencodeRecordLayer extends StatefulWidget {
+
+class LotOpencodeRecordLayer extends StatefulWidget {
+  final String gameEn;
+
+  LotOpencodeRecordLayer({this.gameEn}) : assert(gameEn != null);
+
   _OpencodeRecordState createState() => new _OpencodeRecordState();
 }
 
-class _OpencodeRecordState extends State<OpencodeRecordLayer>
-    with SingleTickerProviderStateMixin<OpencodeRecordLayer> {
+class _OpencodeRecordState extends State<LotOpencodeRecordLayer>
+    with SingleTickerProviderStateMixin<LotOpencodeRecordLayer> {
   final titles = [
     "全部",
     "时时彩",
@@ -41,7 +43,7 @@ class _OpencodeRecordState extends State<OpencodeRecordLayer>
           centerTitle: true,
           backgroundColor: Colors.red,
           title: new Text(
-            "开奖号码",style: new TextStyle(color: Colors.white),
+           LotConfig.getLotName(widget.gameEn) ,style: new TextStyle(color: Colors.white),
           ),
         ),
         body: new Column(
@@ -50,7 +52,7 @@ class _OpencodeRecordState extends State<OpencodeRecordLayer>
               child: new TabBarView(
                 controller: _tabController,
                 children: titles.map((s) {
-                  return new OpencodeRecorderFragLayer();
+                  return new OpencodeRecorderFragLayer(gameEn: widget.gameEn);
                 }).toList(),
               ),
             )
@@ -63,6 +65,8 @@ class _OpencodeRecordState extends State<OpencodeRecordLayer>
 
 /// index Fragment
 class OpencodeRecorderFragLayer extends StatefulWidget {
+  final String gameEn ;
+  OpencodeRecorderFragLayer({this.gameEn}) : assert(gameEn != null);
   @override
   _LotterBetRecorderFragState createState() =>
       new _LotterBetRecorderFragState();
@@ -79,7 +83,7 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     dispatch(context,
-        new SecondRequestAction(context, {"pageIndex": 0, "pageSize": 100}));
+        new OpencodeRequestAction(context, {"total":100 ,"gameEn": widget.gameEn ,"pageIndex": 0, "pageSize": 100}));
   }
 
   @override
@@ -96,14 +100,6 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
               ),
 //              margin: EdgeInsets.all(10.0),
               child: new InkWell(
-                onTap: () {
-                  print("onTop");
-                   Navigator.of(context).push(new MaterialPageRoute(
-                  builder: (context) =>
-                  new LotOpencodeRecordLayer(
-                    gameEn: "${value["gameEn"]}",
-                  )));
-                },
                 child: new Row(
                   children: <Widget>[
                     new Expanded(
@@ -131,7 +127,7 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                                         mainAxisAlignment:
                                         MainAxisAlignment.start,
                                 children:
-                                new List.generate(int.parse("${value['codeCount']}"), (index) {
+                                new List.generate("${value['opencode']}".split(",").length, (index) {
                                   var _str = "${value["opencode"] ?? "-"}".split(",");
                                   print(_str);
                                   return new Container(
@@ -170,7 +166,7 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
         );
       },
       converter: (state) {
-        return state.state.homeModel.second;
+        return state.state.opencodeModel.list;
       },
     );
   }
