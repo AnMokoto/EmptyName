@@ -75,6 +75,7 @@ class _MineState extends State<MineLayer> {
                                     children: <Widget>[
                                       new Text(
                                         "可用余额(元)",
+                                        style: new TextStyle(color: Colors.black87),
                                       ),
                                       new Text(
                                         "12.0",
@@ -122,6 +123,7 @@ class _MineState extends State<MineLayer> {
                                     children: <Widget>[
                                       new Text(
                                         "可提款余额(元)",
+                                        style: new TextStyle(color: Colors.black87),
                                       ),
                                       new Text(
                                         "100.0",
@@ -174,8 +176,21 @@ class _MineState extends State<MineLayer> {
                   builder: (context) => new LotterBetRecordLayer(),
                 ));
               },
-              leading: Icon(Icons.history),
+              leading: Icon(AppIcons.projectRecord),
               title: new Text("投注记录"),
+              trailing: Icon(Icons.navigate_next),
+            ),
+          ), new Container(
+            color: Colors.white,
+//            margin: EdgeInsets.only(top: 10.0),
+            child: new ListTile(
+              onTap: () {
+                Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (context) => new LotterBetRecordLayer(),
+                ));
+              },
+              leading: Icon(AppIcons.withdrawRecord),
+              title: new Text("提现记录"),
               trailing: Icon(Icons.navigate_next),
             ),
           ),

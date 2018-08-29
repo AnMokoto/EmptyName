@@ -5,13 +5,20 @@ import 'package:flutter/widgets.dart' show IconData;
 class AppIcons {
   AppIcons._();
 
-  static IconData passwd = IconData(0xe630, fontFamily: "Alibaba");
-  static IconData codelanzi = IconData(0xe66c, fontFamily: "Alibaba");
-  static IconData chongzhi = IconData(0xe646, fontFamily: "Alibaba");
-  static IconData tixian = IconData(0xe625, fontFamily: "Alibaba");
+  //首屏tab
   static IconData jiangbei = IconData(0xe627, fontFamily: "Alibaba");
   static IconData home = IconData(0xe633, fontFamily: "Alibaba");
   static IconData persion = IconData(0xe657, fontFamily: "Alibaba");
+
+  static IconData passwd = IconData(0xe630, fontFamily: "Alibaba");
+  static IconData codelanzi = IconData(0xe66c, fontFamily: "Alibaba");
+
+  //个人中心icons
+  static IconData projectRecord = IconData(0xe61d, fontFamily: "Alibaba");
+  static IconData withdrawRecord = IconData(0xe60b, fontFamily: "Alibaba");
+  static IconData rechargeRecord = IconData(0xe622, fontFamily: "Alibaba");
+  static IconData chongzhi = IconData(0xe646, fontFamily: "Alibaba");
+  static IconData tixian = IconData(0xe625, fontFamily: "Alibaba");
 
   static IconData from(int codePoint) =>
       IconData(codePoint, fontFamily: "Alibaba");

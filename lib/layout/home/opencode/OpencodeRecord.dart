@@ -44,15 +44,15 @@ class _OpencodeRecordState extends State<OpencodeRecordLayer>
               return new Tab(
                 child: new Text(
                   s,
-                  style: new TextStyle(color: Theme.of(context).primaryColor),
+                  style: new TextStyle(color: Colors.redAccent),
                 ),
               );
             }).toList(),
           ),
           centerTitle: true,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.grey[100],
           title: new Text(
-            "开奖号码",
+            "开奖号码",style: new TextStyle(color: Colors.red),
           ),
         ),
         body: new Column(
