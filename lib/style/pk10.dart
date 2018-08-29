@@ -54,8 +54,62 @@ abstract class _pk10 extends PlayStyle {
 
   @override
   forceTransform(d) {
-    if (d < 9) return "0${d+1}";
-    return "${d+1}";
+    if(type.contains("pk10_gyhz")){
+      if(d == 0){
+        return "大";
+      }if(d == 1){
+        return "小";
+      }if(d == 2){
+        return "单";
+      }if(d == 3){
+        return "双";
+      }
+      return "${d -1 }";
+    }
+    if (d < 9) return "0${d + 1}";
+    return "${d + 1}";
+  }
+}
+
+
+@protected
+class cqssc_hz extends _pk10 {
+  @protected
+  cqssc_hz(
+      {String len, @required String type, @required String name, String desc})
+      : super(type: type, name: name, desc: desc) {
+    this._data = initialData(21);
+  }
+
+  @override
+  List<List<int>> toBet2System(int index, int position) {
+    if (position >= _data[0].length) return _data;
+    _data[0][position] = _data[0][position] == -1 ? position : -1;
+    return _data;
+  }
+
+  @override
+  PlayModelItem transformWithType(PlayModelItem state) {
+    state.code = "";
+    List<String> value = new List();
+    _data[0].forEach((f) {
+      if (f > -1) {
+        value.add(forceTransform(f));
+      }
+    });
+    state.zhushu = value.length;
+    state.money = state.zhushu * price;
+
+    String code =  transformToString(value, type);
+    Log.message("${type}_value===$code");
+    state.code = code;
+
+    return state;
+  }
+
+  @override
+  List<String> initialType() {
+    return [""];
   }
 }
 
@@ -181,6 +235,9 @@ class Stylepk10 extends StyleManagerIMPL {
   PlayStyle get pk10q1zxfx =>
       cqssc_zxfx(type: "pk10_q1zxfx", name: "猜冠军", desc: "猜冠军");
 
+  PlayStyle get pk10_gyhz =>
+      cqssc_hz(type: "pk10_gyhz", name: "冠亚和", desc: "冠亚和");
+
   @override
   String get name => "pk10";
 
@@ -192,6 +249,7 @@ class Stylepk10 extends StyleManagerIMPL {
         pk10q3zxfx,
         pk10q2zxfx,
         pk10q1zxfx,
+        pk10_gyhz,
       ];
 }
 /*
