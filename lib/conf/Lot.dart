@@ -5,6 +5,7 @@ library app.font;
  */
 class LotConfig {
   LotConfig._();
+
   static Map<String, String> _lot = {
     "xglhc": "香港六合彩",
     "pk10": "北京快车",
@@ -53,10 +54,34 @@ class LotConfig {
     "jx11x5": "江西11选5",
     "zj11x5": "浙江11选5",
   };
+  static Map<String, String> _lotShortName = {
+    "lhc": "六合彩",
+    "pk10": "pk10",
+    "gdkl10": "快乐十分",
+    "gxk3": "快三",
+    "ssc1": "分分彩",
+    "ssc3": "三分彩",
+    "ssc5": "五分彩",
+    "cqssc": "时时彩",
+    "gd11x5": "11选5",
+  };
+
   /**
    * 获取彩种logo
    */
   static String getLotName(String gameEn) {
+    return _lot["$gameEn"] ?? '--';
+  }
+
+  static String getLotShortName(String gameEn) {
+    if (gameEn.contains("11x5")) return "11选5";
+    if (gameEn.contains("k3")) return "快三";
+    if (gameEn.contains("lhc")) return "六合彩";
+    if (gameEn.contains("ss5")) return "五分彩";
+    if (gameEn.contains("ss3")) return "三分彩";
+    if (gameEn.contains("ss1")) return "分分彩";
+    if (gameEn.contains("ssc")) return "时时彩";
+
     return _lot["$gameEn"] ?? '--';
   }
 }

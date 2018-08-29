@@ -134,7 +134,7 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
 //                      new Icon(AppIcons.getLot("${value["gameEn"]}"),size: 33.0,),
                         LotIcon.logo("${value["gameEn"]}", 33.0),
                         new Text(
-                            LotConfig.getLotName("${value["gameEn"] ?? "-"}"),
+                            LotConfig.getLotShortName("${value["gameEn"] ?? "-"}"),
                             style: new TextStyle(
                                 fontSize: 11.0, color: Colors.black54))
                       ],
