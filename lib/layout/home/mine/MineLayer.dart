@@ -181,7 +181,22 @@ class _MineState extends State<MineLayer> {
               title: new Text("投注记录"),
               trailing: Icon(Icons.navigate_next ),
             ),
-          ),new Container(
+          )
+          ,new Container(
+//            margin: EdgeInsets.only(top: 10.0),
+      color: Colors.white,
+      child: new ListTile(
+        onTap: () {
+          Navigator.of(context).push(new MaterialPageRoute(
+            builder: (context) => new LoginLayer(),
+          ));
+        },
+        leading: Icon(Icons.history),
+        title: new Text("用户登陆"),
+        trailing: Icon(Icons.navigate_next),
+      ),
+    )
+          ,new Container(
             color: Colors.white,
 //            margin: EdgeInsets.only(top: 10.0),
             child: new ListTile(
@@ -208,20 +223,7 @@ class _MineState extends State<MineLayer> {
               trailing: Icon(Icons.navigate_next),
             ),
           ),
-          new Container(
-//            margin: EdgeInsets.only(top: 10.0),
-            color: Colors.white,
-            child: new ListTile(
-              onTap: () {
-                Navigator.of(context).push(new MaterialPageRoute(
-                  builder: (context) => new LoginLayer(),
-                ));
-              },
-              leading: Icon(Icons.history),
-              title: new Text("用户登陆"),
-              trailing: Icon(Icons.navigate_next),
-            ),
-          ),
+
           new Container(
             color: Colors.white,
             child: new ListTile(

@@ -117,6 +117,7 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                                   new Text(LotConfig.getLotName(
                                       "${value['gameEn']}") ,style: new TextStyle(fontSize: 14.0),),
                                   new Text("  第 ${value["expectNo"] ?? "-"}期" , style: new TextStyle(fontSize: 12.0 ,color: Colors.black87)),
+                                  new Text("         ${value["desc"] }" , style: new TextStyle(fontSize: 12.0 ,color: Colors.black87)),
 
 //                              new Icon(AppIcons.getLot("${value['gameEn']}"), size: 60.0)
                                 ],

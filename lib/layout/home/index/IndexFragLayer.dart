@@ -42,12 +42,12 @@ class _IndexFragState extends State<IndexFragLayer> {
       children: <Widget>[
         new AspectRatio(
           aspectRatio: 16.0 / 9.0,
-          child: Image.asset(
-            "assets/images/app_back.png",
+          child: Image.network('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535553838059&di=1ca43aa1c063ce6d4ac55478f156a30e&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0153ed5850ab46a8012060c8c42cd9.png%40900w_1l_2o_100sh.jpg'
+            ,
             fit: BoxFit.cover,
           ),
         ), //banner
-        new Align(
+        /*new Align(
           alignment: Alignment.centerLeft,
           child: new Directionality(
             textDirection: TextDirection.ltr,
@@ -61,7 +61,7 @@ class _IndexFragState extends State<IndexFragLayer> {
               ),
             ),
           ),
-        ),
+        ),*/
         new Expanded(
           child: new StoreConnector<AppState, List<FixBoxModel>>(
             builder: (context, state) {
