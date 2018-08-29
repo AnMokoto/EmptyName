@@ -66,7 +66,7 @@ class _HomeState extends State<HomeLayer> {
       bottomNavigationBar: new BottomNavigationBar(
         items: [
           BottomNavigationBarItem(icon: Icon(AppIcons.home ,size: 24.0,), title: Text("首页")),
-          BottomNavigationBarItem(icon: Icon(AppIcons.jiangbei ,size: 20.0,), title: Text("开奖号码")),
+          BottomNavigationBarItem(icon: Icon(AppIcons.jiangbei ,size: 24.0,), title: Text("开奖号码")),
           BottomNavigationBarItem(
               icon: Icon(AppIcons.persion ,size: 24.0,), title: Text("个人中心")),
         ],

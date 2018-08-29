@@ -257,7 +257,7 @@ class _LotteryBetRecordDetailsState extends State<LotteryBetRecordDetails> {
                 code = _map["tickets"] != null
                     ? _map["tickets"].map((l) {
                         return l["code"].toString() + "\n";
-                      }).toList()
+                      }).toList().toString().replaceAll("[", "").replaceAll("]", "")
                     : "";
               } catch (e) {
                 print("code----------");
