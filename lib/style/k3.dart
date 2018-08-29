@@ -5,6 +5,7 @@ import 'Pk10Zhushuzxfx.dart';
 import 'ZuheUtil.dart';
 import 'style.dart';
 import 'package:lowlottery/conf/LotPlay.dart';
+
 ///  快三
 @protected
 abstract class _k3 extends PlayStyle {
@@ -12,7 +13,7 @@ abstract class _k3 extends PlayStyle {
 
   _k3({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc) {
-    _data = initialData(6);
+    playReset();
   }
 
   List<List<int>> initialData(int len) {
@@ -21,6 +22,13 @@ abstract class _k3 extends PlayStyle {
         return -1;
       });
     });
+  }
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
+    _data = initialData(6);
   }
 
   @override
@@ -62,16 +70,19 @@ abstract class _k3 extends PlayStyle {
       return "${d + 1}${d + 1}";
     }
     if (type == 'k3_hz') {
-      if(d == 0){
+      if (d == 0) {
         return "大";
-      }if(d == 1){
+      }
+      if (d == 1) {
         return "小";
-      }if(d == 2){
+      }
+      if (d == 2) {
         return "单";
-      }if(d == 3){
+      }
+      if (d == 3) {
         return "双";
       }
-      return "${d -1 }";
+      return "${d - 1}";
     }
     if (type == 'k3_3thtx') {
       return "111 222 333 444 555 666";
@@ -83,13 +94,17 @@ abstract class _k3 extends PlayStyle {
   }
 }
 
-
 @protected
 class cqssc_hz extends _k3 {
   @protected
   cqssc_hz(
       {String len, @required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc) {
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
     this._data = initialData(20);
   }
 
@@ -112,7 +127,7 @@ class cqssc_hz extends _k3 {
     state.zhushu = value.length;
     state.money = state.zhushu * price;
 
-    String code =  transformToString(value, type);
+    String code = transformToString(value, type);
     Log.message("${type}_value===$code");
     state.code = code;
 
@@ -130,7 +145,12 @@ class k3_thdx extends _k3 {
   @protected
   k3_thdx(
       {String len, @required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc) {
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
     this._data = initialData(6);
   }
 
@@ -153,7 +173,7 @@ class k3_thdx extends _k3 {
     state.zhushu = value.length;
     state.money = state.zhushu * price;
 
-    String code =  transformToString(value, type);
+    String code = transformToString(value, type);
     Log.message("${type}_value===$code");
     state.code = code;
 
@@ -175,9 +195,14 @@ class k3_buthdx extends _k3 {
   int numCount = 3;
   k3_buthdx(
       {String len, @required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc) {
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
     this._data = initialData(6);
-    if(type=='k3_2bth'){
+    if (type == 'k3_2bth') {
       numCount = 2;
     }
   }
@@ -201,7 +226,7 @@ class k3_buthdx extends _k3 {
     state.zhushu = ZuheUtil.combination(value.length, numCount).toInt();
     state.money = state.zhushu * price;
 
-    String code =  transformToString(value, type);
+    String code = transformToString(value, type);
     Log.message("${type}_value===$code");
     state.code = code;
 
@@ -219,9 +244,13 @@ class k3_thtx extends _k3 {
   @protected
   k3_thtx(
       {String len, @required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc) {
-    this._data = initialData(1);
+      : super(type: type, name: name, desc: desc);
 
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
+    this._data = initialData(1);
   }
 
   @override
@@ -243,7 +272,7 @@ class k3_thtx extends _k3 {
     state.zhushu = 1;
     state.money = state.zhushu * price;
 
-    String code =  transformToString(value, type);
+    String code = transformToString(value, type);
     Log.message("${type}_value===$code");
     state.code = code;
 
@@ -263,28 +292,36 @@ class Stylek3 extends StyleManagerIMPL {
     return const Stylek3();
   }
 
-  PlayStyle get k3_hz => cqssc_hz(type: "k3_hz", name: LotPlayConfig.getName("k3_hz"), desc: "特码直选");
-  PlayStyle get k3_3thdx => k3_thdx(type: "k3_3thdx", name:LotPlayConfig.getName("k3_3thdx"), desc: "正1特码");
-  PlayStyle get k3_3bth => k3_buthdx(type: "k3_3bth", name:LotPlayConfig.getName("k3_3bth"), desc: "正2特码");
-  PlayStyle get k3_2thfx => k3_thdx(type: "k3_2thfx", name:LotPlayConfig.getName("k3_2thfx"), desc: "正3特码");
-  PlayStyle get k3_2thdx => k3_thdx(type: "k3_2thdx", name:LotPlayConfig.getName("k3_2thdx"), desc: "正4特码");
-  PlayStyle get k3_2bth => k3_buthdx(type: "k3_2bth", name:LotPlayConfig.getName("k3_2bth"), desc: "正5特码");
-  PlayStyle get k3_3thtx => k3_thtx(type: "k3_3thtx", name: LotPlayConfig.getName("k3_3thtx"), desc: "正6特码");
-  PlayStyle get k3_3lhtx => k3_thtx(type: "k3_3lhtx", name: LotPlayConfig.getName("k3_3lhtx"), desc: "正6特码");
+  PlayStyle get k3_hz => cqssc_hz(
+      type: "k3_hz", name: LotPlayConfig.getName("k3_hz"), desc: "特码直选");
+  PlayStyle get k3_3thdx => k3_thdx(
+      type: "k3_3thdx", name: LotPlayConfig.getName("k3_3thdx"), desc: "正1特码");
+  PlayStyle get k3_3bth => k3_buthdx(
+      type: "k3_3bth", name: LotPlayConfig.getName("k3_3bth"), desc: "正2特码");
+  PlayStyle get k3_2thfx => k3_thdx(
+      type: "k3_2thfx", name: LotPlayConfig.getName("k3_2thfx"), desc: "正3特码");
+  PlayStyle get k3_2thdx => k3_thdx(
+      type: "k3_2thdx", name: LotPlayConfig.getName("k3_2thdx"), desc: "正4特码");
+  PlayStyle get k3_2bth => k3_buthdx(
+      type: "k3_2bth", name: LotPlayConfig.getName("k3_2bth"), desc: "正5特码");
+  PlayStyle get k3_3thtx => k3_thtx(
+      type: "k3_3thtx", name: LotPlayConfig.getName("k3_3thtx"), desc: "正6特码");
+  PlayStyle get k3_3lhtx => k3_thtx(
+      type: "k3_3lhtx", name: LotPlayConfig.getName("k3_3lhtx"), desc: "正6特码");
 
   @override
   String get name => "快三";
 
   @override
   List<PlayStyle> get all => [
-    k3_hz,
-    k3_3thdx,
-    k3_3bth,
-    k3_2thfx,
+        k3_hz,
+        k3_3thdx,
+        k3_3bth,
+        k3_2thfx,
 //    k3_2thdx,
-    k3_2bth,
-    k3_3thtx,
-    k3_3lhtx,
+        k3_2bth,
+        k3_3thtx,
+        k3_3lhtx,
       ];
 }
 /*

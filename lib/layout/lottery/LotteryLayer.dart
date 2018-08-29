@@ -119,7 +119,6 @@ class _LotteryState extends State<LotteryLayer> {
         //     }, childCount: _titles.length))),
         backgroundColor: Colors.white,
         body: new Container(
-
             constraints: new BoxConstraints.expand(),
             child: new Column(
               children: <Widget>[
@@ -213,37 +212,34 @@ class _LotteryState extends State<LotteryLayer> {
                     ),
 // new SizedBox()
 
-                    new Expanded(
-                      child: new Container(
-                          child: new StoreConnector<AppState, Lottery>(
-                        builder: (context, state) {
-                          return new Column(
-                            children: <Widget>[
-                              new Text(
-                                "${state == null ? "" : state.expectNo ?? ""}期投注截止",
+                    new Container(
+                        child: new StoreConnector<AppState, Lottery>(
+                      builder: (context, state) {
+                        return new Column(
+                          children: <Widget>[
+                            new Text(
+                              "${state == null ? "" : state.expectNo ?? ""}期投注截止",
+                              style: headStyle,
+                            ),
+
+                            new Container(
+                              margin: EdgeInsets.all(4.0),
+                              child: new Text(
+                                //data
+                                "${state == null ? "" : state.remainTime ?? ""}",
+
                                 style: headStyle,
                               ),
+                            ),
 
-                              new Container(
-                                margin: EdgeInsets.all(4.0),
-                                child: new Text(
-                                  //data
-                                  "${state == null ? "" : state.remainTime ?? ""}",
-
-                                  style: headStyle,
-                                ),
-                              ),
-
-
-                              //new Spacer(),
-                            ],
-                          );
-                        },
-                        converter: (state) {
-                          return state.state.lottery.lottery;
-                        },
-                      )),
-                    ),
+                            //new Spacer(),
+                          ],
+                        );
+                      },
+                      converter: (state) {
+                        return state.state.lottery.lottery;
+                      },
+                    )),
                   ]),
                 ),
 
@@ -312,6 +308,16 @@ class _LotteryState extends State<LotteryLayer> {
                                   child: new Row(
                                     children: <Widget>[
                                       new IconButton(
+                                        onPressed: () {
+                                          if (style.isValid()) {
+                                            var trans = widget.style.transform;
+                                            widget.style.playReset();
+                                            StoreProvider.of<AppState>(context)
+                                                .dispatch(new LotterBetAdd(
+                                                    item: trans));
+                                            setState(() {});
+                                          }
+                                        },
                                         icon: new Icon(
                                           Icons.add,
                                           size: 40.0,
@@ -359,22 +365,58 @@ class _LotteryState extends State<LotteryLayer> {
                         new ConstrainedBox(
                           constraints:
                               new BoxConstraints(minHeight: double.infinity),
-                          child: new RaisedButton.icon(
-                            textColor: Colors.white,
-                            elevation: 0.0,
-                            // highlightColor: Colors.transparent,
-                            // splashColor: Colors.transparent,
-                            color: Colors.black87,
-                            label: new Text("号码篮"),
-                            icon: new Icon(AppIcons.codelanzi),
-                            onPressed: () {
-                              /// turn to pay layer
-                              StoreProvider.of<AppState>(context).dispatch(
-                                  new LotterBetAdd(item: style.transform));
-                              Navigator.of(context).push(new MaterialPageRoute(
-                                  builder: (context) => new LotteryBetLayer()));
-                            },
-                          ),
+                          child: new Stack(
+                              fit: StackFit.passthrough,
+                              children: <Widget>[
+                                new RaisedButton.icon(
+                                  textColor: Colors.white,
+                                  elevation: 0.0,
+                                  // highlightColor: Colors.transparent,
+                                  // splashColor: Colors.transparent,
+                                  color: Colors.black87,
+                                  label: new Text("号码篮"),
+                                  icon: new Icon(AppIcons.codelanzi),
+                                  onPressed: () {
+                                    /// turn to pay layer
+                                    Navigator.of(context).push(
+                                        new MaterialPageRoute(
+                                            builder: (context) =>
+                                                new LotteryBetLayer()));
+                                  },
+                                ),
+                                new Positioned(
+                                  left: 20.0,
+                                  top: 5.0,
+                                  child: new StoreConnector<AppState, int>(
+                                      builder: (context, state) {
+                                    return Offstage(
+                                      offstage: state <= 0,
+                                      child: new Container(
+                                        constraints: new BoxConstraints(
+                                          minWidth: 10.0,
+                                          minHeight: 10.0,
+                                          maxWidth: 20.0,
+                                          maxHeight: 20.0,
+                                        ),
+                                        decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.red,
+                                        ),
+                                        child: new Center(
+                                          child: new Text("$state",
+                                              style: new TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13.0,
+                                              )),
+                                        ),
+                                      ),
+                                    );
+                                  }, converter: (state) {
+                                    var content = state.state.betModel.content;
+                                    return content == null ? 0 : content.length;
+                                  }),
+                                ),
+                              ]),
                         ),
                       ],
                     ),

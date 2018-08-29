@@ -12,7 +12,7 @@ abstract class _kl10 extends PlayStyle {
 
   _kl10({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc) {
-    _data = initialData(10);
+    playReset();
   }
 
   List<List<int>> initialData(int len) {
@@ -21,6 +21,13 @@ abstract class _kl10 extends PlayStyle {
         return -1;
       });
     });
+  }
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
+    _data = initialData(10);
   }
 
   @override
@@ -120,7 +127,12 @@ class kl10_rx extends _kl10 {
       @required String name,
       String desc,
       String initLeftDesc})
-      : super(type: type, name: name, desc: desc) {
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
     this._data = initialData(12);
     if (type.endsWith("2")) {
       zuheCount = 2;
@@ -189,7 +201,12 @@ class kl10_zux extends _kl10 {
       @required String name,
       String desc,
       String initLeftDesc})
-      : super(type: type, name: name, desc: desc) {
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
     this._data = initialData(12);
     if (type.contains("2")) {
       zuheCount = 2;
@@ -303,7 +320,7 @@ class Stylekl10 extends StyleManagerIMPL {
   kl10_rx7("rx7", "任选七"),
   kl10_rx8("rx8", "任选八"),
   kl10_q1zxfx("q1zxfx", "前一直选复选"),
-  kl10_q2zxfx("q2zxfx", "前二直选复选"),
+  kl10_q2zxfx("q2zxfx", "前二直选���选"),
   kl10_q3zxfx("q3zxfx", "前三直选复选"),
   kl10_q2zuxfx("q2zuxfx", "前二组选复选"),
   kl10_q3zuxfx("q3zuxfx", "前三组选复选"),

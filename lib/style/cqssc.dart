@@ -10,7 +10,7 @@ abstract class _cqssc extends PlayStyle {
 
   _cqssc({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc) {
-    _data = initialData(10);
+    playReset();
   }
 
   List<List<int>> initialData(int len) {
@@ -19,6 +19,13 @@ abstract class _cqssc extends PlayStyle {
         return -1;
       });
     });
+  }
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
+    _data = initialData(10);
   }
 
   @override
@@ -32,8 +39,8 @@ abstract class _cqssc extends PlayStyle {
 
   @override
   forceTransform(d) {
-    if(type.endsWith("zuxhz")){
-      return "${d+1}";
+    if (type.endsWith("zuxhz")) {
+      return "${d + 1}";
     }
     return d;
   }
@@ -237,7 +244,12 @@ class cqssc_hz extends _cqssc {
 
   cqssc_hz(
       {String len, @required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc) {
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
     this._data = initialData(19);
     this._zhushu = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
   }
@@ -285,7 +297,12 @@ class cqssc_zuxfx extends _cqssc {
   int len = 0;
   cqssc_zuxfx(
       {int len, @required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc) {
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
     this._data = initialData(10);
     this.len = len;
   }
@@ -336,7 +353,12 @@ class cqssc_zuxhz extends _cqssc {
       @required String name,
       String desc,
       String initLeftDesc})
-      : super(type: type, name: name, desc: desc) {
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
     this._data = initialData(17);
     if (type.contains("2"))
       this._zhushu = [1, 1, 2, 2, 3, 3, 4, 4, 5, 4, 4, 3, 3, 2, 2, 1, 1];
@@ -390,10 +412,16 @@ class cqssc_zuxbd extends _cqssc {
       @required String name,
       String desc,
       String initLeftDesc})
-      : super(type: type, name: name, desc: desc) {
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
     //todo 包胆起始位置从1开始，需要特殊处理，暂时未处理
     this._data = initialData(10);
   }
+
 //包胆只能选择一位号码
   @override
   List<List<int>> toBet2System(int index, int position) {
@@ -445,7 +473,12 @@ class cqssc_bd1 extends _cqssc {
       @required String name,
       String desc,
       String initLeftDesc})
-      : super(type: type, name: name, desc: desc) {
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
     this._data = initialData(10);
   }
 
@@ -497,7 +530,12 @@ class cqssc_bd2 extends _cqssc {
       @required String name,
       String desc,
       String initLeftDesc})
-      : super(type: type, name: name, desc: desc) {
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
     this._data = initialData(10);
     if (type.endsWith("5xsbd")) {
       zuheCount = 3;
@@ -553,7 +591,12 @@ class cqssc_kd extends _cqssc {
       @required String name,
       String desc,
       String initLeftDesc})
-      : super(type: type, name: name, desc: desc) {
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
     this._data = initialData(10);
     if (type.contains("2"))
       this._zhushu = [10, 18, 16, 14, 12, 10, 8, 6, 4, 2];
@@ -600,7 +643,6 @@ class cqssc_kd extends _cqssc {
 class cqssc_hz3 extends cqssc_hz {
   cqssc_hz3({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc) {
-    this._data = initialData(28);
     this._zhushu = [
       1,
       3,
@@ -632,6 +674,13 @@ class cqssc_hz3 extends cqssc_hz {
       1
     ];
   }
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
+    this._data = initialData(28);
+  }
 }
 
 class Stylessc extends StyleManagerIMPL {
@@ -651,7 +700,7 @@ class Stylessc extends StyleManagerIMPL {
   PlayStyle get cqssq2zxkd =>
       cqssc_kd(type: "ssc_q2zxkd", name: "前二直选跨度", desc: "前二直选跨度");
   PlayStyle get cqssq2zuxfx =>
-      cqssc_zuxfx(len: 2, type: "ssc_q2zuxfx", name: "前二组选复选", desc: "前二组选复选");
+      cqssc_zuxfx(len: 2, type: "ssc_q2zuxfx", name: "前二组选复选", desc: "前二��选复选");
   PlayStyle get cqssq2zuxhz =>
       cqssc_zuxhz(type: "ssc_q2zuxhz", name: "前二组选和值", desc: "前二组选和值");
   PlayStyle get cqssq2zuxbd =>
@@ -795,7 +844,7 @@ class Stylessc extends StyleManagerIMPL {
 //   factory style.cqssc_z3zxhz() => style(type: "z3zxhz", desc: "中三直选和值");
 //   factory style.cqssc_z3zxkd() => style(type: "z3zxkd", desc: "中三直选跨度");
 //   factory style.cqssc_z3ybd() => style(type: "z3ybd", desc: "������������一码不定����");
-//   factory style.cqssc_z3ebd() => style(type: "z3ebd", desc: "中三������不��位");
+//   factory style.cqssc_z3ebd() => style(type: "z3ebd", desc: "中三��������不��位");
 //   //四星
 //   factory style.cqssc_4xzxfx() => style(type: "4xzxfx", desc: "四星直选复选");
 //   factory style.cqssc_4xybd() => style(type: "4xybd", desc: "四星一码不定位");

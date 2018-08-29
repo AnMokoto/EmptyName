@@ -5,6 +5,7 @@ import 'Pk10Zhushuzxfx.dart';
 import 'ZuheUtil.dart';
 import 'style.dart';
 import 'package:lowlottery/conf/LotPlay.dart';
+
 ///  香港六合彩
 @protected
 abstract class _xglhc extends PlayStyle {
@@ -12,7 +13,7 @@ abstract class _xglhc extends PlayStyle {
 
   _xglhc({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc) {
-    _data = initialData(10);
+    playReset();
   }
 
   List<List<int>> initialData(int len) {
@@ -21,6 +22,13 @@ abstract class _xglhc extends PlayStyle {
         return -1;
       });
     });
+  }
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
+    _data = initialData(10);
   }
 
   @override
@@ -54,8 +62,8 @@ abstract class _xglhc extends PlayStyle {
 
   @override
   forceTransform(d) {
-    if (d < 9) return "0${d+1}";
-    return "${d+1}";
+    if (d < 9) return "0${d + 1}";
+    return "${d + 1}";
   }
 }
 
@@ -162,7 +170,12 @@ class cqssc_hz extends _xglhc {
   @protected
   cqssc_hz(
       {String len, @required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc) {
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
     this._data = initialData(49);
   }
 
@@ -205,13 +218,34 @@ class Stylexglhc extends StyleManagerIMPL {
     return const Stylexglhc();
   }
 
-  PlayStyle get tmzx => cqssc_hz(type: "xglhc_tmzx", name: LotPlayConfig.getName("xglhc_tmzx"), desc: "特码直选");
-  PlayStyle get zmz1t => cqssc_hz(type: "xglhc_zmz1t", name:LotPlayConfig.getName("xglhc_zmz1t"), desc: "正1特码");
-  PlayStyle get zmz2t => cqssc_hz(type: "xglhc_zmz2t", name:LotPlayConfig.getName("xglhc_zmz2t"), desc: "正2特码");
-  PlayStyle get zmz3t => cqssc_hz(type: "xglhc_zmz3t", name:LotPlayConfig.getName("xglhc_zmz3t"), desc: "正3特码");
-  PlayStyle get zmz4t => cqssc_hz(type: "xglhc_zmz4t", name:LotPlayConfig.getName("xglhc_zmz4t"), desc: "正4特码");
-  PlayStyle get zmz5t => cqssc_hz(type: "xglhc_zmz5t", name:LotPlayConfig.getName("xglhc_zmz5t"), desc: "正5特码");
-  PlayStyle get zmz6t => cqssc_hz(type: "xglhc_zmz6t", name: LotPlayConfig.getName("xglhc_zmz6t"), desc: "正6特码");
+  PlayStyle get tmzx => cqssc_hz(
+      type: "xglhc_tmzx",
+      name: LotPlayConfig.getName("xglhc_tmzx"),
+      desc: "特码直选");
+  PlayStyle get zmz1t => cqssc_hz(
+      type: "xglhc_zmz1t",
+      name: LotPlayConfig.getName("xglhc_zmz1t"),
+      desc: "正1特码");
+  PlayStyle get zmz2t => cqssc_hz(
+      type: "xglhc_zmz2t",
+      name: LotPlayConfig.getName("xglhc_zmz2t"),
+      desc: "正2特码");
+  PlayStyle get zmz3t => cqssc_hz(
+      type: "xglhc_zmz3t",
+      name: LotPlayConfig.getName("xglhc_zmz3t"),
+      desc: "正3特码");
+  PlayStyle get zmz4t => cqssc_hz(
+      type: "xglhc_zmz4t",
+      name: LotPlayConfig.getName("xglhc_zmz4t"),
+      desc: "正4特码");
+  PlayStyle get zmz5t => cqssc_hz(
+      type: "xglhc_zmz5t",
+      name: LotPlayConfig.getName("xglhc_zmz5t"),
+      desc: "正5特码");
+  PlayStyle get zmz6t => cqssc_hz(
+      type: "xglhc_zmz6t",
+      name: LotPlayConfig.getName("xglhc_zmz6t"),
+      desc: "正6特码");
 
   @override
   String get name => "六合彩";

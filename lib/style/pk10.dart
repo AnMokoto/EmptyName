@@ -12,7 +12,7 @@ abstract class _pk10 extends PlayStyle {
 
   _pk10({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc) {
-    _data = initialData(10);
+    playReset();
   }
 
   List<List<int>> initialData(int len) {
@@ -21,6 +21,13 @@ abstract class _pk10 extends PlayStyle {
         return -1;
       });
     });
+  }
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
+    _data = initialData(10);
   }
 
   @override
@@ -54,30 +61,37 @@ abstract class _pk10 extends PlayStyle {
 
   @override
   forceTransform(d) {
-    if(type.contains("pk10_gyhz")){
-      if(d == 0){
+    if (type.contains("pk10_gyhz")) {
+      if (d == 0) {
         return "大";
-      }if(d == 1){
+      }
+      if (d == 1) {
         return "小";
-      }if(d == 2){
+      }
+      if (d == 2) {
         return "单";
-      }if(d == 3){
+      }
+      if (d == 3) {
         return "双";
       }
-      return "${d -1 }";
+      return "${d - 1}";
     }
     if (d < 9) return "0${d + 1}";
     return "${d + 1}";
   }
 }
 
-
 @protected
 class cqssc_hz extends _pk10 {
   @protected
   cqssc_hz(
       {String len, @required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc) {
+      : super(type: type, name: name, desc: desc);
+
+  @override
+  void playReset() {
+    // TODO: implement playReset
+    super.playReset();
     this._data = initialData(21);
   }
 
@@ -100,7 +114,7 @@ class cqssc_hz extends _pk10 {
     state.zhushu = value.length;
     state.money = state.zhushu * price;
 
-    String code =  transformToString(value, type);
+    String code = transformToString(value, type);
     Log.message("${type}_value===$code");
     state.code = code;
 

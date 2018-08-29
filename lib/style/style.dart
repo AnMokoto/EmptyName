@@ -52,6 +52,19 @@ abstract class PlayStyle {
   /// 返回传递参数信息
   PlayModelItem get transform => transformWithType(this.model);
 
+  PlayModelItem randomType() {
+    /// 随机生成
+  }
+
+  /// 重置选项卡数据
+  @mustCallSuper
+  void playReset() {
+    model = new PlayModelItem();
+  }
+
+  /// 当前选项是否为可激活状态
+  bool isValid() => model != null && model.zhushu > 0 && model.money > 0;
+
   /// 业务处理，不对外
   @protected
   PlayModelItem transformWithType(PlayModelItem model);

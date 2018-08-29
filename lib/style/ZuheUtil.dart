@@ -1,5 +1,3 @@
-
-
 class ZuheUtil {
   /**
    * log
@@ -13,7 +11,7 @@ class ZuheUtil {
    * 计算组合数，即C(n, m) = n!/((n-m)! * m!)
    */
 
- static double combination(int n, int m) {
+  static double combination(int n, int m) {
     return (n >= m) ? factorial(n) / factorial(n - m) / factorial(m) : 0.0;
   }
 }
