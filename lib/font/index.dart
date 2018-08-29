@@ -10,6 +10,8 @@ class AppIcons {
   static IconData chongzhi = IconData(0xe646, fontFamily: "Alibaba");
   static IconData tixian = IconData(0xe625, fontFamily: "Alibaba");
   static IconData jiangbei = IconData(0xe627, fontFamily: "Alibaba");
+  static IconData home = IconData(0xe633, fontFamily: "Alibaba");
+  static IconData persion = IconData(0xe657, fontFamily: "Alibaba");
 
   static IconData from(int codePoint) =>
       IconData(codePoint, fontFamily: "Alibaba");

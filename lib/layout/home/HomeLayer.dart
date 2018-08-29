@@ -55,7 +55,7 @@ class _HomeState extends State<HomeLayer> {
   Widget build(BuildContext context) {
     return new Scaffold(
       body: new PageView.builder(
-        physics: new PageScrollPhysics(),
+        physics: new NeverScrollableScrollPhysics(),
         onPageChanged: _onPageChanged,
         controller: _pageController,
         itemBuilder: (context, index) {
@@ -65,10 +65,10 @@ class _HomeState extends State<HomeLayer> {
       ),
       bottomNavigationBar: new BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home ,size: 24.0,), title: Text("首页")),
+          BottomNavigationBarItem(icon: Icon(AppIcons.home ,size: 24.0,), title: Text("首页")),
           BottomNavigationBarItem(icon: Icon(AppIcons.jiangbei ,size: 20.0,), title: Text("开奖号码")),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person ,size: 24.0,), title: Text("个人中心")),
+              icon: Icon(AppIcons.persion ,size: 24.0,), title: Text("个人中心")),
         ],
         currentIndex: _currentIndex,
         onTap: (index) {
