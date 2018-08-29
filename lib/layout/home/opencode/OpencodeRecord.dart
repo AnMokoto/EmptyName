@@ -38,21 +38,10 @@ class _OpencodeRecordState extends State<OpencodeRecordLayer>
       initialIndex: 0,
       child: new Scaffold(
         appBar: new AppBar(
-          bottom: new TabBar(
-            controller: _tabController,
-            tabs: titles.map((s) {
-              return new Tab(
-                child: new Text(
-                  s,
-                  style: new TextStyle(color: Colors.redAccent),
-                ),
-              );
-            }).toList(),
-          ),
           centerTitle: true,
-          backgroundColor: Colors.grey[100],
+          backgroundColor: Colors.red,
           title: new Text(
-            "开奖号码",style: new TextStyle(color: Colors.red),
+            "开奖号码",style: new TextStyle(color: Colors.white),
           ),
         ),
         body: new Column(
@@ -122,7 +111,7 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                         children: <Widget>[
                           new Expanded(
                             child: new Container(
-                              margin: EdgeInsets.all(10.0),
+                              margin: EdgeInsets.only(left: 5.0),
                               child: new Row(
                                 children: <Widget>[
                                   new Text(LotConfig.getLotName(
@@ -150,12 +139,7 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                                     decoration: new BoxDecoration(
                                         color: Colors.red,
                                         shape: BoxShape.circle,
-                                        boxShadow: <BoxShadow>[
-                                          new BoxShadow(
-                                              color: Colors.black26,
-                                              offset:
-                                              const Offset(2.0, 2.0)),
-                                        ]),
+                                        ),
                                     width: 28.0,
                                     height: 28.0,
                                     child: new Center(

@@ -36,7 +36,7 @@ class _LotterBetRecordState extends State<LotterBetRecordLayer>
       initialIndex: 0,
       child: new Scaffold(
         appBar: new AppBar(
-          bottom: new TabBar(
+          /*bottom: new TabBar(
             controller: _tabController,
             tabs: titles.map((s) {
               return new Tab(
@@ -46,7 +46,7 @@ class _LotterBetRecordState extends State<LotterBetRecordLayer>
                 ),
               );
             }).toList(),
-          ),
+          ),*/
           centerTitle: true,
           backgroundColor: Colors.red,
           title: new Text("投注记录"),

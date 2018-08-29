@@ -176,9 +176,9 @@ class _MineState extends State<MineLayer> {
                   builder: (context) => new LotterBetRecordLayer(),
                 ));
               },
-              leading: Icon(AppIcons.projectRecord),
+              leading: Icon(AppIcons.projectRecord , color: Colors.red),
               title: new Text("投注记录"),
-              trailing: Icon(Icons.navigate_next),
+              trailing: Icon(Icons.navigate_next ),
             ),
           ), new Container(
             color: Colors.white,
@@ -189,7 +189,7 @@ class _MineState extends State<MineLayer> {
                   builder: (context) => new LotterBetRecordLayer(),
                 ));
               },
-              leading: Icon(AppIcons.withdrawRecord),
+              leading: Icon(AppIcons.withdrawRecord,color: Colors.red),
               title: new Text("提现记录"),
               trailing: Icon(Icons.navigate_next),
             ),
