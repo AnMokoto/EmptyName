@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'package:lowlottery/layout/bet/LotteryBetLayer.dart';
 import 'package:lowlottery/font/index.dart';
-
+import 'package:lowlottery/layout/record/WithdrawRecord.dart';
 class MineLayer extends StatefulWidget {
   _MineState createState() => new _MineState();
 }
@@ -180,13 +180,26 @@ class _MineState extends State<MineLayer> {
               title: new Text("投注记录"),
               trailing: Icon(Icons.navigate_next ),
             ),
-          ), new Container(
+          ),new Container(
             color: Colors.white,
 //            margin: EdgeInsets.only(top: 10.0),
             child: new ListTile(
               onTap: () {
                 Navigator.of(context).push(new MaterialPageRoute(
                   builder: (context) => new LotterBetRecordLayer(),
+                ));
+              },
+              leading: Icon(AppIcons.accountMingxiRecord , color: Colors.red),
+              title: new Text("账户明细"),
+              trailing: Icon(Icons.navigate_next ),
+            ),
+          ), new Container(
+            color: Colors.white,
+//            margin: EdgeInsets.only(top: 10.0),
+            child: new ListTile(
+              onTap: () {
+                Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (context) => new WithdrawRecordLayer(),
                 ));
               },
               leading: Icon(AppIcons.withdrawRecord,color: Colors.red),
