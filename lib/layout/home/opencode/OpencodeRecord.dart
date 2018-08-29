@@ -105,6 +105,7 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
               constraints: new BoxConstraints(
                 maxHeight: 80.0,
               ),
+//              margin: EdgeInsets.all(10.0),
               child: new InkWell(
                 onTap: () {
                   print("onTop");
@@ -121,20 +122,58 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                         children: <Widget>[
                           new Expanded(
                             child: new Container(
-                              padding: EdgeInsets.all(10.0),
+                              margin: EdgeInsets.all(10.0),
                               child: new Row(
                                 children: <Widget>[
                                   new Text(LotConfig.getLotName(
-                                      "${value['gameEn']}")),
-                                  new Text("${value["expectNo"] ?? "-"}" +
-                                      " | " +
-                                      "${value['createTime'] ?? '-'}"),
-                                  new Text("${value["opencode"] ?? "-"}"),
+                                      "${value['gameEn']}") ,style: new TextStyle(fontSize: 14.0),),
+                                  new Text("  第 ${value["expectNo"] ?? "-"}期" , style: new TextStyle(fontSize: 12.0 ,color: Colors.black87)),
+
 //                              new Icon(AppIcons.getLot("${value['gameEn']}"), size: 60.0)
                                 ],
                               ),
                             ),
                           ),
+
+                          new Expanded(
+                            child: new Container(
+//                              margin: EdgeInsets.all(10.0),
+                            child: new Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                children:
+                                new List.generate(int.parse("${value['codeCount']}"), (index) {
+                                  var _str = "${value["opencode"] ?? "-"}".split(",");
+                                  print(_str);
+                                  return new Container(
+                                    margin: EdgeInsets.only(left:5.0),
+                                    decoration: new BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle,
+                                        boxShadow: <BoxShadow>[
+                                          new BoxShadow(
+                                              color: Colors.black26,
+                                              offset:
+                                              const Offset(2.0, 2.0)),
+                                        ]),
+                                    width: 28.0,
+                                    height: 28.0,
+                                    child: new Center(
+                                      child: new Text(
+                                        _str.length > 1 ? _str[index] : "-",
+                                        // _str[index] ?? "-",
+                                        style: const TextStyle(
+                                            fontSize: 14.0,
+                                            color: Colors.white),
+                                        textAlign: TextAlign.center,
+                                        textDirection: TextDirection.ltr,
+                                      ),
+                                    ),
+                                  );
+                                })),
+            )
+                          ),
+
                           new Divider(),
                         ],
                       ),
