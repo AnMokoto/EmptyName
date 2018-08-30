@@ -9,6 +9,7 @@ import 'package:lowlottery/layout/bet/LotteryBetLayer.dart';
 import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/layout/record/WithdrawRecord.dart';
 import 'package:lowlottery/layout/record/AccountMingxiRecord.dart';
+import 'package:lowlottery/layout/record/MessageRecord.dart';
 
 class MineLayer extends StatefulWidget {
   _MineState createState() => new _MineState();
@@ -23,24 +24,25 @@ class _MineState extends State<MineLayer>
       controller: new ScrollController(),
       child: new Container(
         color: Colors.grey[200],
+        padding: EdgeInsets.only(bottom: 20.0),
         child: new Column(
           children: <Widget>[
             new AspectRatio(
-              aspectRatio: 1.0,
+              aspectRatio: 1.1,
               child: new Stack(
                 // alignment: Alignment.center,
                 children: <Widget>[
                   new AspectRatio(
                     aspectRatio: 16.0 / 9.0,
                     child: Image.asset(
-                      "assets/images/app_back.png",
+                      "assets/images/avatar.png",
                       fit: BoxFit.cover,
                     ),
                   ), //
 
                   new Container(
                     padding: EdgeInsets.all(15.0),
-                    margin: EdgeInsets.only(top: 110.0),
+                    margin: EdgeInsets.only(top: 70.0),
                     constraints: new BoxConstraints(minWidth: double.infinity),
                     child: new Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,7 +51,25 @@ class _MineState extends State<MineLayer>
                           margin: EdgeInsets.only(top: 5.0, bottom: 10.0),
                           child: new Column(
                             children: <Widget>[
-                              Icon(Icons.whatshot),
+                              new Container(
+                                  margin: EdgeInsets.only(left: 5.0),
+                                  decoration: new BoxDecoration(
+                                    color: Colors.red,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  width: 50.0,
+                                  height: 50.0,
+                                  child: new ClipOval(
+                                    child: new FadeInImage.assetNetwork(
+                                      placeholder:
+                                          "images/normal_user_icon.webp",
+                                      fit: BoxFit.fitWidth,
+                                      image:
+                                          "http://p1m4sp0og.bkt.clouddn.com/avatar.png",
+                                      width: 60.0,
+                                      height: 60.0,
+                                    ),
+                                  )),
                               new Text(
                                 "111",
                                 style: new TextStyle(
@@ -60,21 +80,18 @@ class _MineState extends State<MineLayer>
                         ),
                         //// 钱
                         new Container(
-                          constraints: new BoxConstraints(
-                              minWidth: double.infinity, minHeight: 150.0),
+                          constraints:
+                              new BoxConstraints(minWidth: double.infinity),
                           decoration: new BoxDecoration(
                               color: Colors.grey[100],
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(28.0))),
+                                  BorderRadius.all(Radius.circular(128.0))),
                           child: new Column(
                             children: <Widget>[
                               /// header
                               new Container(
                                 color: Colors.grey[100],
                                 child: new Row(children: <Widget>[
-                                  // child: new Padding(
-                                  //     padding: EdgeInsets.symmetric(
-                                  //         horizontal: 10.0, vertical: 5.0),
                                   new Expanded(
                                     child: new Container(
                                         child: new Column(
@@ -102,9 +119,6 @@ class _MineState extends State<MineLayer>
                                             label: new Text("充值"),
                                             icon: new Icon(AppIcons.chongzhi),
                                             onPressed: () {
-                                              /// turn to pay layer
-                                              /*StoreProvider.of<AppState>(context).dispatch(
-                                                    new LotterBetAdd(item: style.transform));*/
                                               Navigator.of(context).push(
                                                   new MaterialPageRoute(
                                                       builder: (context) =>
@@ -115,7 +129,6 @@ class _MineState extends State<MineLayer>
                                       ],
                                     )),
                                   ),
-
                                   new Padding(
                                     padding:
                                         EdgeInsets.symmetric(vertical: 5.0),
@@ -125,7 +138,6 @@ class _MineState extends State<MineLayer>
                                       height: 150.0,
                                     ),
                                   ),
-// new SizedBox()
                                   new Expanded(
                                     child: new Container(
                                         child: new Column(
@@ -153,9 +165,6 @@ class _MineState extends State<MineLayer>
                                             label: new Text("提现"),
                                             icon: new Icon(AppIcons.tixian),
                                             onPressed: () {
-                                              /// turn to pay layer
-                                              /*StoreProvider.of<AppState>(context).dispatch(
-                                                    new LotterBetAdd(item: style.transform));*/
                                               Navigator.of(context).push(
                                                   new MaterialPageRoute(
                                                       builder: (context) =>
@@ -180,7 +189,6 @@ class _MineState extends State<MineLayer>
             ),
             new Container(
               color: Colors.grey[100],
-//            margin: EdgeInsets.only(top: 10.0),
               child: new ListTile(
                 onTap: () {
                   Navigator.of(context).push(new MaterialPageRoute(
@@ -192,7 +200,6 @@ class _MineState extends State<MineLayer>
                 trailing: Icon(Icons.navigate_next),
               ),
             ),
-
             new Container(
               color: Colors.grey[100],
 //            margin: EdgeInsets.only(top: 10.0),
@@ -223,6 +230,20 @@ class _MineState extends State<MineLayer>
             ),
             new Container(
               color: Colors.grey[100],
+//            margin: EdgeInsets.only(top: 10.0),
+              child: new ListTile(
+                onTap: () {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) => new MessageLayer(),
+                  ));
+                },
+                leading: Icon(AppIcons.message, color: Colors.red),
+                title: new Text("我的消息"),
+                trailing: Icon(Icons.navigate_next),
+              ),
+            ),
+            new Container(
+              color: Colors.grey[100],
               child: new ListTile(
                 onTap: () {
                   Navigator.of(context).push(new MaterialPageRoute(
@@ -233,8 +254,9 @@ class _MineState extends State<MineLayer>
                 title: new Text("用户注册"),
                 trailing: Icon(Icons.navigate_next),
               ),
-            ),new Container(
-//            margin: EdgeInsets.only(top: 10.0),
+            ),
+            new Container(
+            margin: EdgeInsets.only(bottom: 10.0),
               color: Colors.grey[100],
               child: new ListTile(
                 onTap: () {

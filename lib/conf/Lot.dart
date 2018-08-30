@@ -27,6 +27,7 @@ class LotConfig {
     "ssc1": "分分彩",
     "ssc3": "三分彩",
     "ssc5": "五分彩",
+    "txssc": "腾讯分分彩",
     "cqssc": "重庆时时彩",
     "xjssc": "新疆时时彩",
     "tjssc": "天津时时彩",
@@ -54,17 +55,7 @@ class LotConfig {
     "jx11x5": "江西11选5",
     "zj11x5": "浙江11选5",
   };
-  static Map<String, String> _lotShortName = {
-    "lhc": "六合彩",
-    "pk10": "pk10",
-    "gdkl10": "快乐十分",
-    "gxk3": "快三",
-    "ssc1": "分分彩",
-    "ssc3": "三分彩",
-    "ssc5": "五分彩",
-    "cqssc": "时时彩",
-    "gd11x5": "11选5",
-  };
+
 
   /**
    * 获取彩种logo

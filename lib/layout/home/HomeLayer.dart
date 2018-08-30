@@ -73,7 +73,7 @@ class _HomeState extends State<HomeLayer> {
         currentIndex: _currentIndex,
         onTap: (index) {
           _pageController.animateToPage(index,
-              duration: Duration(milliseconds: 200),
+              duration: Duration(milliseconds: 20),
               curve: ElasticOutCurve(0.6));
           _onPageChanged(index);
         },
