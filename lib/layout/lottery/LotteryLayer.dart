@@ -310,12 +310,14 @@ class _LotteryState extends State<LotteryLayer> {
                                       new IconButton(
                                         onPressed: () {
                                           if (style.isValid()) {
-                                            var trans = widget.style.transform;
-                                            widget.style.playReset();
+                                            final trans = PlayModelItem.copy(
+                                                widget.style.transform);
                                             StoreProvider.of<AppState>(context)
                                                 .dispatch(new LotterBetAdd(
                                                     item: trans));
-                                            setState(() {});
+                                            setState(() {
+                                              widget.style.playReset();
+                                            });
                                           }
                                         },
                                         icon: new Icon(

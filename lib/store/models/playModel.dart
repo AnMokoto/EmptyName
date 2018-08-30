@@ -66,4 +66,12 @@ class PlayModelItem extends Object {
       "money": money
     };
   }
+
+  factory PlayModelItem.copy(PlayModelItem item) {
+    return new PlayModelItem(
+        code: item.code,
+        playEn: item.playEn,
+        zhushu: item.zhushu,
+        money: item.money);
+  }
 }
