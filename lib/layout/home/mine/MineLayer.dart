@@ -22,7 +22,7 @@ class _MineState extends State<MineLayer>
       physics: new AlwaysScrollableScrollPhysics(),
       controller: new ScrollController(),
       child: new Container(
-        color: Colors.grey,
+        color: Colors.grey[200],
         child: new Column(
           children: <Widget>[
             new AspectRatio(
@@ -70,7 +70,7 @@ class _MineState extends State<MineLayer>
                             children: <Widget>[
                               /// header
                               new Container(
-                                color: Colors.white,
+                                color: Colors.grey[100],
                                 child: new Row(children: <Widget>[
                                   // child: new Padding(
                                   //     padding: EdgeInsets.symmetric(
@@ -179,7 +179,7 @@ class _MineState extends State<MineLayer>
               ),
             ),
             new Container(
-              color: Colors.white,
+              color: Colors.grey[100],
 //            margin: EdgeInsets.only(top: 10.0),
               child: new ListTile(
                 onTap: () {
@@ -192,22 +192,9 @@ class _MineState extends State<MineLayer>
                 trailing: Icon(Icons.navigate_next),
               ),
             ),
+
             new Container(
-//            margin: EdgeInsets.only(top: 10.0),
-              color: Colors.white,
-              child: new ListTile(
-                onTap: () {
-                  Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new LoginLayer(),
-                  ));
-                },
-                leading: Icon(Icons.history),
-                title: new Text("用户登陆"),
-                trailing: Icon(Icons.navigate_next),
-              ),
-            ),
-            new Container(
-              color: Colors.white,
+              color: Colors.grey[100],
 //            margin: EdgeInsets.only(top: 10.0),
               child: new ListTile(
                 onTap: () {
@@ -221,7 +208,7 @@ class _MineState extends State<MineLayer>
               ),
             ),
             new Container(
-              color: Colors.white,
+              color: Colors.grey[100],
 //            margin: EdgeInsets.only(top: 10.0),
               child: new ListTile(
                 onTap: () {
@@ -235,7 +222,7 @@ class _MineState extends State<MineLayer>
               ),
             ),
             new Container(
-              color: Colors.white,
+              color: Colors.grey[100],
               child: new ListTile(
                 onTap: () {
                   Navigator.of(context).push(new MaterialPageRoute(
@@ -244,6 +231,19 @@ class _MineState extends State<MineLayer>
                 },
                 leading: Icon(Icons.history),
                 title: new Text("用户注册"),
+                trailing: Icon(Icons.navigate_next),
+              ),
+            ),new Container(
+//            margin: EdgeInsets.only(top: 10.0),
+              color: Colors.grey[100],
+              child: new ListTile(
+                onTap: () {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) => new LoginLayer(),
+                  ));
+                },
+                leading: Icon(Icons.history),
+                title: new Text("用户登陆"),
                 trailing: Icon(Icons.navigate_next),
               ),
             ),
