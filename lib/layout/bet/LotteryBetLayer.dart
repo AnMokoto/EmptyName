@@ -129,9 +129,7 @@ class _LotteryState extends State<LotteryBetLayer> {
                   builder: (context, model) {
                     var isOffset =
                         model.content == null || model.content.length <= 0;
-                    return new Offstage(
-                      offstage: isOffset,
-                      child: new Container(
+                    return  new Container(
                         height: 55.0,
                         color: Colors.transparent,
                         child: new Row(
@@ -192,8 +190,7 @@ class _LotteryState extends State<LotteryBetLayer> {
                             )
                           ],
                         ),
-                      ),
-                    );
+                      );
                   },
                   converter: (store) {
                     return store.state.betModel;
