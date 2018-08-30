@@ -146,7 +146,7 @@ class _LotteryState extends State<LotteryBetLayer> {
                                     // new Semantics()
                                     new SafeArea(
                                       child: new Text(
-                                        "方案 ${model.zhushu}注,${model.money}元",
+                                        "方案 ${model.zhushu??0}注,${model.money??0}元",
                                         overflow: TextOverflow.ellipsis,
                                         style: new TextStyle(
                                             fontSize: 15.0,
