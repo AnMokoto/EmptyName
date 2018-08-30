@@ -304,6 +304,7 @@ class _LotteryState extends State<LotteryLayer> {
                                 onTap: () {
                                   if (style.isValid()) {
                                     var trans = widget.style.transform;
+                                    trans.playEn = style.type;
                                     widget.style.playReset();
                                     StoreProvider.of<AppState>(context)
                                         .dispatch(new LotterBetAdd(
