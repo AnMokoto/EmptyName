@@ -28,7 +28,7 @@ class _MineState extends State<MineLayer>
         child: new Column(
           children: <Widget>[
             new AspectRatio(
-              aspectRatio: 1.1,
+              aspectRatio: 1.0,
               child: new Stack(
                 // alignment: Alignment.center,
                 children: <Widget>[
@@ -85,7 +85,7 @@ class _MineState extends State<MineLayer>
                           decoration: new BoxDecoration(
                               color: Colors.grey[100],
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(128.0))),
+                                  BorderRadius.all(Radius.circular(10.0))),
                           child: new Column(
                             children: <Widget>[
                               /// header
@@ -256,7 +256,7 @@ class _MineState extends State<MineLayer>
               ),
             ),
             new Container(
-            margin: EdgeInsets.only(bottom: 10.0),
+              margin: EdgeInsets.only(bottom: 10.0),
               color: Colors.grey[100],
               child: new ListTile(
                 onTap: () {
