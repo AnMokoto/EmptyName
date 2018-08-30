@@ -50,12 +50,10 @@ flutter:
   assets:
     - assets/images/app_back.png
     - assets/images/move.png
+    - assets/images/avatar.png
 
 
-    - assets/lottery/cqssc.png
-    - assets/lottery/pk10.png
-    - assets/lottery/tjssc.png
-    - assets/lottery/xjssc.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
@@ -85,5 +83,4 @@ flutter:
   fonts:
     - family: Alibaba
       fonts:
-        # - asset: assets/ttf/iconfont.ttf
-        - asset: assets/ttf/afont.ttf
+         - asset: assets/ttf/iconfont.ttf

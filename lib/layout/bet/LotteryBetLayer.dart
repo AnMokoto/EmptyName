@@ -258,7 +258,7 @@ class _LotteryBetPress extends StatelessWidget {
   Widget build(BuildContext context) {
     return new RaisedButton.icon(
       color: Colors.white,
-      textColor: Colors.black87,
+      textColor: Colors.black54,
       disabledColor: Colors.deepOrange,
       shape: new RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(5.0)),

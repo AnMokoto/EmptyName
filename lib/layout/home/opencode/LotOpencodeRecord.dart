@@ -127,7 +127,6 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                                 children:
                                 new List.generate("${value['opencode']}".split(",").length, (index) {
                                   var _str = "${value["opencode"] ?? "-"}".split(",");
-                                  print(_str);
                                   return new Container(
                                     margin: EdgeInsets.only(left:5.0),
                                     decoration: new BoxDecoration(

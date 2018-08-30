@@ -105,16 +105,6 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
               maxHeight: 80.0,
             ),
             child: new InkWell(
-              onLongPress: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return new AlertDialog(
-                      title: new Text("data"),
-                    ).build(context);
-                  },
-                );
-              },
               onTap: () {
                 print("onTop");
                 Navigator.of(context).push(new MaterialPageRoute(
