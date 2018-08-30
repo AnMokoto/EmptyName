@@ -300,82 +300,71 @@ class _LotteryState extends State<LotteryLayer> {
                     child: new Row(
                       children: <Widget>[
                         new Expanded(
-                            child: new InkWell(
-                                onTap: () {
-                                  if (style.isValid()) {
-                                    var trans = widget.style.transform;
-                                    trans.playEn = style.type;
-                                    widget.style.playReset();
-                                    StoreProvider.of<AppState>(context)
-                                        .dispatch(new LotterBetAdd(
-                                        item: trans));
-                                    setState(() {});
-                                  }
-                                },
-                                child: new Container(
-                                constraints: new BoxConstraints.expand(),
-                                color: Colors.red,
-                                child: new Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: new Row(
-                                    children: <Widget>[
-                                      new IconButton(
-                                        onPressed: () {
-                                          if (style.isValid()) {
-                                            final trans = PlayModelItem.copy(
-                                                widget.style.transform);
-                                            StoreProvider.of<AppState>(context)
-                                                .dispatch(new LotterBetAdd(
-                                                    item: trans));
-                                            setState(() {
-                                              widget.style.playReset();
-                                            });
-                                          }
-                                        },
-                                        icon: new Icon(
-                                          Icons.add,
-                                          size: 40.0,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      new Container(
-                                        margin: EdgeInsets.only(left: 15.0),
-                                        constraints:
-                                            new BoxConstraints.tightForFinite(),
-                                        child: new Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: <Widget>[
-                                            new SafeArea(
-                                              child: new Text(
-                                                "共${model.zhushu}注，${model.money}元",
-                                                style: new TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 15.0,
-                                                ),
-                                              ),
-                                            ),
-                                            new Container(
-                                              constraints: new BoxConstraints(
-                                                  maxWidth: 200.0),
-                                              child: new Text(_code ?? "",
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  softWrap: false,
-                                                  style: new TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 15.0,
-                                                  )),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                          child: new Container(
+                            constraints: new BoxConstraints.expand(),
+                            color: Colors.red,
+                            child: new Padding(
+                              padding: EdgeInsets.all(5.0),
+                              child: new Row(
+                                children: <Widget>[
+                                  new IconButton(
+                                    onPressed: () {
+                                      if (style.isValid()) {
+                                        final trans = PlayModelItem.copy(
+                                            widget.style.transform);
+                                        StoreProvider.of<AppState>(context)
+                                            .dispatch(
+                                                new LotterBetAdd(item: trans));
+                                        setState(() {
+                                          widget.style.playReset();
+                                        });
+                                      }
+                                    },
+                                    icon: new Icon(
+                                      Icons.add,
+                                      size: 40.0,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                )))),
+                                  new Container(
+                                    margin: EdgeInsets.only(left: 15.0),
+                                    constraints:
+                                        new BoxConstraints.tightForFinite(),
+                                    child: new Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        new SafeArea(
+                                          child: new Text(
+                                            "共${model.zhushu}注，${model.money}元",
+                                            style: new TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                        ),
+                                        new Container(
+                                          constraints: new BoxConstraints(
+                                              maxWidth: 200.0),
+                                          child: new Text(_code ?? "",
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              softWrap: false,
+                                              style: new TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15.0,
+                                              )),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                         new ConstrainedBox(
                           constraints:
                               new BoxConstraints(minHeight: double.infinity),
