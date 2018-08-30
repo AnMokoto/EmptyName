@@ -40,8 +40,8 @@ abstract class PlayStyle {
     this._type = type;
     this._showName = name;
     this._desc = desc ?? "";
-    this.model = new PlayModelItem()..playEn = type;
     this._price = price;
+    this.model = new PlayModelItem()..playEn = type;
     this._height = LotLineHeight.calHeight("", type);
   }
 
@@ -59,7 +59,7 @@ abstract class PlayStyle {
   /// 重置选项卡数据
   @mustCallSuper
   void playReset() {
-    model = new PlayModelItem();
+    model = new PlayModelItem()..playEn = this.type;
   }
 
   /// 当前选项是否为可激活状态
