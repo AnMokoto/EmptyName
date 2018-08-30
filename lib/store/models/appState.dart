@@ -5,6 +5,7 @@ import '../net/index.dart';
 import 'playModel.dart';
 import 'homeModel.dart';
 import 'OpencodeModel.dart';
+import 'TradeModel.dart';
 const price = 2.0;
 const dynamic HOST_NAME = "http://178.128.21.119:10003/";
 
@@ -18,6 +19,7 @@ class AppState {
   static double price = 2.0;
   String _token = "";
 
+  TradeModel tradeModel;
   OpencodeModel opencodeModel;
   PlayModel betModel;
   LotteryState lottery;
@@ -32,6 +34,7 @@ class AppState {
     this.betModel = new PlayModel();
     this.record = new LotteryRecord();
     this.httpRetrofit = HttpRetrofit.from(HOST_NAME)..setHeaders(REQUEST_HEAD);
+    this.tradeModel = new TradeModel();
   }
 
   String get token => _token;

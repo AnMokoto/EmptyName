@@ -11,8 +11,7 @@ class _LotterBetRecordState extends State<LotterBetRecordLayer>
     with SingleTickerProviderStateMixin<LotterBetRecordLayer> {
   final titles = [
     "全部",
-    "已中奖",
-    "待开奖",
+
   ];
 
   @protected

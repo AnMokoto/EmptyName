@@ -9,6 +9,7 @@ import '_httpMiddleware.dart';
 import 'userMiddleware.dart';
 import 'lotteryMiddleware.dart';
 import 'homeMiddleware.dart';
+import 'tradeMiddleware.dart';
 part 'middleware.dart';
 
 /// 不动
@@ -25,4 +26,5 @@ final List<Middleware<AppState>> _appMiddleware = <Middleware<AppState>>[
   ..addAll(lotterMiddleware)
   ..addAll(betMiddleware)
   ..addAll(recordMiddleware)
+  ..addAll(tradeMiddleware)
   ..addAll(homeMiddleware);

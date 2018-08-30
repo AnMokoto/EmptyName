@@ -14,9 +14,7 @@ class _OpencodeRecordState extends State<LotOpencodeRecordLayer>
     with SingleTickerProviderStateMixin<LotOpencodeRecordLayer> {
   final titles = [
     "全部",
-    "时时彩",
-    "快三",
-    "11选5",
+
   ];
 
   @protected

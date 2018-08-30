@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lowlottery/conf/Lot.dart';
-import 'package:lowlottery/conf/LotIcon.dart';
 import 'package:lowlottery/store/appStore.dart';
 
 /**
@@ -37,17 +35,6 @@ class _WithdrawRecordState extends State<AccountRecordLayer>
       initialIndex: 0,
       child: new Scaffold(
         appBar: new AppBar(
-          /*bottom: new TabBar(
-            controller: _tabController,
-            tabs: titles.map((s) {
-              return new Tab(
-                child: new Text(
-                  s,
-                  style: new TextStyle(color: Theme.of(context).primaryColor),
-                ),
-              );
-            }).toList(),
-          ),*/
           centerTitle: true,
           backgroundColor: Colors.red,
           title: new Text("账户明细"),
@@ -91,7 +78,7 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     dispatch(context,
-        new LotteryRecordAction(context, {"pageIndex": 0, "pageSize": 100}));
+        new TradeRequestAction(context, {"pageIndex": 0, "pageSize": 100}));
   }
 
   @override
@@ -107,41 +94,25 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
               maxHeight: 80.0,
             ),
             child: new InkWell(
-              onLongPress: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return new AlertDialog(
-                      title: new Text("data"),
-                    ).build(context);
-                  },
-                );
-              },
-              onTap: () {
-                print("onTop");
-              },
               child: new Row(
                 children: <Widget>[
                   ///左边的
-                  new Container(
-                    padding: EdgeInsets.all(10.0),
-                    child: new Column(
-                      children: <Widget>[
-                        // Image.network(""),
-//                      new Icon(AppIcons.getLot("${value["gameEn"]}"),size: 33.0,),
-                        LotIcon.logo("${value["gameEn"]}", 33.0),
-                        new Text(
-                            LotConfig.getLotShortName(
-                                "${value["gameEn"] ?? "-"}"),
-                            style: new TextStyle(
-                                fontSize: 11.0, color: Colors.black54))
-                      ],
-                    ),
-                  ),
 
                   new Expanded(
                     child: new Column(
                       children: <Widget>[
+                        new Expanded(
+                          child: new Container(
+                            padding: EdgeInsets.all(10.0),
+                            child: new Row(
+                              children: <Widget>[
+                                new Text("${value["desc"] ?? "-"}",
+                                    style: new TextStyle(
+                                        fontSize: 11.0, color: Colors.black54))
+                              ],
+                            ),
+                          ),
+                        ),
                         new Expanded(
                           child: new Container(
                             padding: EdgeInsets.all(10.0),
@@ -153,25 +124,10 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                                     child: new Stack(
                                       children: <Widget>[
                                         new Positioned(
-                                          left: 0.0,
-                                          top: 0.0,
-                                          child: new Text(
-                                            "${value["statusDesc"] ?? "-"}",
-                                            style: new TextStyle(
-                                              color: Colors.red,
-                                            ),
-                                          ),
-                                        ),
-                                        new Positioned(
-                                          right: 0.0,
-                                          top: 0.0,
-                                          child: new Text("自购"),
-                                        ),
-                                        new Positioned(
                                           right: 0.0,
                                           bottom: 0.0,
                                           child: new Text(
-                                            "投注${value["money"] ?? "-"}元",
+                                            "${value["amount"] ?? "-"}元",
                                             style: new TextStyle(
                                                 fontSize: 11.0,
                                                 color: Colors.black54),
@@ -191,7 +147,6 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                                     ),
                                   ),
                                 ),
-                                new Icon(Icons.navigate_next)
                               ],
                             ),
                           ),
@@ -207,7 +162,7 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
         },
       );
     }, converter: (state) {
-      return state.state.record.data;
+      return state.state.tradeModel.list;
     });
   }
 }

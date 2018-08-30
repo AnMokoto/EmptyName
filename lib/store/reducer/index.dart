@@ -8,6 +8,7 @@ import 'userReducer.dart';
 import 'lotteryReducer.dart';
 import 'homeReducer.dart';
 import 'OpencodeReducer.dart';
+import 'tradeReducer.dart';
 AppState appReducer(AppState state, dynamic action) {
   ///  model.reducer
   return _reducer(state, action);
@@ -21,6 +22,7 @@ final _reducer = combineReducers<AppState>(_list);
 //// 增加了在这里 `..addAll()`
 @protected
 final List<Reducer<AppState>> _list = <Reducer<AppState>>[]
+  ..addAll(tradeReducer)
   ..addAll(opencodeReducer)
   ..addAll(logReducer)
   ..addAll(betReducer)
