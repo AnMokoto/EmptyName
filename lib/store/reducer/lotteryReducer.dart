@@ -16,6 +16,7 @@ final List<Reducer<AppState>> betReducer = <Reducer<AppState>>[
   new TypedReducer<AppState, LotteryClearAction>((state, action) {
     print("LotteryClearAction");
     state.betModel = new PlayModel();
+    state.lottery = new LotteryState();
     return state;
   }),
   new TypedReducer<AppState, LotterBetAdd>((state, action) {
@@ -50,8 +51,15 @@ AppState _initContentWithDetail(AppState state) {
 @protected
 final List<Reducer<AppState>> lotteryReducer = <Reducer<AppState>>[
   new TypedReducer<AppState, LotteryInitQueryAction>((state, action) {
-    state.lottery.lottery = action.lottery ?? state.lottery.lottery;
-    state.lottery.history = action.history ?? state.lottery.history;
+    state.lottery.lottery = action.lottery;
+    return state;
+  }),
+  new TypedReducer<AppState, LotteryInitRecordQueryAction>((state, action) {
+    state.lottery.history = action.history;
+    return state;
+  }),
+    new TypedReducer<AppState, LotteryRefreshDeadLineAction>((state, action) {
+    //state.lottery.history = action.history;
     return state;
   }),
 ];

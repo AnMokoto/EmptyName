@@ -44,14 +44,17 @@ class LotteryQueryAction extends StoreAction {}
 
 class LotteryClearAction extends StoreAction {}
 
+/// 当前期数控制
 class LotteryInitQueryAction extends StoreAction {
   final LotteryModel lottery;
+  LotteryInitQueryAction({this.lottery});
+}
 
+/// 当前游戏玩法的历史开奖记录
+class LotteryInitRecordQueryAction extends StoreAction {
   /// 历史记录
   List<Lottery> history;
-  LotteryInitQueryAction({this.lottery, List<Lottery> history}) {
-    this.history = history ?? new List();
-  }
+  LotteryInitRecordQueryAction({this.history});
 }
 
 class LotteryExpectNowAction extends HttpStoreAction {

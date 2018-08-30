@@ -6,12 +6,10 @@ part 'LotteryModel.g.dart';
 
 @JsonSerializable()
 class Lottery extends Object with _$LotterySerializerMixin {
-  var gameEn;   //彩种编码
+  var gameEn; //彩种编码
   var openTime; //开奖时间
-  var opencode;  //开奖号码
-  var expectNo;//期号数据
-  var buyEndTime; //购买截止时间
-  var remainTime;//倒计时时长
+  var opencode; //开奖号码
+  var expectNo; //期号数据
 
   factory Lottery.fromJson(Map<String, dynamic> json) =>
       _$LotteryFromJson(json);
@@ -21,7 +19,9 @@ class Lottery extends Object with _$LotterySerializerMixin {
     json.forEach((f) {
       try {
         list.add(Lottery.fromJson(f));
-      } on Exception {}
+      } catch (e) {
+        print(e);
+      }
     });
     return list;
   }
@@ -45,10 +45,9 @@ class LotteryModel extends Lottery with _$LotteryModelSerializerMixin {
   //   "nowTime": 1534072380530,
   //   "remainTime": 414470
   // }
-
-  var remainTime;
+  var buyEndTime; //购买截止时间
+  var remainTime; //倒计时时长
   var buyStartTime;
-  var buyEndTime;
 
   factory LotteryModel.fromJson(Map<String, dynamic> json) =>
       _$LotteryModelFromJson(json);
@@ -63,7 +62,7 @@ class LotteryState {
   LotteryModel lottery;
 
   /// 历史记录
-  List<Lottery> history = new List();
+  List<Lottery> history;
 }
 
 class LotteryRecord {

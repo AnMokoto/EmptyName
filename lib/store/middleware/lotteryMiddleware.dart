@@ -79,10 +79,6 @@ final betMiddleware = <Middleware<AppState>>[
 
 @protected
 final lotterMiddleware = <Middleware<AppState>>[
-  // new TypedMiddleware<AppState, LotteryInitQueryAction>(
-  //     (store, action, NextDispatcher next) async {
-  //   next(action);
-  // }),
   new TypedMiddleware<AppState, LotteryExpectNowAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));
@@ -111,7 +107,8 @@ final lotterMiddleware = <Middleware<AppState>>[
     transform(response, next).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
-        next(LotteryInitQueryAction(history: Lottery.fromJsonToList(value)));
+        final history = Lottery.fromJsonToList(value);
+        next(LotteryInitRecordQueryAction(history: history));
       }
     });
     next(HttpProgressAction(action.context, false));

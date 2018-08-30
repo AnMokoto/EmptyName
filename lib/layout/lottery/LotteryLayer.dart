@@ -7,8 +7,10 @@ import 'package:lowlottery/store/appStore.dart';
 import 'package:lowlottery/style/index.dart';
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:lowlottery/font/index.dart';
+import 'package:lowlottery/conf/date.dart';
 
 /// callback when who preclick the item.
 /// [position] item count position
@@ -38,10 +40,6 @@ class _LotteryState extends State<LotteryLayer> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    StoreProvider.of<AppState>(context).dispatch(
-        new LotteryExpectNowAction(context, {"gameEn": widget.gameEn}));
-    StoreProvider.of<AppState>(context).dispatch(new LotteryExpectRecordAction(
-        context, {"gameEn": widget.gameEn, "total": 1}));
   }
 
   Future<bool> _onPopToPreview() {
@@ -56,11 +54,6 @@ class _LotteryState extends State<LotteryLayer> {
 
   @override
   Widget build(BuildContext context) {
-    var headStyle = const TextStyle(
-      fontSize: 15.0,
-      color: Colors.black26,
-    );
-
     var style = widget.style;
 
     var _code = style.transform.code;
@@ -123,124 +116,9 @@ class _LotteryState extends State<LotteryLayer> {
             child: new Column(
               children: <Widget>[
                 /// header
-                new Container(
-                  color: Colors.grey[100],
-                  child: new Row(children: <Widget>[
-                    // child: new Padding(
-                    //     padding: EdgeInsets.symmetric(
-                    //         horizontal: 10.0, vertical: 5.0),
-                    new Expanded(
-                      child: new Container(
-                          child: new StoreConnector<AppState, LotteryState>(
-                        builder: (context, state) {
-                          return new Column(
-                            children: <Widget>[
-                              new Text(
-                                (state.history != null
-                                        ? (state.history.length > 0
-                                            ? state.history[0].expectNo ?? ""
-                                            : "")
-                                        : "") +
-                                    "期开奖号码",
-                                style: headStyle,
-                              ),
-                              new Container(
-                                child: new Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children:
-                                        new List.generate(style.count, (index) {
-                                      var _str = (state.history.length > 0
-                                              ? (state.history[0].opencode
-                                                      as String) ??
-                                                  ""
-                                              : "")
-                                          .split(",");
-                                      print(_str);
-                                      return new Container(
-                                        decoration: new BoxDecoration(
-                                            color: Colors.red,
-                                            shape: BoxShape.circle,
-                                            boxShadow: <BoxShadow>[
-                                              new BoxShadow(
-                                                  color: Colors.black26,
-                                                  offset:
-                                                      const Offset(2.0, 2.0)),
-                                            ]),
-                                        width: 22.0,
-                                        height: 22.0,
-                                        child: new Center(
-                                          child: new Text(
-                                            _str.length > 1 ? _str[index] : "-",
-                                            // _str[index] ?? "-",
-                                            style: const TextStyle(
-                                                fontSize: 14.0,
-                                                color: Colors.white),
-                                            textAlign: TextAlign.center,
-                                            textDirection: TextDirection.ltr,
-                                          ),
-                                        ),
-                                      );
-                                    })),
-                              ),
-                            ],
-                          );
-                        },
-                        converter: (state) {
-                          return state.state.lottery;
-                        },
-                      )),
-                    ),
-
-                    // new Container(
-                    //   width: 1.0,
-                    //   height: double.infinity,
-                    //   color: Colors.grey[200],
-                    //   // constraints: const BoxConstraints.tightFor(),
-                    //   //   decoration: new BoxDecoration(
-                    //   //       border: new Border(
-                    //   //           left: new BorderSide(
-                    //   //               width: 1.0, color: Colors.grey[200]))),
-                    // ),
-                    new Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5.0),
-                      child: new Container(
-                        color: Colors.grey,
-                        width: .5,
-                        height: 50.0,
-                      ),
-                    ),
-// new SizedBox()
-
-                    new Container(
-                        child: new StoreConnector<AppState, Lottery>(
-                      builder: (context, state) {
-                        return new Column(
-                          children: <Widget>[
-                            new Text(
-                              "${state == null ? "" : state.expectNo ?? ""}期投注截止",
-                              style: headStyle,
-                            ),
-
-                            new Container(
-                              margin: EdgeInsets.all(4.0),
-                              child: new Text(
-                                //data
-                                "${state == null ? "" : state.remainTime ?? ""}",
-
-                                style: headStyle,
-                              ),
-                            ),
-
-                            //new Spacer(),
-                          ],
-                        );
-                      },
-                      converter: (state) {
-                        return state.state.lottery.lottery;
-                      },
-                    )),
-                  ]),
+                new _LotteryHeadLayer(
+                  gameEn: widget.gameEn,
+                  style: style,
                 ),
 
                 /// list
@@ -312,7 +190,6 @@ class _LotteryState extends State<LotteryLayer> {
                                       if (style.isValid()) {
                                         final trans =
                                             PlayModelItem.copy(style.transform);
-                                        print("trans===================${trans.toMap()}");
                                         StoreProvider.of<AppState>(context)
                                             .dispatch(
                                                 new LotterBetAdd(item: trans));
@@ -462,6 +339,267 @@ class LotteryHeadSliverPersistentHeaderDelegate
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
     return true;
+  }
+}
+
+/// 顶部指示器
+@immutable
+class _LotteryHeadLayer extends StatefulWidget {
+  final String gameEn;
+  final PlayStyle style;
+  _LotteryHeadLayer({this.gameEn, this.style})
+      : assert(gameEn != null && style != null);
+  _LotteryHeadState createState() => new _LotteryHeadState();
+}
+
+class _LotteryHeadState extends State<_LotteryHeadLayer>
+    with WidgetsBindingObserver {
+  Timer _timer;
+  bool isAlive;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    // super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.inactive) {
+      _requestNewQState();
+    }
+
+    print("didChangeAppLifecycleState-------$state");
+    setState(() {});
+  }
+
+  void _requestNewQState() {
+    StoreProvider.of<AppState>(context).dispatch(
+        new LotteryExpectNowAction(context, {"gameEn": widget.gameEn}));
+    StoreProvider.of<AppState>(context).dispatch(new LotteryExpectRecordAction(
+        context, {"gameEn": widget.gameEn, "total": 1}));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _requestNewQState();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    isAlive = true;
+    _startTimer();
+  }
+
+  Future _startTimer() async {
+    return Future.delayed(Duration(seconds: 1), () {
+      if (isAlive) {
+        _startTimer();
+      }
+      try {
+        ///发送更改时间
+        dispatch(context, LotteryRefreshDeadLineAction());
+        //setState(() {});
+      } catch (e) {}
+    });
+  }
+
+  @override
+  void dispose() {
+    isAlive = false;
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var headStyle = const TextStyle(
+      fontSize: 15.0,
+      color: Colors.black26,
+    );
+    var style = widget.style;
+    return new Container(
+      color: Colors.grey[100],
+      child: new Row(children: <Widget>[
+        // child: new Padding(
+        //     padding: EdgeInsets.symmetric(
+        //         horizontal: 10.0, vertical: 5.0),
+        new Expanded(
+          child: new Container(
+              child: new StoreConnector<AppState, LotteryState>(
+            builder: (context, state) {
+              return new Column(
+                children: <Widget>[
+                  new Text(
+                    (state.history != null
+                            ? (state.history.isNotEmpty
+                                ? state.history[0].expectNo ?? ""
+                                : "")
+                            : "") +
+                        "期开奖号码",
+                    style: headStyle,
+                  ),
+                  new Container(
+                    child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: new List.generate(style.count, (index) {
+                          var _str = (state.history != null
+                                  ? (state.history.isNotEmpty
+                                      ? state.history[0].opencode as String ??
+                                          ""
+                                      : "")
+                                  : "")
+                              .split(",");
+                          return new Container(
+                            decoration: new BoxDecoration(
+                                color: Colors.red,
+                                shape: BoxShape.circle,
+                                boxShadow: <BoxShadow>[
+                                  new BoxShadow(
+                                      color: Colors.black26,
+                                      offset: const Offset(2.0, 2.0)),
+                                ]),
+                            width: 22.0,
+                            height: 22.0,
+                            child: new Center(
+                              child: new Text(
+                                _str.length > 1 ? _str[index] : "-",
+                                // _str[index] ?? "-",
+                                style: const TextStyle(
+                                    fontSize: 14.0, color: Colors.white),
+                                textAlign: TextAlign.center,
+                                textDirection: TextDirection.ltr,
+                              ),
+                            ),
+                          );
+                        })),
+                  ),
+                ],
+              );
+            },
+            converter: (state) {
+              return state.state.lottery;
+            },
+          )),
+        ),
+
+        // new Container(
+        //   width: 1.0,
+        //   height: double.infinity,
+        //   color: Colors.grey[200],
+        //   // constraints: const BoxConstraints.tightFor(),
+        //   //   decoration: new BoxDecoration(
+        //   //       border: new Border(
+        //   //           left: new BorderSide(
+        //   //               width: 1.0, color: Colors.grey[200]))),
+        // ),
+        new Padding(
+          padding: EdgeInsets.symmetric(vertical: 5.0),
+          child: new Container(
+            color: Colors.grey,
+            width: .5,
+            height: 50.0,
+          ),
+        ),
+// new SizedBox()
+
+        new Container(
+            margin: EdgeInsets.only(left: 5.0),
+            padding: EdgeInsets.all(3.0),
+            child: new StoreConnector<AppState, LotteryState>(
+              builder: (context, state) {
+                var store = state.lottery;
+                var time =
+                    "00:00:00"; //"${store == null ? "" : store.remainTime ?? ""}"
+
+                if (store != null) {
+                  final deadLine = store.remainTime as int;
+
+                  // if (_timer != null) {
+                  //   if (_timer.isActive) {
+                  //     _timer.cancel();
+                  //   }
+                  //   _timer = null;
+                  // }
+
+                  if (deadLine <= 0) {
+                    showPopDialog(context);
+                  } else {
+                    // _timer = new Timer(Duration(seconds: deadLine), () {
+                    //   showPopDialog(context);
+                    // });
+                    //dispatch(context, action)
+                    time = DateHelper.invoke(deadLine);
+                  }
+                }
+
+                return new Column(
+                  children: <Widget>[
+                    new Text(
+                      "${store == null ? "" : store.expectNo ?? ""}期投注截止",
+                      style: headStyle,
+                    ),
+
+                    new Container(
+                      margin: EdgeInsets.all(4.0),
+                      child: new Text(
+                        //data
+
+                        time,
+
+                        style: headStyle,
+                      ),
+                    ),
+
+                    //new Spacer(),
+                  ],
+                );
+              },
+              converter: (state) {
+                return state.state.lottery;
+              },
+            )),
+      ]),
+    );
+  }
+
+  void showPopDialog(BuildContext context) {
+    final dialogBtnStyle =
+        new TextStyle(color: Colors.lightBlue, fontSize: 12.0);
+
+    final dialogTextStyle = new TextStyle(
+      color: Colors.black87,
+      fontSize: 13.0,
+    );
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return new CupertinoAlertDialog(
+            title: new Text(
+              "本期结束",
+              style: dialogTextStyle,
+            ),
+            content: new Text(
+              "data",
+              style: dialogTextStyle,
+            ),
+            actions: <Widget>[
+              new CupertinoDialogAction(
+                child: new Text(
+                  "确定",
+                  style: dialogBtnStyle,
+                ),
+                isDefaultAction: true,
+                onPressed: () {
+                  Navigator.of(context).pop();
+
+                  ///dismiss
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 }
 
