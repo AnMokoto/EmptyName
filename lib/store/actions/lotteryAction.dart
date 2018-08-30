@@ -44,6 +44,8 @@ class LotteryQueryAction extends StoreAction {}
 
 class LotteryClearAction extends StoreAction {}
 
+class LotteryRefreshDeadLineAction extends StoreAction {}
+
 /// 当前期数控制
 class LotteryInitQueryAction extends StoreAction {
   final LotteryModel lottery;
