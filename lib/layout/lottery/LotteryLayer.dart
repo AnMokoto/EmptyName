@@ -174,7 +174,7 @@ class _LotteryState extends State<LotteryLayer> {
 //                child: new Offstage(
 //                  offstage: model.zhushu <= 0,
                   child: new Container(
-                    height: 55.0,
+                    height: Platform.isAndroid ? 50.0 : 60.0,
                     child: new Row(
                       children: <Widget>[
                         new Expanded(
@@ -183,62 +183,64 @@ class _LotteryState extends State<LotteryLayer> {
                             color: Colors.red,
                             child: new Padding(
                               padding: EdgeInsets.all(5.0),
-                              child: new Row(
-                                children: <Widget>[
-                                  new IconButton(
-                                    onPressed: () {
-                                      if (style.isValid()) {
-                                        final trans =
-                                            PlayModelItem.copy(style.transform);
-                                        StoreProvider.of<AppState>(context)
-                                            .dispatch(
-                                                new LotterBetAdd(item: trans));
-                                        setState(() {
-                                          widget.style.playReset();
-                                        });
-                                      }
-                                    },
-                                    icon: new Icon(
+                              child: new InkWell(
+                                onTap: () {
+                                  if (style.isValid()) {
+                                    final trans =
+                                        PlayModelItem.copy(style.transform);
+                                    StoreProvider.of<AppState>(context)
+                                        .dispatch(
+                                            new LotterBetAdd(item: trans));
+                                    setState(() {
+                                      widget.style.playReset();
+                                    });
+                                  }
+                                },
+                                child: new Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    new Icon(
                                       Icons.add,
                                       size: 40.0,
                                       color: Colors.white,
                                     ),
-                                  ),
-                                  new Container(
-                                    margin: EdgeInsets.only(left: 15.0),
-                                    constraints:
-                                        new BoxConstraints.tightForFinite(),
-                                    child: new Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        new SafeArea(
-                                          child: new Text(
-                                            "共${model.zhushu}注，${model.money}元",
-                                            style: new TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15.0,
-                                            ),
-                                          ),
-                                        ),
-                                        new Container(
-                                          constraints: new BoxConstraints(
-                                              maxWidth: 200.0),
-                                          child: new Text(_code ?? "",
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              softWrap: false,
+                                    new Container(
+                                      margin: EdgeInsets.only(left: 15.0),
+                                      constraints:
+                                          new BoxConstraints.tightForFinite(),
+                                      child: new Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          new SafeArea(
+                                            bottom: false,
+                                            child: new Text(
+                                              "共${model.zhushu}注，${model.money}元",
                                               style: new TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 15.0,
-                                              )),
-                                        )
-                                      ],
+                                              ),
+                                            ),
+                                          ),
+                                          new Container(
+                                            constraints: new BoxConstraints
+                                                .tightForFinite(width: 180.0),
+                                            child: new Text(_code ?? "",
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                                softWrap: false,
+                                                style: new TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 15.0,
+                                                )),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -354,7 +356,7 @@ class _LotteryHeadLayer extends StatefulWidget {
 
 class _LotteryHeadState extends State<_LotteryHeadLayer>
     with WidgetsBindingObserver {
-  Timer _timer;
+  //Timer _timer;
   bool isAlive;
 
   @override
@@ -364,9 +366,6 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
     if (state == AppLifecycleState.inactive) {
       _requestNewQState();
     }
-
-    print("didChangeAppLifecycleState-------$state");
-    setState(() {});
   }
 
   void _requestNewQState() {
@@ -391,15 +390,17 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
   }
 
   Future _startTimer() async {
+    if (!isAlive) return Future.value(false);
     return Future.delayed(Duration(seconds: 1), () {
       if (isAlive) {
-        _startTimer();
+        try {
+          _startTimer();
+
+          ///发送更改时间
+          dispatch(context, LotteryRefreshDeadLineAction());
+          //setState(() {});
+        } catch (e) {}
       }
-      try {
-        ///发送更改时间
-        dispatch(context, LotteryRefreshDeadLineAction());
-        //setState(() {});
-      } catch (e) {}
     });
   }
 
@@ -506,14 +507,14 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
             margin: EdgeInsets.only(left: 5.0),
             padding: EdgeInsets.all(3.0),
             child: new StoreConnector<AppState, LotteryState>(
-              builder: (context, state) {
+              builder: (c, state) {
                 var store = state.lottery;
                 var time =
                     "00:00:00"; //"${store == null ? "" : store.remainTime ?? ""}"
 
                 if (store != null) {
                   final deadLine = store.remainTime as int;
-
+                  debugPrint("deadLine=$deadLine");
                   // if (_timer != null) {
                   //   if (_timer.isActive) {
                   //     _timer.cancel();
@@ -522,13 +523,19 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
                   // }
 
                   if (deadLine <= 0) {
-                    showPopDialog(context);
+                    if (isAlive) {
+                      isAlive = false;
+                      Future.delayed(Duration(seconds: 1), () {
+                        showPopDialog(context, state.lottery);
+                      });
+                    }
                   } else {
-                    // _timer = new Timer(Duration(seconds: deadLine), () {
-                    //   showPopDialog(context);
-                    // });
-                    //dispatch(context, action)
+                    // if (!isAlive) {
+                    //   isAlive = true;
+                    //   _startTimer();
+                    // }
                     time = DateHelper.invoke(deadLine);
+                    debugPrint("deadLine=$time");
                   }
                 }
 
@@ -562,7 +569,10 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
     );
   }
 
-  void showPopDialog(BuildContext context) {
+  void showPopDialog(BuildContext context, LotteryModel model) {
+    final expectNo = model.expectNo;
+    dispatch(context, new LotteryClearAction());
+    isAlive = false;
     final dialogBtnStyle =
         new TextStyle(color: Colors.lightBlue, fontSize: 12.0);
 
@@ -572,15 +582,16 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
     );
     showDialog(
         context: context,
-        barrierDismissible: false,
+        //barrierDismissible: false,
         builder: (context) {
+          _requestNewQState();
           return new CupertinoAlertDialog(
             title: new Text(
               "本期结束",
               style: dialogTextStyle,
             ),
             content: new Text(
-              "data",
+              "$expectNo 期已结束",
               style: dialogTextStyle,
             ),
             actions: <Widget>[
@@ -591,10 +602,11 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
                 ),
                 isDefaultAction: true,
                 onPressed: () {
+                  isAlive = true;
+                  _startTimer();
                   Navigator.of(context).pop();
-
-                  ///dismiss
-                  Navigator.of(context).pop();
+                  ////启动重新开始的时间计时器
+                  _requestNewQState();
                 },
               )
             ],

@@ -2,6 +2,7 @@ import 'package:redux/redux.dart';
 import '../actions/lotteryAction.dart';
 import '../models/index.dart';
 import 'package:flutter/foundation.dart';
+import 'dart:math';
 
 /// reducer
 //
@@ -58,8 +59,13 @@ final List<Reducer<AppState>> lotteryReducer = <Reducer<AppState>>[
     state.lottery.history = action.history;
     return state;
   }),
-    new TypedReducer<AppState, LotteryRefreshDeadLineAction>((state, action) {
-    //state.lottery.history = action.history;
+  new TypedReducer<AppState, LotteryRefreshDeadLineAction>((state, action) {
+    if (state.lottery.lottery != null) {
+      var deadLine = state.lottery.lottery.remainTime as int;
+      deadLine -= 1000;
+      deadLine = max(0, deadLine);
+      state.lottery.lottery.remainTime = deadLine;
+    }
     return state;
   }),
 ];
