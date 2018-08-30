@@ -300,7 +300,18 @@ class _LotteryState extends State<LotteryLayer> {
                     child: new Row(
                       children: <Widget>[
                         new Expanded(
-                            child: new Container(
+                            child: new InkWell(
+                                onTap: () {
+                                  if (style.isValid()) {
+                                    var trans = widget.style.transform;
+                                    widget.style.playReset();
+                                    StoreProvider.of<AppState>(context)
+                                        .dispatch(new LotterBetAdd(
+                                        item: trans));
+                                    setState(() {});
+                                  }
+                                },
+                                child: new Container(
                                 constraints: new BoxConstraints.expand(),
                                 color: Colors.red,
                                 child: new Padding(
@@ -308,16 +319,6 @@ class _LotteryState extends State<LotteryLayer> {
                                   child: new Row(
                                     children: <Widget>[
                                       new IconButton(
-                                        onPressed: () {
-                                          if (style.isValid()) {
-                                            var trans = widget.style.transform;
-                                            widget.style.playReset();
-                                            StoreProvider.of<AppState>(context)
-                                                .dispatch(new LotterBetAdd(
-                                                    item: trans));
-                                            setState(() {});
-                                          }
-                                        },
                                         icon: new Icon(
                                           Icons.add,
                                           size: 40.0,
@@ -361,7 +362,7 @@ class _LotteryState extends State<LotteryLayer> {
                                       ),
                                     ],
                                   ),
-                                ))),
+                                )))),
                         new ConstrainedBox(
                           constraints:
                               new BoxConstraints(minHeight: double.infinity),
