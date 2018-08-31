@@ -9,6 +9,7 @@ class AppIcons {
   static IconData jiangbei = IconData(0xe627, fontFamily: "Alibaba");
   static IconData home = IconData(0xe633, fontFamily: "Alibaba");
   static IconData persion = IconData(0xe657, fontFamily: "Alibaba");
+  static IconData dating = IconData(0xe636, fontFamily: "Alibaba");
 
   static IconData passwd = IconData(0xe630, fontFamily: "Alibaba");
   static IconData codelanzi = IconData(0xe66c, fontFamily: "Alibaba");

@@ -48,11 +48,11 @@ class HomeState extends State<HomeLayer> {
         title: Text("首页")),
     BottomNavigationBarItem(
       activeIcon: Icon(
-        AppIcons.home,
+        AppIcons.dating,
         color: Colors.red,
       ),
       icon: Icon(
-        AppIcons.home,
+        AppIcons.dating,
         color: Colors.grey,
       ),
       title: Text("购彩大厅"),
