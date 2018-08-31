@@ -16,6 +16,20 @@ class IndexResponseAction extends StoreAction {
   IndexResponseAction(this.model);
 }
 
+//// banners
+class BannerRequestAction extends HttpStoreAction {
+  BannerRequestAction(BuildContext context, Map<String, dynamic> body)
+      : super(context: context, body: body);
+
+  @override
+  String get path => "banners";
+}
+
+class BannerResponseAction extends StoreAction {
+  List<dynamic> model;
+  BannerResponseAction(this.model);
+}
+
 ////
 ///第二屏
 class SecondRequestAction extends HttpStoreAction {

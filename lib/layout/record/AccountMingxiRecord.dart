@@ -116,8 +116,9 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                                           right: 0.0,
                                           bottom: 0.0,
                                           child: new Text(
-                                            "${value["amount"] ?? "-"}元",
+                                            "${value["moneyStr"] ?? "-"}元",
                                             style: new TextStyle(
+
                                                 ),
                                           ),
                                         ),
