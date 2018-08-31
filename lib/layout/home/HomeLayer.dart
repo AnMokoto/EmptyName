@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'package:lowlottery/layout/home/index/IndexFragLayer.dart';
-import 'package:lowlottery/layout/home/mine/MineLayer.dart';
-import 'package:lowlottery/layout/home/opencode/OpencodeRecord.dart';
+import 'index/IndexFragLayer.dart';
+import 'mine/MineLayer.dart';
+import 'opencode/OpencodeRecord.dart';
+import 'hall/HallLayer.dart';
 import 'package:lowlottery/font/index.dart';
+
 class HomeLayer extends StatefulWidget {
   @override
-  _HomeState createState() => new _HomeState();
+  HomeState createState() => new HomeState();
 }
 
-class _HomeState extends State<HomeLayer> {
+class HomeState extends State<HomeLayer> {
   PageController _pageController;
 
   int _currentIndex = 0;
@@ -21,12 +23,60 @@ class _HomeState extends State<HomeLayer> {
     ),
     new ConstrainedBox(
       constraints: const BoxConstraints.expand(),
+      child: new HallLayer(),
+    ),
+    new ConstrainedBox(
+      constraints: const BoxConstraints.expand(),
       child: new OpencodeRecordLayer(),
     ),
     new ConstrainedBox(
       constraints: const BoxConstraints.expand(),
       child: new MineLayer(),
     )
+  ];
+
+  final List<BottomNavigationBarItem> bottomBar = [
+    BottomNavigationBarItem(
+        activeIcon: Icon(
+          AppIcons.home,
+          color: Colors.red,
+        ),
+        icon: Icon(
+          AppIcons.home,
+          color: Colors.grey,
+        ),
+        title: Text("首页")),
+    BottomNavigationBarItem(
+      activeIcon: Icon(
+        AppIcons.home,
+        color: Colors.red,
+      ),
+      icon: Icon(
+        AppIcons.home,
+        color: Colors.grey,
+      ),
+      title: Text("购彩大厅"),
+    ),
+    BottomNavigationBarItem(
+        activeIcon: Icon(
+          AppIcons.jiangbei,
+          color: Colors.red,
+        ),
+        icon: Icon(
+          AppIcons.jiangbei,
+          color: Colors.grey,
+        ),
+        title: Text("开奖号码")),
+    BottomNavigationBarItem(
+        activeIcon: Icon(
+          AppIcons.persion,
+          color: Colors.red,
+        ),
+        icon: Icon(
+          AppIcons.persion,
+          color: Colors.grey,
+        ),
+        title: Text("个人中心")),
   ];
 
   @override
@@ -51,6 +101,12 @@ class _HomeState extends State<HomeLayer> {
     });
   }
 
+  void onPageChanged(int index) {
+    _pageController.animateToPage(index,
+        duration: Duration(milliseconds: 20), curve: ElasticOutCurve(0.6));
+    _onPageChanged(index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -64,18 +120,12 @@ class _HomeState extends State<HomeLayer> {
         itemCount: 3,
       ),
       bottomNavigationBar: new BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(AppIcons.home ,size: 24.0,), title: Text("首页")),
-          BottomNavigationBarItem(icon: Icon(AppIcons.jiangbei ,size: 24.0,), title: Text("开奖号码")),
-          BottomNavigationBarItem(
-              icon: Icon(AppIcons.persion ,size: 24.0,), title: Text("个人中心")),
-        ],
+        type: BottomNavigationBarType.fixed,
+        fixedColor: Colors.red,
+        items: bottomBar,
         currentIndex: _currentIndex,
         onTap: (index) {
-          _pageController.animateToPage(index,
-              duration: Duration(milliseconds: 20),
-              curve: ElasticOutCurve(0.6));
-          _onPageChanged(index);
+          onPageChanged(index);
         },
       ),
     );

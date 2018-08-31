@@ -571,7 +571,7 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
 
   void showPopDialog(BuildContext context, LotteryModel model) {
     final expectNo = model.expectNo;
-    dispatch(context, new LotteryClearAction());
+    // dispatch(context, new LotteryClearAction());
     isAlive = false;
     final dialogBtnStyle =
         new TextStyle(color: Colors.lightBlue, fontSize: 12.0);
