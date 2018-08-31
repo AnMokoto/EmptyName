@@ -17,9 +17,11 @@ class AppIcons {
   static IconData projectRecord = IconData(0xe61d, fontFamily: "Alibaba");
   static IconData accountMingxiRecord = IconData(0xe672, fontFamily: "Alibaba");
   static IconData withdrawRecord = IconData(0xe60b, fontFamily: "Alibaba");
+  static IconData message = IconData(0xe612, fontFamily: "Alibaba");
   static IconData rechargeRecord = IconData(0xe622, fontFamily: "Alibaba");
   static IconData chongzhi = IconData(0xe646, fontFamily: "Alibaba");
   static IconData tixian = IconData(0xe625, fontFamily: "Alibaba");
+  static IconData caishen = IconData(0xe634, fontFamily: "Alibaba");
 
   static IconData from(int codePoint) =>
       IconData(codePoint, fontFamily: "Alibaba");

@@ -95,7 +95,6 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
 //              margin: EdgeInsets.all(10.0),
               child: new InkWell(
                 onTap: () {
-                  print("onTop");
                    Navigator.of(context).push(new MaterialPageRoute(
                   builder: (context) =>
                   new LotOpencodeRecordLayer(
@@ -132,7 +131,6 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                                 children:
                                 new List.generate(int.parse("${value['codeCount']}"), (index) {
                                   var _str = "${value["opencode"] ?? "-"}".split(",");
-                                  print(_str);
                                   return new Container(
                                     margin: EdgeInsets.only(left:5.0),
                                     decoration: new BoxDecoration(

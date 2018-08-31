@@ -37,7 +37,7 @@ class _WithdrawRecordState extends State<WithdrawRecordLayer>
         appBar: new AppBar(
           centerTitle: true,
           backgroundColor: Colors.red,
-          title: new Text("账户明细"),
+          title: new Text("提现记录"),
         ),
         body: new Column(
           children: <Widget>[
@@ -103,19 +103,7 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                       children: <Widget>[
                         new Expanded(
                           child: new Container(
-                            padding: EdgeInsets.all(10.0),
-                            child: new Row(
-                              children: <Widget>[
-                                new Text("${value["desc"] ?? "-"}",
-                                    style: new TextStyle(
-                                        fontSize: 11.0, color: Colors.black54))
-                              ],
-                            ),
-                          ),
-                        ),
-                        new Expanded(
-                          child: new Container(
-                            padding: EdgeInsets.all(10.0),
+                            padding: EdgeInsets.only(left: 10.0),
                             child: new Row(
                               children: <Widget>[
                                 new Expanded(
@@ -128,25 +116,34 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                                           bottom: 0.0,
                                           child: new Text(
                                             "${value["amount"] ?? "-"}元",
-                                            style: new TextStyle(
-                                                fontSize: 11.0,
-                                                color: Colors.black54),
+                                            style: new TextStyle(),
                                           ),
                                         ),
                                         new Positioned(
                                           left: 0.0,
                                           bottom: 0.0,
                                           child: new Text(
-                                            "${value["createTimeStr"] ?? "-"}",
-                                            style: new TextStyle(
-                                                fontSize: 11.0,
-                                                color: Colors.black54),
-                                          ),
+                                              "${value["desc"] ?? "-"}",
+                                              style: new TextStyle()),
                                         )
                                       ],
                                     ),
                                   ),
                                 ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        new Expanded(
+                          child: new Container(
+                            padding: EdgeInsets.all(10.0),
+                            child: new Row(
+                              children: <Widget>[
+                                new Text(
+                                  "${value["createTimeStr"] ?? "-"}",
+                                  style: new TextStyle(
+                                      fontSize: 11.0, color: Colors.black54),
+                                )
                               ],
                             ),
                           ),

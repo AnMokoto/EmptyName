@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:lowlottery/store/appStore.dart';
 
 /**
- * 账户明细
+    消息
  */
-class AccountRecordLayer extends StatefulWidget {
+class MessageLayer extends StatefulWidget {
   _WithdrawRecordState createState() => new _WithdrawRecordState();
 }
 
-class _WithdrawRecordState extends State<AccountRecordLayer>
-    with SingleTickerProviderStateMixin<AccountRecordLayer> {
+class _WithdrawRecordState extends State<MessageLayer>
+    with SingleTickerProviderStateMixin<MessageLayer> {
   final titles = [
     "全部",
   ];
@@ -37,7 +37,7 @@ class _WithdrawRecordState extends State<AccountRecordLayer>
         appBar: new AppBar(
           centerTitle: true,
           backgroundColor: Colors.red,
-          title: new Text("账户明细"),
+          title: new Text("我的消息"),
         ),
         body: new Column(
           children: <Widget>[
@@ -78,7 +78,7 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     dispatch(context,
-        new TradeRequestAction(context, {"pageIndex": 0, "pageSize": 100}));
+        new MessageRequestAction(context, {"pageIndex": 0, "pageSize": 100}));
   }
 
   @override
@@ -101,7 +101,6 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                   new Expanded(
                     child: new Column(
                       children: <Widget>[
-
                         new Expanded(
                           child: new Container(
                             padding: EdgeInsets.only(left: 10.0),
@@ -112,20 +111,13 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                                     margin: EdgeInsets.only(right: 20.0),
                                     child: new Stack(
                                       children: <Widget>[
-                                        new Positioned(
-                                          right: 0.0,
-                                          bottom: 0.0,
-                                          child: new Text(
-                                            "${value["amount"] ?? "-"}元",
-                                            style: new TextStyle(
-                                                ),
-                                          ),
-                                        ),
+
                                         new Positioned(
                                           left: 0.0,
                                           bottom: 0.0,
-                                          child: new Text("${value["desc"] ?? "-"}",
-                                              style: new TextStyle( )),
+                                          child: new Text(
+                                              "${value["title"] ?? "-"}",
+                                              style: new TextStyle()),
                                         )
                                       ],
                                     ),
@@ -143,10 +135,8 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                                 new Text(
                                   "${value["createTimeStr"] ?? "-"}",
                                   style: new TextStyle(
-                                      fontSize: 11.0,
-                                      color: Colors.black54),
+                                      fontSize: 11.0, color: Colors.black54),
                                 )
-
                               ],
                             ),
                           ),
@@ -162,7 +152,7 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
         },
       );
     }, converter: (state) {
-      return state.state.tradeModel.list;
+      return state.state.messageModel.list;
     });
   }
 }

@@ -10,6 +10,7 @@ import 'userMiddleware.dart';
 import 'lotteryMiddleware.dart';
 import 'homeMiddleware.dart';
 import 'tradeMiddleware.dart';
+import 'messageMiddleware.dart';
 part 'middleware.dart';
 
 /// 不动
@@ -27,4 +28,5 @@ final List<Middleware<AppState>> _appMiddleware = <Middleware<AppState>>[
   ..addAll(betMiddleware)
   ..addAll(recordMiddleware)
   ..addAll(tradeMiddleware)
+  ..addAll(messageMiddleware)
   ..addAll(homeMiddleware);
