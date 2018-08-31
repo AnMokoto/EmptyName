@@ -7,6 +7,7 @@ class HomeModel {
 
   ///
   List<dynamic> second = [];
+  List<dynamic> banners = [];
 
   dynamic third;
 }

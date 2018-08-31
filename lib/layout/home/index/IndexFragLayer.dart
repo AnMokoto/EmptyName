@@ -34,6 +34,7 @@ class _IndexFragState extends State<IndexFragLayer> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     dispatch(context, new IndexRequestAction(context, new Map()));
+    dispatch(context, new BannerRequestAction(context, new Map()));
   }
 
   @override
