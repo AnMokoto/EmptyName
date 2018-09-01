@@ -117,7 +117,7 @@ class HomeState extends State<HomeLayer> {
         itemBuilder: (context, index) {
           return layer[index];
         },
-        itemCount: 3,
+        itemCount: 4,
       ),
       bottomNavigationBar: new BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
