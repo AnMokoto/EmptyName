@@ -65,12 +65,14 @@ class LotConfig {
   }
 
   static String getLotShortName(String gameEn) {
+    if (gameEn.contains("pk10")) return "pk10";
     if (gameEn.contains("11x5")) return "11选5";
     if (gameEn.contains("k3")) return "快三";
     if (gameEn.contains("lhc")) return "六合彩";
     if (gameEn.contains("ss5")) return "五分彩";
     if (gameEn.contains("ss3")) return "三分彩";
     if (gameEn.contains("ss1")) return "分分彩";
+    if (gameEn.contains("txss")) return "分分彩";
     if (gameEn.contains("ssc")) return "时时彩";
 
     return _lot["$gameEn"] ?? '--';
