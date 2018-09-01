@@ -61,18 +61,18 @@ class OpenCode {
    */
   static Container _pk10(_str, int index) {
     return new Container(
-      margin: EdgeInsets.only(left: 5.0),
+      margin: EdgeInsets.only(left: 4.0),
       decoration: new BoxDecoration(
         color: Pk10Color.colors(_str[index]),
         shape: BoxShape.rectangle,
       ),
       width: 25.0,
-      height: 35.0,
+      height: 30.0,
       child: new Center(
         child: new Text(
           _str.length > 1 ? _str[index] : "-",
           // _str[index] ?? "-",
-          style: const TextStyle(fontSize: 14.0, color: Colors.white),
+          style: const TextStyle(fontSize: 16.0, color: Colors.white),
           textAlign: TextAlign.center,
           textDirection: TextDirection.ltr,
         ),
