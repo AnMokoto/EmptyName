@@ -58,7 +58,7 @@ class _IndexFragState extends State<HallIndexLayer> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    dispatch(context, new IndexRequestAction(context, new Map()));
+    dispatch(context, new IndexRequestAction(context, {'type':'all'}));
   }
 
   @override
