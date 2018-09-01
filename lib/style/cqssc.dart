@@ -9,9 +9,7 @@ abstract class _cqssc extends PlayStyle {
   List<List<int>> _data;
 
   _cqssc({@required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc) {
-    playReset();
-  }
+      : super(type: type, name: name, desc: desc);
 
   List<List<int>> initialData(int len) {
     return new List.generate(initialType().length, (index) {

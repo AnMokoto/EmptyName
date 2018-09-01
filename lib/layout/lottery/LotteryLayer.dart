@@ -11,11 +11,58 @@ import 'dart:io';
 
 import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/conf/date.dart';
+import 'package:lowlottery/widget/Lottery2Layer.dart';
 
 /// callback when who preclick the item.
 /// [position] item count position
-/// [m] anything
-typedef void OnLotteryPushClick(int index, int position);
+/// [index] inline index
+typedef void OnLotteryPushClick(int position, int index);
+
+class _LotteryMenu extends StatelessWidget {
+  final PlayStyle style;
+  final StyleManagerIMPL impl;
+  dynamic f;
+  _LotteryMenu({this.impl, this.style, f(v)}) {
+    this.f = f;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final title = new Text(
+      style.name,
+      style: new TextStyle(color: Colors.white, fontSize: 20.0),
+    );
+
+    final all = impl.all;
+    return new RaisedButton.icon(
+      label: title,
+      elevation: 0.0,
+      splashColor: Colors.transparent,
+      colorBrightness: Brightness.light,
+      color: Colors.transparent,
+      icon: new Icon(Icons.arrow_drop_down),
+      onPressed: () {
+        showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return new CupertinoPicker(
+                  diameterRatio: 1.0,
+                  magnification: 1.3,
+                  backgroundColor: Colors.white,
+                  looping: true,
+                  useMagnifier: true,
+                  onSelectedItemChanged: (position) {
+                    f(all[position]);
+                  },
+                  itemExtent: 25.0,
+                  children: new List.generate(all.length, (index) {
+                    return new Center(child: new Text(all[index].name));
+                  }));
+            });
+      },
+    );
+  }
+}
 
 class LotteryLayer extends StatefulWidget {
   StyleManagerIMPL impl;
@@ -63,39 +110,15 @@ class _LotteryState extends State<LotteryLayer> {
     return new WillPopScope(
       child: new Scaffold(
         appBar: new AppBar(
-          centerTitle: true,
-          title: new PopupMenuButton(
-            child: new Text(
-              style.name,
-              style: new TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            onSelected: (str) {},
-            // icon: Icon(Icons.arrow_drop_down),
-            itemBuilder: (context) => widget.impl.all.map((f) {
-                  return PopupMenuItem(
-                      value: f.desc ?? "",
-                      child: new OutlineButton(
-                        onPressed: () {
-                          setState(() {
-                            widget.style = f;
-                          });
-                        },
-                        child: new Text(f.name ?? ""),
-                      ));
-                }).toList(),
-          ),
-          actions: <Widget>[
-            new IconButton(
-              icon: new Icon(
-                Icons.favorite,
-                color: Colors.red,
-              ),
-              onPressed: () {},
-            )
-          ],
-        ),
+            centerTitle: true,
+            title: _LotteryMenu(
+                impl: widget.impl,
+                style: widget.style,
+                f: (f) {
+                  setState(() {
+                    widget.style = f;
+                  });
+                })),
 
         // child: new Container(
         //     padding: EdgeInsets.all(10.0),
@@ -357,7 +380,7 @@ class _LotteryHeadLayer extends StatefulWidget {
 class _LotteryHeadState extends State<_LotteryHeadLayer>
     with WidgetsBindingObserver {
   //Timer _timer;
-  bool isAlive;
+  bool isAlive, isShowDialog = false;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -523,12 +546,13 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
                   // }
 
                   if (deadLine <= 0) {
-                    if (isAlive) {
-                      isAlive = false;
-                      Future.delayed(Duration(seconds: 1), () {
+                    if (!isShowDialog) {
+                      isShowDialog = true;
+                      Future.delayed(Duration(milliseconds: 100), () {
                         showPopDialog(context, state.lottery);
                       });
                     }
+                    time = "投注截止";
                   } else {
                     // if (!isAlive) {
                     //   isAlive = true;
@@ -571,8 +595,6 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
 
   void showPopDialog(BuildContext context, LotteryModel model) {
     final expectNo = model.expectNo;
-    // dispatch(context, new LotteryClearAction());
-    isAlive = false;
     final dialogBtnStyle =
         new TextStyle(color: Colors.lightBlue, fontSize: 12.0);
 
@@ -602,11 +624,12 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
                 ),
                 isDefaultAction: true,
                 onPressed: () {
-                  isAlive = true;
-                  _startTimer();
+                  //isAlive = true;
+                  //_startTimer();
                   Navigator.of(context).pop();
                   ////启动重新开始的时间计时器
                   _requestNewQState();
+                  isShowDialog = false;
                 },
               )
             ],
@@ -632,113 +655,115 @@ class _LotteryItemState extends State<LotteryItem> {
   Widget build(BuildContext context) {
     var value = widget.style;
     int position = widget.position;
-    var left = value.initialType();
-    var data = value.initialArray()[widget.position];
-    var height = value.height;
-    return new Container(
-      constraints:
-          new BoxConstraints(minHeight: 80.0, minWidth: double.infinity),
-      child: new Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          /// left
-          new Offstage(
-            offstage: left[position] == "",
-            child: new Container(
-              width: 50.0,
-              height: 30.0,
-              decoration: new BoxDecoration(
-                color: Colors.grey[300],
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(4.0),
-              ),
-              child: new Center(
-                child: new Text(
-                  left[position] ?? "",
-                  style: new TextStyle(
-                    color: Colors.black26,
-                    fontSize: 13.0,
-                  ),
-                  maxLines: 1,
-                ),
-              ),
-              margin: EdgeInsets.only(right: 20.0),
-            ),
-          ),
-
-          /// right
-          new Expanded(
-            child: new Container(
-              constraints: new BoxConstraints.tightFor(height: height),
-              child: new GridView.count(
-                //controller: new FixedExtentScrollController(),
-                physics: new NeverScrollableScrollPhysics(),
-                crossAxisCount: 5,
-                childAspectRatio: 1.0,
-                scrollDirection: Axis.vertical,
-                children: new List.generate(
-                  data.length,
-                  (index) {
-                    return new Container(
-                      // color: value["able"] as bool
-                      //     ? Colors.red[400]
-                      //     : Colors.green[100],
-                      constraints: BoxConstraints.tightForFinite(),
-                      alignment: Alignment.center,
-                      child: new Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          ///数字按钮
-                          ///
-                          new InkWell(
-                              child: new Container(
-                                constraints: BoxConstraints.tightForFinite(),
-                                // padding: EdgeInsets.all(5.0),
-                                child: new Container(
-                                  constraints: new BoxConstraints(
-                                      minHeight: 35.0, minWidth: 35.0),
-
-                                  // constraints: new BoxConstraints(
-                                  //     minWidth: 40.0, minHeight: 40.0),
-                                  decoration: new BoxDecoration(
-                                      color: data[index] != -1
-                                          ? Colors.red
-                                          : Colors.grey[300],
-                                      shape: BoxShape.circle),
-                                  child: new Center(
-                                    child: new Text(
-                                      "${value.forceTransform(index)}",
-                                      maxLines: 1,
-                                      style: new TextStyle(
-                                          color: data[index] != -1
-                                              ? Colors.white
-                                              : Colors.red,
-                                          fontSize: 17.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              onTap: () {
-                                widget.callback(
-                                  widget.position,
-                                  index,
-                                );
-                              }),
-
-                          /// 预留位���
-                          // new Text(
-                          //   (value["sub"] as String) ?? "1",
-                          // )
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
+    return new Lottery2Layer(
+      billboard: value.billboard(position),
+      style: value.layerStyle,
+      child: value.generate(position, widget.callback),
     );
+    // return new Container(
+    //   constraints:
+    //       new BoxConstraints(minHeight: 80.0, minWidth: double.infinity),
+    //   child: new Row(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: <Widget>[
+    //       /// left
+    //       new Offstage(
+    //         offstage: left[position] == "",
+    //         child: new Container(
+    //           width: 50.0,
+    //           height: 30.0,
+    //           decoration: new BoxDecoration(
+    //             color: Colors.grey[300],
+    //             shape: BoxShape.rectangle,
+    //             borderRadius: BorderRadius.circular(4.0),
+    //           ),
+    //           child: new Center(
+    //             child: new Text(
+    //               left[position] ?? "",
+    //               style: new TextStyle(
+    //                 color: Colors.black26,
+    //                 fontSize: 13.0,
+    //               ),
+    //               maxLines: 1,
+    //             ),
+    //           ),
+    //           margin: EdgeInsets.only(right: 20.0),
+    //         ),
+    //       ),
+
+    //       /// right
+    //       new Expanded(
+    //         child: new Container(
+    //           constraints: new BoxConstraints.tightFor(height: height),
+    //           child: new GridView.count(
+    //             //controller: new FixedExtentScrollController(),
+    //             physics: new NeverScrollableScrollPhysics(),
+    //             crossAxisCount: 5,
+    //             childAspectRatio: 1.0,
+    //             scrollDirection: Axis.vertical,
+    //             children: new List.generate(
+    //               data.length,
+    //               (index) {
+    //                 return new Container(
+    //                   // color: value["able"] as bool
+    //                   //     ? Colors.red[400]
+    //                   //     : Colors.green[100],
+    //                   constraints: BoxConstraints.tightForFinite(),
+    //                   alignment: Alignment.center,
+    //                   child: new Column(
+    //                     crossAxisAlignment: CrossAxisAlignment.start,
+    //                     children: <Widget>[
+    //                       ///数字按钮
+    //                       ///
+    //                       new InkWell(
+    //                           child: new Container(
+    //                             constraints: BoxConstraints.tightForFinite(),
+    //                             // padding: EdgeInsets.all(5.0),
+    //                             child: new Container(
+    //                               constraints: new BoxConstraints(
+    //                                   minHeight: 35.0, minWidth: 35.0),
+
+    //                               // constraints: new BoxConstraints(
+    //                               //     minWidth: 40.0, minHeight: 40.0),
+    //                               decoration: new BoxDecoration(
+    //                                   color: data[index] != -1
+    //                                       ? Colors.red
+    //                                       : Colors.grey[300],
+    //                                   shape: BoxShape.circle),
+    //                               child: new Center(
+    //                                 child: new Text(
+    //                                   "${value.forceTransform(index)}",
+    //                                   maxLines: 1,
+    //                                   style: new TextStyle(
+    //                                       color: data[index] != -1
+    //                                           ? Colors.white
+    //                                           : Colors.red,
+    //                                       fontSize: 17.0),
+    //                                 ),
+    //                               ),
+    //                             ),
+    //                           ),
+    //                           onTap: () {
+    //                             widget.callback(
+    //                               widget.position,
+    //                               index,
+    //                             );
+    //                           }),
+
+    //                       /// 预留位���
+    //                       // new Text(
+    //                       //   (value["sub"] as String) ?? "1",
+    //                       // )
+    //                     ],
+    //                   ),
+    //                 );
+    //               },
+    //             ),
+    //           ),
+    //         ),
+    //       )
+    //     ],
+    //   ),
+    // );
   }
 }

@@ -1,10 +1,22 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:lowlottery/log.dart';
-
-import 'Pk10Zhushuzxfx.dart';
 import 'ZuheUtil.dart';
 import 'style.dart';
 import 'package:lowlottery/conf/LotPlay.dart';
+
+class ShapeRect extends Shape {
+  @override
+  // TODO: implement decoration
+  Decoration get decoration => new BoxDecoration(
+      color: Colors.transparent,
+      shape: BoxShape.rectangle,
+      border: new Border.all());
+
+  @override
+  Decoration get onPressDecoration =>
+      new BoxDecoration(color: Colors.red, shape: BoxShape.rectangle);
+}
 
 ///  快三
 @protected
@@ -12,9 +24,7 @@ abstract class _k3 extends PlayStyle {
   List<List<int>> _data;
 
   _k3({@required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc) {
-    playReset();
-  }
+      : super(type: type, name: name, desc: desc);
 
   List<List<int>> initialData(int len) {
     return new List.generate(initialType().length, (index) {
@@ -39,6 +49,18 @@ abstract class _k3 extends PlayStyle {
   @override
   // TODO: implement count
   int get count => 3;
+
+  @protected
+  Shape shape(int position, int index) {
+    return new ShapeRect();
+  }
+
+  @override
+  BoxConstraints get constraints =>
+      new BoxConstraints(minWidth: 40.0, maxWidth: 60.0, minHeight: 35.0);
+
+  @override
+  LotteryStyle get layerStyle => new LotteryStyleDefault(count: 4);
 
   @override
   List<List<int>> toBet2System(int index, int position) {
@@ -303,7 +325,7 @@ class Stylek3 extends StyleManagerIMPL {
   PlayStyle get k3_2thdx => k3_thdx(
       type: "k3_2thdx", name: LotPlayConfig.getName("k3_2thdx"), desc: "正4特码");
   PlayStyle get k3_2bth => k3_buthdx(
-      type: "k3_2bth", name: LotPlayConfig.getName("k3_2bth"), desc: "正5特码");
+      type: "k3_2bth", name: LotPlayConfig.getName("k3_2bth"), desc: "���5特码");
   PlayStyle get k3_3thtx => k3_thtx(
       type: "k3_3thtx", name: LotPlayConfig.getName("k3_3thtx"), desc: "正6特码");
   PlayStyle get k3_3lhtx => k3_thtx(
