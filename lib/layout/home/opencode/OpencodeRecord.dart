@@ -4,6 +4,9 @@ import 'package:lowlottery/conf/Lot.dart';
 import 'package:lowlottery/store/appStore.dart';
 import 'dart:async';
 import 'LotOpencodeRecord.dart';
+import 'package:lowlottery/conf/Pk10Color.dart';
+import 'Opencode.dart';
+
 class OpencodeRecordLayer extends StatefulWidget {
   _OpencodeRecordState createState() => new _OpencodeRecordState();
 }
@@ -12,7 +15,6 @@ class _OpencodeRecordState extends State<OpencodeRecordLayer>
     with SingleTickerProviderStateMixin<OpencodeRecordLayer> {
   final titles = [
     "全部",
-
   ];
 
   @protected
@@ -39,7 +41,8 @@ class _OpencodeRecordState extends State<OpencodeRecordLayer>
           centerTitle: true,
           backgroundColor: Colors.red,
           title: new Text(
-            "开奖号码",style: new TextStyle(color: Colors.white),
+            "开奖号码",
+            style: new TextStyle(color: Colors.white),
           ),
         ),
         body: new Column(
@@ -95,11 +98,10 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
 //              margin: EdgeInsets.all(10.0),
               child: new InkWell(
                 onTap: () {
-                   Navigator.of(context).push(new MaterialPageRoute(
-                  builder: (context) =>
-                  new LotOpencodeRecordLayer(
-                    gameEn: "${value["gameEn"]}",
-                  )));
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (context) => new LotOpencodeRecordLayer(
+                            gameEn: "${value["gameEn"]}",
+                          )));
                 },
                 child: new Row(
                   children: <Widget>[
@@ -111,50 +113,38 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                               margin: EdgeInsets.only(left: 5.0),
                               child: new Row(
                                 children: <Widget>[
-                                  new Text(LotConfig.getLotName(
-                                      "${value['gameEn']}") ,style: new TextStyle(fontSize: 14.0),),
-                                  new Text("  第 ${value["expectNo"] ?? "-"}期" , style: new TextStyle(fontSize: 12.0 ,color: Colors.black87)),
-                                  new Text("         ${value["desc"] }" , style: new TextStyle(fontSize: 12.0 ,color: Colors.black87)),
+                                  new Text(
+                                    LotConfig.getLotName("${value['gameEn']}"),
+                                    style: new TextStyle(fontSize: 14.0),
+                                  ),
+                                  new Text("  第 ${value["expectNo"] ?? "-"}期",
+                                      style: new TextStyle(
+                                          fontSize: 12.0,
+                                          color: Colors.black87)),
+                                  new Text("         ${value["desc"]}",
+                                      style: new TextStyle(
+                                          fontSize: 12.0,
+                                          color: Colors.black87)),
 
 //                              new Icon(AppIcons.getLot("${value['gameEn']}"), size: 60.0)
                                 ],
                               ),
                             ),
                           ),
-
                           new Expanded(
-                            child: new Container(
+                              child: new Container(
 //                              margin: EdgeInsets.all(10.0),
                             child: new Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                children:
-                                new List.generate(int.parse("${value['codeCount']}"), (index) {
-                                  var _str = "${value["opencode"] ?? "-"}".split(",");
-                                  return new Container(
-                                    margin: EdgeInsets.only(left:5.0),
-                                    decoration: new BoxDecoration(
-                                        color: Colors.red,
-                                        shape: BoxShape.circle,
-                                        ),
-                                    width: 28.0,
-                                    height: 28.0,
-                                    child: new Center(
-                                      child: new Text(
-                                        _str.length > 1 ? _str[index] : "-",
-                                        // _str[index] ?? "-",
-                                        style: const TextStyle(
-                                            fontSize: 14.0,
-                                            color: Colors.white),
-                                        textAlign: TextAlign.center,
-                                        textDirection: TextDirection.ltr,
-                                      ),
-                                    ),
-                                  );
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: new List.generate(
+                                    int.parse("${value['codeCount']}"),
+                                    (index) {
+                                  var _str =
+                                      "${value["opencode"] ?? "-"}".split(",");
+                                  var gameEn = '${value["gameEn"]}';
+                                  return OpenCode.opencode(gameEn, _str, index);
                                 })),
-            )
-                          ),
-
+                          )),
                           new Divider(),
                         ],
                       ),
