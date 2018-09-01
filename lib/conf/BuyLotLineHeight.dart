@@ -19,7 +19,7 @@ class LotLineHeight {
         playEn.contains("zmz4t") ||
         playEn.contains("zmz5t") ||
         playEn.contains("zmz6t")) {
-      return 800.0;
+      return 600.0;
     }
 
     return 100.0;

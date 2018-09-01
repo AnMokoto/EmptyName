@@ -100,6 +100,25 @@ class LotPlayConfig {
     "xglhc_zmz6t": "正码正6特",
     "xglhc_zmz6lm": "正码正6两面",
 
+    "xglhc_lm3qz": "连码三全中",
+    "xglhc_lm2qz": "连码二全中",
+    "xglhc_lm3z2": "连码三中二",
+    "xglhc_lm2z1": "连码二中特",
+    "xglhc_lmtc": "连码特串",
+    "xglhc_tmbb": "特码半波",
+    "xglhc_sxtx": "特肖",
+    "xglhc_sx1x": "一肖",
+    "xglhc_wstmtw": "特码头尾",
+    "xglhc_ws2wl": "二尾连",
+    "xglhc_ws3wl": "三尾连",
+    "xglhc_ws4wl": "四尾连",
+    "xglhc_bz5": "五不中",
+    "xglhc_bz6": "六不中",
+    "xglhc_bz7": "七不中",
+    "xglhc_bz8": "八不中",
+    "xglhc_bz9": "九不中",
+    "xglhc_bz10": "十不中",
+
   };
 
   /**

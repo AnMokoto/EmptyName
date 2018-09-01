@@ -105,15 +105,22 @@ String transformToString(List<dynamic> choice, String type) {
       type.endsWith("sbd") ||
       type.contains("zuxbd") ||
       type.contains("rx") ||
-      type.contains("zmz1t") ||
-      type.contains("zmz2t") ||
-      type.contains("zmz3t") ||
-      type.contains("zmz4t") ||
-      type.contains("zmz5t") ||
-      type.contains("zmz6t") ||
       type.contains("thdx") ||
       type.contains("2thfx") ||
       type.contains("2bth")) {
+    return transformToWithOutPoint(choice);
+  }
+  if (type.contains("xglhc")) {
+    /*if (
+        type.contains("zmz1t") ||
+        type.contains("zmz2t") ||
+        type.contains("zmz3t") ||
+        type.contains("zmz4t") ||
+        type.contains("zmz5t") ||
+        type.contains("zmz6t") ||
+        type.endsWith("lm") || //两面
+        type.contains("bz")
+        ) {*/
     return transformToWithOutPoint(choice);
   }
   return choice.toString().replaceAll(new RegExp(r"(\]|\[)"), "");
