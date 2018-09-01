@@ -62,6 +62,12 @@ abstract class _xglhc extends PlayStyle {
 
   @override
   forceTransform(d) {
+    if(type.contains("lm")){
+      //两面
+      List<String> li = ['大' ,'小' ,'单' ,'双','大单' ,'大双' ,'小单' ,'小双'
+         ,'合大' ,'合小' ,'合单' ,'合双' ,'尾大','尾小','家禽','野兽' ,'红波' ,'绿波' ,'蓝波'];
+      return li[d] ;
+    }
     if (d < 9) return "0${d + 1}";
     return "${d + 1}";
   }
@@ -168,15 +174,19 @@ class pk10_dwd extends _xglhc {
 @protected
 class cqssc_hz extends _xglhc {
   @protected
+  int len = 49 ;
   cqssc_hz(
-      {String len, @required String type, @required String name, String desc})
+      {int len, @required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
 
   @override
   void playReset() {
     // TODO: implement playReset
     super.playReset();
-    this._data = initialData(49);
+    if(type.contains("lm")){
+      len = 19;
+    }
+    this._data = initialData(len);
   }
 
   @override
@@ -246,19 +256,60 @@ class Stylexglhc extends StyleManagerIMPL {
       type: "xglhc_zmz6t",
       name: LotPlayConfig.getName("xglhc_zmz6t"),
       desc: "正6特码");
+  PlayStyle get xglhc_zmrx => cqssc_hz(
+      type: "xglhc_zmrx",
+      name: LotPlayConfig.getName("xglhc_zmrx"),
+      desc: "正码任选");
+  PlayStyle get xglhc_zmz1lm => cqssc_hz(
+      type: "xglhc_zmz1lm",
+      name: LotPlayConfig.getName("xglhc_zmz1lm"),
+      desc: "正码两面");
+ PlayStyle get xglhc_zmz2lm => cqssc_hz(
+      type: "xglhc_zmz2lm",
+      name: LotPlayConfig.getName("xglhc_zmz2lm"),
+      desc: "正码两面");
+ PlayStyle get xglhc_zmz3lm => cqssc_hz(
+      type: "xglhc_zmz3lm",
+      name: LotPlayConfig.getName("xglhc_zmz3lm"),
+      desc: "正码两面");
+ PlayStyle get xglhc_zmz4lm => cqssc_hz(
+      type: "xglhc_zmz4lm",
+      name: LotPlayConfig.getName("xglhc_zmz4lm"),
+      desc: "正码两面");
+ PlayStyle get xglhc_zmz5lm => cqssc_hz(
+      type: "xglhc_zmz5lm",
+      name: LotPlayConfig.getName("xglhc_zmz5lm"),
+      desc: "正码两面");
+ PlayStyle get xglhc_zmz6lm => cqssc_hz(
+      type: "xglhc_zmz6lm",
+      name: LotPlayConfig.getName("xglhc_zmz6lm"),
+      desc: "正码两面");
+
+ PlayStyle get xglhc_tmlm => cqssc_hz(
+      type: "xglhc_tmlm",
+      name: LotPlayConfig.getName("xglhc_tmlm"),
+      desc: "特码两面");
 
   @override
   String get name => "六合彩";
 
   @override
   List<PlayStyle> get all => [
+        xglhc_zmz1lm,
         tmzx,
+        xglhc_zmrx,
         zmz1t,
         zmz2t,
         zmz3t,
         zmz4t,
         zmz5t,
         zmz6t,
+        xglhc_tmlm,
+        xglhc_zmz2lm,
+        xglhc_zmz3lm,
+        xglhc_zmz4lm,
+        xglhc_zmz5lm,
+        xglhc_zmz6lm,
       ];
 }
 /*

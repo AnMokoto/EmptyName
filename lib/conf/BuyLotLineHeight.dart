@@ -12,7 +12,7 @@ class LotLineHeight {
     }if (playEn.contains("11x5")) {
       return 170.0;
     }
-    if (playEn.contains("tmzx") ||
+    if (playEn.contains("xglhc") ||
         playEn.contains("zmz1t") ||
         playEn.contains("zmz2t") ||
         playEn.contains("zmz3t") ||
