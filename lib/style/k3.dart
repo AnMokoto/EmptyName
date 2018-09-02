@@ -5,18 +5,6 @@ import 'ZuheUtil.dart';
 import 'style.dart';
 import 'package:lowlottery/conf/LotPlay.dart';
 
-class ShapeRect extends Shape {
-  @override
-  // TODO: implement decoration
-  Decoration get decoration => new BoxDecoration(
-      color: Colors.transparent,
-      shape: BoxShape.rectangle,
-      border: new Border.all());
-
-  @override
-  Decoration get onPressDecoration =>
-      new BoxDecoration(color: Colors.red, shape: BoxShape.rectangle);
-}
 
 ///  快三
 @protected
@@ -57,11 +45,27 @@ abstract class _k3 extends PlayStyle {
 
   @override
   BoxConstraints get constraints =>
-      new BoxConstraints(minWidth: 40.0, maxWidth: 60.0, minHeight: 35.0);
+      new BoxConstraints(minWidth: 10.0, maxWidth: 20.0, minHeight: 35.0 );
 
   @override
-  LotteryStyle get layerStyle => new LotteryStyleDefault(count: 4);
+  LotteryStyle get layerStyle => new LotteryStyleDefault(count: _getCount());
 
+  _getCount(){
+    if(type.contains("tx")){
+      return 1 ;
+    }else if(type.contains('hz')){
+      return 4;
+    }
+    return 6;
+  }
+   _getWidth(){
+    if(type.contains("tx")){
+      return  20.0;
+    }else if(type.contains('hz')){
+      return 40.0;
+    }
+    return 60.0 ;
+  }
   @override
   List<List<int>> toBet2System(int index, int position) {
     /// 长度拦截
@@ -336,13 +340,13 @@ class Stylek3 extends StyleManagerIMPL {
 
   @override
   List<PlayStyle> get all => [
+        k3_3thtx,
         k3_hz,
         k3_3thdx,
         k3_3bth,
         k3_2thfx,
 //    k3_2thdx,
         k3_2bth,
-        k3_3thtx,
         k3_3lhtx,
       ];
 }

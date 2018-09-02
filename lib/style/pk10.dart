@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:lowlottery/log.dart';
-
+import 'package:flutter/material.dart';
 import 'Pk10Zhushuzxfx.dart';
 import 'ZuheUtil.dart';
 import 'style.dart';
@@ -36,6 +36,27 @@ abstract class _pk10 extends PlayStyle {
   @override
   // TODO: implement count
   int get count => 10;
+  @protected
+  Shape shape(int position, int index) {
+    if(type=="pk10_gyhz")  {
+      return new ShapeRect();
+    }
+    return new ShapeCircle();
+  }
+
+  @override
+  BoxConstraints get constraints =>
+      new BoxConstraints(minWidth: 10.0, maxWidth: 20.0, minHeight: 35.0 );
+
+  @override
+  LotteryStyle get layerStyle => new LotteryStyleDefault(count: _getCount());
+
+  _getCount(){
+    if( type=='pk10_gyhz'){ //冠亚和 3个
+      return 4 ;
+    }
+    return 5;
+  }
 
   @override
   List<List<int>> toBet2System(int index, int position) {

@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:lowlottery/conf/LotPlay.dart';
 import 'package:lowlottery/log.dart';
 
-import 'Pk10Zhushuzxfx.dart';
 import 'ZuheUtil.dart';
 import 'style.dart';
-import 'package:lowlottery/conf/LotPlay.dart';
 
 ///  香港六合彩
 @protected
@@ -38,6 +38,79 @@ abstract class _xglhc extends PlayStyle {
   // TODO: implement count
   int get count => 7;
 
+  @protected
+  Shape shape(int position, int index) {
+    if(type.endsWith("lm") || type=='xglhc_tmbb' || type.contains("sx") || type.contains("ws"))  {
+      return new ShapeRect();
+    }
+    return new ShapeCircle();
+  }
+
+  @override
+  BoxConstraints get constraints =>
+      new BoxConstraints(minWidth: 10.0, maxWidth: 20.0, minHeight: 35.0 );
+
+  @override
+  LotteryStyle get layerStyle => new LotteryStyleDefault(count: _getCount());
+
+  _getCount(){
+    if(type.contains("sx") || type=='xglhc_tmbb'){ //生肖 ,半波 3个
+      return 3 ;
+    }else if(type.contains('ws')|| type.endsWith("lm")){ //尾数 , 两面 4
+      return 4;
+    }
+    return 6;
+  }
+
+  /**
+   *
+      /*
+   *
+      "xglhc_tmzx": "特码直选",
+      "xglhc_tmlm": "特码两面",
+      "xglhc_zmrx": "正码任选",
+      "xglhc_zmz1t": "正码正1特",
+      "xglhc_zmz1lm": "正码正1两面",
+      "xglhc_zmz2t": "正码正2特",
+      "xglhc_zmz2lm": "正码正2两面",
+      "xglhc_zmz3t": "正码正3特",
+      "xglhc_zmz3lm": "正码正3两面",
+      "xglhc_zmz4t": "正码正4特",
+      "xglhc_zmz4lm": "正码正4两面",
+      "xglhc_zmz5t": "正码正5特",
+      "xglhc_zmz5lm": "正码正5两面",
+      "xglhc_zmz6t": "正码正6特",
+      "xglhc_zmz6lm": "正码正6两面",
+      "xglhc_lm3qz": "连码三全中",
+      "xglhc_lm2qz": "连码二全中",
+      "xglhc_lm3z2": "连码三中二",
+      "xglhc_lm2z1": "连码二中特",
+      "xglhc_lmtc": "连码特串",
+      "xglhc_tmbb": "特码半波",
+      "xglhc_sxtx": "特肖",
+      "xglhc_sx1x": "一肖",
+      "xglhc_wstmtw": "特码头尾",
+      "xglhc_ws2wl": "二尾连",
+      "xglhc_ws3wl": "三尾连",
+      "xglhc_ws4wl": "四尾连",
+      "xglhc_bz5": "五不中",
+      "xglhc_bz6": "六不中",
+      "xglhc_bz7": "七不中",
+      "xglhc_bz8": "八不中",
+      "xglhc_bz9": "九不中",
+      "xglhc_bz10": "十不中",
+
+
+   * */
+   */
+  _getWidth(){
+    if(type.contains("tx")){
+      return  20.0;
+    }else if(type.contains('hz')){
+      return 40.0;
+    }
+    return 60.0 ;
+  }
   @override
   List<List<int>> toBet2System(int index, int position) {
     /// 长度拦截

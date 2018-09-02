@@ -269,7 +269,18 @@ class ShapeCircle extends Shape {
   Decoration get onPressDecoration =>
       new BoxDecoration(color: Colors.red, shape: BoxShape.circle);
 }
+class ShapeRect extends Shape {
+  @override
+  // TODO: implement decoration
+  Decoration get decoration => new BoxDecoration(
+      color: Colors.transparent,
+      shape: BoxShape.rectangle,
+      border: new Border.all(color: Colors.grey));
 
+  @override
+  Decoration get onPressDecoration =>
+      new BoxDecoration(color: Colors.red, shape: BoxShape.rectangle);
+}
 class StyleGenerateItem extends StatelessWidget {
   bool isSelect;
   Widget child;
@@ -292,7 +303,7 @@ class StyleGenerateItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-        margin: EdgeInsets.only(left: 1.0, right: 1.0),
+        margin: EdgeInsets.only(left: 5.0, right: 5.0),
         constraints: constraints,
         alignment: Alignment.center,
         decoration: shape,
