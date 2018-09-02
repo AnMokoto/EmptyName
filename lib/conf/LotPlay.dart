@@ -46,6 +46,7 @@ class LotPlayConfig {
     "ssc_h2dxds": "后二大小单双",
     "ssc_q3dxds": "前三大小单双",
     "ssc_h3dxds": "后三大小单双",
+    "pk10_gyhz": "冠亚和",
     "pk10_dwd": "定位胆",
     "pk10_q5zxfx": "前五直选复选",
     "pk10_q4zxfx": "前四直选复选",
