@@ -18,18 +18,46 @@ import 'package:lowlottery/widget/Lottery2Layer.dart';
 /// [index] inline index
 typedef void OnLotteryPushClick(int position, int index);
 
-class _LotteryMenu extends StatelessWidget {
+class _LotteryMenu extends StatefulWidget {
   final PlayStyle style;
   final StyleManagerIMPL impl;
+  final dynamic f;
+  _LotteryMenu({this.impl, this.style, f(v)})
+      : this.f = f,
+        assert(style != null);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _LotteryState();
+  }
+}
+
+class _LotteryState extends State<_LotteryMenu>
+    with SingleTickerProviderStateMixin<_LotteryMenu> {
+  PlayStyle style;
+  StyleManagerIMPL impl;
   dynamic f;
-  _LotteryMenu({this.impl, this.style, f(v)}) {
-    this.f = f;
+  AnimationController controller;
+  _LotteryState() {
+    this.f = widget.f;
+    this.style = widget.style;
+    this.impl = widget.impl;
+    controller = AnimationController(
+      vsync: null,
+      duration: Duration(seconds: 1),
+    );
+    //controller.forward();
   }
 
   @override
   Widget build(BuildContext context) {
     final title = new Text(
       style.name,
+      style: new TextStyle(color: Colors.white, fontSize: 20.0),
+    );
+
+    final implTitle = new Text(
+      impl.name ?? "",
       style: new TextStyle(color: Colors.white, fontSize: 20.0),
     );
 
@@ -40,24 +68,55 @@ class _LotteryMenu extends StatelessWidget {
       splashColor: Colors.transparent,
       colorBrightness: Brightness.light,
       color: Colors.transparent,
-      icon: new Icon(Icons.arrow_drop_down),
+      icon: new AnimatedIcon(
+        icon: AnimatedIcons.arrow_menu,
+        color: Colors.white,
+        progress: controller,
+      ),
       onPressed: () {
-        showModalBottomSheet(
+        showCupertinoModalPopup(
             context: context,
             builder: (context) {
-              return new CupertinoPicker(
-                  diameterRatio: 1.0,
-                  magnification: 1.3,
-                  backgroundColor: Colors.white,
-                  looping: true,
-                  useMagnifier: true,
-                  onSelectedItemChanged: (position) {
-                    f(all[position]);
-                  },
-                  itemExtent: 25.0,
-                  children: new List.generate(all.length, (index) {
-                    return new Center(child: new Text(all[index].name));
-                  }));
+              return new CupertinoActionSheet(
+                  title: implTitle,
+                  //message: new Text("data"),
+                  actions: new List.generate(
+                    all.length,
+                    (index) {
+                      return new CupertinoActionSheetAction(
+                        onPressed: () {
+                          f(all[index]);
+                          Navigator.of(context).pop();
+                        },
+                        child: new Center(
+                          child: new Text(all[index].name),
+                        ),
+                      );
+                    },
+                  ),
+                  cancelButton: new CupertinoActionSheetAction(
+                    isDefaultAction: true,
+                    child: new Text(
+                      "取消",
+                      // style: new TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ));
+              // return new CupertinoPicker(
+              //     diameterRatio: 1.0,
+              //     magnification: 1.3,
+              //     backgroundColor: Colors.white,
+              //     looping: true,
+              //     useMagnifier: true,
+              //     onSelectedItemChanged: (position) {
+              //       f(all[position]);
+              //     },
+              //     itemExtent: 25.0,
+              //     children: new List.generate(all.length, (index) {
+              //       return new Center(child: new Text(all[index].name));
+              //     }));
             });
       },
     );
