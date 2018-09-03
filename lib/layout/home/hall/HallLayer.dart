@@ -58,7 +58,7 @@ class _IndexFragState extends State<HallIndexLayer> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    dispatch(context, new IndexRequestAction(context, {'type':'all'}));
+    dispatch(context, new IndexRequestAction(context, {'type': 'all'}));
   }
 
   @override
@@ -77,7 +77,7 @@ class _IndexFragState extends State<HallIndexLayer> {
             });
       },
       converter: (state) {
-        return state.state.homeModel.model;
+        return state.state.homeModel.third;
       },
     );
   }

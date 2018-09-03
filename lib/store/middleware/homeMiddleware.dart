@@ -15,12 +15,18 @@ final homeMiddleware = <Middleware<AppState>>[
     transform(response, next).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
-        next(IndexResponseAction(FixBoxModel.fromJsonToList(value)));
+        var model = FixBoxModel.fromJsonToList(value);
+        if (action.body['type'] == "all") {
+          next(ThirdResponseAction(model));
+        } else {
+          next(IndexResponseAction(model));
+        }
       }
     });
     next(HttpProgressAction(action.context, false));
     next(action);
-  }),new TypedMiddleware<AppState, BannerRequestAction>(
+  }),
+  new TypedMiddleware<AppState, BannerRequestAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
@@ -47,8 +53,8 @@ final homeMiddleware = <Middleware<AppState>>[
     });
     next(HttpProgressAction(action.context, false));
     next(action);
-  })
-  ,new TypedMiddleware<AppState, OpencodeRequestAction>(
+  }),
+  new TypedMiddleware<AppState, OpencodeRequestAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;

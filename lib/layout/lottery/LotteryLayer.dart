@@ -18,39 +18,47 @@ import 'package:lowlottery/widget/Lottery2Layer.dart';
 /// [index] inline index
 typedef void OnLotteryPushClick(int position, int index);
 
+@immutable
 class _LotteryMenu extends StatefulWidget {
   final PlayStyle style;
   final StyleManagerIMPL impl;
-  final dynamic f;
-  _LotteryMenu({this.impl, this.style, f(v)})
-      : this.f = f,
-        assert(style != null);
+  dynamic f;
+  _LotteryMenu({this.impl, this.style, this.f}) : assert(style != null);
 
   @override
-  State<StatefulWidget> createState() {
-    return _LotteryState();
-  }
+  _LotteryMenuState createState() => new _LotteryMenuState();
 }
 
-class _LotteryState extends State<_LotteryMenu>
+class _LotteryMenuState extends State<_LotteryMenu>
     with SingleTickerProviderStateMixin<_LotteryMenu> {
-  PlayStyle style;
-  StyleManagerIMPL impl;
-  dynamic f;
   AnimationController controller;
-  _LotteryState() {
-    this.f = widget.f;
-    this.style = widget.style;
-    this.impl = widget.impl;
+  Animation animation;
+  _LotteryMenuState() {
     controller = AnimationController(
-      vsync: null,
+      vsync: this,
       duration: Duration(seconds: 1),
     );
+
+    // animation = new Tween(
+    //   begin: 0,
+    //   end: 1,
+    // ).animate(controller);
     //controller.forward();
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final style = widget.style;
+    final impl = widget.impl;
+    dynamic f = widget.f;
+
     final title = new Text(
       style.name,
       style: new TextStyle(color: Colors.white, fontSize: 20.0),
@@ -58,7 +66,7 @@ class _LotteryState extends State<_LotteryMenu>
 
     final implTitle = new Text(
       impl.name ?? "",
-      style: new TextStyle(color: Colors.white, fontSize: 20.0),
+      style: new TextStyle(color: Colors.blueGrey, fontSize: 20.0),
     );
 
     final all = impl.all;
@@ -68,12 +76,17 @@ class _LotteryState extends State<_LotteryMenu>
       splashColor: Colors.transparent,
       colorBrightness: Brightness.light,
       color: Colors.transparent,
-      icon: new AnimatedIcon(
-        icon: AnimatedIcons.arrow_menu,
-        color: Colors.white,
-        progress: controller,
+      icon: new Center(
+        child: new AnimatedIcon(
+          icon: AnimatedIcons.menu_close,
+          color: Colors.white,
+          semanticLabel: "aaa ",
+          progress: controller,
+        ),
       ),
+      // icon: Icon(Icons.arrow_drop_down),
       onPressed: () {
+        controller.forward();
         showCupertinoModalPopup(
             context: context,
             builder: (context) {
@@ -87,6 +100,7 @@ class _LotteryState extends State<_LotteryMenu>
                         onPressed: () {
                           f(all[index]);
                           Navigator.of(context).pop();
+                          controller.reverse();
                         },
                         child: new Center(
                           child: new Text(all[index].name),
@@ -102,6 +116,7 @@ class _LotteryState extends State<_LotteryMenu>
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
+                      controller.reverse();
                     },
                   ));
               // return new CupertinoPicker(
@@ -117,7 +132,9 @@ class _LotteryState extends State<_LotteryMenu>
               //     children: new List.generate(all.length, (index) {
               //       return new Center(child: new Text(all[index].name));
               //     }));
-            });
+            }).then((f) {
+          controller.reverse();
+        });
       },
     );
   }

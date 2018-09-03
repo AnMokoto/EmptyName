@@ -52,3 +52,27 @@ class LogStateAction extends StoreAction {
 class LogOutAction extends StoreAction {
   LogOutAction();
 }
+
+/// 获取用户基本信息
+class UserRequestAction extends HttpStoreAction {
+  UserRequestAction();
+  @override
+  String get path => "user/userinfo";
+}
+
+class UserResponseAction extends StoreAction {
+  dynamic value;
+  UserResponseAction({this.value});
+}
+
+/// 获取用户余额信息
+class UserRequestBalanceAction extends HttpStoreAction {
+  UserRequestBalanceAction();
+  @override
+  String get path => "user/balance";
+}
+
+class UserResponseBalanceAction extends StoreAction {
+  dynamic value;
+  UserResponseBalanceAction({this.value});
+}

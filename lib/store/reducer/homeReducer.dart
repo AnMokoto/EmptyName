@@ -13,9 +13,12 @@ final List<Reducer<AppState>> homeReducer = <Reducer<AppState>>[
     state.homeModel.second = action.model;
     return state;
   }),
-  new TypedReducer<AppState, IndexResponseAction>((state, action) {
+  new TypedReducer<AppState, ThirdResponseAction>((state, action) {
+    state.homeModel.third = action.model;
+    return state;
+  }),
+  new TypedReducer<AppState, BannerResponseAction>((state, action) {
     state.homeModel.banners = action.model;
     return state;
   }),
-
 ];

@@ -10,13 +10,33 @@ import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/layout/record/WithdrawRecord.dart';
 import 'package:lowlottery/layout/record/AccountMingxiRecord.dart';
 import 'package:lowlottery/layout/record/MessageRecord.dart';
+import 'package:lowlottery/store/AppStore.dart';
 
 class MineLayer extends StatefulWidget {
   _MineState createState() => new _MineState();
 }
 
 class _MineState extends State<MineLayer>
-    with SingleTickerProviderStateMixin<MineLayer> {
+    with SingleTickerProviderStateMixin<MineLayer>, WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    dispatch(context, new UserRequestAction());
+    dispatch(context, new UserRequestBalanceAction());
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -27,165 +47,177 @@ class _MineState extends State<MineLayer>
         padding: EdgeInsets.only(bottom: 20.0),
         child: new Column(
           children: <Widget>[
-            new AspectRatio(
-              aspectRatio: 1.0,
-              child: new Stack(
-                // alignment: Alignment.center,
-                children: <Widget>[
-                  new AspectRatio(
-                    aspectRatio: 16.0 / 9.0,
-                    child: Image.asset(
-                      "assets/images/avatar.png",
-                      fit: BoxFit.cover,
-                    ),
-                  ), //
+            new Stack(
+              // alignment: Alignment.center,
+              children: <Widget>[
+                new AspectRatio(
+                  aspectRatio: 16.0 / 9.0,
+                  child: Image.asset(
+                    "assets/images/avatar.png",
+                    fit: BoxFit.cover,
+                  ),
+                ), //
 
-                  new Container(
-                    padding: EdgeInsets.all(15.0),
-                    margin: EdgeInsets.only(top: 70.0),
-                    constraints: new BoxConstraints(minWidth: double.infinity),
-                    child: new Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        new Container(
+                new Container(
+                  padding: EdgeInsets.all(15.0),
+                  margin: EdgeInsets.only(top: 70.0),
+                  constraints: new BoxConstraints(minWidth: double.infinity),
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      /// 头像区域
+                      new StoreConnector<AppState, UserInfo>(
+                          builder: (context, state) {
+                        return new Container(
                           margin: EdgeInsets.only(top: 5.0, bottom: 10.0),
                           child: new Column(
                             children: <Widget>[
                               new Container(
-                                  margin: EdgeInsets.only(left: 5.0),
-                                  decoration: new BoxDecoration(
-                                    color: Colors.red,
-                                    shape: BoxShape.circle,
+                                margin: EdgeInsets.only(left: 5.0),
+                                decoration: new BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.circle,
+                                ),
+                                width: 50.0,
+                                height: 50.0,
+                                child: new ClipOval(
+                                  child: new FadeInImage.assetNetwork(
+                                    placeholder: "assets/images/app_back.png",
+                                    fit: BoxFit.fill,
+                                    image: state.avatar ??
+                                        "http://p1m4sp0og.bkt.clouddn.com/avatar.png",
+                                    width: 60.0,
+                                    height: 60.0,
                                   ),
-                                  width: 50.0,
-                                  height: 50.0,
-                                  child: new ClipOval(
-                                    child: new FadeInImage.assetNetwork(
-                                      placeholder:
-                                          "images/normal_user_icon.webp",
-                                      fit: BoxFit.fitWidth,
-                                      image:
-                                          "http://p1m4sp0og.bkt.clouddn.com/avatar.png",
-                                      width: 60.0,
-                                      height: 60.0,
-                                    ),
-                                  )),
+                                ),
+                              ),
                               new Text(
-                                "111",
+                                "${state.nickName ?? state.username ?? ""}",
                                 style: new TextStyle(
                                     fontSize: 15.0, color: Colors.white70),
                               ),
                             ],
                           ),
-                        ),
-                        //// 钱
-                        new Container(
-                          constraints:
-                              new BoxConstraints(minWidth: double.infinity),
-                          decoration: new BoxDecoration(
-                              color: Colors.grey[100],
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0))),
-                          child: new Column(
-                            children: <Widget>[
-                              /// header
-                              new Container(
+                        );
+                      }, converter: (state) {
+                        return state.state.userModel.mUserInfo;
+                      }),
+                      //// 钱
+                      new StoreConnector<AppState, UserBalance>(
+                        builder: (context, state) {
+                          return new Container(
+                            constraints:
+                                new BoxConstraints(minWidth: double.infinity),
+                            decoration: new BoxDecoration(
                                 color: Colors.grey[100],
-                                child: new Row(children: <Widget>[
-                                  new Expanded(
-                                    child: new Container(
-                                        child: new Column(
-                                      children: <Widget>[
-                                        new Text(
-                                          "可用余额(元)",
-                                          style: new TextStyle(
-                                              color: Colors.black87),
-                                        ),
-                                        new Text(
-                                          "12.0",
-                                          style: new TextStyle(
-                                              color: Colors.red,
-                                              fontSize: 22.0),
-                                        ),
-                                        new ConstrainedBox(
-                                          constraints: new BoxConstraints(
-                                              minHeight: 38.0, minWidth: 120.0),
-                                          child: new RaisedButton.icon(
-                                            textColor: Colors.white,
-                                            elevation: 0.0,
-                                            // highlightColor: Colors.transparent,
-                                            // splashColor: Colors.transparent,
-                                            color: Colors.red,
-                                            label: new Text("充值"),
-                                            icon: new Icon(AppIcons.chongzhi),
-                                            onPressed: () {
-                                              Navigator.of(context).push(
-                                                  new MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          new LotteryBetLayer()));
-                                            },
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0))),
+                            child: new Column(
+                              children: <Widget>[
+                                /// header
+                                new Container(
+                                  color: Colors.grey[100],
+                                  child: new Row(children: <Widget>[
+                                    new Expanded(
+                                      child: new Container(
+                                          child: new Column(
+                                        children: <Widget>[
+                                          new Text(
+                                            "可用余额(元)",
+                                            style: new TextStyle(
+                                                color: Colors.black87),
                                           ),
-                                        ),
-                                      ],
-                                    )),
-                                  ),
-                                  new Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 5.0),
-                                    child: new Container(
-                                      color: Colors.grey,
-                                      width: .5,
-                                      height: 150.0,
+                                          new Text(
+                                            "${(state.totalBalance ?? 0.0)}",
+                                            style: new TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 22.0),
+                                          ),
+                                          new ConstrainedBox(
+                                            constraints: new BoxConstraints(
+                                                minHeight: 38.0,
+                                                minWidth: 120.0),
+                                            child: new RaisedButton.icon(
+                                              textColor: Colors.white,
+                                              elevation: 0.0,
+                                              // highlightColor: Colors.transparent,
+                                              // splashColor: Colors.transparent,
+                                              color: Colors.red,
+                                              label: new Text("充值"),
+                                              icon: new Icon(AppIcons.chongzhi),
+                                              onPressed: () {
+                                                Navigator.of(context).push(
+                                                    new MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            new LotteryBetLayer()));
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      )),
                                     ),
-                                  ),
-                                  new Expanded(
-                                    child: new Container(
-                                        child: new Column(
-                                      children: <Widget>[
-                                        new Text(
-                                          "可提款余额(元)",
-                                          style: new TextStyle(
-                                              color: Colors.black87),
-                                        ),
-                                        new Text(
-                                          "100.0",
-                                          style: new TextStyle(
-                                              color: Colors.red,
-                                              fontSize: 22.0),
-                                        ),
-                                        new ConstrainedBox(
-                                          constraints: new BoxConstraints(
-                                              minHeight: 38.0, minWidth: 120.0),
-                                          child: new RaisedButton.icon(
-                                            textColor: Colors.white,
-                                            elevation: 0.0,
-                                            // highlightColor: Colors.transparent,
-                                            // splashColor: Colors.transparent,
-                                            color: Colors.orange,
-                                            label: new Text("提现"),
-                                            icon: new Icon(AppIcons.tixian),
-                                            onPressed: () {
-                                              Navigator.of(context).push(
-                                                  new MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          new LotteryBetLayer()));
-                                            },
+                                    new Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 5.0),
+                                      child: new Container(
+                                        color: Colors.grey,
+                                        width: .5,
+                                        height: 150.0,
+                                      ),
+                                    ),
+                                    new Expanded(
+                                      child: new Container(
+                                          child: new Column(
+                                        children: <Widget>[
+                                          new Text(
+                                            "可提款余额(元)",
+                                            style: new TextStyle(
+                                                color: Colors.black87),
                                           ),
-                                        ),
-                                      ],
-                                    )),
-                                  ),
-                                ]),
-                              ),
-                            ],
+                                          new Text(
+                                            "${(state.withdrawable ?? 0.0)}",
+                                            style: new TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 22.0),
+                                          ),
+                                          new ConstrainedBox(
+                                            constraints: new BoxConstraints(
+                                                minHeight: 38.0,
+                                                minWidth: 120.0),
+                                            child: new RaisedButton.icon(
+                                              textColor: Colors.white,
+                                              elevation: 0.0,
+                                              // highlightColor: Colors.transparent,
+                                              // splashColor: Colors.transparent,
+                                              color: Colors.orange,
+                                              label: new Text("提现"),
+                                              icon: new Icon(AppIcons.tixian),
+                                              onPressed: () {
+                                                Navigator.of(context).push(
+                                                    new MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            new LotteryBetLayer()));
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                    ),
+                                  ]),
+                                ),
+                              ],
 //                          child: new Text("data"),
-                          ),
-                        ),
-                      ],
-                    ),
+                            ),
+                          );
+                        },
+                        converter: (store) {
+                          return store.state.userModel.mUserBalance;
+                        },
+                      )
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             new Container(
               color: Colors.grey[100],

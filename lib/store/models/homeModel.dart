@@ -5,9 +5,10 @@ class HomeModel {
   /// 第一屏的数据
   List<FixBoxModel> model = [];
 
-  ///
+  ///开奖号码
   List<dynamic> second = [];
-  List<dynamic> banners = [];
 
-  dynamic third;
+  ///购彩大厅
+  List<FixBoxModel> third = [];
+  List<dynamic> banners = [];
 }

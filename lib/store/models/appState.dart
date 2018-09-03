@@ -5,8 +5,10 @@ import '../net/index.dart';
 import 'playModel.dart';
 import 'homeModel.dart';
 import 'OpencodeModel.dart';
+import 'user.dart';
 import 'TradeModel.dart';
 import 'MessageModel.dart';
+
 const price = 2.0;
 const dynamic HOST_NAME = "http://178.128.21.119:10003/";
 
@@ -18,7 +20,7 @@ const dynamic REQUEST_HEAD = {
 
 class AppState {
   static double price = 2.0;
-  String _token = "";
+  UserModel userModel;
 
   MessageModel messageModel;
   TradeModel tradeModel;
@@ -38,12 +40,15 @@ class AppState {
     this.httpRetrofit = HttpRetrofit.from(HOST_NAME)..setHeaders(REQUEST_HEAD);
     this.tradeModel = new TradeModel();
     this.messageModel = new MessageModel();
+    this.userModel = new UserModel();
   }
 
-  String get token => _token;
+  String get token => userModel.token;
   set token(String token) {
-    this._token = token;
-    this.httpRetrofit.addHeaders(key: "Authorization", value: this._token);
+    this.userModel.token = token;
+    this
+        .httpRetrofit
+        .addHeaders(key: "Authorization", value: this.userModel.token);
   }
 
   factory AppState.from() {

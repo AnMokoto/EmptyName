@@ -2,6 +2,7 @@ import 'style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lowlottery/log.dart';
 import 'ZuheUtil.dart';
+import 'dart:math';
 
 ///  重庆时时彩分类
 @protected
@@ -41,6 +42,15 @@ abstract class _cqssc extends PlayStyle {
       return "${d + 1}";
     }
     return d;
+  }
+
+  @override
+  PlayModelItem isRandomType(PlayStyle style) {
+    // PlayStyle random = style.clone();
+    //////////////////////////////////
+    ////////////Of clone./////////////
+    //////////////////////////////////
+    return null;
   }
 
   @override

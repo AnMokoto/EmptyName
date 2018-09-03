@@ -2,9 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lowlottery/store/models/playModel.dart';
 export 'package:lowlottery/store/models/playModel.dart';
+import 'dart:isolate';
+import 'dart:async';
 
 /// 对玩法数据实际操作的工具类
-abstract class PlayStyle {
+abstract class PlayStyle extends Object {
   /// 玩法样式
   @protected
   String _type;
@@ -47,9 +49,18 @@ abstract class PlayStyle {
   /// 返回传递参数信息
   PlayModelItem get transform => transformWithType(this.model);
 
-  PlayModelItem randomType() {
-    /// 随机生成
+  @mustCallSuper
+  List<PlayModelItem> randomType(int nums) {
+    assert(nums > 0);
+
+    List<PlayModelItem> models = new List.generate(nums, (index) {
+      return isRandomType(this);
+    });
+    return models;
   }
+
+  @protected
+  PlayModelItem isRandomType(PlayStyle style);
 
   /// 重置选项卡数据
   @mustCallSuper
@@ -171,6 +182,35 @@ abstract class PlayStyle {
   }
 }
 
+class PlayStyleClone extends PlayStyle {
+  final PlayStyle style;
+  PlayStyleClone(this.style);
+
+  @override
+  int get count => style.count;
+
+  @override
+  PlayModelItem transformWithType(PlayModelItem model) {
+    return style.transformWithType(model);
+  }
+
+  @override
+  List<List<int>> toBet2System(int index, int position) {
+    return style.toBet2System(index, position);
+  }
+
+  @override
+  PlayModelItem isRandomType(PlayStyle style) {
+    return null;
+  }
+
+  @override
+  List<String> initialType() => style.initialType();
+
+  @override
+  List<List<int>> initialArray() => style.initialArray();
+}
+
 /// 替换数据格式
 String transformToString(List<dynamic> choice, String type) {
   List<String> contains = ["zuxfx", "zuxhz", "zuxkd"];
@@ -269,6 +309,7 @@ class ShapeCircle extends Shape {
   Decoration get onPressDecoration =>
       new BoxDecoration(color: Colors.red, shape: BoxShape.circle);
 }
+
 class ShapeRect extends Shape {
   @override
   // TODO: implement decoration
@@ -281,6 +322,7 @@ class ShapeRect extends Shape {
   Decoration get onPressDecoration =>
       new BoxDecoration(color: Colors.red, shape: BoxShape.rectangle);
 }
+
 class StyleGenerateItem extends StatelessWidget {
   bool isSelect;
   Widget child;

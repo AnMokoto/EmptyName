@@ -23,7 +23,15 @@ class HttpProgressAction extends StoreAction {
   HttpProgressAction(this.context, this.isShow);
 }
 
+/// 错误信息 以及 弹窗控制
 class HttpErrorAction extends StoreAction {
   final String msg;
-  HttpErrorAction({this.msg});
+  final dynamic state;
+  HttpErrorAction({this.state, this.msg});
+}
+
+/// 处理普通弹窗消息
+class HttpMsgAction extends StoreAction {
+  final String msg;
+  HttpMsgAction({this.msg});
 }

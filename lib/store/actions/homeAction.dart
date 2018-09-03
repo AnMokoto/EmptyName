@@ -45,6 +45,10 @@ class SecondResponseAction extends StoreAction {
   SecondResponseAction(this.model);
 }
 
+class ThirdResponseAction extends StoreAction {
+  List<FixBoxModel> model;
+  ThirdResponseAction(this.model);
+}
 
 class OpencodeRequestAction extends HttpStoreAction {
   OpencodeRequestAction(BuildContext context, Map<String, dynamic> body)

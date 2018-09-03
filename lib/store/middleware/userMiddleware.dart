@@ -25,11 +25,12 @@ final userMiddleware = <Middleware<AppState>>[
       if (!(value is Exception)) {
         /// 这里保存本地session
         var token = value['token'];
-        var bl = await SPHelper.save(key: "token", value: token);
         next(LoginAction(token: token));
-        Navigator.of(action.context).pushReplacement(new MaterialPageRoute(
-          builder: (context) => new HomeLayer(),
-        ));
+        SPHelper.save(key: "token", value: token).then((b) {
+          Navigator.of(action.context).pushReplacement(new MaterialPageRoute(
+            builder: (context) => new HomeLayer(),
+          ));
+        });
       }
     });
     next(new HttpProgressAction(action.context, false));
@@ -78,6 +79,36 @@ final userMiddleware = <Middleware<AppState>>[
         ));
       }
       next(action);
+    });
+    next(action);
+  }),
+];
+
+/// 获取用户数据
+@protected
+final userXMiddleware = <Middleware<AppState>>[
+  new TypedMiddleware<AppState, UserRequestAction>(
+      (store, action, NextDispatcher next) async {
+    //next(new HttpProgressAction(action.context, true));
+    var api = store.state.httpRetrofit;
+    var response = await api.post(path: action.path, body: action.body);
+    transform(response, next).then((value) {
+      print("${action.path}-------$value");
+      if (!(value is Exception)) {
+        next(UserResponseAction(value: value));
+      }
+    });
+    next(action);
+  }),
+  new TypedMiddleware<AppState, UserRequestBalanceAction>(
+      (store, action, NextDispatcher next) async {
+    var api = store.state.httpRetrofit;
+    var response = await api.post(path: action.path, body: action.body);
+    transform(response, next).then((value) {
+      print("${action.path}-------$value");
+      if (!(value is Exception)) {
+        next(UserResponseBalanceAction(value: value));
+      }
     });
     next(action);
   }),
