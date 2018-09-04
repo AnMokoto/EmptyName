@@ -8,6 +8,7 @@ class LotConfig {
 
   static Map<String, String> _lot = {
     "xglhc": "香港六合彩",
+    "xglhcffc": "大发六合彩",
     "pk10": "北京快车",
     "gdkl10": "广东快乐十分",
     "cqkl10": "重庆快乐十分",
