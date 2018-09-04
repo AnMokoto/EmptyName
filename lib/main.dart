@@ -3,7 +3,9 @@ import 'package:lowlottery/layout/splash/SplashLayer.dart';
 import 'package:lowlottery/layout/home/HomeLayer.dart';
 import 'package:lowlottery/store/appStore.dart';
 
-void main() => runApp(new MyApp(store: appStore));
+void main() {
+  runApp(new MyApp(store: appStore));
+}
 
 class MyApp extends StatelessWidget {
   final Store<AppState> store;

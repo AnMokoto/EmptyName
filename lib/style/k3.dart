@@ -5,37 +5,16 @@ import 'ZuheUtil.dart';
 import 'style.dart';
 import 'package:lowlottery/conf/LotPlay.dart';
 
-
 ///  快三
 @protected
 abstract class _k3 extends PlayStyle {
-  List<List<int>> _data;
-
   _k3({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
 
-  List<List<int>> initialData(int len) {
-    return new List.generate(initialType().length, (index) {
-      return new List.generate(len, (i) {
-        return -1;
-      });
-    });
-  }
+  @override
+  int get initialCount => 6;
 
   @override
-  void playReset() {
-    // TODO: implement playReset
-    super.playReset();
-    _data = initialData(6);
-  }
-
-  @override
-  List<List<int>> initialArray() {
-    return _data;
-  }
-
-  @override
-  // TODO: implement count
   int get count => 3;
 
   @protected
@@ -45,39 +24,41 @@ abstract class _k3 extends PlayStyle {
 
   @override
   BoxConstraints get constraints =>
-      new BoxConstraints(minWidth: 10.0, maxWidth: 20.0, minHeight: 35.0 );
+      new BoxConstraints(minWidth: 10.0, maxWidth: 20.0, minHeight: 35.0);
 
   @override
   LotteryStyle get layerStyle => new LotteryStyleDefault(count: _getCount());
 
-  _getCount(){
-    if(type.contains("tx")){
-      return 1 ;
-    }else if(type.contains('hz')){
+  _getCount() {
+    if (type.contains("tx")) {
+      return 1;
+    } else if (type.contains('hz')) {
       return 4;
     }
     return 6;
   }
-   _getWidth(){
-    if(type.contains("tx")){
-      return  20.0;
-    }else if(type.contains('hz')){
+
+  _getWidth() {
+    if (type.contains("tx")) {
+      return 20.0;
+    } else if (type.contains('hz')) {
       return 40.0;
     }
-    return 60.0 ;
+    return 60.0;
   }
+
   @override
   List<List<int>> toBet2System(int index, int position) {
     /// 长度拦截
-    if (index >= _data.length) return _data;
-    List<int> lis = _data[index];
+    if (index >= data.length) return data;
+    List<int> lis = data[index];
 
     /// 长度拦截
-    if (lis.length <= position) return _data;
+    if (lis.length <= position) return data;
 
     /// 替换属性
     lis[position] = lis[position] == position ? -1 : position;
-    return _data;
+    return data;
   }
 
   @override
@@ -128,24 +109,20 @@ class cqssc_hz extends _k3 {
       : super(type: type, name: name, desc: desc);
 
   @override
-  void playReset() {
-    // TODO: implement playReset
-    super.playReset();
-    this._data = initialData(20);
-  }
+  int get initialCount => 20;
 
   @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
   PlayModelItem transformWithType(PlayModelItem state) {
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         value.add(forceTransform(f));
       }
@@ -174,24 +151,20 @@ class k3_thdx extends _k3 {
       : super(type: type, name: name, desc: desc);
 
   @override
-  void playReset() {
-    // TODO: implement playReset
-    super.playReset();
-    this._data = initialData(6);
-  }
+  int get initialCount => 6;
 
   @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
   PlayModelItem transformWithType(PlayModelItem state) {
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         value.add(forceTransform(f));
       }
@@ -227,24 +200,26 @@ class k3_buthdx extends _k3 {
   void playReset() {
     // TODO: implement playReset
     super.playReset();
-    this._data = initialData(6);
     if (type == 'k3_2bth') {
       numCount = 2;
     }
   }
 
   @override
+  int get initialCount => 6;
+
+  @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
   PlayModelItem transformWithType(PlayModelItem state) {
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         value.add(forceTransform(f));
       }
@@ -273,24 +248,20 @@ class k3_thtx extends _k3 {
       : super(type: type, name: name, desc: desc);
 
   @override
-  void playReset() {
-    // TODO: implement playReset
-    super.playReset();
-    this._data = initialData(1);
-  }
+  int get initialCount => 1;
 
   @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
   PlayModelItem transformWithType(PlayModelItem state) {
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         value.add(forceTransform(f));
       }

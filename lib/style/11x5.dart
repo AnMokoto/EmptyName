@@ -9,47 +9,27 @@ import 'package:lowlottery/conf/LotPlay.dart';
 ///  十一选五
 @protected
 abstract class _11x5 extends PlayStyle {
-  List<List<int>> _data;
-
   _11x5({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
 
-  List<List<int>> initialData(int len) {
-    return new List.generate(initialType().length, (index) {
-      return new List.generate(len, (i) {
-        return -1;
-      });
-    });
-  }
-
   @override
-  void playReset() {
-    // TODO: implement playReset
-    super.playReset();
-    _data = initialData(10);
-  }
-
-  @override
-  List<List<int>> initialArray() {
-    return _data;
-  }
-
-  @override
-  // TODO: implement count
   int get count => 5;
+
+  @override
+  int get initialCount => 11;
 
   @override
   List<List<int>> toBet2System(int index, int position) {
     /// 长度拦截
-    if (index >= _data.length) return _data;
-    List<int> lis = _data[index];
+    if (index >= data.length) return data;
+    List<int> lis = data[index];
 
     /// 长度拦截
-    if (lis.length <= position) return _data;
+    if (lis.length <= position) return data;
 
     /// 替换属性
     lis[position] = lis[position] == position ? -1 : position;
-    return _data;
+    return data;
   }
 
   @override
@@ -73,13 +53,6 @@ class cqssc_zxfx extends _11x5 {
       : super(type: type, name: name, desc: desc);
 
   @override
-  void playReset() {
-    // TODO: implement playReset
-    super.playReset();
-    this._data = initialData(11);
-  }
-
-  @override
   List<String> initialType() {
     if (type.contains("3")) return ["第一位", "第二位", "第三位"];
     if (type.contains("2")) return ["第一位", "第二位"];
@@ -90,7 +63,7 @@ class cqssc_zxfx extends _11x5 {
     state.code = "";
     List<String> value = new List();
     int acount = 1;
-    _data.forEach((item) {
+    data.forEach((item) {
       List<String> choice = new List();
       int _count = 0;
 
@@ -137,9 +110,7 @@ class gd11x5_rx extends _11x5 {
 
   @override
   void playReset() {
-    // TODO: implement playReset
     super.playReset();
-    this._data = initialData(11);
     if (type.endsWith("zxfx")) {
       leftName = "第一位";
     }
@@ -162,9 +133,9 @@ class gd11x5_rx extends _11x5 {
 
   @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
@@ -172,7 +143,7 @@ class gd11x5_rx extends _11x5 {
     var count = 0;
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         count += 1;
         value.add(forceTransform(f));
@@ -219,7 +190,6 @@ class gd11x5_zux extends _11x5 {
   void playReset() {
     // TODO: implement playReset
     super.playReset();
-    this._data = initialData(11);
     if (type.contains("2")) {
       zuheCount = 2;
     } else if (type.contains("3")) {
@@ -229,9 +199,9 @@ class gd11x5_zux extends _11x5 {
 
   @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
@@ -239,7 +209,7 @@ class gd11x5_zux extends _11x5 {
     var count = 0;
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         count += 1;
         value.add(forceTransform(f));

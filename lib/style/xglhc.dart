@@ -9,30 +9,8 @@ import 'style.dart';
 ///  香港六合彩
 @protected
 abstract class _xglhc extends PlayStyle {
-  List<List<int>> _data;
-
   _xglhc({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
-
-  List<List<int>> initialData(int len) {
-    return new List.generate(initialType().length, (index) {
-      return new List.generate(len, (i) {
-        return -1;
-      });
-    });
-  }
-
-  @override
-  void playReset() {
-    // TODO: implement playReset
-    super.playReset();
-    _data = initialData(10);
-  }
-
-  @override
-  List<List<int>> initialArray() {
-    return _data;
-  }
 
   @override
   // TODO: implement count
@@ -40,7 +18,10 @@ abstract class _xglhc extends PlayStyle {
 
   @protected
   Shape shape(int position, int index) {
-    if(type.endsWith("lm") || type=='xglhc_tmbb' || type.contains("sx") || type.contains("ws"))  {
+    if (type.endsWith("lm") ||
+        type == 'xglhc_tmbb' ||
+        type.contains("sx") ||
+        type.contains("ws")) {
       return new ShapeRect();
     }
     return new ShapeCircle();
@@ -48,15 +29,17 @@ abstract class _xglhc extends PlayStyle {
 
   @override
   BoxConstraints get constraints =>
-      new BoxConstraints(minWidth: 10.0, maxWidth: 20.0, minHeight: 35.0 );
+      new BoxConstraints(minWidth: 10.0, maxWidth: 20.0, minHeight: 35.0);
 
   @override
   LotteryStyle get layerStyle => new LotteryStyleDefault(count: _getCount());
 
-  _getCount(){
-    if(type.contains("sx") || type=='xglhc_tmbb'){ //生肖 ,半波 3个
-      return 3 ;
-    }else if(type.contains('ws')|| type.endsWith("lm")){ //尾数 , 两面 4
+  _getCount() {
+    if (type.contains("sx") || type == 'xglhc_tmbb') {
+      //生肖 ,半波 3个
+      return 3;
+    } else if (type.contains('ws') || type.endsWith("lm")) {
+      //尾数 , 两面 4
       return 4;
     }
     return 6;
@@ -103,26 +86,27 @@ abstract class _xglhc extends PlayStyle {
 
    * */
    */
-  _getWidth(){
-    if(type.contains("tx")){
-      return  20.0;
-    }else if(type.contains('hz')){
+  _getWidth() {
+    if (type.contains("tx")) {
+      return 20.0;
+    } else if (type.contains('hz')) {
       return 40.0;
     }
-    return 60.0 ;
+    return 60.0;
   }
+
   @override
   List<List<int>> toBet2System(int index, int position) {
     /// 长度拦截
-    if (index >= _data.length) return _data;
-    List<int> lis = _data[index];
+    if (index >= data.length) return data;
+    List<int> lis = data[index];
 
     /// 长度拦截
-    if (lis.length <= position) return _data;
+    if (lis.length <= position) return data;
 
     /// 替换属性
     lis[position] = lis[position] == position ? -1 : position;
-    return _data;
+    return data;
   }
 
   @override
@@ -234,10 +218,13 @@ class xglhc_rx extends _xglhc {
       : super(type: type, name: name, desc: desc);
 
   @override
+  // TODO: implement initialCount
+  int get initialCount => 49;
+
+  @override
   void playReset() {
     // TODO: implement playReset
     super.playReset();
-    this._data = initialData(49);
     if (type.contains("bz")) {
       //不中
       if (type.endsWith("5")) {
@@ -265,23 +252,23 @@ class xglhc_rx extends _xglhc {
     } else if (type.contains("xglhc_ws2wl")) //尾数
     {
       zuheCount = 2;
-      this._data = initialData(10);
+      this.data = initialData(10);
     } else if (type.contains("xglhc_ws3wl")) //尾数
     {
       zuheCount = 3;
-      this._data = initialData(10);
+      this.data = initialData(10);
     } else if (type.contains("xglhc_ws4wl")) //尾数
     {
       zuheCount = 4;
-      this._data = initialData(10);
+      this.data = initialData(10);
     }
   }
 
   @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
@@ -289,7 +276,7 @@ class xglhc_rx extends _xglhc {
     var count = 0;
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         count += 1;
         value.add(forceTransform(f));
@@ -332,21 +319,24 @@ class cqssc_hz extends _xglhc {
     } else if (type.contains("sx")) {
       len = 12;
     }
-    this._data = initialData(len);
+    this.data = initialData(len);
   }
 
   @override
+  int get initialCount => len;
+
+  @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
   PlayModelItem transformWithType(PlayModelItem state) {
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         value.add(forceTransform(f));
       }

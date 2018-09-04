@@ -52,6 +52,11 @@ class LotteryInitQueryAction extends StoreAction {
   LotteryInitQueryAction({this.lottery});
 }
 
+class LotteryRandomAction extends StoreAction {
+  final List<PlayModelItem> items;
+  LotteryRandomAction({this.items});
+}
+
 /// 当前游戏玩法的历史开奖记录
 class LotteryInitRecordQueryAction extends StoreAction {
   /// 历史记录

@@ -8,30 +8,8 @@ import 'style.dart';
 ///  十一选五
 @protected
 abstract class _kl10 extends PlayStyle {
-  List<List<int>> _data;
-
   _kl10({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
-
-  List<List<int>> initialData(int len) {
-    return new List.generate(initialType().length, (index) {
-      return new List.generate(len, (i) {
-        return -1;
-      });
-    });
-  }
-
-  @override
-  void playReset() {
-    // TODO: implement playReset
-    super.playReset();
-    _data = initialData(10);
-  }
-
-  @override
-  List<List<int>> initialArray() {
-    return _data;
-  }
 
   @override
   // TODO: implement count
@@ -40,15 +18,15 @@ abstract class _kl10 extends PlayStyle {
   @override
   List<List<int>> toBet2System(int index, int position) {
     /// 长度拦截
-    if (index >= _data.length) return _data;
-    List<int> lis = _data[index];
+    if (index >= data.length) return data;
+    List<int> lis = data[index];
 
     /// 长度拦截
-    if (lis.length <= position) return _data;
+    if (lis.length <= position) return data;
 
     /// 替换属性
     lis[position] = lis[position] == position ? -1 : position;
-    return _data;
+    return data;
   }
 
   @override
@@ -82,7 +60,7 @@ class cqssc_zxfx extends _kl10 {
     state.code = "";
     List<String> value = new List();
     int acount = 1;
-    _data.forEach((item) {
+    data.forEach((item) {
       List<String> choice = new List();
       int _count = 0;
 
@@ -128,10 +106,13 @@ class kl10_rx extends _kl10 {
       : super(type: type, name: name, desc: desc);
 
   @override
+  // TODO: implement initialCount
+  int get initialCount => 12;
+
+  @override
   void playReset() {
     // TODO: implement playReset
     super.playReset();
-    this._data = initialData(12);
     if (type.endsWith("2")) {
       zuheCount = 2;
     } else if (type.endsWith("3")) {
@@ -151,9 +132,9 @@ class kl10_rx extends _kl10 {
 
   @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
@@ -161,7 +142,7 @@ class kl10_rx extends _kl10 {
     var count = 0;
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         count += 1;
         value.add(f.toString());
@@ -205,7 +186,6 @@ class kl10_zux extends _kl10 {
   void playReset() {
     // TODO: implement playReset
     super.playReset();
-    this._data = initialData(12);
     if (type.contains("2")) {
       zuheCount = 2;
     } else if (type.contains("3")) {
@@ -214,10 +194,14 @@ class kl10_zux extends _kl10 {
   }
 
   @override
+  // TODO: implement initialCount
+  int get initialCount => 12;
+
+  @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
@@ -225,7 +209,7 @@ class kl10_zux extends _kl10 {
     var count = 0;
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         count += 1;
         value.add(f.toString());

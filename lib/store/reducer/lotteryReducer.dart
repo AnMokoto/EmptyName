@@ -9,9 +9,13 @@ import 'dart:math';
 @protected
 final List<Reducer<AppState>> betReducer = <Reducer<AppState>>[
   new TypedReducer<AppState, LotterBetQuery>((state, action) {
+    /// 期号过期 重置
+    ///  初始化拉去重置
+
     state.betModel
       ..gameEn = action.gameEn ?? state.betModel.gameEn
       ..expectNo = action.expectNo ?? state.betModel.expectNo;
+
     return state;
   }),
   new TypedReducer<AppState, LotteryClearAction>((state, action) {
@@ -19,6 +23,10 @@ final List<Reducer<AppState>> betReducer = <Reducer<AppState>>[
     state.betModel = new PlayModel();
     state.lottery = new LotteryState();
     return state;
+  }),
+  new TypedReducer<AppState, LotteryRandomAction>((state, action) {
+    state.betModel.content..addAll(action.items);
+    return _initContentWithDetail(state);
   }),
   new TypedReducer<AppState, LotterBetAdd>((state, action) {
     state.betModel.content..add(action.item);

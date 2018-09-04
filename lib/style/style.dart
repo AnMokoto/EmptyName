@@ -2,11 +2,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lowlottery/store/models/playModel.dart';
 export 'package:lowlottery/store/models/playModel.dart';
-import 'dart:isolate';
-import 'dart:async';
+import 'dart:math';
+import 'package:reflectable/reflectable.dart';
+
+class Reflector extends Reflectable {
+  const Reflector()
+      : super(invokingCapability, typingCapability, reflectedTypeCapability);
+}
+
+const reflector = Reflector();
 
 /// 对玩法数据实际操作的工具类
-abstract class PlayStyle extends Object {
+@reflector
+abstract class PlayStyle extends Object with Type {
   /// 玩法样式
   @protected
   String _type;
@@ -45,27 +53,83 @@ abstract class PlayStyle extends Object {
   @protected
   PlayModelItem model;
 
+  @protected
+  List<List<int>> __data;
+
+  List<List<int>> get data => __data;
+  set data(List<List<int>> datas) {
+    this.__data = datas;
+  }
+
   /// 需要结算的数据
   /// 返回传递参数信息
   PlayModelItem get transform => transformWithType(this.model);
 
+  /// 随机数
+  ///
+  /// [nums] 组数个数
+  ///
+  /// @return [List<PlayModelItem>]
   @mustCallSuper
   List<PlayModelItem> randomType(int nums) {
     assert(nums > 0);
 
     List<PlayModelItem> models = new List.generate(nums, (index) {
-      return isRandomType(this);
+      return isRandomType(
+          this,
+          (initialType() == null || initialType().isEmpty)
+              ? 0
+              : Random().nextInt(initialType().length),
+          Random().nextInt(initialCount));
     });
     return models;
   }
 
+  /// 操作对象随机数
+  ///
+  /// [style] 当前持有对象
+  ///
+  /// [index] [position] ignore
+  ///
+  /// @return 自动返回一个对象
+  ///
+  /// * Alse see:
+  ///      1. [playReset]
+  ///      2. [toBet2System]
+  ///      3. [transform]
   @protected
-  PlayModelItem isRandomType(PlayStyle style);
+  PlayModelItem isRandomType(PlayStyle style, int index, int position) {
+    // PlayStyle _style = self(style)
+    //   ..playReset()
+    //   ..toBet2System(index, position);
+    // return _style.transform;
+    InstanceMirror type = reflector.reflect(self(style));
+    type.invoke("playReset", []);
+    type.invoke("toBet2System", [index, position]);
+    return type.invokeGetter("transform");
+  }
+
+  /// 返回当前状态对象
+  ///
+  /// [style] 当前持有对象
+  @protected
+  PlayStyle self(style) => style;
 
   /// 重置选项卡数据
   @mustCallSuper
   void playReset() {
     model = new PlayModelItem()..playEn = this.type;
+    this.__data = initialData(initialCount);
+  }
+
+  /// 初始化基础数据
+  @protected
+  List<List<int>> initialData(int len) {
+    return new List.generate(initialType().length, (index) {
+      return new List.generate(len, (i) {
+        return -1;
+      });
+    });
   }
 
   /// 当前选项是否为可激活状态
@@ -74,6 +138,9 @@ abstract class PlayStyle extends Object {
   /// 业务处理，不对外
   @protected
   PlayModelItem transformWithType(PlayModelItem model);
+
+  /// 对应的每个列表显示的个数
+  int get initialCount => 10;
 
   /// 列表描述
   /// 列表前缀
@@ -84,7 +151,7 @@ abstract class PlayStyle extends Object {
   /// 样式为 `[[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]]` -1即未选中
   /// 前台默认取数据展示就行，不做这块的数据处理
   @protected
-  List<List<int>> initialArray();
+  List<List<int>> initialArray() => __data;
 
   /// 交互操作，对 [initialArray] 的数据进行操作
   /// [index] 列数
@@ -180,35 +247,6 @@ abstract class PlayStyle extends Object {
       ),
     );
   }
-}
-
-class PlayStyleClone extends PlayStyle {
-  final PlayStyle style;
-  PlayStyleClone(this.style);
-
-  @override
-  int get count => style.count;
-
-  @override
-  PlayModelItem transformWithType(PlayModelItem model) {
-    return style.transformWithType(model);
-  }
-
-  @override
-  List<List<int>> toBet2System(int index, int position) {
-    return style.toBet2System(index, position);
-  }
-
-  @override
-  PlayModelItem isRandomType(PlayStyle style) {
-    return null;
-  }
-
-  @override
-  List<String> initialType() => style.initialType();
-
-  @override
-  List<List<int>> initialArray() => style.initialArray();
 }
 
 /// 替换数据格式

@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:lowlottery/store/appStore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lowlottery/conf/LotPlay.dart';
+import 'package:lowlottery/style/index.dart';
 
-/// 立即下注界面
+/// 立即下注界面,号码篮
+@immutable
 class LotteryBetLayer extends StatefulWidget {
+  final PlayStyle style;
+  LotteryBetLayer({this.style});
+
   @override
   _LotteryState createState() => new _LotteryState();
 }
@@ -44,8 +49,8 @@ class _LotteryState extends State<LotteryBetLayer> {
                       slivers: <Widget>[
                         /// header
                         new SliverPersistentHeader(
-                          delegate:
-                              new LotterBetSliverPersistentHeaderDelegate(),
+                          delegate: new LotterBetSliverPersistentHeaderDelegate(
+                              style: widget.style),
                           pinned: false,
                           floating: false,
                         ),
@@ -129,68 +134,67 @@ class _LotteryState extends State<LotteryBetLayer> {
                   builder: (context, model) {
                     var isOffset =
                         model.content == null || model.content.length <= 0;
-                    return  new Container(
-                        height: 55.0,
-                        color: Colors.transparent,
-                        child: new Row(
-                          children: <Widget>[
-                            new Expanded(
-                              child: new Container(
-                                color: Colors.black87,
-                                padding: EdgeInsets.all(5.0),
-                                child: new Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    // new Semantics()
-                                    new SafeArea(
-                                      child: new Text(
-                                        "方案 ${model.zhushu??0}注,${model.money??0}元",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: new TextStyle(
-                                            fontSize: 15.0,
-                                            color: Colors.white),
-                                      ),
+                    return new Container(
+                      height: 55.0,
+                      color: Colors.transparent,
+                      child: new Row(
+                        children: <Widget>[
+                          new Expanded(
+                            child: new Container(
+                              color: Colors.black87,
+                              padding: EdgeInsets.all(5.0),
+                              child: new Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  // new Semantics()
+                                  new SafeArea(
+                                    child: new Text(
+                                      "方案 ${model.zhushu ?? 0}注,${model.money ?? 0}元",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: new TextStyle(
+                                          fontSize: 15.0, color: Colors.white),
                                     ),
+                                  ),
 
-                                    new SafeArea(
-                                      child: new Text(
-                                        "普通投注",
-                                        style: new TextStyle(
-                                            fontSize: 12.0,
-                                            color: Colors.white70),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                  new SafeArea(
+                                    child: new Text(
+                                      "普通投注",
+                                      style: new TextStyle(
+                                          fontSize: 12.0,
+                                          color: Colors.white70),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
-                            new Container(
-                              // color: Colors.red,
-                              constraints: new BoxConstraints(
-                                  minHeight: double.infinity),
-                              child: new RaisedButton(
-                                color: Colors.red,
-                                shape: null,
-                                textColor: Colors.white,
-                                child: new Text(
-                                  "立即投注",
-                                  style: new TextStyle(fontSize: 18.0),
-                                ),
-                                onPressed: () {
-                                  /// 立即投注
-                                  dispatch(
-                                      context,
-                                      new LotterBetRequestAction(
-                                          context, model.toMap()));
-                                },
+                          ),
+                          new Container(
+                            // color: Colors.red,
+                            constraints:
+                                new BoxConstraints(minHeight: double.infinity),
+                            child: new RaisedButton(
+                              color: Colors.red,
+                              shape: null,
+                              textColor: Colors.white,
+                              child: new Text(
+                                "立即投注",
+                                style: new TextStyle(fontSize: 18.0),
                               ),
-                            )
-                          ],
-                        ),
-                      );
+                              onPressed: () {
+                                /// 立即投注
+                                dispatch(
+                                    context,
+                                    new LotterBetRequestAction(
+                                        context, model.toMap()));
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    );
                   },
                   converter: (store) {
                     return store.state.betModel;
@@ -207,6 +211,11 @@ class _LotteryState extends State<LotteryBetLayer> {
 class LotterBetSliverPersistentHeaderDelegate
     extends SliverPersistentHeaderDelegate {
   final List header = ["机选1注", "机选5注", "继续选号"];
+
+  PlayStyle style;
+
+  LotterBetSliverPersistentHeaderDelegate({this.style});
+
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -218,19 +227,29 @@ class LotterBetSliverPersistentHeaderDelegate
         color: Colors.grey[200],
         padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
         child: new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
-            /// 顶部三块
-            children: new List.generate(header.length, (index) {
+          /// 顶部三块
+          children: new List.generate(
+            header.length,
+            (index) {
               return _LotteryBetPress(
-                  title: header[index],
-                  onPress: () {
-                    /// 三块不同的点击事件
-                    if (index == 2) {
-                      Navigator.of(context).pop();
-                    }
-                  });
-            })),
+                title: header[index],
+                onPress: () {
+                  /// 三块不同的点击事件
+                  if (index == 2) {
+                    Navigator.of(context).pop();
+                  } else {
+                    dispatch(
+                        context,
+                        LotteryRandomAction(
+                            items: style.randomType(index == 1 ? 5 : 1)));
+                  }
+                },
+              );
+            },
+          ),
+        ),
       ),
     );
   }

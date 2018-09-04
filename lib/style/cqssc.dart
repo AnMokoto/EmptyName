@@ -2,38 +2,16 @@ import 'style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lowlottery/log.dart';
 import 'ZuheUtil.dart';
-import 'dart:math';
 
 ///  重庆时时彩分类
 @protected
 abstract class _cqssc extends PlayStyle {
-  List<List<int>> _data;
+  // List<List<int>> data;
 
   _cqssc({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
 
-  List<List<int>> initialData(int len) {
-    return new List.generate(initialType().length, (index) {
-      return new List.generate(len, (i) {
-        return -1;
-      });
-    });
-  }
-
   @override
-  void playReset() {
-    // TODO: implement playReset
-    super.playReset();
-    _data = initialData(10);
-  }
-
-  @override
-  List<List<int>> initialArray() {
-    return _data;
-  }
-
-  @override
-  // TODO: implement count
   int get count => 5;
 
   @override
@@ -45,26 +23,17 @@ abstract class _cqssc extends PlayStyle {
   }
 
   @override
-  PlayModelItem isRandomType(PlayStyle style) {
-    // PlayStyle random = style.clone();
-    //////////////////////////////////
-    ////////////Of clone./////////////
-    //////////////////////////////////
-    return null;
-  }
-
-  @override
   List<List<int>> toBet2System(int index, int position) {
     /// 长度拦截
-    if (index >= _data.length) return _data;
-    List<int> lis = _data[index];
+    if (index >= data.length) return data;
+    List<int> lis = data[index];
 
     /// 长度拦截
-    if (lis.length <= position) return _data;
+    if (lis.length <= position) return data;
 
     /// 替换属性
     lis[position] = lis[position] == position ? -1 : position;
-    return _data;
+    return data;
   }
 
   @override
@@ -90,7 +59,7 @@ class cqssc_1xfx extends _cqssc {
     state.code = "";
 
     List<String> value = new List();
-    _data.forEach((item) {
+    data.forEach((item) {
       List<String> choice = new List();
       item.forEach((index) {
         if (index > -1) {
@@ -133,7 +102,7 @@ class cqssc_5xzxfx extends _cqssc {
     state.code = "";
     List<String> value = new List();
     int acount = 1;
-    _data.forEach((item) {
+    data.forEach((item) {
       List<String> choice = new List();
       int _count = 0;
 
@@ -173,7 +142,7 @@ class cqssc_q2fx extends _cqssc {
     state.code = "";
     List<String> value = new List();
     int acount = 1;
-    _data.forEach((item) {
+    data.forEach((item) {
       List<String> choice = new List();
       int _count = 0;
 
@@ -258,15 +227,17 @@ class cqssc_hz extends _cqssc {
   void playReset() {
     // TODO: implement playReset
     super.playReset();
-    this._data = initialData(19);
     this._zhushu = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
   }
 
   @override
+  int get initialCount => 19;
+
+  @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
@@ -274,7 +245,7 @@ class cqssc_hz extends _cqssc {
     var count = 0;
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         count += this._zhushu[f];
         value.add(f.toString());
@@ -305,28 +276,27 @@ class cqssc_zuxfx extends _cqssc {
   int len = 0;
   cqssc_zuxfx(
       {int len, @required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc);
-
-  @override
-  void playReset() {
-    // TODO: implement playReset
-    super.playReset();
-    this._data = initialData(10);
+      : super(type: type, name: name, desc: desc) {
     this.len = len;
   }
 
   @override
+  void playReset() {
+    super.playReset();
+  }
+
+  @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
   PlayModelItem transformWithType(PlayModelItem state) {
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         value.add(f.toString());
       }
@@ -367,16 +337,18 @@ class cqssc_zuxhz extends _cqssc {
   void playReset() {
     // TODO: implement playReset
     super.playReset();
-    this._data = initialData(17);
     if (type.contains("2"))
       this._zhushu = [1, 1, 2, 2, 3, 3, 4, 4, 5, 4, 4, 3, 3, 2, 2, 1, 1];
   }
 
   @override
+  int get initialCount => 17;
+
+  @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
@@ -384,7 +356,7 @@ class cqssc_zuxhz extends _cqssc {
     var count = 0;
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         count += this._zhushu[f];
         value.add(forceTransform(f));
@@ -407,9 +379,8 @@ class cqssc_zuxhz extends _cqssc {
   }
 }
 
-/**
- *前二后二组选包胆
- */
+///前二后二组选包胆
+///todo 包胆起始位置从1开始，需要特殊处理，暂时未处理
 @protected
 class cqssc_zuxbd extends _cqssc {
   @protected
@@ -426,26 +397,24 @@ class cqssc_zuxbd extends _cqssc {
   void playReset() {
     // TODO: implement playReset
     super.playReset();
-    //todo 包胆起始位置从1开始，需要特殊处理，暂时未处理
-    this._data = initialData(10);
   }
 
 //包胆只能选择一位号码
   @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    for (int i = 0; i < _data[0].length; ++i) {
-      _data[0][i] = -1;
+    if (position >= data[0].length) return data;
+    for (int i = 0; i < data[0].length; ++i) {
+      data[0][i] = -1;
     }
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
   PlayModelItem transformWithType(PlayModelItem state) {
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         value.add(f.toString());
       }
@@ -484,17 +453,10 @@ class cqssc_bd1 extends _cqssc {
       : super(type: type, name: name, desc: desc);
 
   @override
-  void playReset() {
-    // TODO: implement playReset
-    super.playReset();
-    this._data = initialData(10);
-  }
-
-  @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
@@ -502,7 +464,7 @@ class cqssc_bd1 extends _cqssc {
     var count = 0;
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         count += 1;
         value.add(f.toString());
@@ -544,7 +506,6 @@ class cqssc_bd2 extends _cqssc {
   void playReset() {
     // TODO: implement playReset
     super.playReset();
-    this._data = initialData(10);
     if (type.endsWith("5xsbd")) {
       zuheCount = 3;
     }
@@ -552,9 +513,9 @@ class cqssc_bd2 extends _cqssc {
 
   @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
@@ -562,7 +523,7 @@ class cqssc_bd2 extends _cqssc {
     var count = 0;
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         count += 1;
         value.add(f.toString());
@@ -605,7 +566,6 @@ class cqssc_kd extends _cqssc {
   void playReset() {
     // TODO: implement playReset
     super.playReset();
-    this._data = initialData(10);
     if (type.contains("2"))
       this._zhushu = [10, 18, 16, 14, 12, 10, 8, 6, 4, 2];
     else if (type.contains("3"))
@@ -614,9 +574,9 @@ class cqssc_kd extends _cqssc {
 
   @override
   List<List<int>> toBet2System(int index, int position) {
-    if (position >= _data[0].length) return _data;
-    _data[0][position] = _data[0][position] == -1 ? position : -1;
-    return _data;
+    if (position >= data[0].length) return data;
+    data[0][position] = data[0][position] == -1 ? position : -1;
+    return data;
   }
 
   @override
@@ -624,7 +584,7 @@ class cqssc_kd extends _cqssc {
     var count = 0;
     state.code = "";
     List<String> value = new List();
-    _data[0].forEach((f) {
+    data[0].forEach((f) {
       if (f > -1) {
         count += this._zhushu[f];
         value.add(f.toString());
@@ -684,11 +644,7 @@ class cqssc_hz3 extends cqssc_hz {
   }
 
   @override
-  void playReset() {
-    // TODO: implement playReset
-    super.playReset();
-    this._data = initialData(28);
-  }
+  int get initialCount => 28;
 }
 
 class Stylessc extends StyleManagerIMPL {

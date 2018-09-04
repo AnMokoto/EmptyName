@@ -363,7 +363,9 @@ class _LotteryState extends State<LotteryLayer> {
                                     Navigator.of(context).push(
                                         new MaterialPageRoute(
                                             builder: (context) =>
-                                                new LotteryBetLayer()));
+                                                new LotteryBetLayer(
+                                                  style: style,
+                                                )));
                                   },
                                 ),
                                 new Positioned(
