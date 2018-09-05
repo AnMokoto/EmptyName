@@ -3,6 +3,7 @@ import 'package:lowlottery/store/appStore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lowlottery/conf/LotPlay.dart';
 import 'package:lowlottery/style/index.dart';
+import 'dart:io';
 
 /// 立即下注界面,号码篮
 @immutable
@@ -221,11 +222,13 @@ class LotterBetSliverPersistentHeaderDelegate
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     // TODO: implement build
     return new SafeArea(
+      minimum: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
       child: new Container(
         ///header
-        constraints: new BoxConstraints.tightFor(),
-        color: Colors.grey[200],
-        padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+        constraints: new BoxConstraints(
+          minHeight: Platform.isIOS ? 50.0 : 0.0,
+        ),
+        color: Colors.transparent,
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
