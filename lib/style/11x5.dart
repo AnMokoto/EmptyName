@@ -8,6 +8,7 @@ import 'package:lowlottery/conf/LotPlay.dart';
 
 ///  十一选五
 @protected
+@reflector
 abstract class _11x5 extends PlayStyle {
   _11x5({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -48,6 +49,7 @@ abstract class _11x5 extends PlayStyle {
  * 直选复选
  */
 @protected
+@reflector
 class cqssc_zxfx extends _11x5 {
   cqssc_zxfx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -96,6 +98,7 @@ class cqssc_zxfx extends _11x5 {
     任选
  */
 @protected
+@reflector
 class gd11x5_rx extends _11x5 {
   @protected
   List<int> _zhushu;
@@ -174,6 +177,7 @@ class gd11x5_rx extends _11x5 {
     组选
  */
 @protected
+@reflector
 class gd11x5_zux extends _11x5 {
   @protected
   List<int> _zhushu;

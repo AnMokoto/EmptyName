@@ -7,6 +7,7 @@ import 'package:lowlottery/conf/LotPlay.dart';
 
 ///  快三
 @protected
+@reflector
 abstract class _k3 extends PlayStyle {
   _k3({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -102,9 +103,10 @@ abstract class _k3 extends PlayStyle {
 }
 
 @protected
-class cqssc_hz extends _k3 {
+@reflector
+class k3_hzs extends _k3 {
   @protected
-  cqssc_hz(
+  k3_hzs(
       {String len, @required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
 
@@ -144,6 +146,7 @@ class cqssc_hz extends _k3 {
 }
 
 @protected
+@reflector
 class k3_thdx extends _k3 {
   @protected
   k3_thdx(
@@ -189,6 +192,7 @@ class k3_thdx extends _k3 {
  * 3不同号 , 2不同号
  */
 @protected
+@reflector
 class k3_buthdx extends _k3 {
   @protected
   int numCount = 3;
@@ -241,6 +245,7 @@ class k3_buthdx extends _k3 {
 }
 
 @protected
+@reflector
 class k3_thtx extends _k3 {
   @protected
   k3_thtx(
@@ -289,8 +294,13 @@ class Stylek3 extends StyleManagerIMPL {
     return const Stylek3();
   }
 
-  PlayStyle get k3_hz => cqssc_hz(
-      type: "k3_hz", name: LotPlayConfig.getName("k3_hz"), desc: "特码直选");
+  // external
+  factory Stylek3.from() {
+    return const Stylek3();
+  }
+
+  PlayStyle get k3_hz =>
+      k3_hzs(type: "k3_hz", name: LotPlayConfig.getName("k3_hz"), desc: "特码直选");
   PlayStyle get k3_3thdx => k3_thdx(
       type: "k3_3thdx", name: LotPlayConfig.getName("k3_3thdx"), desc: "正1特码");
   PlayStyle get k3_3bth => k3_buthdx(

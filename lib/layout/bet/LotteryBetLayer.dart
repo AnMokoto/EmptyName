@@ -208,13 +208,13 @@ class _LotteryState extends State<LotteryBetLayer> {
 }
 
 /// 顶部操作按钮 悬浮
+@immutable
 class LotterBetSliverPersistentHeaderDelegate
     extends SliverPersistentHeaderDelegate {
   final List header = ["机选1注", "机选5注", "继续选号"];
 
-  PlayStyle style;
-
-  LotterBetSliverPersistentHeaderDelegate({this.style});
+  final PlayStyle style;
+  LotterBetSliverPersistentHeaderDelegate({this.style}) : assert(style != null);
 
   @override
   Widget build(

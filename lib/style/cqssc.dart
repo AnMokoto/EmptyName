@@ -44,6 +44,7 @@ abstract class _cqssc extends PlayStyle {
 }
 
 @protected
+@reflector
 class cqssc_1xfx extends _cqssc {
   cqssc_1xfx() : super(type: "ssc_1xfx", desc: "1星复选", name: "1星复选");
 
@@ -84,6 +85,7 @@ class cqssc_1xfx extends _cqssc {
 }
 
 @protected
+@reflector
 class cqssc_5xzxfx extends _cqssc {
   cqssc_5xzxfx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -128,6 +130,7 @@ class cqssc_5xzxfx extends _cqssc {
 }
 
 @protected
+@reflector
 class cqssc_q2fx extends _cqssc {
   cqssc_q2fx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -171,6 +174,7 @@ class cqssc_q2fx extends _cqssc {
 }
 
 @protected
+@reflector
 class cqssc_h2fx extends cqssc_q2fx {
   cqssc_h2fx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -182,6 +186,7 @@ class cqssc_h2fx extends cqssc_q2fx {
 }
 
 @protected
+@reflector
 class cqssc_q3fx extends cqssc_q2fx {
   cqssc_q3fx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -193,6 +198,7 @@ class cqssc_q3fx extends cqssc_q2fx {
 }
 
 @protected
+@reflector
 class cqssc_h3fx extends cqssc_h2fx {
   cqssc_h3fx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -204,6 +210,7 @@ class cqssc_h3fx extends cqssc_h2fx {
 }
 
 @protected
+@reflector
 class cqssc_z3fx extends cqssc_h2fx {
   cqssc_z3fx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -215,6 +222,7 @@ class cqssc_z3fx extends cqssc_h2fx {
 }
 
 @protected
+@reflector
 class cqssc_hz extends _cqssc {
   @protected
   List<int> _zhushu;
@@ -271,6 +279,7 @@ class cqssc_hz extends _cqssc {
  * 前二后二组选复选
  */
 @protected
+@reflector
 class cqssc_zuxfx extends _cqssc {
   @protected
   int len = 0;
@@ -322,6 +331,7 @@ class cqssc_zuxfx extends _cqssc {
  *前二后二组选和值
  */
 @protected
+@reflector
 class cqssc_zuxhz extends _cqssc {
   @protected
   List<int> _zhushu;
@@ -382,6 +392,7 @@ class cqssc_zuxhz extends _cqssc {
 ///前二后二组选包胆
 ///todo 包胆起始位置从1开始，需要特殊处理，暂时未处理
 @protected
+@reflector
 class cqssc_zuxbd extends _cqssc {
   @protected
   List<int> _zhushu;
@@ -441,6 +452,7 @@ class cqssc_zuxbd extends _cqssc {
  *  一不定
  */
 @protected
+@reflector
 class cqssc_bd1 extends _cqssc {
   @protected
   List<int> _zhushu;
@@ -491,6 +503,7 @@ class cqssc_bd1 extends _cqssc {
  *  二不定，三不定
  */
 @protected
+@reflector
 class cqssc_bd2 extends _cqssc {
   @protected
   List<int> _zhushu;
@@ -551,6 +564,7 @@ class cqssc_bd2 extends _cqssc {
  * 前二后二,前三中三后三 跨度
  */
 @protected
+@reflector
 class cqssc_kd extends _cqssc {
   @protected
   List<int> _zhushu;
@@ -608,6 +622,7 @@ class cqssc_kd extends _cqssc {
 }
 
 @protected
+@reflector
 class cqssc_hz3 extends cqssc_hz {
   cqssc_hz3({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc) {
@@ -654,6 +669,8 @@ class Stylessc extends StyleManagerIMPL {
     return const Stylessc();
 //    return   const Style();
   }
+
+  external factory Stylessc.from();
 
   PlayStyle get cqssc1xfx => cqssc_1xfx();
 

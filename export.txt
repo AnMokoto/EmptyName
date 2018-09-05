@@ -17,3 +17,7 @@ ssh-add ~/.ssh/id_rsa
 
 #  aa
 NmnhGG@qw
+
+
+# reflect
+flutter packages pub run tools/builder.dart lib/main.dart

@@ -8,6 +8,7 @@ import 'style.dart';
 
 ///  香港六合彩
 @protected
+@reflector
 abstract class _xglhc extends PlayStyle {
   _xglhc({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -205,6 +206,7 @@ abstract class _xglhc extends PlayStyle {
     任选
  */
 @protected
+@reflector
 class xglhc_rx extends _xglhc {
   @protected
   List<int> _zhushu;
@@ -301,6 +303,7 @@ class xglhc_rx extends _xglhc {
 }
 
 @protected
+@reflector
 class cqssc_hz extends _xglhc {
   @protected
   int len = 49;

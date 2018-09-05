@@ -7,6 +7,7 @@ import 'style.dart';
 
 ///  十一选五
 @protected
+@reflector
 abstract class _kl10 extends PlayStyle {
   _kl10({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -45,6 +46,7 @@ abstract class _kl10 extends PlayStyle {
  * 直选复选
  */
 @protected
+@reflector
 class cqssc_zxfx extends _kl10 {
   cqssc_zxfx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -93,6 +95,7 @@ class cqssc_zxfx extends _kl10 {
     任选
  */
 @protected
+@reflector
 class kl10_rx extends _kl10 {
   @protected
   List<int> _zhushu;
@@ -170,6 +173,7 @@ class kl10_rx extends _kl10 {
     组选
  */
 @protected
+@reflector
 class kl10_zux extends _kl10 {
   @protected
   List<int> _zhushu;

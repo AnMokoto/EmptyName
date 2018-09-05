@@ -14,7 +14,7 @@ const reflector = Reflector();
 
 /// 对玩法数据实际操作的工具类
 @reflector
-abstract class PlayStyle extends Object with Type {
+abstract class PlayStyle extends Object {
   /// 玩法样式
   @protected
   String _type;
@@ -105,8 +105,23 @@ abstract class PlayStyle extends Object with Type {
     // return _style.transform;
     InstanceMirror type = reflector.reflect(self(style));
     type.invoke("playReset", []);
-    type.invoke("toBet2System", [index, position]);
-    return type.invokeGetter("transform");
+    //type.invoke("toBet2System", _ramdon());
+    PlayModelItem item = type.invokeGetter("transform");
+    while (item.zhushu <= 0) {
+      type.invoke("toBet2System", _ramdon());
+      item = type.invokeGetter("transform");
+    }
+    return item;
+  }
+
+  @protected
+  List<dynamic> _ramdon() {
+    return [
+      (initialType() == null || initialType().isEmpty)
+          ? 0
+          : Random().nextInt(initialType().length),
+      Random().nextInt(initialCount)
+    ];
   }
 
   /// 返回当前状态对象

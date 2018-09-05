@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lowlottery/layout/splash/SplashLayer.dart';
 import 'package:lowlottery/layout/home/HomeLayer.dart';
 import 'package:lowlottery/store/appStore.dart';
+import 'main.reflectable.dart';
 
 void main() {
+  initializeReflectable();
   runApp(new MyApp(store: appStore));
 }
 

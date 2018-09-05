@@ -7,6 +7,7 @@ import 'style.dart';
 
 ///  北京快车
 @protected
+@reflector
 abstract class _pk10 extends PlayStyle {
   _pk10({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -81,6 +82,7 @@ abstract class _pk10 extends PlayStyle {
 }
 
 @protected
+@reflector
 class cqssc_hz extends _pk10 {
   @protected
   cqssc_hz(
@@ -127,6 +129,7 @@ class cqssc_hz extends _pk10 {
     猜冠军到猜前五
  */
 @protected
+@reflector
 class cqssc_zxfx extends _pk10 {
   cqssc_zxfx({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -179,6 +182,7 @@ class cqssc_zxfx extends _pk10 {
  * 定位胆
  */
 @protected
+@reflector
 class pk10_dwd extends _pk10 {
   pk10_dwd({@required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
