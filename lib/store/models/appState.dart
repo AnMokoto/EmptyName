@@ -10,7 +10,7 @@ import 'TradeModel.dart';
 import 'MessageModel.dart';
 
 const price = 2.0;
-const dynamic HOST_NAME = "http://178.128.21.119:10003/";
+const dynamic HOST_NAME = "http://178.128.21.119:9002/";
 
 const dynamic REQUEST_HEAD = {
   "Content-Type": "application/json",
