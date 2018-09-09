@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lowlottery/conf/Pk10Color.dart';
 import 'package:lowlottery/conf/XglhcColor.dart';
-
+import 'package:lowlottery/font/index.dart';
 class OpenCode {
   static Container opencode(String gameEn, var _str, int index) {
     if (gameEn == 'pk10') {
@@ -9,6 +9,9 @@ class OpenCode {
     }
     if (gameEn == 'xglhc') {
       return _xglhc(_str, index);
+    }
+if (gameEn.contains( 'k3')) {
+//      return _k3(_str, index);
     }
 
     return _common(_str, index);
@@ -76,6 +79,33 @@ class OpenCode {
           textAlign: TextAlign.center,
           textDirection: TextDirection.ltr,
         ),
+      ),
+    );
+  }static Container _k3(_str, int index) {
+    var icon = AppIcons.shaizi1 ;
+    var va = _str[index] ;
+    if(va == '2'){
+      icon = AppIcons.shaizi2 ;
+    }else if(va == '3'){
+      icon = AppIcons.shaizi3 ;
+    }else if(va == '4'){
+      icon = AppIcons.shaizi4 ;
+    }else if(va == '5'){
+      icon = AppIcons.shaizi5 ;
+    }else if(va == '6'){
+      icon = AppIcons.shaizi6 ;
+    }
+    return new Container(
+      /*constraints: BoxConstraints(
+        maxHeight: 70.0,
+        minWidth: 70.0,
+        minHeight: 70.0,
+        maxWidth: 70.0,
+      ),*/
+//      padding: EdgeInsets.all(10.0),
+      child: new FittedBox(
+          fit: BoxFit.fill,
+          child: Icon(icon, color: Colors.red),
       ),
     );
   }

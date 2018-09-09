@@ -17,6 +17,7 @@ class LotIcon {
     if (gameEn.contains("ssc5")) return Colors.deepOrange;
     if (gameEn.contains("ssc3")) return Colors.red;
     if (gameEn.contains("ssc1")) return Colors.redAccent[100];
+    if (gameEn.contains("txssc")) return Colors.red;
     if (gameEn.contains("ssc")) return Colors.orange;
     if (gameEn.contains("kl10")) return Colors.deepPurple;
     if (gameEn.contains("11x5")) return Colors.pinkAccent;

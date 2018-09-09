@@ -25,6 +25,12 @@ class AppIcons {
   static IconData caishen = IconData(0xe634, fontFamily: "Alibaba");
 //  暂无数据
   static IconData nodata = IconData(0xe734, fontFamily: "Alibaba");
+  static IconData shaizi1 = IconData(0xe63b, fontFamily: "Alibaba");
+  static IconData shaizi2 = IconData(0xe63c, fontFamily: "Alibaba");
+  static IconData shaizi3 = IconData(0xe63d, fontFamily: "Alibaba");
+  static IconData shaizi4 = IconData(0xe63f, fontFamily: "Alibaba");
+  static IconData shaizi5 = IconData(0xe63e, fontFamily: "Alibaba");
+  static IconData shaizi6 = IconData(0xe640, fontFamily: "Alibaba");
 
   static IconData from(int codePoint) =>
       IconData(codePoint, fontFamily: "Alibaba");
@@ -39,9 +45,10 @@ class AppIcons {
    * 获取彩种logo
    */
   static IconData getLot(String gameEn) {
-    if (gameEn.contains("ssc5")) return IconData(0xe609, fontFamily: "Alibaba");
-    if (gameEn.contains("ssc3")) return IconData(0xe610, fontFamily: "Alibaba");
-    if (gameEn.contains("ssc1")) return IconData(0xe611, fontFamily: "Alibaba");
+    if (gameEn.contains("ssc5")) return IconData(0xe639, fontFamily: "Alibaba");
+    if (gameEn.contains("ssc3")) return IconData(0xe638, fontFamily: "Alibaba");
+    if (gameEn.contains("ssc1")) return IconData(0xe637, fontFamily: "Alibaba");
+    if (gameEn.contains("txssc")) return IconData(0xe685, fontFamily: "Alibaba");
     if (gameEn.contains("ssc")) return IconData(0xe606, fontFamily: "Alibaba");
     if (gameEn.contains("kl10")) return IconData(0xe603, fontFamily: "Alibaba");
     if (gameEn.contains("11x5")) return IconData(0xe605, fontFamily: "Alibaba");
