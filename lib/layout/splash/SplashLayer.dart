@@ -61,7 +61,7 @@ class SplashState extends State<SplashLayer>
     return new FadeTransition(
       opacity: animation,
       child: new Image.asset(
-        "assets/images/app_back.png",
+        "assets/images/app_splash.png",
         fit: BoxFit.cover,
       ),
     );
