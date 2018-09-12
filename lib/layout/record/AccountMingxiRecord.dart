@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lowlottery/store/appStore.dart';
-
+import 'RedUtil.dart';
 /**
  * 账户明细
  */
@@ -115,18 +115,13 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                                         new Positioned(
                                           right: 0.0,
                                           bottom: 0.0,
-                                          child: new Text(
-                                            "${value["moneyStr"] ?? "-"}元",
-                                            style: new TextStyle(
-
-                                                ),
-                                          ),
+                                          child: RedUtil.buildTextBool("${value['moneyStr']}", "${value['viewType']}")
                                         ),
                                         new Positioned(
                                           left: 0.0,
                                           bottom: 0.0,
-                                          child: new Text("${value["desc"] ?? "-"}",
-                                              style: new TextStyle( )),
+                                          child: RedUtil.buildTextBool("${value['desc']}", "${value['viewType']}")
+                                          ,
                                         )
                                       ],
                                     ),

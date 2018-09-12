@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lowlottery/conf/Lot.dart';
 import 'package:lowlottery/conf/LotIcon.dart';
 import 'package:lowlottery/store/appStore.dart';
-
+import 'RedUtil.dart';
 class LotterBetRecordLayer extends StatefulWidget {
   _LotterBetRecordState createState() => new _LotterBetRecordState();
 }
@@ -146,12 +146,7 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                                         new Positioned(
                                           left: 0.0,
                                           top: 0.0,
-                                          child: new Text(
-                                            "${value["statusDesc"] ?? "-"}",
-                                            style: new TextStyle(
-                                              color: Colors.red,
-                                            ),
-                                          ),
+                                          child: RedUtil.buildText("${value['statusDesc']}", "${value['isRed']}")
                                         ),
                                         new Positioned(
                                           right: 0.0,
@@ -277,12 +272,7 @@ class _LotteryBetRecordDetailsState extends State<LotteryBetRecordDetails> {
                         ),
                         new Positioned(
                           right: 0.0,
-                          child: new Text(
-                            "${_map["awardDesc"] ?? "未中奖"}",
-                            style: new TextStyle(
-                              color: Colors.red,
-                            ),
-                          ),
+                          child:RedUtil.buildText("${_map['awardDesc']}", "${_map['isRed']}")
                         ),
                       ],
                     ),

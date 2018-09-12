@@ -7,7 +7,7 @@ class OpenCode {
     if (gameEn == 'pk10') {
       return _pk10(_str, index);
     }
-    if (gameEn == 'xglhc') {
+    if (gameEn.contains('xglhc')) {
       return _xglhc(_str, index);
     }
 if (gameEn.contains( 'k3')) {
