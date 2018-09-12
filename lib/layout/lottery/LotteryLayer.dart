@@ -515,7 +515,7 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
   @override
   Widget build(BuildContext context) {
     var headStyle = const TextStyle(
-      fontSize: 15.0,
+      fontSize: 12.0,
       color: Colors.black26,
     );
     var style = widget.style;
@@ -655,7 +655,10 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
 
                         time,
 
-                        style: headStyle,
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black26,
+                        ),
                       ),
                     ),
 
