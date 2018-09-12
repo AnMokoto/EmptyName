@@ -11,6 +11,7 @@ import 'lotteryMiddleware.dart';
 import 'homeMiddleware.dart';
 import 'tradeMiddleware.dart';
 import 'messageMiddleware.dart';
+import 'paywayMiddleware.dart';
 part 'middleware.dart';
 
 /// 不动
@@ -23,6 +24,7 @@ List<Middleware<AppState>> appMiddleware() => _appMiddleware;
 final List<Middleware<AppState>> _appMiddleware = <Middleware<AppState>>[
   AppMiddleware.from()
 ]
+  ..addAll(paywayMiddleware)
   ..addAll(userMiddleware)
   ..addAll(userXMiddleware)
   ..addAll(lotterMiddleware)

@@ -57,4 +57,10 @@ class AppIcons {
     if (gameEn.contains("pk10")) return IconData(0xe604, fontFamily: "Alibaba");
     if (gameEn.contains("k3")) return IconData(0xe607, fontFamily: "Alibaba");
   }
+
+  static IconData getPay(String gameEn) {
+    if (gameEn.contains("alipay")) return IconData(0xe684, fontFamily: "Alibaba");
+    if (gameEn.contains("weixin")) return IconData(0xe751, fontFamily: "Alibaba");
+    if (gameEn.contains("qq")) return IconData(0xe641, fontFamily: "Alibaba");
+  }
 }

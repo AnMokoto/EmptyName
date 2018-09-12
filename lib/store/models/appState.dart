@@ -30,8 +30,10 @@ class AppState {
   LotteryRecord record;
   HomeModel homeModel;
   HttpRetrofit httpRetrofit;
+  PaywayModel paywayModel ;
 
   AppState() {
+    this.paywayModel =new PaywayModel() ;
     this.opencodeModel = new OpencodeModel();
     this.homeModel = HomeModel();
     this.lottery = new LotteryState();

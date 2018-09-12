@@ -12,7 +12,7 @@ import 'package:lowlottery/layout/record/AccountMingxiRecord.dart';
 import 'package:lowlottery/layout/record/MessageRecord.dart';
 import 'package:lowlottery/store/AppStore.dart';
 import 'package:lowlottery/style/k3.dart';
-
+import 'package:lowlottery/layout/recharge/Chongzhiqudao.dart';
 class MineLayer extends StatefulWidget {
   _MineState createState() => new _MineState();
 }
@@ -150,11 +150,7 @@ class _MineState extends State<MineLayer>
                                                 Navigator.of(context).push(
                                                     new MaterialPageRoute(
                                                         builder: (context) =>
-                                                            new LotteryBetLayer(
-                                                              style:
-                                                                  Stylek3.from()
-                                                                      .k3_3bth,
-                                                            )));
+                                                            new ChongzhiqudaoLayer()));
                                               },
                                             ),
                                           ),
