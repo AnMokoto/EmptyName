@@ -8,7 +8,9 @@ import 'package:lowlottery/conf/PayIcon.dart';
 class WithdwarLayer extends StatefulWidget {
 //  final Map<String ,dynamic> data ;
 
-  WithdwarLayer();
+  double totalMoney ;
+  int ketixian ;
+  WithdwarLayer({this.ketixian ,this.totalMoney});
 
   _LotterBetRecordState createState() => new _LotterBetRecordState();
 }
@@ -18,6 +20,7 @@ class _LotterBetRecordState extends State<WithdwarLayer>
   final titles = [
     "全部",
   ];
+
 
   @protected
   TabController _tabController;
@@ -51,7 +54,7 @@ class _LotterBetRecordState extends State<WithdwarLayer>
                 controller: _tabController,
                 children: titles.map((s) {
                   /// 待增加回退清除
-                  return new LotterBetRecorderFragLayer();
+                  return new LotterBetRecorderFragLayer(ketixian: widget.ketixian,totalMoney: widget.totalMoney,);
                 }).toList(),
               ),
             )
@@ -64,8 +67,11 @@ class _LotterBetRecordState extends State<WithdwarLayer>
 
 /// index Fragment
 class LotterBetRecorderFragLayer extends StatefulWidget {
-  LotterBetRecorderFragLayer();
 
+  double totalMoney ;
+  int ketixian ;
+
+  LotterBetRecorderFragLayer({this.ketixian ,this.totalMoney});
   @override
   _LotterBetRecorderFragState createState() =>
       new _LotterBetRecorderFragState();
@@ -109,14 +115,14 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                     child: new Container(
                         color: Colors.grey[100],
                         child: new ListTile(
-                          title: new Text("账户余额： 1. 截屏保存二维码"),
+                          title: new Text("账户余额： ${widget.totalMoney}"),
                         ))),
                 new Padding(
                     padding: new EdgeInsets.all(0.0),
                     child: new Container(
                         color: Colors.grey[100],
                         child: new ListTile(
-                          title: new Text("可提金额： 1. 截屏保存二维码"),
+                          title: new Text("可提金额： ${widget.ketixian}"),
                         ))),
                 new Padding(
                     padding: new EdgeInsets.all(0.0),

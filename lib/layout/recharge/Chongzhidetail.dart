@@ -154,12 +154,12 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
 //                    print("the username is" + _userNameController.text);
 //                    print("the pass is" + _userPassController.text);
                     StoreProvider.of<AppState>(context).dispatch(
-                      new LoginRequestAction(
+                      new RechargeRequestAction(
                         context,
                         {
 //                          "username": _userNameController.text,
                           "en": widget.en,
-                          "money": "",
+                          "amount": "3.0",
                         },
                       ),
                     );

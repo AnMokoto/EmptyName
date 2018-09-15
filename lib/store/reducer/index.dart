@@ -25,6 +25,7 @@ final _reducer = combineReducers<AppState>(_list);
 //// 增加了在这里 `..addAll()`
 @protected
 final List<Reducer<AppState>> _list = <Reducer<AppState>>[]
+  ..addAll(rechargeReducer)
   ..addAll(tradeReducer)
   ..addAll(messageReducer)
   ..addAll(opencodeReducer)

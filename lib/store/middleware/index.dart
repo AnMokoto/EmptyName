@@ -32,6 +32,7 @@ final List<Middleware<AppState>> _appMiddleware = <Middleware<AppState>>[
   ..addAll(betMiddleware)
   ..addAll(recordMiddleware)
   ..addAll(tradeMiddleware)
+  ..addAll(rechargeMiddleware)
   ..addAll(messageMiddleware)
   ..addAll(homeMiddleware)
   ..addAll(httpMiddleware);

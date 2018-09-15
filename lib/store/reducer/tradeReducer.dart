@@ -10,3 +10,10 @@ final List<Reducer<AppState>> tradeReducer = <Reducer<AppState>>[
   }),
 
 ];
+final List<Reducer<AppState>> rechargeReducer = <Reducer<AppState>>[
+  new TypedReducer<AppState, RechargeResponseAction>((state, action) {
+//    state.tradeModel.list  = action.model;
+    return state;
+  }),
+
+];

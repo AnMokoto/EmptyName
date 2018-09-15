@@ -198,7 +198,9 @@ class _MineState extends State<MineLayer>
                                                 Navigator.of(context).push(
                                                     new MaterialPageRoute(
                                                         builder: (context) =>
-                                                            new WithdwarLayer()));
+                                                            new WithdwarLayer(ketixian: double.parse( "${state.withdrawable}").toInt(),
+                                                             totalMoney: double.parse( "${state.withdrawable}") + double.parse("${state.totalBalance}")
+                                                            )));
                                               },
                                             ),
                                           ),

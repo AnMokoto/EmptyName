@@ -320,7 +320,7 @@ class _LotteryBetRecordDetailsState extends State<LotteryBetRecordDetails> {
                   ),
                   new Container(
                     padding: EdgeInsets.all(10.0),
-                    child: new Text("投注时间：${_map["createTime"] ?? ""}"),
+                    child: new Text("投注时间：${_map["createTimeStr"] ?? ""}"),
                   ),
                   new Container(
                     padding: EdgeInsets.all(10.0),

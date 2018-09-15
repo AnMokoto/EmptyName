@@ -16,12 +16,12 @@ class TradeResponseAction extends StoreAction {
   TradeResponseAction(this.model);
 }
 
-class RechargeAction extends HttpStoreAction {
-  RechargeAction(BuildContext context, Map<String, dynamic> body)
+class RechargeRequestAction extends HttpStoreAction {
+  RechargeRequestAction(BuildContext context, Map<String, dynamic> body)
       : super(context: context, body: body);
 
   @override
-  String get path => "trade/record";
+  String get path => "trade/applyRecharge";
 }
 
 class RechargeResponseAction extends StoreAction {
