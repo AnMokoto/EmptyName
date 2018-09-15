@@ -17,3 +17,11 @@ final List<Reducer<AppState>> withdrawReducer = <Reducer<AppState>>[
   }),
 
 ];
+
+final List<Reducer<AppState>> cardReducer = <Reducer<AppState>>[
+  new TypedReducer<AppState, CardResponseAction>((state, action) {
+//    state.withdrawMoel.list  = action.model;
+    return state;
+  }),
+
+];

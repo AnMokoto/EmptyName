@@ -37,3 +37,19 @@ final withdrawlMiddleware = <Middleware<AppState>>[
     next(action);
   }),
 ];
+final cardMiddleware = <Middleware<AppState>>[
+  new TypedMiddleware<AppState, CardRequestAction>(
+      (store, action, NextDispatcher next) async {
+    next(HttpProgressAction(action.context, true));
+    var api = store.state.httpRetrofit;
+    var response = await api.post(path: action.path, body: action.body);
+    transform(response, next).then((value) {
+      print("${action.path}-------$value");
+      if (!(value is Exception)) {
+        next(CardResponseAction(value));
+      }
+    });
+    next(HttpProgressAction(action.context, false));
+    next(action);
+  }),
+];

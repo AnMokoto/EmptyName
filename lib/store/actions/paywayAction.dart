@@ -28,3 +28,16 @@ class WithdrawResponseAction extends StoreAction {
 
   WithdrawResponseAction(this.model);
 }
+class CardRequestAction extends HttpStoreAction {
+  CardRequestAction(BuildContext context, Map<String, dynamic> body)
+      : super(context: context, body: body);
+
+  @override
+  String get path => "addCard";
+}
+
+class CardResponseAction extends StoreAction {
+  List<dynamic> model;
+
+  CardResponseAction(this.model);
+}

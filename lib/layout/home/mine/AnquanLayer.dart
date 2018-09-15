@@ -5,7 +5,9 @@ import 'package:flutter/widgets.dart';
 import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/store/AppStore.dart';
 import 'package:lowlottery/store/appStore.dart';
-
+import 'CardLayer.dart';
+import 'AlipayLayer.dart';
+import 'ModifyPwdLayer.dart';
 class AnquanLayer extends StatefulWidget {
   AnquanLayer();
 
@@ -134,11 +136,11 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
             new Container(
               color: Colors.grey[100],
               child: new ListTile(
-                /*onTap: () {
+                onTap: () {
                   Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new LotterBetRecordLayer(),
+                    builder: (context) => new ModefyPwdLayer(),
                   ));
-                },*/
+                },
                 leading: Icon(AppIcons.pwd, color: Colors.grey),
                 title: new Text("修改登录密码"),
                 trailing: Icon(Icons.navigate_next),
@@ -176,11 +178,24 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
               color: Colors.grey[100],
 //            margin: EdgeInsets.only(top: 10.0),
               child: new ListTile(
-                /*onTap: () {
+                onTap: () {
                   Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new MessageLayer(),
+                    builder: (context) => new AlipayLayer(),
                   ));
-                },*/
+                },
+                leading: Icon(AppIcons.alipay, color: Colors.grey),
+                title: new Text("绑定支付宝,提现到支付宝"),
+                trailing: Icon(Icons.navigate_next),
+              ),
+            ),new Container(
+              color: Colors.grey[100],
+//            margin: EdgeInsets.only(top: 10.0),
+              child: new ListTile(
+                onTap: () {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) => new CardLayer(),
+                  ));
+                },
                 leading: Icon(AppIcons.chongzhi, color: Colors.grey),
                 title: new Text("银行卡管理"),
                 trailing: Icon(Icons.navigate_next),

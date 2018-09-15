@@ -36,4 +36,5 @@ final List<Reducer<AppState>> _list = <Reducer<AppState>>[]
   ..addAll(recordReducer)
   ..addAll(paywayReducer)
   ..addAll(withdrawReducer)
+  ..addAll(cardReducer)
   ..addAll(homeReducer);

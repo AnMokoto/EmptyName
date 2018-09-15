@@ -34,6 +34,9 @@ class AppIcons {
   static IconData anquan = IconData(0xe644, fontFamily: "Alibaba");
   static IconData phone = IconData(0xe645, fontFamily: "Alibaba");
   static IconData pwd = IconData(0xe610, fontFamily: "Alibaba");
+  static IconData alipay = IconData(0xe684, fontFamily: "Alibaba");
+  static IconData weixin =  IconData(0xe751, fontFamily: "Alibaba");
+  static IconData qq = IconData(0xe641, fontFamily: "Alibaba");
 
   static IconData from(int codePoint) =>
       IconData(codePoint, fontFamily: "Alibaba");
@@ -62,8 +65,8 @@ class AppIcons {
   }
 
   static IconData getPay(String gameEn) {
-    if (gameEn.contains("alipay")) return IconData(0xe684, fontFamily: "Alibaba");
-    if (gameEn.contains("weixin")) return IconData(0xe751, fontFamily: "Alibaba");
-    if (gameEn.contains("qq")) return IconData(0xe641, fontFamily: "Alibaba");
+    if (gameEn.contains("alipay")) alipay;
+    if (gameEn.contains("weixin")) weixin;
+    if (gameEn.contains("qq")) qq;
   }
 }
