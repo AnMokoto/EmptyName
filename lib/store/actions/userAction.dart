@@ -76,3 +76,4 @@ class UserResponseBalanceAction extends StoreAction {
   dynamic value;
   UserResponseBalanceAction({this.value});
 }
+

@@ -107,10 +107,10 @@ class _LoginPageState extends State<ModefyPwdLayer> {
                         print("the username is" + _userNameController.text);
                         print("the pass is" + _userPassController.text);
                         StoreProvider.of<AppState>(context)
-                            .dispatch(new CardRequestAction(context, {
-                          "code": _userNameController.text,
-                          "realName": _userPassController.text,
-                          "cardType": 'alipay'
+                            .dispatch(new ModifyPwdRequestAction(context, {
+//                          "password": _userNameController.text,
+                          "val": _userPassController.text,
+                          "key": 'password'
                         }));
                       },
                       child: new Text(

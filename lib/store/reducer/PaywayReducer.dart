@@ -25,3 +25,11 @@ final List<Reducer<AppState>> cardReducer = <Reducer<AppState>>[
   }),
 
 ];
+
+final List<Reducer<AppState>> modifyPwdReducer = <Reducer<AppState>>[
+  new TypedReducer<AppState, ModifyPwdResponseAction>((state, action) {
+//    state.withdrawMoel.list  = action.model;
+    return state;
+  }),
+
+];

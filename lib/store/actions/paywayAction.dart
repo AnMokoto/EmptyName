@@ -41,3 +41,17 @@ class CardResponseAction extends StoreAction {
 
   CardResponseAction(this.model);
 }
+
+class ModifyPwdRequestAction extends HttpStoreAction {
+  ModifyPwdRequestAction(BuildContext context, Map<String, dynamic> body)
+      : super(context: context, body: body);
+
+  @override
+  String get path => "modifyUser";
+}
+
+class ModifyPwdResponseAction extends StoreAction {
+  List<dynamic> model;
+
+  ModifyPwdResponseAction(this.model);
+}
