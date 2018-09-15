@@ -34,4 +34,5 @@ final List<Reducer<AppState>> _list = <Reducer<AppState>>[]
   ..addAll(lotteryReducer)
   ..addAll(recordReducer)
   ..addAll(paywayReducer)
+  ..addAll(withdrawReducer)
   ..addAll(homeReducer);

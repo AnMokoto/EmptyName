@@ -15,3 +15,16 @@ class PaywayResponseAction extends StoreAction {
 
   PaywayResponseAction(this.model);
 }
+class WithrawRequestAction extends HttpStoreAction {
+  WithrawRequestAction(BuildContext context, Map<String, dynamic> body)
+      : super(context: context, body: body);
+
+  @override
+  String get path => "trade/applyWithdraw";
+}
+
+class WithdrawResponseAction extends StoreAction {
+  List<dynamic> model;
+
+  WithdrawResponseAction(this.model);
+}

@@ -10,3 +10,10 @@ final List<Reducer<AppState>> paywayReducer = <Reducer<AppState>>[
   }),
 
 ];
+final List<Reducer<AppState>> withdrawReducer = <Reducer<AppState>>[
+  new TypedReducer<AppState, WithdrawResponseAction>((state, action) {
+//    state.withdrawMoel.list  = action.model;
+    return state;
+  }),
+
+];

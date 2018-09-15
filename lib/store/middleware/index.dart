@@ -25,6 +25,7 @@ final List<Middleware<AppState>> _appMiddleware = <Middleware<AppState>>[
   AppMiddleware.from()
 ]
   ..addAll(paywayMiddleware)
+  ..addAll(withdrawlMiddleware)
   ..addAll(userMiddleware)
   ..addAll(userXMiddleware)
   ..addAll(lotterMiddleware)
