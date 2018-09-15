@@ -14,6 +14,7 @@ import 'package:lowlottery/store/AppStore.dart';
 import 'package:lowlottery/style/k3.dart';
 import 'package:lowlottery/layout/recharge/Chongzhiqudao.dart';
 import 'package:lowlottery/layout/recharge/Withdraw.dart';
+import 'AnquanLayer.dart';
 class MineLayer extends StatefulWidget {
   _MineState createState() => new _MineState();
 }
@@ -275,6 +276,19 @@ class _MineState extends State<MineLayer>
                 },
                 leading: Icon(AppIcons.message, color: Colors.red),
                 title: new Text("我的消息"),
+                trailing: Icon(Icons.navigate_next),
+              ),
+            ),new Container(
+              color: Colors.grey[100],
+//            margin: EdgeInsets.only(top: 10.0),
+              child: new ListTile(
+                onTap: () {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) => new AnquanLayer(),
+                  ));
+                },
+                leading: Icon(AppIcons.anquan, color: Colors.red),
+                title: new Text("安全中心"),
                 trailing: Icon(Icons.navigate_next),
               ),
             ),

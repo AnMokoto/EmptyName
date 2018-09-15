@@ -31,6 +31,9 @@ class AppIcons {
   static IconData shaizi4 = IconData(0xe63f, fontFamily: "Alibaba");
   static IconData shaizi5 = IconData(0xe63e, fontFamily: "Alibaba");
   static IconData shaizi6 = IconData(0xe640, fontFamily: "Alibaba");
+  static IconData anquan = IconData(0xe644, fontFamily: "Alibaba");
+  static IconData phone = IconData(0xe645, fontFamily: "Alibaba");
+  static IconData pwd = IconData(0xe610, fontFamily: "Alibaba");
 
   static IconData from(int codePoint) =>
       IconData(codePoint, fontFamily: "Alibaba");
