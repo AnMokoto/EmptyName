@@ -14,6 +14,7 @@ import 'package:lowlottery/conf/date.dart';
 import 'package:lowlottery/widget/Lottery2Layer.dart';
 import 'package:lowlottery/conf/Lot.dart';
 import 'LotPlayDesc.dart';
+
 /// callback when who preclick the item.
 /// [position] item count position
 /// [index] inline index
@@ -233,7 +234,7 @@ class _LotteryState extends State<LotteryLayer> {
                           sliver: new SliverPersistentHeader(
                             delegate:
                                 new LotteryHeadSliverPersistentHeaderDelegate(
-                                    playEn:style.type  ),
+                                    playEn: style.type),
                             pinned: false,
                             floating: false,
                           ),
@@ -644,8 +645,7 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
 
   void showPopDialog(BuildContext context, LotteryModel model) {
     final expectNo = model.expectNo;
-    final dialogBtnStyle =
-        new TextStyle(color: Colors.grey, fontSize: 12.0);
+    final dialogBtnStyle = new TextStyle(color: Colors.grey, fontSize: 12.0);
 
     final dialogTextStyle = new TextStyle(
       color: Colors.black87,
