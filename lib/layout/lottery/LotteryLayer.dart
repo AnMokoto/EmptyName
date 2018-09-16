@@ -12,7 +12,7 @@ import 'dart:io';
 import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/conf/date.dart';
 import 'package:lowlottery/widget/Lottery2Layer.dart';
-
+import 'package:lowlottery/conf/Lot.dart';
 /// callback when who preclick the item.
 /// [position] item count position
 /// [index] inline index
@@ -675,7 +675,7 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
   void showPopDialog(BuildContext context, LotteryModel model) {
     final expectNo = model.expectNo;
     final dialogBtnStyle =
-        new TextStyle(color: Colors.lightBlue, fontSize: 12.0);
+        new TextStyle(color: Colors.grey, fontSize: 12.0);
 
     final dialogTextStyle = new TextStyle(
       color: Colors.black87,
@@ -688,11 +688,11 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
           _requestNewQState();
           return new CupertinoAlertDialog(
             title: new Text(
-              "本期结束",
+              "${LotConfig.getLotName(model.gameEn)}",
               style: dialogTextStyle,
             ),
             content: new Text(
-              "$expectNo 期已结束",
+              "$expectNo 期已截止投注",
               style: dialogTextStyle,
             ),
             actions: <Widget>[
