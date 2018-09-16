@@ -12,7 +12,7 @@ final homeMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next ,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         var model = FixBoxModel.fromJsonToList(value);
@@ -31,7 +31,7 @@ final homeMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         next(BannerResponseAction(value));
@@ -45,7 +45,7 @@ final homeMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         next(SecondResponseAction(value));
@@ -59,7 +59,7 @@ final homeMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         next(OpencodeResponseAction(value));
@@ -76,7 +76,7 @@ final lotplayMiddleware = <Middleware<AppState>>[
         next(HttpProgressAction(action.context, true));
         var api = store.state.httpRetrofit;
         var response = await api.post(path: action.path, body: action.body);
-        transform(response, next).then((value) {
+        transform(response, next,action.context).then((value) {
           print("${action.path}-------$value");
           if (!(value is Exception)) {
             next(LotplayResponseAction(value));

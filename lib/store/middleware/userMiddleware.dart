@@ -20,7 +20,7 @@ final userMiddleware = <Middleware<AppState>>[
     next(new HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) async {
+    transform(response, next,action.context).then((value) async {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         /// 这里保存本地session
@@ -43,7 +43,7 @@ final userMiddleware = <Middleware<AppState>>[
     next(new HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) async {
+    transform(response, next,action.context).then((value) async {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         ///注册成功
@@ -92,7 +92,7 @@ final userXMiddleware = <Middleware<AppState>>[
     //next(new HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         next(UserResponseAction(value: value));
@@ -102,14 +102,16 @@ final userXMiddleware = <Middleware<AppState>>[
   }),
   new TypedMiddleware<AppState, UserRequestBalanceAction>(
       (store, action, NextDispatcher next) async {
+        next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
-      print("${action.path}-------$value");
+    transform(response, next,action.context).then((value) {
+      print("${action.path}-------$value ${store.state.toString()}");
       if (!(value is Exception)) {
         next(UserResponseBalanceAction(value: value));
       }
     });
     next(action);
+        next(HttpProgressAction(action.context, true));
   }),
 ];

@@ -12,7 +12,7 @@ final tradeMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         next(TradeResponseAction(value));
@@ -28,7 +28,7 @@ final rechargeMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         next(RechargeResponseAction(value));

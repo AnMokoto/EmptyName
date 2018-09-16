@@ -52,7 +52,7 @@ final betMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         next(LotterBetPayRequestAction(
@@ -69,7 +69,7 @@ final betMiddleware = <Middleware<AppState>>[
     //next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         store.state.betModel.content = new List();
@@ -88,7 +88,7 @@ final lotterMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         print("aaaaaa-------dvevew");
@@ -108,7 +108,7 @@ final lotterMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         final history = Lottery.fromJsonToList(value);
@@ -128,7 +128,7 @@ final recordMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         next(LotteryRecordResponseAction(value['dataList']));
@@ -142,7 +142,7 @@ final recordMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         next(LotteryRecordDetailResponseAction(value));

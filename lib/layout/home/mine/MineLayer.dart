@@ -37,7 +37,7 @@ class _MineState extends State<MineLayer>
   void didChangeDependencies() {
     super.didChangeDependencies();
     dispatch(context, new UserRequestAction());
-    dispatch(context, new UserRequestBalanceAction());
+    dispatch(context, new UserRequestBalanceAction(context));
   }
 
   @override
@@ -302,21 +302,6 @@ class _MineState extends State<MineLayer>
                 },
                 leading: Icon(AppIcons.kefu, color: Colors.red),
                 title: new Text("客服中心"),
-                trailing: Icon(Icons.navigate_next),
-              ),
-            ),
-
-            new Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              color: Colors.grey[100],
-              child: new ListTile(
-                onTap: () {
-                  Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new LoginLayer(),
-                  ));
-                },
-                leading: Icon(Icons.history),
-                title: new Text("用户登陆"),
                 trailing: Icon(Icons.navigate_next),
               ),
             ),
