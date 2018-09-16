@@ -7,7 +7,6 @@ import 'package:lowlottery/layout/lottery/LotteryLayer.dart';
 import 'package:lowlottery/style/index.dart' show StyleSplit;
 import 'package:lowlottery/store/appStore.dart';
 import 'dart:async';
-
 class IndexFragLayer extends StatefulWidget {
   // final index_type = [
   //   "assets/lottery/cqssc.png",
@@ -35,6 +34,7 @@ class _IndexFragState extends State<IndexFragLayer> {
     super.didChangeDependencies();
     dispatch(context, new IndexRequestAction(context, {'type':'home'}));
     dispatch(context, new BannerRequestAction(context, new Map()));
+    dispatch(context, new LotplayRequestAction(context, {}));
   }
 
   @override

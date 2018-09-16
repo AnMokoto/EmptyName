@@ -6,3 +6,4 @@ export 'LotteryModel.dart';
 export 'TradeModel.dart';
 export 'user.dart';
 export 'PaywayModel.dart';
+export 'LotplayModel.dart';

@@ -24,6 +24,7 @@ class AppState {
   UserModel userModel;
 
   MessageModel messageModel;
+  LotplayModel lotplayModel;
   TradeModel tradeModel;
   OpencodeModel opencodeModel;
   PlayModel betModel;
@@ -36,6 +37,7 @@ class AppState {
 
   AppState() {
 
+    this.lotplayModel =new LotplayModel();
     this.withdrawMoel =new WithdrawMoel();
     this.paywayModel =new PaywayModel() ;
     this.opencodeModel = new OpencodeModel();

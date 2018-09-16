@@ -37,4 +37,5 @@ final List<Middleware<AppState>> _appMiddleware = <Middleware<AppState>>[
   ..addAll(rechargeMiddleware)
   ..addAll(messageMiddleware)
   ..addAll(homeMiddleware)
+  ..addAll(lotplayMiddleware)
   ..addAll(httpMiddleware);

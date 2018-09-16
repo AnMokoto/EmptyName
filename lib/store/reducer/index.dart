@@ -38,4 +38,5 @@ final List<Reducer<AppState>> _list = <Reducer<AppState>>[]
   ..addAll(withdrawReducer)
   ..addAll(cardReducer)
   ..addAll(modifyPwdReducer)
+  ..addAll(lotplayReducer)
   ..addAll(homeReducer);

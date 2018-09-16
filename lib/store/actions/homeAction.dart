@@ -62,3 +62,16 @@ class OpencodeResponseAction extends StoreAction {
   List<dynamic> model;
   OpencodeResponseAction(this.model);
 }
+
+class LotplayRequestAction extends HttpStoreAction {
+  LotplayRequestAction(BuildContext context, Map<String, dynamic> body)
+      : super(context: context, body: body);
+
+  @override
+  String get path => "lotPlayConfig";
+}
+
+class LotplayResponseAction extends StoreAction {
+  List<dynamic> model;
+  LotplayResponseAction(this.model);
+}
