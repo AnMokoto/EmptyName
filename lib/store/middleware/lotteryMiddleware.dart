@@ -6,34 +6,37 @@ import 'package:flutter/material.dart';
 import '../actions/_HttpAction.dart';
 import '../net/net.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:lowlottery/layout/record/ProjectDetail.dart';
 //临时弹窗
 void requestWhenwhohasreallytoPaySuccess(BuildContext context, dynamic data) {
-  var style = new TextStyle(fontSize: 10.0, color: Colors.lightBlue);
+  var leftstyle = new TextStyle(fontSize: 14.0, color: Colors.grey);
+  var style = new TextStyle(fontSize: 14.0, color: Colors.red);
   showDialog(
     context: context,
     builder: (context) => new CupertinoAlertDialog(
-          title: new Text("title"),
-          content: new Text("success"),
+          title: new Text("投注成功"),
+          content: new Text(""),
           actions: <Widget>[
             new CupertinoDialogAction(
               isDefaultAction: true,
               onPressed: () {
-                //this.dispose();
                 Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) => new ProjectDetail(
+                      projectEn: data["projectEn"] ?? "-",
+                    )));
               },
               child: new Text(
-                "left",
-                style: style,
+                "查看方案",
+                style: leftstyle,
               ),
             ),
             new CupertinoDialogAction(
               onPressed: () {
-                //this.dispose();
                 Navigator.of(context).pop();
               },
               child: new Text(
-                "right",
+                "继续投注",
                 style: style,
               ),
             ),

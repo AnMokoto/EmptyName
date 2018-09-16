@@ -615,7 +615,6 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
 
                 if (store != null) {
                   final deadLine = store.remainTime as int;
-                  debugPrint("deadLine=$deadLine");
                   // if (_timer != null) {
                   //   if (_timer.isActive) {
                   //     _timer.cancel();
@@ -637,7 +636,6 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
                     //   _startTimer();
                     // }
                     time = DateHelper.invoke(deadLine);
-                    debugPrint("deadLine=$time");
                   }
                 }
 
