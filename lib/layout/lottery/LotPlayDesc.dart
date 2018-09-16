@@ -36,27 +36,26 @@ class LotteryHeadSliverPersistentHeaderDelegate
       child: new Semantics(
         child: new StoreConnector<AppState, List<dynamic>>(
             builder: (context, state) {
-          for (var val in state) {
-            if (val['playEn'] == playEn) {
-              String odd;
-              if (val['odd'] > 0) {
-                odd = val['odd'].toString();
-              } else if (val['awardMoney'] > 0) {
-                odd = val['awardMoney'].toString()+" 元";
-              }else{
-                odd = '' ;
-              }
-              return new Container(
-                child: new Column(children: <Widget>[
-                  new Container(
-                    child: new Text(
-                      "${val['desc']} ${odd}",
-                      style: new TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                ]),
-              );
+          var val = state.firstWhere((e) => e['playEn'] == playEn);
+          if (val != null) {
+            String odd;
+            if (val['odd'] > 0) {
+              odd = val['odd'].toString();
+            } else if (val['awardMoney'] > 0) {
+              odd = val['awardMoney'].toString() + " 元";
+            } else {
+              odd = '';
             }
+            return new Container(
+              child: new Column(children: <Widget>[
+                new Container(
+                  child: new Text(
+                    "${val['desc']} ${odd}",
+                    style: new TextStyle(color: Colors.grey),
+                  ),
+                ),
+              ]),
+            );
           }
           return new Text("");
         }, converter: (state) {
