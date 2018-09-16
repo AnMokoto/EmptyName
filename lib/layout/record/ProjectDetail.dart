@@ -3,7 +3,15 @@ import 'package:lowlottery/conf/Lot.dart';
 import 'package:lowlottery/conf/LotIcon.dart';
 import 'package:lowlottery/store/appStore.dart';
 import 'RedUtil.dart';
-
+import 'package:lowlottery/layout/lottery/LotteryLayer.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/rendering.dart';
+import 'package:lowlottery/widget/fixbox/FixBoxWidget.dart';
+import 'package:lowlottery/widget/fixbox/FixBoxModel.dart';
+import 'package:lowlottery/layout/lottery/LotteryLayer.dart';
+import 'package:lowlottery/style/index.dart' show StyleSplit;
+import 'package:lowlottery/store/appStore.dart';
 class ProjectDetail extends StatefulWidget {
   final String projectEn;
 
@@ -131,6 +139,28 @@ class _LotteryBetRecordDetailsState extends State<ProjectDetail> {
                   new Container(
                     padding: EdgeInsets.all(10.0),
                     child: new Text("方案编号：${_map["projectEn"] ?? ""}"),
+                  ),new Container(
+                    width: 360.0,
+                    margin: new EdgeInsets.all( 40.0),
+                    child: new Card(
+                      color: Colors.red,
+                      elevation: 6.0,
+                      child: new FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).push(new MaterialPageRoute(
+                            builder: (context) => new LotteryLayer(
+                              impl: StyleSplit.of("${_map["gameEn"] ?? ""}"),
+                              gameEn: "${_map["gameEn"] ?? ""}",
+                            ),
+                          ));
+                        },
+                        child: new Text(
+                          '继续投注',
+                          style:
+                          new TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
+                      ),
+                    ),
                   )
                 ],
               );
