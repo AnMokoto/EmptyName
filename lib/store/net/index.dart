@@ -12,7 +12,7 @@ class HttpRetrofit {
   Map<String, dynamic> headers;
 
   HttpRetrofit(
-      {this.host, this.duration: const Duration(milliseconds: 1000 * 10)})
+      {this.host, this.duration: const Duration(seconds: 60)})
       : assert(host != null && host.isNotEmpty) {
     headers = new Map.from({
       "Content-Type": "application/json",
@@ -24,7 +24,7 @@ class HttpRetrofit {
   factory HttpRetrofit.from(String host) => new HttpRetrofit(host: host);
 
   Future<http.Response> post({String path, Map<String, dynamic> body}) async {
-    print("path=$path--headers=$headers--body=$body");
+    print("--path=$path\n--headers=$headers\n--body=$body");
     return await http
         .post(host + path,
             headers: new Map.from(headers), body: json.encode(body))
