@@ -72,6 +72,7 @@ final betMiddleware = <Middleware<AppState>>[
     transform(response, next).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
+        store.state.betModel.content = new List();
         requestWhenwhohasreallytoPaySuccess(action.context, value);
         next(action);
       }
