@@ -17,7 +17,8 @@ final homeMiddleware = <Middleware<AppState>>[
       (store, action, NextDispatcher next) async {
         var type = '${action.body['type']}';
         var key = 'lotConf$type' ;
-        var cache = await SPHelper.value(key: key, def: null).then((token) {
+        print('cache key $key');
+        var cache = await SPHelper.valueDate(key: key, def: null).then((token) {
           if (token == null) {
             return "0";
           } else {
@@ -37,7 +38,7 @@ final homeMiddleware = <Middleware<AppState>>[
             print("${action.path}-------$value");
             if (!(value is Exception)) {
               var model = FixBoxModel.fromJsonToList(value);
-              SPHelper.save(key: key , value: json.encode(value)) ;
+              SPHelper.saveDate(key: key , value: json.encode(value)) ;
               if (action.body['type'] == "all") {
                 next(ThirdResponseAction(model));
               } else {
@@ -99,7 +100,7 @@ final lotplayMiddleware = <Middleware<AppState>>[
         next(HttpProgressAction(action.context, true));
 
         var key = 'lotPlayConf' ;
-        var cache = await SPHelper.value(key: key, def: null).then((token) {
+        var cache = await SPHelper.valueDate(key: key, def: null).then((token) {
           if (token == null) {
             return "0";
           } else {
@@ -114,7 +115,7 @@ final lotplayMiddleware = <Middleware<AppState>>[
           transform(response, next, action.context).then((value) {
             print("${action.path}-------$value");
             if (!(value is Exception)) {
-              SPHelper.save(key:key, value: json.encode(value));
+              SPHelper.saveDate(key:key, value: json.encode(value));
               next(LotplayResponseAction(value));
             }
           });

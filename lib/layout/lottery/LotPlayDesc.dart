@@ -36,8 +36,9 @@ class LotteryHeadSliverPersistentHeaderDelegate
       child: new Semantics(
         child: new StoreConnector<AppState, List<dynamic>>(
             builder: (context, state) {
-          var val = state.firstWhere((e) => e['playEn'] == playEn);
-          if (val != null) {
+              var m = new Map() ;
+          Map val = state.firstWhere((e) => e['playEn'] == playEn ,orElse: ()=>m);
+          if (val.length>0) {
             String odd;
             if (val['odd'] > 0) {
               odd = val['odd'].toString();
