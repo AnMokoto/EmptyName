@@ -16,6 +16,7 @@ final httpMiddleware = <Middleware<AppState>>[
       (store, action, NextDispatcher next) {
     next(action);
     // demo
+    print("error:${action.state}   msg:  ${action.msg}") ;
     if (isState(action.state)) {
       next(HttpMsgAction(msg: action.msg));
     }else if (action.context!=null && nologin(action.state) ) {
@@ -35,10 +36,9 @@ final httpMiddleware = <Middleware<AppState>>[
         textcolor: '#ffffff');
   }),
 ];
-
+//state==1 余额不足暂时先提示
 bool isState(dynamic state) {
-  // demo
-  return state == 600;
+  return state == 600 || state == 1;
 }
 
 bool nologin(dynamic state) {
