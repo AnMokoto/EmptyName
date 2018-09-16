@@ -38,19 +38,19 @@ class LotteryHeadSliverPersistentHeaderDelegate
             builder: (context, state) {
           for (var val in state) {
             if (val['playEn'] == playEn) {
-              double odd;
-              String dawei = '元';
+              String odd;
               if (val['odd'] > 0) {
-                odd = val['odd'];
-                dawei = '';
+                odd = val['odd'].toString();
               } else if (val['awardMoney'] > 0) {
-                odd = val['awardMoney'];
+                odd = val['awardMoney'].toString()+" 元";
+              }else{
+                odd = '' ;
               }
               return new Container(
                 child: new Column(children: <Widget>[
                   new Container(
                     child: new Text(
-                      "${val['desc']} ${odd} ${dawei}",
+                      "${val['desc']} ${odd}",
                       style: new TextStyle(color: Colors.grey),
                     ),
                   ),
