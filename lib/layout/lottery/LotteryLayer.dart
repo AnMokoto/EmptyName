@@ -232,7 +232,7 @@ class _LotteryState extends State<LotteryLayer> {
                           sliver: new SliverPersistentHeader(
                             delegate:
                                 new LotteryHeadSliverPersistentHeaderDelegate(
-                                    money: 0.0),
+                                    playEn:style.type  ),
                             pinned: false,
                             floating: false,
                           ),
@@ -416,19 +416,43 @@ class _LotteryState extends State<LotteryLayer> {
 
 class LotteryHeadSliverPersistentHeaderDelegate
     extends SliverPersistentHeaderDelegate {
-  dynamic money;
+  String playEn;
 
-  LotteryHeadSliverPersistentHeaderDelegate({this.money});
+  Store<AppState> state ;
+   String desc ;
+  LotteryHeadSliverPersistentHeaderDelegate({this.playEn }){
+  }
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return new SafeArea(
       child: new Semantics(
-        child: new Text(
-          "从万位、千位、百位,十位、个位任意位置上至少选择1个号码，号码与相同位置的开奖号码一致。励现金${money}元",
-          style: const TextStyle(color: Colors.black),
-        ),
+        child: new StoreConnector<AppState, List<dynamic>>(
+            builder: (context, state) {
+              for(var val in state){
+                if(val['playEn'] == playEn){
+                    double odd ;
+                    String dawei = '元';
+                    if(val['odd']>0){
+                      odd = val['odd'] ;
+                      dawei = '' ;
+                    }else if(val['awardMoney']>0){
+                      odd = val['awardMoney'];
+                    }
+                  return new Container(
+                    child: new Column(
+                    children:<Widget>[
+                    new Container(child: new Text( "${val['desc']} ${odd} ${dawei}" ,style:  new TextStyle(color: Colors.grey),), ),
+                  ]),);
+                }
+              }
+              return  new Text("");
+
+            }, converter: (state) {
+          var content = state.state.lotplayModel.list;
+          return content;
+        }),
       ),
     );
   }
