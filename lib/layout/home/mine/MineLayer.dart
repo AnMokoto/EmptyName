@@ -291,6 +291,19 @@ class _MineState extends State<MineLayer>
                 title: new Text("安全中心"),
                 trailing: Icon(Icons.navigate_next),
               ),
+            ),new Container(
+              color: Colors.grey[100],
+//            margin: EdgeInsets.only(top: 10.0),
+              child: new ListTile(
+                onTap: () {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) => new AnquanLayer(),
+                  ));
+                },
+                leading: Icon(AppIcons.kefu, color: Colors.red),
+                title: new Text("客服中心"),
+                trailing: Icon(Icons.navigate_next),
+              ),
             ),
             new Container(
               color: Colors.grey[100],

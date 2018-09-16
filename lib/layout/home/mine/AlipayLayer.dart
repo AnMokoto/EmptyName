@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/store/appStore.dart';
-
+import 'package:lowlottery/font/index.dart';
 class AlipayLayer extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -71,7 +71,7 @@ class _LoginPageState extends State<AlipayLayer> {
                     decoration: new InputDecoration(
                       hintText: "支付宝账号仅限提现使用",
                       border: new UnderlineInputBorder(),
-                      icon: Icon(Icons.local_phone),
+                      icon: Icon(AppIcons.alipay ,color: Colors.grey,),
                     ),
                     // obscureText: true,
                   ),
@@ -89,7 +89,7 @@ class _LoginPageState extends State<AlipayLayer> {
                     decoration: new InputDecoration(
                       hintText: "务必使用真实姓名",
                       border: new UnderlineInputBorder(),
-                      icon: Icon(Icons.local_phone),
+                      icon: Icon(AppIcons.persion),
                     ),
                     // obscureText: true,
                   ),
