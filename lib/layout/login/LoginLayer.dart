@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lowlottery/font/index.dart';
 import 'package:flutter/services.dart';
 import 'package:lowlottery/store/appStore.dart';
-
+import 'package:lowlottery/layout/register/RegisterLayer.dart';
 class LoginLayer extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginLayer> {
   var topBottomPadding = 4.0;
   var textTips = new TextStyle(fontSize: 16.0, color: Colors.black);
   var hintTips = new TextStyle(fontSize: 15.0, color: Colors.black26);
-  static const LOGO = "images/oschina.png";
+  static const LOGO = "";
 
   var _userPassController = new TextEditingController();
   var _userNameController = new TextEditingController();
@@ -29,6 +29,18 @@ class _LoginPageState extends State<LoginLayer> {
         automaticallyImplyLeading: false, //禁止pop
         title: new Text("登录", style: new TextStyle(color: Colors.white)),
         iconTheme: new IconThemeData(color: Colors.white),
+          actions: <Widget>[
+            new OutlineButton(
+              borderSide:new BorderSide(color: Theme.of(context).primaryColor),
+              child: new Text('立即注册',style: new TextStyle(color: Colors.white),),
+              onPressed: (){
+                Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (context) => new RegisterLayer(),
+                ));
+              },
+            )
+
+          ],
       ),
       body: new Stack(
         fit: StackFit.expand,
@@ -67,7 +79,7 @@ class _LoginPageState extends State<LoginLayer> {
                     controller: _userNameController,
                     textInputAction: TextInputAction.next,
                     decoration: new InputDecoration(
-                        hintText: "账号",
+                        hintText: "注册的手机号或者邮箱",
                         border: new UnderlineInputBorder(),
                         icon: Icon(Icons.local_phone)),
                     //obscureText: true,
@@ -84,7 +96,7 @@ class _LoginPageState extends State<LoginLayer> {
                     textInputAction: TextInputAction.done,
                     decoration: new InputDecoration(
                       icon: Icon(AppIcons.passwd),
-                      hintText: "密码",
+                      hintText: "登陆密码",
                       border: new UnderlineInputBorder(),
                     ),
                     obscureText: true,

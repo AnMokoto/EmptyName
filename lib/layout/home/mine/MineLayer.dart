@@ -305,19 +305,7 @@ class _MineState extends State<MineLayer>
                 trailing: Icon(Icons.navigate_next),
               ),
             ),
-            new Container(
-              color: Colors.grey[100],
-              child: new ListTile(
-                onTap: () {
-                  Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new RegisterLayer(),
-                  ));
-                },
-                leading: Icon(Icons.history),
-                title: new Text("用户注册"),
-                trailing: Icon(Icons.navigate_next),
-              ),
-            ),
+
             new Container(
               margin: EdgeInsets.only(bottom: 10.0),
               color: Colors.grey[100],
