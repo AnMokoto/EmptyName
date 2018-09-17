@@ -79,7 +79,7 @@ class _LotteryBetRecordDetailsState extends State<ProjectDetail> {
                           child: new Column(
                             children: <Widget>[
                               // Image.network(""),
-                              LotIcon.logo("${_map["gameEn"]}", 33.0),
+                              LotIcon.logo("${_map["gameEn"] ?? ''}", 33.0),
 //                        new Text(LotConfig.getLotName("${_map["gameEn"]??"-"}"))
                             ],
                           ),
