@@ -8,6 +8,9 @@ import 'package:lowlottery/store/appStore.dart';
 import 'CardLayer.dart';
 import 'AlipayLayer.dart';
 import 'ModifyPwdLayer.dart';
+import 'package:lowlottery/layout/login/LoginLayer.dart';
+import 'package:lowlottery/store/sp.dart';
+
 class AnquanLayer extends StatefulWidget {
   AnquanLayer();
 
@@ -187,7 +190,8 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                 title: new Text("绑定支付宝,提现到支付宝"),
                 trailing: Icon(Icons.navigate_next),
               ),
-            ),new Container(
+            ),
+            new Container(
               color: Colors.grey[100],
 //            margin: EdgeInsets.only(top: 10.0),
               child: new ListTile(
@@ -201,6 +205,32 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                 trailing: Icon(Icons.navigate_next),
               ),
             ),
+            new StoreConnector<AppState, AppState>(builder: (context, state) {
+              return new Container(
+                width: 360.0,
+                margin: new EdgeInsets.all(40.0),
+                child: new Card(
+                  color: Colors.red,
+                  elevation: 6.0,
+                  child: new FlatButton(
+                    onPressed: () {
+                     state.token = '' ;
+                      SPHelper.clearAll();
+                      Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                        builder: (context) => new LoginLayer(),
+                      ));
+                    },
+                    child: new Text(
+                      '退出登录',
+                      style: new TextStyle(color: Colors.white, fontSize: 16.0),
+                    ),
+                  ),
+                ),
+              );
+            }, converter: (state) {
+              return state.state;
+            }),
+
           ],
         ),
       ),
