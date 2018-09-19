@@ -353,9 +353,22 @@ abstract class StyleManagerIMPL {
   const StyleManagerIMPL();
 
   /// 返回当前彩种的所有玩法
-  List<PlayStyle> get all;
+//  List<PlayStyle> get all;
 
   String get name;
+
+  List<PlayStyle> get all {
+   return playEns().map((playEn)=> playStyle(playEn)).where((play)=>play!=null).toList();
+  }
+  @protected
+  PlayStyle playStyle(String playEn){
+
+  }
+  @protected
+  List<String> playEns(){
+
+  }
+
 }
 
 abstract class LotteryStyle {
