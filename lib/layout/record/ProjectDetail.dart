@@ -50,7 +50,8 @@ class _LotteryBetRecordDetailsState extends State<ProjectDetail> {
           constraints: new BoxConstraints.expand(),
           child: new StoreConnector<AppState, Map<String, dynamic>>(
             builder: (context, _map) {
-              var code;
+              if(_map==null) _map = {};
+             /* var code;
               try {
                 code = _map["tickets"] != null
                     ? _map["tickets"].map((l) {
@@ -61,7 +62,7 @@ class _LotteryBetRecordDetailsState extends State<ProjectDetail> {
                 print("code----------");
                 print(e);
                 code = "";
-              }
+              }*/
               return new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -115,10 +116,6 @@ class _LotteryBetRecordDetailsState extends State<ProjectDetail> {
                         ),
                         new Text(
                           "投注玩法：${_map["playDesc"] ?? ""}",
-                          style: style,
-                        ),
-                        new Text(
-                          "投注号码：${code}",
                           style: style,
                         ),
                         new Text(
