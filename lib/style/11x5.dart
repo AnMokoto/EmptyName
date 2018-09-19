@@ -104,6 +104,7 @@ class gd11x5_rx extends _11x5 {
   List<int> _zhushu;
   int zuheCount = 2;
   var leftName = "任选";
+
   gd11x5_rx(
       {@required String type,
       @required String name,
@@ -240,75 +241,41 @@ class gd11x5_zux extends _11x5 {
 class Style11x5 extends StyleManagerIMPL {
   const Style11x5();
 
+  static List<String> plays = ['11x5_rx2', '11x5_rx3'];
+
   factory Style11x5.of(String str) {
     return const Style11x5();
-//    return   const Style();
   }
-
-  PlayStyle get gd11x5rx2 => gd11x5_rx(
-      type: "11x5_rx2", name: LotPlayConfig.getName("11x5_rx2"), desc: "任选二");
-
-  PlayStyle get gd11x5rx3 => gd11x5_rx(
-      type: "11x5_rx3", name: LotPlayConfig.getName("11x5_rx3"), desc: "任选三");
-
-  PlayStyle get gd11x5rx4 => gd11x5_rx(
-      type: "11x5_rx4", name: LotPlayConfig.getName("11x5_rx4"), desc: "任选四");
-
-  PlayStyle get gd11x5rx5 => gd11x5_rx(
-      type: "11x5_rx5", name: LotPlayConfig.getName("11x5_rx5"), desc: "任选五");
-
-  PlayStyle get gd11x5rx6 => gd11x5_rx(
-      type: "11x5_rx6", name: LotPlayConfig.getName("11x5_rx6"), desc: "任选六");
-
-  PlayStyle get gd11x5rx7 => gd11x5_rx(
-      type: "11x5_rx7", name: LotPlayConfig.getName("11x5_rx7"), desc: "任选七");
-
-  PlayStyle get gd11x5rx8 => gd11x5_rx(
-      type: "11x5_rx8", name: LotPlayConfig.getName("11x5_rx8"), desc: "任选八");
-
-  PlayStyle get gd11x5q1zxfx => gd11x5_rx(
-      type: "11x5_q1zxfx",
-      name: LotPlayConfig.getName("11x5_q1zxfx"),
-      desc: "前一直选复选");
-
-  PlayStyle get gd11x5q2zxfx => cqssc_zxfx(
-      type: "11x5_q2zxfx",
-      name: LotPlayConfig.getName("11x5_q2zxfx"),
-      desc: "前二直选复选");
-
-  PlayStyle get gd11x5q3zxfx => cqssc_zxfx(
-      type: "11x5_q3zxfx",
-      name: LotPlayConfig.getName("11x5_q3zxfx"),
-      desc: "前三直选复选");
-
-  PlayStyle get gd11x5q2zuxfx => gd11x5_zux(
-      type: "11x5_q2zuxfx",
-      name: LotPlayConfig.getName("11x5_q2zuxfx"),
-      desc: "前二组选复选");
-
-  PlayStyle get gd11x5q3zuxfx => gd11x5_zux(
-      type: "11x5_q3zuxfx",
-      name: LotPlayConfig.getName("11x5_q3zuxfx"),
-      desc: "前三组选复选");
 
   @override
   String get name => "十一选五";
 
   @override
-  List<PlayStyle> get all => [
-        gd11x5rx2,
-        gd11x5rx3,
-        gd11x5rx4,
-        gd11x5rx5,
-        gd11x5rx6,
-        gd11x5rx7,
-        gd11x5rx8,
-//        gd11x5q1zxfx,
-        gd11x5q2zxfx,
-        gd11x5q3zxfx,
-        gd11x5q2zuxfx,
-        gd11x5q3zuxfx,
-      ];
+  List<String> playEns() {
+    return plays;
+  }
+
+  @override
+  PlayStyle playStyle(String playEn) {
+    switch (playEn) {
+      case '11x5_rx2':
+      case '11x5_rx3':
+      case '11x5_rx4':
+      case '11x5_rx5':
+      case '11x5_rx6':
+      case '11x5_rx7':
+      case '11x5_rx8':
+      case '11x5_q1zxfx':
+        return gd11x5_rx(type: playEn, name: LotPlayConfig.getName(playEn));
+      case '11x5_q2zxfx':
+      case '11x5_q3zxfx':
+        return cqssc_zxfx(type: playEn, name: LotPlayConfig.getName(playEn));
+      case '11x5_q2zuxfx':
+      case '11x5_q3zuxfx':
+        return gd11x5_zux(type: playEn, name: LotPlayConfig.getName(playEn));
+    }
+    return null;
+  }
 }
 /*
 * //广东11选5

@@ -12,7 +12,9 @@ import 'package:lowlottery/layout/record/AccountMingxiRecord.dart';
 import 'package:lowlottery/layout/record/MessageRecord.dart';
 import 'package:lowlottery/store/AppStore.dart';
 import 'package:lowlottery/style/k3.dart';
-
+import 'package:lowlottery/layout/recharge/Chongzhiqudao.dart';
+import 'package:lowlottery/layout/recharge/Withdraw.dart';
+import 'AnquanLayer.dart';
 class MineLayer extends StatefulWidget {
   _MineState createState() => new _MineState();
 }
@@ -35,7 +37,7 @@ class _MineState extends State<MineLayer>
   void didChangeDependencies() {
     super.didChangeDependencies();
     dispatch(context, new UserRequestAction());
-    dispatch(context, new UserRequestBalanceAction());
+    dispatch(context, new UserRequestBalanceAction(context));
   }
 
   @override
@@ -150,11 +152,7 @@ class _MineState extends State<MineLayer>
                                                 Navigator.of(context).push(
                                                     new MaterialPageRoute(
                                                         builder: (context) =>
-                                                            new LotteryBetLayer(
-                                                              style:
-                                                                  Stylek3.from()
-                                                                      .k3_3bth,
-                                                            )));
+                                                            new ChongzhiqudaoLayer()));
                                               },
                                             ),
                                           ),
@@ -201,7 +199,9 @@ class _MineState extends State<MineLayer>
                                                 Navigator.of(context).push(
                                                     new MaterialPageRoute(
                                                         builder: (context) =>
-                                                            new LotteryBetLayer()));
+                                                            new WithdwarLayer(ketixian: double.parse( "${state.withdrawable}").toInt(),
+                                                             totalMoney: double.parse( "${state.withdrawable}") + double.parse("${state.totalBalance}")
+                                                            )));
                                               },
                                             ),
                                           ),
@@ -278,31 +278,41 @@ class _MineState extends State<MineLayer>
                 title: new Text("我的消息"),
                 trailing: Icon(Icons.navigate_next),
               ),
-            ),
-            new Container(
+            ),new Container(
               color: Colors.grey[100],
+//            margin: EdgeInsets.only(top: 10.0),
               child: new ListTile(
                 onTap: () {
                   Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new RegisterLayer(),
+                    builder: (context) => new AnquanLayer(),
                   ));
                 },
-                leading: Icon(Icons.history),
-                title: new Text("用户注册"),
+                leading: Icon(AppIcons.anquan, color: Colors.red),
+                title: new Text("安全中心"),
                 trailing: Icon(Icons.navigate_next),
               ),
-            ),
-            new Container(
-              margin: EdgeInsets.only(bottom: 10.0),
+            ),new Container(
               color: Colors.grey[100],
+//            margin: EdgeInsets.only(top: 10.0),
               child: new ListTile(
                 onTap: () {
                   Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new LoginLayer(),
+                    builder: (context) => new AnquanLayer(),
                   ));
                 },
-                leading: Icon(Icons.history),
-                title: new Text("用户登陆"),
+                leading: Icon(AppIcons.kefu, color: Colors.red),
+                title: new Text("客服中心"),
+                trailing: Icon(Icons.navigate_next),
+              ),
+            ),new Container(
+              color: Colors.grey[100],
+//            margin: EdgeInsets.only(top: 10.0),
+              child: new ListTile(
+                onTap: () {
+                  SPHelper.clearAll();
+                },
+                leading: Icon(AppIcons.kefu, color: Colors.red),
+                title: new Text("清除缓存"),
                 trailing: Icon(Icons.navigate_next),
               ),
             ),

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lowlottery/conf/Lot.dart';
 import 'package:lowlottery/conf/LotIcon.dart';
 import 'package:lowlottery/store/appStore.dart';
-
+import 'RedUtil.dart';
+import 'ProjectDetail.dart';
 class LotterBetRecordLayer extends StatefulWidget {
   _LotterBetRecordState createState() => new _LotterBetRecordState();
 }
@@ -108,7 +109,7 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
               onTap: () {
                 print("onTop");
                 Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new LotteryBetRecordDetails(
+                    builder: (context) => new ProjectDetail(
                           projectEn: value["projectEn"] ?? "-",
                         )));
               },
@@ -146,12 +147,7 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                                         new Positioned(
                                           left: 0.0,
                                           top: 0.0,
-                                          child: new Text(
-                                            "${value["statusDesc"] ?? "-"}",
-                                            style: new TextStyle(
-                                              color: Colors.red,
-                                            ),
-                                          ),
+                                          child: RedUtil.buildText("${value['statusDesc']}", "${value['isRed']}")
                                         ),
                                         new Positioned(
                                           right: 0.0,
@@ -200,149 +196,5 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
     }, converter: (state) {
       return state.state.record.data;
     });
-  }
-}
-
-class LotteryBetRecordDetails extends StatefulWidget {
-  final String projectEn;
-
-  LotteryBetRecordDetails({this.projectEn}) : assert(projectEn != null);
-
-  _LotteryBetRecordDetailsState createState() =>
-      new _LotteryBetRecordDetailsState();
-}
-
-class _LotteryBetRecordDetailsState extends State<LotteryBetRecordDetails> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    dispatch(
-        context,
-        new LotteryRecordDetailAction(
-            context, {"projectEn": widget.projectEn ?? ""}));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var style = new TextStyle(color: Colors.black87, fontSize: 13.0);
-
-    return new Scaffold(
-      appBar: new AppBar(
-        centerTitle: true,
-        title: new Text("方案详情"),
-      ),
-      body: new Container(
-          constraints: new BoxConstraints.expand(),
-          child: new StoreConnector<AppState, Map<String, dynamic>>(
-            builder: (context, _map) {
-              var code;
-              try {
-                code = _map["tickets"] != null
-                    ? _map["tickets"].map((l) {
-                        return l["code"].toString() + "\n";
-                      }).toList().toString().replaceAll("[", "").replaceAll("]", "")
-                    : "";
-              } catch (e) {
-                print("code----------");
-                print(e);
-                code = "";
-              }
-              return new Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  new Container(
-                    constraints: new BoxConstraints(
-                        minWidth: double.infinity, maxHeight: 55.0),
-                    padding: EdgeInsets.all(10.0),
-                    color: Colors.grey[200],
-                    child: new Stack(
-                      alignment: Alignment.center,
-                      fit: StackFit.passthrough,
-                      children: <Widget>[
-                        new Positioned(
-                          left: 0.0,
-                          child: new Column(
-                            children: <Widget>[
-                              // Image.network(""),
-                              LotIcon.logo("${_map["gameEn"]}", 33.0),
-//                        new Text(LotConfig.getLotName("${_map["gameEn"]??"-"}"))
-                            ],
-                          ),
-                        ),
-                        new Positioned(
-                          right: 0.0,
-                          child: new Text(
-                            "${_map["awardDesc"] ?? "未中奖"}",
-                            style: new TextStyle(
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  new Container(
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.rectangle,
-                      border: new Border.all(color: Colors.white30),
-                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                    ),
-                    padding: EdgeInsets.all(10.0),
-                    constraints: BoxConstraints(minWidth: double.infinity),
-                    child: new Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        new Text("彩        种：" +
-                            LotConfig.getLotName("${_map["gameEn"] ?? "-"}")),
-                        new Text(
-                          "期        号：第${_map["expectNo"] ?? ""}期",
-                          style: style,
-                        ),
-                        new Text(
-                          "投注金额：${_map["money"] ?? ""}元",
-                          style: style,
-                        ),
-                        new Text(
-                          "投注玩法：${_map["playDesc"] ?? ""}",
-                          style: style,
-                        ),
-                        new Text(
-                          "投注号码：${code}",
-                          style: style,
-                        ),
-                        new Text(
-                          "投注信息：${_map["zhushu"] ?? ""}注  ${_map["beishu"] ?? ""}倍",
-                          style: style,
-                        ),
-                        new Text(
-                          "开奖号码：${_map["opencode"] ?? ""}",
-                          style: style,
-                        ),
-                      ],
-                    ),
-                  ),
-                  new Container(
-                    padding: EdgeInsets.all(10.0),
-                    child: new Text("投注时间：${_map["createTime"] ?? ""}"),
-                  ),
-                  new Container(
-                    padding: EdgeInsets.all(10.0),
-                    child: new Text("方案编号：${_map["projectEn"] ?? ""}"),
-                  )
-                ],
-              );
-            },
-            converter: (state) {
-              return state.state.record.detail;
-            },
-          )),
-    );
   }
 }

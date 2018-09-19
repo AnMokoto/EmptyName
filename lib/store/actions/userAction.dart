@@ -67,7 +67,9 @@ class UserResponseAction extends StoreAction {
 
 /// 获取用户余额信息
 class UserRequestBalanceAction extends HttpStoreAction {
-  UserRequestBalanceAction();
+  UserRequestBalanceAction(BuildContext context)
+      : super(context: context );
+
   @override
   String get path => "user/balance";
 }
@@ -76,3 +78,4 @@ class UserResponseBalanceAction extends StoreAction {
   dynamic value;
   UserResponseBalanceAction({this.value});
 }
+

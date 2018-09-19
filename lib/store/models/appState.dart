@@ -11,6 +11,7 @@ import 'MessageModel.dart';
 
 const price = 2.0;
 const dynamic HOST_NAME = "http://178.128.21.119:9003/";
+//const dynamic HOST_NAME = "http://api.484084.com/";
 
 const dynamic REQUEST_HEAD = {
   "Content-Type": "application/json",
@@ -23,6 +24,7 @@ class AppState {
   UserModel userModel;
 
   MessageModel messageModel;
+  LotplayModel lotplayModel;
   TradeModel tradeModel;
   OpencodeModel opencodeModel;
   PlayModel betModel;
@@ -30,8 +32,13 @@ class AppState {
   LotteryRecord record;
   HomeModel homeModel;
   HttpRetrofit httpRetrofit;
+  PaywayModel paywayModel;
+  WithdrawMoel withdrawMoel;
 
   AppState() {
+    this.lotplayModel = new LotplayModel();
+    this.withdrawMoel = new WithdrawMoel();
+    this.paywayModel = new PaywayModel();
     this.opencodeModel = new OpencodeModel();
     this.homeModel = HomeModel();
     this.lottery = new LotteryState();

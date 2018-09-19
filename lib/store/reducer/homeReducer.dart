@@ -22,3 +22,12 @@ final List<Reducer<AppState>> homeReducer = <Reducer<AppState>>[
     return state;
   }),
 ];
+
+
+final List<Reducer<AppState>> lotplayReducer = <Reducer<AppState>>[
+  new TypedReducer<AppState, LotplayResponseAction>((state, action) {
+    state.lotplayModel.list  = action.model;
+    return state;
+  }),
+
+];

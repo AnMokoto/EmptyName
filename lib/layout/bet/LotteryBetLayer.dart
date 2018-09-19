@@ -226,7 +226,7 @@ class LotterBetSliverPersistentHeaderDelegate
       child: new Container(
         ///header
         constraints: new BoxConstraints(
-          minHeight: Platform.isIOS ? 50.0 : 0.0,
+          minHeight: Platform.isIOS ? 80.0 : 0.0,
         ),
         color: Colors.transparent,
         child: new Row(

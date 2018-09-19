@@ -126,8 +126,10 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                                       style: new TextStyle(
                                           fontSize: 12.0,
                                           color: Colors.black87)),
-
-//                              new Icon(AppIcons.getLot("${value['gameEn']}"), size: 60.0)
+                                  new Text("         ${value["desc"]}",
+                                      style: new TextStyle(
+                                          fontSize: 12.0,
+                                          color: Colors.black87)),
                                 ],
                               ),
                             ),

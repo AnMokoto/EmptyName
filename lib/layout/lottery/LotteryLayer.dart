@@ -12,6 +12,8 @@ import 'dart:io';
 import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/conf/date.dart';
 import 'package:lowlottery/widget/Lottery2Layer.dart';
+import 'package:lowlottery/conf/Lot.dart';
+import 'LotPlayDesc.dart';
 
 /// callback when who preclick the item.
 /// [position] item count position
@@ -144,7 +146,7 @@ class LotteryLayer extends StatefulWidget {
   StyleManagerIMPL impl;
   String gameEn;
   PlayStyle style;
-  LotteryLayer({this.impl, this.gameEn}) : assert(impl != null) {
+  LotteryLayer({this.impl, this.gameEn}) {
     this.style = impl.all[0];
     this.gameEn = gameEn;
     print("..............." + gameEn);
@@ -232,7 +234,7 @@ class _LotteryState extends State<LotteryLayer> {
                           sliver: new SliverPersistentHeader(
                             delegate:
                                 new LotteryHeadSliverPersistentHeaderDelegate(
-                                    money: 0.0),
+                                    playEn: style.type),
                             pinned: false,
                             floating: false,
                           ),
@@ -414,37 +416,6 @@ class _LotteryState extends State<LotteryLayer> {
   }
 }
 
-class LotteryHeadSliverPersistentHeaderDelegate
-    extends SliverPersistentHeaderDelegate {
-  dynamic money;
-
-  LotteryHeadSliverPersistentHeaderDelegate({this.money});
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return new SafeArea(
-      child: new Semantics(
-        child: new Text(
-          "从万位、千位、百位,十位、个位任意位置上至少选择1个号码，号码与相同位置的开奖号码一致。励现金${money}元",
-          style: const TextStyle(color: Colors.black),
-        ),
-      ),
-    );
-  }
-
-  @override
-  double get maxExtent => 50.0;
-
-  @override
-  double get minExtent => 0.0;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
-  }
-}
-
 /// 顶部指示器
 @immutable
 class _LotteryHeadLayer extends StatefulWidget {
@@ -515,7 +486,7 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
   @override
   Widget build(BuildContext context) {
     var headStyle = const TextStyle(
-      fontSize: 15.0,
+      fontSize: 12.0,
       color: Colors.black26,
     );
     var style = widget.style;
@@ -615,7 +586,6 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
 
                 if (store != null) {
                   final deadLine = store.remainTime as int;
-                  debugPrint("deadLine=$deadLine");
                   // if (_timer != null) {
                   //   if (_timer.isActive) {
                   //     _timer.cancel();
@@ -637,7 +607,6 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
                     //   _startTimer();
                     // }
                     time = DateHelper.invoke(deadLine);
-                    debugPrint("deadLine=$time");
                   }
                 }
 
@@ -655,7 +624,10 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
 
                         time,
 
-                        style: headStyle,
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black26,
+                        ),
                       ),
                     ),
 
@@ -673,8 +645,7 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
 
   void showPopDialog(BuildContext context, LotteryModel model) {
     final expectNo = model.expectNo;
-    final dialogBtnStyle =
-        new TextStyle(color: Colors.lightBlue, fontSize: 12.0);
+    final dialogBtnStyle = new TextStyle(color: Colors.grey, fontSize: 12.0);
 
     final dialogTextStyle = new TextStyle(
       color: Colors.black87,
@@ -687,11 +658,11 @@ class _LotteryHeadState extends State<_LotteryHeadLayer>
           _requestNewQState();
           return new CupertinoAlertDialog(
             title: new Text(
-              "本期结束",
+              "${LotConfig.getLotName(model.gameEn)}",
               style: dialogTextStyle,
             ),
             content: new Text(
-              "$expectNo 期已结束",
+              "$expectNo 期已截止投注",
               style: dialogTextStyle,
             ),
             actions: <Widget>[
@@ -738,110 +709,5 @@ class _LotteryItemState extends State<LotteryItem> {
       style: value.layerStyle,
       child: value.generate(position, widget.callback),
     );
-    // return new Container(
-    //   constraints:
-    //       new BoxConstraints(minHeight: 80.0, minWidth: double.infinity),
-    //   child: new Row(
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: <Widget>[
-    //       /// left
-    //       new Offstage(
-    //         offstage: left[position] == "",
-    //         child: new Container(
-    //           width: 50.0,
-    //           height: 30.0,
-    //           decoration: new BoxDecoration(
-    //             color: Colors.grey[300],
-    //             shape: BoxShape.rectangle,
-    //             borderRadius: BorderRadius.circular(4.0),
-    //           ),
-    //           child: new Center(
-    //             child: new Text(
-    //               left[position] ?? "",
-    //               style: new TextStyle(
-    //                 color: Colors.black26,
-    //                 fontSize: 13.0,
-    //               ),
-    //               maxLines: 1,
-    //             ),
-    //           ),
-    //           margin: EdgeInsets.only(right: 20.0),
-    //         ),
-    //       ),
-
-    //       /// right
-    //       new Expanded(
-    //         child: new Container(
-    //           constraints: new BoxConstraints.tightFor(height: height),
-    //           child: new GridView.count(
-    //             //controller: new FixedExtentScrollController(),
-    //             physics: new NeverScrollableScrollPhysics(),
-    //             crossAxisCount: 5,
-    //             childAspectRatio: 1.0,
-    //             scrollDirection: Axis.vertical,
-    //             children: new List.generate(
-    //               data.length,
-    //               (index) {
-    //                 return new Container(
-    //                   // color: value["able"] as bool
-    //                   //     ? Colors.red[400]
-    //                   //     : Colors.green[100],
-    //                   constraints: BoxConstraints.tightForFinite(),
-    //                   alignment: Alignment.center,
-    //                   child: new Column(
-    //                     crossAxisAlignment: CrossAxisAlignment.start,
-    //                     children: <Widget>[
-    //                       ///数字按钮
-    //                       ///
-    //                       new InkWell(
-    //                           child: new Container(
-    //                             constraints: BoxConstraints.tightForFinite(),
-    //                             // padding: EdgeInsets.all(5.0),
-    //                             child: new Container(
-    //                               constraints: new BoxConstraints(
-    //                                   minHeight: 35.0, minWidth: 35.0),
-
-    //                               // constraints: new BoxConstraints(
-    //                               //     minWidth: 40.0, minHeight: 40.0),
-    //                               decoration: new BoxDecoration(
-    //                                   color: data[index] != -1
-    //                                       ? Colors.red
-    //                                       : Colors.grey[300],
-    //                                   shape: BoxShape.circle),
-    //                               child: new Center(
-    //                                 child: new Text(
-    //                                   "${value.forceTransform(index)}",
-    //                                   maxLines: 1,
-    //                                   style: new TextStyle(
-    //                                       color: data[index] != -1
-    //                                           ? Colors.white
-    //                                           : Colors.red,
-    //                                       fontSize: 17.0),
-    //                                 ),
-    //                               ),
-    //                             ),
-    //                           ),
-    //                           onTap: () {
-    //                             widget.callback(
-    //                               widget.position,
-    //                               index,
-    //                             );
-    //                           }),
-
-    //                       /// 预留位���
-    //                       // new Text(
-    //                       //   (value["sub"] as String) ?? "1",
-    //                       // )
-    //                     ],
-    //                   ),
-    //                 );
-    //               },
-    //             ),
-    //           ),
-    //         ),
-    //       )
-    //     ],
-    //   ),
-    // );
   }
 }

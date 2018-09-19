@@ -7,3 +7,4 @@ export 'lotteryAction.dart';
 export 'homeAction.dart';
 export 'tradeAction.dart';
 export 'messageAction.dart';
+export 'paywayAction.dart';

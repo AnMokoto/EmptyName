@@ -6,34 +6,37 @@ import 'package:flutter/material.dart';
 import '../actions/_HttpAction.dart';
 import '../net/net.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:lowlottery/layout/record/ProjectDetail.dart';
 //临时弹窗
 void requestWhenwhohasreallytoPaySuccess(BuildContext context, dynamic data) {
-  var style = new TextStyle(fontSize: 10.0, color: Colors.lightBlue);
+  var leftstyle = new TextStyle(fontSize: 14.0, color: Colors.grey);
+  var style = new TextStyle(fontSize: 14.0, color: Colors.red);
   showDialog(
     context: context,
     builder: (context) => new CupertinoAlertDialog(
-          title: new Text("title"),
-          content: new Text("success"),
+          title: new Text("投注成功"),
+          content: new Text(""),
           actions: <Widget>[
             new CupertinoDialogAction(
               isDefaultAction: true,
               onPressed: () {
-                //this.dispose();
                 Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) => new ProjectDetail(
+                      projectEn: data["projectEn"] ?? "-",
+                    )));
               },
               child: new Text(
-                "left",
-                style: style,
+                "查看方案",
+                style: leftstyle,
               ),
             ),
             new CupertinoDialogAction(
               onPressed: () {
-                //this.dispose();
                 Navigator.of(context).pop();
               },
               child: new Text(
-                "right",
+                "继续投注",
                 style: style,
               ),
             ),
@@ -49,7 +52,7 @@ final betMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         next(LotterBetPayRequestAction(
@@ -66,9 +69,10 @@ final betMiddleware = <Middleware<AppState>>[
     //next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
+        store.state.betModel.content = new List();
         requestWhenwhohasreallytoPaySuccess(action.context, value);
         next(action);
       }
@@ -84,7 +88,7 @@ final lotterMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         print("aaaaaa-------dvevew");
@@ -104,7 +108,7 @@ final lotterMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         final history = Lottery.fromJsonToList(value);
@@ -124,7 +128,7 @@ final recordMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         next(LotteryRecordResponseAction(value['dataList']));
@@ -138,7 +142,7 @@ final recordMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, true));
     var api = store.state.httpRetrofit;
     var response = await api.post(path: action.path, body: action.body);
-    transform(response, next).then((value) {
+    transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
         next(LotteryRecordDetailResponseAction(value));

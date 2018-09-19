@@ -196,6 +196,7 @@ class k3_thdx extends _k3 {
 class k3_buthdx extends _k3 {
   @protected
   int numCount = 3;
+
   k3_buthdx(
       {String len, @required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -290,6 +291,8 @@ class k3_thtx extends _k3 {
 class Stylek3 extends StyleManagerIMPL {
   const Stylek3();
 
+  static List<String> plays = ['k3_hz'];
+
   factory Stylek3.of(String str) {
     return const Stylek3();
   }
@@ -299,37 +302,32 @@ class Stylek3 extends StyleManagerIMPL {
     return const Stylek3();
   }
 
-  PlayStyle get k3_hz =>
-      k3_hzs(type: "k3_hz", name: LotPlayConfig.getName("k3_hz"), desc: "特码直选");
-  PlayStyle get k3_3thdx => k3_thdx(
-      type: "k3_3thdx", name: LotPlayConfig.getName("k3_3thdx"), desc: "正1特码");
-  PlayStyle get k3_3bth => k3_buthdx(
-      type: "k3_3bth", name: LotPlayConfig.getName("k3_3bth"), desc: "正2特码");
-  PlayStyle get k3_2thfx => k3_thdx(
-      type: "k3_2thfx", name: LotPlayConfig.getName("k3_2thfx"), desc: "正3特码");
-  PlayStyle get k3_2thdx => k3_thdx(
-      type: "k3_2thdx", name: LotPlayConfig.getName("k3_2thdx"), desc: "正4特码");
-  PlayStyle get k3_2bth => k3_buthdx(
-      type: "k3_2bth", name: LotPlayConfig.getName("k3_2bth"), desc: "���5特码");
-  PlayStyle get k3_3thtx => k3_thtx(
-      type: "k3_3thtx", name: LotPlayConfig.getName("k3_3thtx"), desc: "正6特码");
-  PlayStyle get k3_3lhtx => k3_thtx(
-      type: "k3_3lhtx", name: LotPlayConfig.getName("k3_3lhtx"), desc: "正6特码");
-
   @override
   String get name => "快三";
 
   @override
-  List<PlayStyle> get all => [
-        k3_3thtx,
-        k3_hz,
-        k3_3thdx,
-        k3_3bth,
-        k3_2thfx,
-//    k3_2thdx,
-        k3_2bth,
-        k3_3lhtx,
-      ];
+  List<String> playEns() {
+    return plays;
+  }
+
+  @override
+  PlayStyle playStyle(String playEn) {
+    switch (playEn) {
+      case 'k3_hz':
+        return k3_hzs(type: playEn, name: LotPlayConfig.getName(playEn));
+      case 'k3_3thdx':
+      case 'k3_2thfx':
+      case 'k3_2thdx':
+        return k3_thdx(type: playEn, name: LotPlayConfig.getName(playEn));
+      case 'k3_3thtx':
+      case 'k3_3lhtx':
+        return k3_thtx(type: playEn, name: LotPlayConfig.getName(playEn));
+      case 'k3_3bth':
+      case 'k3_2bth':
+        return k3_buthdx(type: playEn, name: LotPlayConfig.getName(playEn));
+    }
+    return null;
+  }
 }
 /*
 * 

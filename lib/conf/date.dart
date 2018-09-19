@@ -1,12 +1,15 @@
 class DateHelper {
   static String invoke(num mill) {
-    var date =
-        new DateTime.fromMillisecondsSinceEpoch(mill.toInt(), isUtc: true);
-    //return "${date.hour}:${date.minute}:${date.second}";
-    return (date.hour > 9 ? "${date.hour}" : "0${date.hour}") +
+    mill = mill /1000;
+   int sec = (mill % 60).toInt();
+   num secSup = mill / 60;
+   int min = (secSup % 60 ).toInt();
+   num minSup = secSup /60 ;
+   int hour = (minSup ).toInt();
+    return (hour > 9 ? "${hour}" : "0${hour}") +
         ":" +
-        (date.minute > 9 ? "${date.minute}" : "0${date.minute}") +
+        (min > 9 ? "${min}" : "0${min}") +
         ":" +
-        (date.second > 9 ? "${date.second}" : "0${date.second}");
+        (sec > 9 ? "${sec}" : "0${sec}");
   }
 }

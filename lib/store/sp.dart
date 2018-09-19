@@ -18,7 +18,21 @@ class SPHelper {
     var _share = await prefs;
     return await _share.setString(key, value);
   }
+  static Future<String> valueDate({String key, String def: ""}) async {
+   return value(key: getKey(key) ,def: def );
+  }
 
+  static Future<bool> saveDate({String key, String value}) async {
+    return save(key: getKey(key) ,value: value);
+  }
+
+  static String getKey(String key) {
+    DateTime date = DateTime.now().toLocal();
+    var da = '${date.year}${date.month}${date.day}';
+    var res = '$key$da';
+    print(res) ;
+    return res;
+  }
   static Future<bool> clear({String key}) async {
     return await save(key: key, value: null);
   }

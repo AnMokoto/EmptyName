@@ -5,8 +5,10 @@ import 'package:redux/redux.dart' show NextDispatcher;
 import 'dart:convert';
 import 'dart:async';
 import '../actions/_HttpAction.dart';
+import 'package:redux/redux.dart';
+import 'package:flutter/material.dart' show BuildContext;
 
-Future<dynamic> transform(Response response, NextDispatcher next) async {
+Future<dynamic> transform(Response response, NextDispatcher next ,BuildContext context) async {
   var errorMessage = response.statusCode.toString();
   dynamic code = errorMessage;
   if (response.statusCode == 200) {
@@ -18,7 +20,7 @@ Future<dynamic> transform(Response response, NextDispatcher next) async {
     errorMessage = body['message'];
     code = body['code'];
   }
-  next(HttpErrorAction(state: code, msg: errorMessage));
+  next(HttpErrorAction(state: code, msg: errorMessage ,context: context));
   return new Exception(errorMessage);
 }
 

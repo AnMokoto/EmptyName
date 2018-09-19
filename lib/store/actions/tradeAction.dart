@@ -15,3 +15,17 @@ class TradeResponseAction extends StoreAction {
 
   TradeResponseAction(this.model);
 }
+
+class RechargeRequestAction extends HttpStoreAction {
+  RechargeRequestAction(BuildContext context, Map<String, dynamic> body)
+      : super(context: context, body: body);
+
+  @override
+  String get path => "trade/applyRecharge";
+}
+
+class RechargeResponseAction extends StoreAction {
+  Map<String ,dynamic> model;
+
+  RechargeResponseAction(this.model);
+}

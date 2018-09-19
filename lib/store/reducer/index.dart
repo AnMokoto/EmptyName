@@ -10,6 +10,7 @@ import 'homeReducer.dart';
 import 'OpencodeReducer.dart';
 import 'tradeReducer.dart';
 import 'messageReducer.dart';
+import 'PaywayReducer.dart';
 
 AppState appReducer(AppState state, dynamic action) {
   ///  model.reducer
@@ -24,6 +25,7 @@ final _reducer = combineReducers<AppState>(_list);
 //// 增加了在这里 `..addAll()`
 @protected
 final List<Reducer<AppState>> _list = <Reducer<AppState>>[]
+  ..addAll(rechargeReducer)
   ..addAll(tradeReducer)
   ..addAll(messageReducer)
   ..addAll(opencodeReducer)
@@ -32,4 +34,9 @@ final List<Reducer<AppState>> _list = <Reducer<AppState>>[]
   ..addAll(betReducer)
   ..addAll(lotteryReducer)
   ..addAll(recordReducer)
+  ..addAll(paywayReducer)
+  ..addAll(withdrawReducer)
+  ..addAll(cardReducer)
+  ..addAll(modifyPwdReducer)
+  ..addAll(lotplayReducer)
   ..addAll(homeReducer);

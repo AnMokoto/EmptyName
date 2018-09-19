@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'Pk10Zhushuzxfx.dart';
 import 'ZuheUtil.dart';
 import 'style.dart';
+import 'package:lowlottery/conf/LotPlay.dart';
 
 ///  北京快车
 @protected
@@ -228,50 +229,34 @@ class pk10_dwd extends _pk10 {
 class Stylepk10 extends StyleManagerIMPL {
   const Stylepk10();
 
+  static List<String> plays = ['pk10_dwd'];
+
   factory Stylepk10.of(String str) {
     return const Stylepk10();
   }
-
-  PlayStyle get pk10dwd => pk10_dwd(type: "pk10_dwd", name: "定位胆", desc: "定位胆");
-
-  PlayStyle get pk10q5zxfx =>
-      cqssc_zxfx(type: "pk10_q5zxfx", name: "猜前五", desc: "猜前五");
-
-  PlayStyle get pk10q4zxfx =>
-      cqssc_zxfx(type: "pk10_q4zxfx", name: "猜前四", desc: "猜前四");
-
-  PlayStyle get pk10q3zxfx =>
-      cqssc_zxfx(type: "pk10_q3zxfx", name: "猜前三", desc: "猜前三");
-
-  PlayStyle get pk10q2zxfx =>
-      cqssc_zxfx(type: "pk10_q2zxfx", name: "猜前二", desc: "猜前二");
-
-  PlayStyle get pk10q1zxfx =>
-      cqssc_zxfx(type: "pk10_q1zxfx", name: "猜冠军", desc: "猜冠军");
-
-  PlayStyle get pk10_gyhz =>
-      cqssc_hz(type: "pk10_gyhz", name: "冠亚和", desc: "冠亚和");
 
   @override
   String get name => "pk10";
 
   @override
-  List<PlayStyle> get all => [
-        pk10dwd,
-        pk10q5zxfx,
-        pk10q4zxfx,
-        pk10q3zxfx,
-        pk10q2zxfx,
-        pk10q1zxfx,
-        pk10_gyhz,
-      ];
+  List<String> playEns() {
+    return plays;
+  }
+
+  @override
+  PlayStyle playStyle(String playEn) {
+    switch (playEn) {
+      case 'pk10_q5zxfx':
+      case 'pk10_q4zxfx':
+      case 'pk10_q3zxfx':
+      case 'pk10_q2zxfx':
+      case 'pk10_q1zxfx':
+        return cqssc_zxfx(type: playEn, name: LotPlayConfig.getName(playEn));
+      case 'pk10_dwd':
+        return pk10_dwd(type: playEn, name: LotPlayConfig.getName(playEn));
+      case 'pk10_gyhz':
+        return cqssc_hz(type: playEn, name: LotPlayConfig.getName(playEn));
+    }
+    return null;
+  }
 }
-/*
-* 
-  pk10_q5dwd("pk10_dwd", "定位胆"),
-  pk10_q5zxfx("pk10_q5zxfx", "前五直选复选"),
-  pk10_q4zxfx("pk10_q4zxfx", "前四直选复选"),
-  pk10_q3zxfx("pk10_q3zxfx", "前三直选复选"),
-  pk10_q2zxfx("pk10_q2zxfx", "前二直选复选"),
-  pk10_q1zxfx("pk10_q1zxfx", "前一直选复选"),
-* */

@@ -11,6 +11,7 @@ import 'lotteryMiddleware.dart';
 import 'homeMiddleware.dart';
 import 'tradeMiddleware.dart';
 import 'messageMiddleware.dart';
+import 'paywayMiddleware.dart';
 part 'middleware.dart';
 
 /// 不动
@@ -23,12 +24,18 @@ List<Middleware<AppState>> appMiddleware() => _appMiddleware;
 final List<Middleware<AppState>> _appMiddleware = <Middleware<AppState>>[
   AppMiddleware.from()
 ]
+  ..addAll(paywayMiddleware)
+  ..addAll(withdrawlMiddleware)
+  ..addAll(cardMiddleware)
+  ..addAll(modifyPwdMiddleware)
   ..addAll(userMiddleware)
   ..addAll(userXMiddleware)
   ..addAll(lotterMiddleware)
   ..addAll(betMiddleware)
   ..addAll(recordMiddleware)
   ..addAll(tradeMiddleware)
+  ..addAll(rechargeMiddleware)
   ..addAll(messageMiddleware)
   ..addAll(homeMiddleware)
+  ..addAll(lotplayMiddleware)
   ..addAll(httpMiddleware);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lowlottery/store/appStore.dart';
 
 /**
-    提现记录
+    提现
  */
 class WithdrawRecordLayer extends StatefulWidget {
   _WithdrawRecordState createState() => new _WithdrawRecordState();
@@ -37,7 +37,7 @@ class _WithdrawRecordState extends State<WithdrawRecordLayer>
         appBar: new AppBar(
           centerTitle: true,
           backgroundColor: Colors.red,
-          title: new Text("提现记录"),
+          title: new Text("提现"),
         ),
         body: new Column(
           children: <Widget>[

@@ -54,11 +54,16 @@ abstract class PlayStyle extends Object {
   PlayModelItem model;
 
   @protected
-  List<List<int>> __data;
+  List<List<int>> __data, __multiple;
 
   List<List<int>> get data => __data;
   set data(List<List<int>> datas) {
     this.__data = datas;
+  }
+
+  List<List<int>> get multiple => __multiple;
+  set multiple(List<List<int>> multiple) {
+    this.__multiple = multiple;
   }
 
   /// 需要结算的数据
@@ -135,6 +140,7 @@ abstract class PlayStyle extends Object {
   void playReset() {
     model = new PlayModelItem()..playEn = this.type;
     this.__data = initialData(initialCount);
+    this.__multiple = initialData(initialCount);
   }
 
   /// 初始化基础数据
@@ -167,6 +173,9 @@ abstract class PlayStyle extends Object {
   /// 前台默认取数据展示就行，不做这块的数据处理
   @protected
   List<List<int>> initialArray() => __data;
+
+  @protected
+  List<List<int>> initialMultiple() => __multiple;
 
   /// 交互操作，对 [initialArray] 的数据进行操作
   /// [index] 列数
@@ -229,18 +238,34 @@ abstract class PlayStyle extends Object {
   /// [position] => [initialArray]
   List<Widget> generate(int position, fun(int p, int i)) {
     final data = initialArray()[position];
+    final multiple = initialMultiple()[position];
     return new List.generate(data.length, (index) {
       final isSelect = data[index] != -1;
+      final multipleItem = multiple[index];
       return new InkWell(
-          child: new StyleGenerateItem(
-            shape: shape(position, index),
-            constraints: constraints,
-            isSelect: isSelect,
-            child: getChildItem(position, index),
-          ),
-          onTap: () {
-            fun(position, index);
-          });
+        onTap: () {
+          fun(position, index);
+        },
+        child: new Column(
+          children: <Widget>[
+            new StyleGenerateItem(
+              shape: shape(position, index),
+              constraints: constraints,
+              isSelect: isSelect,
+              child: getChildItem(position, index),
+            ),
+            new Offstage(
+              offstage: multipleItem > 0,
+              child: new Container(
+                margin: EdgeInsets.all(3.0),
+                child: new Center(
+                  child: new Text("$multipleItem"),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
     });
   }
 
@@ -328,9 +353,22 @@ abstract class StyleManagerIMPL {
   const StyleManagerIMPL();
 
   /// 返回当前彩种的所有玩法
-  List<PlayStyle> get all;
+//  List<PlayStyle> get all;
 
   String get name;
+
+  List<PlayStyle> get all {
+   return playEns().map((playEn)=> playStyle(playEn)).where((play)=>play!=null).toList();
+  }
+  @protected
+  PlayStyle playStyle(String playEn){
+
+  }
+  @protected
+  List<String> playEns(){
+
+  }
+
 }
 
 abstract class LotteryStyle {
