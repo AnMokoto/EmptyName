@@ -5,6 +5,7 @@ import 'Pk10Zhushuzxfx.dart';
 import 'ZuheUtil.dart';
 import 'style.dart';
 import 'package:lowlottery/conf/LotPlay.dart';
+
 ///  北京快车
 @protected
 @reflector
@@ -227,7 +228,9 @@ class pk10_dwd extends _pk10 {
 
 class Stylepk10 extends StyleManagerIMPL {
   const Stylepk10();
+
   static List<String> plays = ['pk10_dwd'];
+
   factory Stylepk10.of(String str) {
     return const Stylepk10();
   }
@@ -239,6 +242,7 @@ class Stylepk10 extends StyleManagerIMPL {
   List<String> playEns() {
     return plays;
   }
+
   @override
   PlayStyle playStyle(String playEn) {
     switch (playEn) {
@@ -255,5 +259,4 @@ class Stylepk10 extends StyleManagerIMPL {
     }
     return null;
   }
-
 }

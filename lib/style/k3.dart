@@ -196,6 +196,7 @@ class k3_thdx extends _k3 {
 class k3_buthdx extends _k3 {
   @protected
   int numCount = 3;
+
   k3_buthdx(
       {String len, @required String type, @required String name, String desc})
       : super(type: type, name: name, desc: desc);
@@ -289,7 +290,9 @@ class k3_thtx extends _k3 {
 
 class Stylek3 extends StyleManagerIMPL {
   const Stylek3();
+
   static List<String> plays = ['k3_hz'];
+
   factory Stylek3.of(String str) {
     return const Stylek3();
   }
@@ -306,6 +309,7 @@ class Stylek3 extends StyleManagerIMPL {
   List<String> playEns() {
     return plays;
   }
+
   @override
   PlayStyle playStyle(String playEn) {
     switch (playEn) {

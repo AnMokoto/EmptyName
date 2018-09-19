@@ -104,6 +104,7 @@ class gd11x5_rx extends _11x5 {
   List<int> _zhushu;
   int zuheCount = 2;
   var leftName = "任选";
+
   gd11x5_rx(
       {@required String type,
       @required String name,
@@ -239,10 +240,13 @@ class gd11x5_zux extends _11x5 {
 
 class Style11x5 extends StyleManagerIMPL {
   const Style11x5();
-  static List<String> plays = ['11x5_rx2' ,'11x5_rx3'];
+
+  static List<String> plays = ['11x5_rx2', '11x5_rx3'];
+
   factory Style11x5.of(String str) {
     return const Style11x5();
   }
+
   @override
   String get name => "十一选五";
 
@@ -250,9 +254,10 @@ class Style11x5 extends StyleManagerIMPL {
   List<String> playEns() {
     return plays;
   }
+
   @override
-  PlayStyle playStyle(String playEn){
-    switch(playEn){
+  PlayStyle playStyle(String playEn) {
+    switch (playEn) {
       case '11x5_rx2':
       case '11x5_rx3':
       case '11x5_rx4':
@@ -264,12 +269,12 @@ class Style11x5 extends StyleManagerIMPL {
         return gd11x5_rx(type: playEn, name: LotPlayConfig.getName(playEn));
       case '11x5_q2zxfx':
       case '11x5_q3zxfx':
-        return cqssc_zxfx(type: playEn,name: LotPlayConfig.getName(playEn));
+        return cqssc_zxfx(type: playEn, name: LotPlayConfig.getName(playEn));
       case '11x5_q2zuxfx':
       case '11x5_q3zuxfx':
-        return gd11x5_zux(type: playEn,name: LotPlayConfig.getName(playEn));
+        return gd11x5_zux(type: playEn, name: LotPlayConfig.getName(playEn));
     }
-    return null ;
+    return null;
   }
 }
 /*

@@ -45,6 +45,7 @@ abstract class _xglhc extends PlayStyle {
     }
     return 6;
   }
+
   _getWidth() {
     if (type.contains("tx")) {
       return 20.0;
@@ -320,10 +321,13 @@ class cqssc_hz extends _xglhc {
 
 class Stylexglhc extends StyleManagerIMPL {
   const Stylexglhc();
+
   static List<String> plays = ['xglhc_tmzx'];
+
   factory Stylexglhc.of(String str) {
     return const Stylexglhc();
   }
+
   @override
   String get name => "六合彩";
 
@@ -331,45 +335,45 @@ class Stylexglhc extends StyleManagerIMPL {
   List<String> playEns() {
     return plays;
   }
+
   @override
   PlayStyle playStyle(String playEn) {
-     switch(playEn){
-       case 'xglhc_tmzx':
-       case 'xglhc_zmz6t':
-       case 'xglhc_zmz5t':
-       case 'xglhc_zmz4t':
-       case 'xglhc_zmz3t':
-       case 'xglhc_zmz2t':
-       case 'xglhc_zmz1t':
-       case 'xglhc_sx1x':
-       case 'xglhc_sxtx':
-       case 'xglhc_wstmtw':
-       case 'xglhc_tmlm':
-       case 'xglhc_zmz6lm':
-       case 'xglhc_zmz5lm':
-       case 'xglhc_zmz4lm':
-       case 'xglhc_zmz3lm':
-       case 'xglhc_zmz2lm':
-       case 'xglhc_zmz1lm':
-       case 'xglhc_zmrx':
-         return cqssc_hz(type: playEn, name: LotPlayConfig.getName(playEn));
-       case 'xglhc_ws4wl':
-       case 'xglhc_ws3wl':
-       case 'xglhc_ws2wl':
-       case 'xglhc_lmtc':
-       case 'xglhc_lm2z1':
-       case 'xglhc_lm3z2':
-       case 'xglhc_lm2qz':
-       case 'xglhc_lm3qz':
-       case 'xglhc_bz10':
-       case 'xglhc_bz9':
-       case 'xglhc_bz8':
-       case 'xglhc_bz7':
-       case 'xglhc_bz6':
-       case 'xglhc_bz5':
-         return xglhc_rx(type: playEn, name: LotPlayConfig.getName(playEn));
-
-     }
-     return null;
+    switch (playEn) {
+      case 'xglhc_tmzx':
+      case 'xglhc_zmz6t':
+      case 'xglhc_zmz5t':
+      case 'xglhc_zmz4t':
+      case 'xglhc_zmz3t':
+      case 'xglhc_zmz2t':
+      case 'xglhc_zmz1t':
+      case 'xglhc_sx1x':
+      case 'xglhc_sxtx':
+      case 'xglhc_wstmtw':
+      case 'xglhc_tmlm':
+      case 'xglhc_zmz6lm':
+      case 'xglhc_zmz5lm':
+      case 'xglhc_zmz4lm':
+      case 'xglhc_zmz3lm':
+      case 'xglhc_zmz2lm':
+      case 'xglhc_zmz1lm':
+      case 'xglhc_zmrx':
+        return cqssc_hz(type: playEn, name: LotPlayConfig.getName(playEn));
+      case 'xglhc_ws4wl':
+      case 'xglhc_ws3wl':
+      case 'xglhc_ws2wl':
+      case 'xglhc_lmtc':
+      case 'xglhc_lm2z1':
+      case 'xglhc_lm3z2':
+      case 'xglhc_lm2qz':
+      case 'xglhc_lm3qz':
+      case 'xglhc_bz10':
+      case 'xglhc_bz9':
+      case 'xglhc_bz8':
+      case 'xglhc_bz7':
+      case 'xglhc_bz6':
+      case 'xglhc_bz5':
+        return xglhc_rx(type: playEn, name: LotPlayConfig.getName(playEn));
+    }
+    return null;
   }
 }
