@@ -10,15 +10,15 @@ import '../actions/index.dart';
 import '../models/index.dart';
 import '../net/net.dart';
 import '../sp.dart';
-
+import 'package:lowlottery/conf/CacheKey.dart';
 @protected
 final homeMiddleware = <Middleware<AppState>>[
   new TypedMiddleware<AppState, IndexRequestAction>(
       (store, action, NextDispatcher next) async {
         var type = '${action.body['type']}';
-        var key = 'lotConf$type' ;
+        var key =CacheKey.getLotKey( '${action.body['type']}') ;
         print('cache key $key');
-        var cache = await SPHelper.valueDate(key: key, def: null).then((token) {
+        var cache = await SPHelper.value(key: key, def: null).then((token) {
           if (token == null) {
             return "0";
           } else {
@@ -38,7 +38,7 @@ final homeMiddleware = <Middleware<AppState>>[
             print("${action.path}-------$value");
             if (!(value is Exception)) {
               var model = FixBoxModel.fromJsonToList(value);
-              SPHelper.saveDate(key: key , value: json.encode(value)) ;
+              SPHelper.save(key: key , value: json.encode(value)) ;
               if (action.body['type'] == "all") {
                 next(ThirdResponseAction(model));
               } else {
@@ -99,8 +99,8 @@ final lotplayMiddleware = <Middleware<AppState>>[
           (store, action, NextDispatcher next) async {
         next(HttpProgressAction(action.context, true));
 
-        var key = 'lotPlayConf' ;
-        var cache = await SPHelper.valueDate(key: key, def: null).then((token) {
+        var key = CacheKey.getPlayKey();
+        var cache = await SPHelper.value(key: key, def: null).then((token) {
           if (token == null) {
             return "0";
           } else {
@@ -115,7 +115,7 @@ final lotplayMiddleware = <Middleware<AppState>>[
           transform(response, next, action.context).then((value) {
             print("${action.path}-------$value");
             if (!(value is Exception)) {
-              SPHelper.saveDate(key:key, value: json.encode(value));
+              SPHelper.save(key:key, value: json.encode(value));
               next(LotplayResponseAction(value));
             }
           });

@@ -304,6 +304,17 @@ class _MineState extends State<MineLayer>
                 title: new Text("客服中心"),
                 trailing: Icon(Icons.navigate_next),
               ),
+            ),new Container(
+              color: Colors.grey[100],
+//            margin: EdgeInsets.only(top: 10.0),
+              child: new ListTile(
+                onTap: () {
+                  SPHelper.clearAll();
+                },
+                leading: Icon(AppIcons.kefu, color: Colors.red),
+                title: new Text("清除缓存"),
+                trailing: Icon(Icons.navigate_next),
+              ),
             ),
           ],
         ),
