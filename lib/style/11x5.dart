@@ -241,9 +241,10 @@ class gd11x5_zux extends _11x5 {
 class Style11x5 extends StyleManagerIMPL {
   const Style11x5();
 
-  static List<String> plays = ['11x5_rx2', '11x5_rx3'];
+  static List<String> plays = [];
 
-  factory Style11x5.of(String str) {
+  factory Style11x5.of(String str,List<String> playEns) {
+    plays = playEns;
     return const Style11x5();
   }
 

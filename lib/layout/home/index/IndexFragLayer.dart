@@ -64,21 +64,21 @@ class _IndexFragState extends State<IndexFragLayer> {
           ),
         ),*/
         new Expanded(
-          child: new StoreConnector<AppState, List<FixBoxModel>>(
+          child: new StoreConnector<AppState,AppState >(
             builder: (context, state) {
               return new FixBoxWidget(
-                  models: state ?? [],
+                  models: state.homeModel.model ?? [],
                   onItemClick: (model, position) {
                     Navigator.of(context).push(new MaterialPageRoute(
                       builder: (context) => new LotteryLayer(
-                            impl: StyleSplit.of(model.gameEn),
+                            impl: StyleSplit.of(model.gameEn ,state.lotplayModel.list),
                             gameEn: model.gameEn,
                           ),
                     ));
                   });
             },
             converter: (state) {
-              return state.state.homeModel.model;
+              return state.state;
             },
           ),
         ),
