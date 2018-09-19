@@ -137,7 +137,22 @@ class cqssc_q2fx extends _cqssc {
 
   @override
   List<String> initialType() {
-    return ["万位", "千位"];
+    if(type.contains("q2")) {
+      return ["万位", "千位"];
+    }
+    if(type.contains("h2")) {
+      return ["十位", "个位"];
+    }
+    if(type.contains("h3")) {
+      return ["百位", "十位", "个位"];
+    }
+    if(type.contains("q3")) {
+      return ["万位", "千位", "百位"];
+    }
+    if(type.contains("z3")) {
+      return ["千位", "白位", "十位"];
+    }
+
   }
 
   @override
@@ -173,53 +188,8 @@ class cqssc_q2fx extends _cqssc {
   }
 }
 
-@protected
-@reflector
-class cqssc_h2fx extends cqssc_q2fx {
-  cqssc_h2fx({@required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc);
 
-  @override
-  List<String> initialType() {
-    return ["十位", "个位"];
-  }
-}
 
-@protected
-@reflector
-class cqssc_q3fx extends cqssc_q2fx {
-  cqssc_q3fx({@required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc);
-
-  @override
-  List<String> initialType() {
-    return ["万位", "千位", "百位"];
-  }
-}
-
-@protected
-@reflector
-class cqssc_h3fx extends cqssc_h2fx {
-  cqssc_h3fx({@required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc);
-
-  @override
-  List<String> initialType() {
-    return ["百位", "十位", "个位"];
-  }
-}
-
-@protected
-@reflector
-class cqssc_z3fx extends cqssc_h2fx {
-  cqssc_z3fx({@required String type, @required String name, String desc})
-      : super(type: type, name: name, desc: desc);
-
-  @override
-  List<String> initialType() {
-    return ["千位", "白位", "十位"];
-  }
-}
 
 @protected
 @reflector
@@ -688,7 +658,7 @@ class Stylessc extends StyleManagerIMPL {
       cqssc_zuxbd(type: "ssc_q2zuxbd", name: "前二组选包胆", desc: "前二组选包胆");
 
   PlayStyle get cqssh2zxfx =>
-      cqssc_h2fx(type: "ssc_h2zxfx", name: "后二直选复选", desc: "后二直选复选");
+      cqssc_q2fx(type: "ssc_h2zxfx", name: "后二直选复选", desc: "后二直选复选");
   PlayStyle get cqssh2zxhz =>
       cqssc_hz(type: "ssc_h2zxhz", name: "后二直选和值", desc: "后二直选和值");
   PlayStyle get cqssh2zxkd =>
@@ -701,7 +671,7 @@ class Stylessc extends StyleManagerIMPL {
       cqssc_zuxbd(type: "ssc_h2zuxbd", name: "后二组选包胆", desc: "后二组选包胆");
 
   PlayStyle get cqssq3zxfx =>
-      cqssc_q3fx(type: "ssc_q3zxfx", name: "前三直选复选", desc: "前三直选复选");
+      cqssc_q2fx(type: "ssc_q3zxfx", name: "前三直选复选", desc: "前三直选复选");
   PlayStyle get cqssq3zxhz =>
       cqssc_hz3(type: "ssc_q3zxhz", name: "前三直选和值", desc: "前三直选和值");
   PlayStyle get cqssq3zxkd =>
@@ -712,7 +682,7 @@ class Stylessc extends StyleManagerIMPL {
       cqssc_bd2(type: "ssc_q3ebd", name: "前三二不定码", desc: "前三二不定码");
 
   PlayStyle get cqssh3zxfx =>
-      cqssc_h3fx(type: "ssc_h3zxfx", name: "后三直选复选", desc: "后三直选复选");
+      cqssc_q2fx(type: "ssc_h3zxfx", name: "后三直选复选", desc: "后三直选复选");
   PlayStyle get cqssh3zxhz =>
       cqssc_hz3(type: "ssc_h3zxhz", name: "后三直选和值", desc: "后三直选和值");
   PlayStyle get cqssh3zxkd =>
@@ -723,7 +693,7 @@ class Stylessc extends StyleManagerIMPL {
       cqssc_bd2(type: "ssc_h3ebd", name: "后三二不定码", desc: "后三二不定码");
 
   PlayStyle get cqssz3zxfx =>
-      cqssc_z3fx(type: "ssc_z3zxfx", name: "中三直选复选", desc: "中三直选复选");
+      cqssc_q2fx(type: "ssc_z3zxfx", name: "中三直选复选", desc: "中三直选复选");
   PlayStyle get cqssz3zxhz =>
       cqssc_hz3(type: "ssc_z3zxhz", name: "中三直选和值", desc: "中三直选和值");
   PlayStyle get cqssz3zxkd =>
