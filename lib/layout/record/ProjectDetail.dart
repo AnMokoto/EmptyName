@@ -12,6 +12,8 @@ import 'package:lowlottery/widget/fixbox/FixBoxModel.dart';
 import 'package:lowlottery/layout/lottery/LotteryLayer.dart';
 import 'package:lowlottery/style/index.dart' show StyleSplit;
 import 'package:lowlottery/store/appStore.dart';
+import 'Tickets.dart';
+
 class ProjectDetail extends StatefulWidget {
   final String projectEn;
 
@@ -50,19 +52,7 @@ class _LotteryBetRecordDetailsState extends State<ProjectDetail> {
           constraints: new BoxConstraints.expand(),
           child: new StoreConnector<AppState, Map<String, dynamic>>(
             builder: (context, _map) {
-              if(_map==null) _map = {};
-             /* var code;
-              try {
-                code = _map["tickets"] != null
-                    ? _map["tickets"].map((l) {
-                        return l["code"].toString() + "\n";
-                      }).toList().toString().replaceAll("[", "").replaceAll("]", "")
-                    : "";
-              } catch (e) {
-                print("code----------");
-                print(e);
-                code = "";
-              }*/
+              if (_map == null) _map = {};
               return new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -86,15 +76,14 @@ class _LotteryBetRecordDetailsState extends State<ProjectDetail> {
                           ),
                         ),
                         new Positioned(
-                          right: 0.0,
-                          child:RedUtil.buildText("${_map['awardDesc']}", "${_map['isRed']}")
-                        ),
+                            right: 0.0,
+                            child: RedUtil.buildText(
+                                "${_map['awardDesc']}", "${_map['isRed']}")),
                       ],
                     ),
                   ),
                   new Container(
                     decoration: new BoxDecoration(
-                      color: Colors.white,
                       shape: BoxShape.rectangle,
                       border: new Border.all(color: Colors.white30),
                       borderRadius: BorderRadius.all(Radius.circular(8.0)),
@@ -126,19 +115,23 @@ class _LotteryBetRecordDetailsState extends State<ProjectDetail> {
                           "开奖号码：${_map["opencode"] ?? ""}",
                           style: style,
                         ),
+                        new Text(
+                          "方案内容：",
+                          style: style,
+                        ),
                       ],
                     ),
                   ),
-                  new Container(
-                    padding: EdgeInsets.all(10.0),
-                    child: new Text("投注时间：${_map["createTimeStr"] ?? ""}"),
+                  new Expanded(
+                    child: Tickets.build(_map["tickets"]),
                   ),
                   new Container(
                     padding: EdgeInsets.all(10.0),
                     child: new Text("方案编号：${_map["projectEn"] ?? ""}"),
-                  ),new Container(
+                  ),
+                  new Container(
                     width: 360.0,
-                    margin: new EdgeInsets.all( 40.0),
+                    margin: new EdgeInsets.all(40.0),
                     child: new Card(
                       color: Colors.red,
                       elevation: 6.0,
@@ -146,19 +139,20 @@ class _LotteryBetRecordDetailsState extends State<ProjectDetail> {
                         onPressed: () {
                           Navigator.of(context).push(new MaterialPageRoute(
                             builder: (context) => new LotteryLayer(
-                              impl: StyleSplit.of("${_map["gameEn"] ?? ""}"),
-                              gameEn: "${_map["gameEn"] ?? ""}",
-                            ),
+                                  impl:
+                                      StyleSplit.of("${_map["gameEn"] ?? ""}"),
+                                  gameEn: "${_map["gameEn"] ?? ""}",
+                                ),
                           ));
                         },
                         child: new Text(
                           '继续投注',
-                          style:
-                          new TextStyle(color: Colors.white, fontSize: 16.0),
+                          style: new TextStyle(
+                              color: Colors.white, fontSize: 16.0),
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               );
             },
