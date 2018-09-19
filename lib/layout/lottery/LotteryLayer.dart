@@ -61,6 +61,8 @@ class _LotteryMenuState extends State<_LotteryMenu>
     final impl = widget.impl;
     dynamic f = widget.f;
 
+    // style.multiple = impl.playEns().map((playEn)=> impl.playStyle(playEn)).where((play)=>play!=null).toList()
+
     final title = new Text(
       style.name,
       style: new TextStyle(color: Colors.white, fontSize: 20.0),
@@ -246,13 +248,28 @@ class _LotteryState extends State<LotteryLayer> {
                               (context, index) {
                                 return new Column(
                                   children: <Widget>[
-                                    new LotteryItem(
-                                      position: index,
-                                      style: style,
-                                      callback: (index, position) {
-                                        setState(() {
-                                          style.toBet2System(index, position);
-                                        });
+                                    new StoreConnector<AppState, LotplayModel>(
+                                      builder: (context, state) {
+                                        final map = state.list.firstWhere(
+                                            (w) => w['playEn'] == style.type);
+                                        if (map != null &&
+                                            map['odds'] != null) {
+                                          style.multiple = map['odds'];
+                                        }
+
+                                        return new LotteryItem(
+                                          position: index,
+                                          style: style,
+                                          callback: (index, position) {
+                                            setState(() {
+                                              style.toBet2System(
+                                                  index, position);
+                                            });
+                                          },
+                                        );
+                                      },
+                                      converter: (state) {
+                                        return state.state.lotplayModel;
                                       },
                                     ),
                                     new Divider(),
