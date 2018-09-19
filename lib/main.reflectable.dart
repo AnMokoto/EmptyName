@@ -1450,7 +1450,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             {},
             {
               r"": (b) => ({type, name, desc}) => b
-                  ? new prefix6.cqssc_h2fx(type: type, name: name, desc: desc)
+                  ? new prefix6.cqssc_q2fx(type: type, name: name, desc: desc)
                   : null
             },
             6,
@@ -1506,7 +1506,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             {},
             {
               r"": (b) => ({type, name, desc}) => b
-                  ? new prefix6.cqssc_q3fx(type: type, name: name, desc: desc)
+                  ? new prefix6.cqssc_q2fx(type: type, name: name, desc: desc)
                   : null
             },
             6,
@@ -1562,7 +1562,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             {},
             {
               r"": (b) => ({type, name, desc}) => b
-                  ? new prefix6.cqssc_h3fx(type: type, name: name, desc: desc)
+                  ? new prefix6.cqssc_q2fx(type: type, name: name, desc: desc)
                   : null
             },
             6,
@@ -1618,7 +1618,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             {},
             {
               r"": (b) => ({type, name, desc}) => b
-                  ? new prefix6.cqssc_z3fx(type: type, name: name, desc: desc)
+                  ? new prefix6.cqssc_q2fx(type: type, name: name, desc: desc)
                   : null
             },
             6,
@@ -6950,10 +6950,6 @@ final _data = <r.Reflectable, r.ReflectorData>{
         prefix6.cqssc_1xfx,
         prefix6.cqssc_5xzxfx,
         prefix6.cqssc_q2fx,
-        prefix6.cqssc_h2fx,
-        prefix6.cqssc_q3fx,
-        prefix6.cqssc_h3fx,
-        prefix6.cqssc_z3fx,
         prefix6.cqssc_hz,
         prefix6.cqssc_zuxfx,
         prefix6.cqssc_zuxhz,
