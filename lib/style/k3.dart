@@ -291,9 +291,10 @@ class k3_thtx extends _k3 {
 class Stylek3 extends StyleManagerIMPL {
   const Stylek3();
 
-  static List<String> plays = ['k3_hz'];
+  static List<String> plays = [];
 
-  factory Stylek3.of(String str) {
+  factory Stylek3.of(String str,List<String> playEns) {
+    plays = playEns;
     return const Stylek3();
   }
 

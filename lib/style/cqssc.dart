@@ -635,9 +635,10 @@ class cqssc_hz3 extends cqssc_hz {
 class Stylessc extends StyleManagerIMPL {
   const Stylessc();
 
-  static List<String> plays = ['ssc_1xfx'];
+  static List<String> plays = [];
 
-  factory Stylessc.of(String str) {
+  factory Stylessc.of(String str ,List<String> playEns) {
+    plays = playEns;
     return const Stylessc();
   }
 

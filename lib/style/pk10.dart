@@ -229,9 +229,10 @@ class pk10_dwd extends _pk10 {
 class Stylepk10 extends StyleManagerIMPL {
   const Stylepk10();
 
-  static List<String> plays = ['pk10_dwd'];
+  static List<String> plays = [ ];
 
-  factory Stylepk10.of(String str) {
+  factory Stylepk10.of(String str,List<String> playEns) {
+    plays = playEns;
     return const Stylepk10();
   }
 

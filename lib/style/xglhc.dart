@@ -322,9 +322,10 @@ class cqssc_hz extends _xglhc {
 class Stylexglhc extends StyleManagerIMPL {
   const Stylexglhc();
 
-  static List<String> plays = ['xglhc_tmzx'];
+  static List<String> plays = [ ];
 
-  factory Stylexglhc.of(String str) {
+  factory Stylexglhc.of(String str,List<String> playEns) {
+    plays = playEns;
     return const Stylexglhc();
   }
 

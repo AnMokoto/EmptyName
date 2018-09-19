@@ -140,7 +140,7 @@ class _LotteryBetRecordDetailsState extends State<ProjectDetail> {
                           Navigator.of(context).push(new MaterialPageRoute(
                             builder: (context) => new LotteryLayer(
                                   impl:
-                                      StyleSplit.of("${_map["gameEn"] ?? ""}"),
+                                      StyleSplit.of("${_map["gameEn"] ?? ""}" ,[]),
                                   gameEn: "${_map["gameEn"] ?? ""}",
                                 ),
                           ));
