@@ -5,6 +5,7 @@ import 'package:lowlottery/store/appStore.dart';
 import 'dart:async';
 import 'LotOpencodeRecord.dart';
 import 'package:lowlottery/conf/Pk10Color.dart';
+import 'package:lowlottery/layout/record/Nodata.dart';
 import 'Opencode.dart';
 
 class OpencodeRecordLayer extends StatefulWidget {
@@ -87,6 +88,8 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, List<dynamic>>(
       builder: (context, state) {
+        Container nodata = Nodata.nodata(state);
+        if (nodata != null) return nodata;
         return new ListView.builder(
           itemCount: state.length,
           itemBuilder: (context, index) {
