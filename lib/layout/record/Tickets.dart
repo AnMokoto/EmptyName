@@ -13,7 +13,7 @@ class Tickets {
         var value = tickets[index];
         return new Container(
           constraints: new BoxConstraints(
-            maxHeight: 40.0,
+            maxHeight: 140.0,
             minHeight: 20.0,
           ),
           child: new InkWell(
@@ -33,27 +33,27 @@ class Tickets {
                                   child: new Text(
                                     "${value["playDesc"] ?? "-"}",
                                     style: new TextStyle(
-                                        fontSize: 11.0, color: Colors.black54),
+                                          color: Colors.black54),
                                   )),
                               new Container(
-                                  width: 180.0,
+                                  width: 140.0,
                                   child: new Text(
                                     "${value["code"] ?? "-"}",
                                     style: new TextStyle(
-                                        fontSize: 11.0, color: Colors.black54),
+                                         color: Colors.black54),
                                   )),
                               new Container(
                                   width: 80.0,
                                   child: new Text(
-                                    "${value["zhushu"] ?? "-"}注${value['beishu']}倍${value['money']}元",
+                                    "${value["zhushu"] ?? "-"}注${value['beishu']}倍",
                                     style: new TextStyle(
-                                        fontSize: 11.0, color: Colors.black54),
+                                         color: Colors.black54),
                                   )),
                               new Container(
                                 width: 50.0,
-                                child: RedUtil.buildTextFont(
+                                child: RedUtil.buildText(
                                     "${value['awardMoney']}",
-                                    "${value['isRed']}" ,11.0)
+                                    "${value['isRed']}"  )
                               )
                             ],
                           ),
