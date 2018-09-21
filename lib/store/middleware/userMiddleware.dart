@@ -48,7 +48,14 @@ final userMiddleware = <Middleware<AppState>>[
       if (!(value is Exception)) {
         ///注册成功
         ///
-        Navigator.of(action.context).pop();
+        /// 这里保存本地session
+        var token = value['token'];
+        next(LoginAction(token: token));
+        SPHelper.save(key: "token", value: token).then((b) {
+          Navigator.of(action.context).pushReplacement(new MaterialPageRoute(
+            builder: (context) => new HomeLayer(),
+          ));
+        });
       }
     });
     next(new HttpProgressAction(action.context, false));

@@ -37,17 +37,7 @@ class _LoginPageState extends State<RegisterLayer> {
       body: new Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          new Container(
-            constraints: BoxConstraints.expand(),
-            color: Colors.transparent,
-            child: new InkWell(
-              onTap: () {
-                print("TextInput.hide-----------------------");
-                SystemChannels.textInput.invokeMethod("TextInput.hide");
-                FocusScope.of(context).requestFocus(new FocusNode());
-              },
-            ),
-          ),
+
           new Container(
             child: new Column(
               mainAxisSize: MainAxisSize.min,
