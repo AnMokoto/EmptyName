@@ -13,7 +13,7 @@ class Tickets {
         var value = tickets[index];
         return new Container(
           constraints: new BoxConstraints(
-            maxHeight: 140.0,
+            maxHeight: 40.0,
             minHeight: 20.0,
           ),
           child: new InkWell(
@@ -36,7 +36,7 @@ class Tickets {
                                           color: Colors.black54),
                                   )),
                               new Container(
-                                  width: 140.0,
+                                  width: 110.0,
                                   child: new Text(
                                     "${value["code"] ?? "-"}",
                                     style: new TextStyle(
