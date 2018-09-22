@@ -211,20 +211,6 @@ class _LotteryState extends State<LotteryLayer> {
                     widget.style = f;
                   });
                 })),
-
-        // child: new Container(
-        //     padding: EdgeInsets.all(10.0),
-        //     child: new ListView.custom(
-        //         childrenDelegate:
-        //             new SliverChildBuilderDelegate((context, index) {
-        //       return new LotteryItem(
-        //         this._titles[index],
-        //         index,
-        //         items: new List.generate(10, (i) {
-        //           return {i: ""};
-        //         }),
-        //       );
-        //     }, childCount: _titles.length))),
         backgroundColor: Colors.white,
         body: new Container(
             constraints: new BoxConstraints.expand(),
