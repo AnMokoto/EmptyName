@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lowlottery/store/appStore.dart';
 import 'RedUtil.dart';
+import 'Nodata.dart';
+import 'ProjectDetail.dart';
 /**
  * 账户明细
  */
@@ -85,6 +87,8 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, List<dynamic>>(
         builder: (context, state) {
+          Container nodata = Nodata.nodata(state);
+          if (nodata != null) return nodata;
       return new ListView.builder(
         itemCount: state == null ? 0 : state.length,
         itemBuilder: (context, index) {
@@ -93,7 +97,20 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
             constraints: new BoxConstraints(
               maxHeight: 80.0,
             ),
+
             child: new InkWell(
+              onTap: () {
+                print("onTop");
+
+                var type ="${value['type']}";
+                if(type=='5' || type=='2') {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (context) =>
+                      new ProjectDetail(
+                        projectEn: value["en"] ?? "-",
+                      )));
+                }
+              },
               child: new Row(
                 children: <Widget>[
                   ///左边的

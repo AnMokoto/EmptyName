@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lowlottery/store/appStore.dart';
-
+import 'Nodata.dart';
 /**
     消息
  */
@@ -85,6 +85,8 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, List<dynamic>>(
         builder: (context, state) {
+          Container nodata = Nodata.nodata(state);
+          if (nodata != null) return nodata;
       return new ListView.builder(
         itemCount: state == null ? 0 : state.length,
         itemBuilder: (context, index) {

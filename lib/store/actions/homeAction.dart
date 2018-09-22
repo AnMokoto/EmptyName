@@ -29,6 +29,19 @@ class BannerResponseAction extends StoreAction {
   List<dynamic> model;
   BannerResponseAction(this.model);
 }
+//// 六合彩生肖
+class SxRequestAction extends HttpStoreAction {
+  SxRequestAction(BuildContext context, Map<String, dynamic> body)
+      : super(context: context, body: body);
+
+  @override
+  String get path => "lhcsxList";
+}
+
+class SxResponseAction extends StoreAction {
+  List<dynamic> model;
+  SxResponseAction(this.model);
+}
 
 ////
 ///第二屏

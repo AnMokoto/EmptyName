@@ -242,9 +242,10 @@ class Style11x5 extends StyleManagerIMPL {
   const Style11x5();
 
   static List<String> plays = [];
-
-  factory Style11x5.of(String str,List<String> playEns) {
+  static Map<String ,List<dynamic>> oddMap = {};
+  factory Style11x5.of(String str,List<String> playEns ,Map<String ,List<dynamic>> oddMap1) {
     plays = playEns;
+    oddMap = oddMap1;
     return const Style11x5();
   }
 
@@ -258,6 +259,7 @@ class Style11x5 extends StyleManagerIMPL {
 
   @override
   PlayStyle playStyle(String playEn) {
+    PlayStyle playStyle = null;
     switch (playEn) {
       case '11x5_rx2':
       case '11x5_rx3':
@@ -267,15 +269,22 @@ class Style11x5 extends StyleManagerIMPL {
       case '11x5_rx7':
       case '11x5_rx8':
       case '11x5_q1zxfx':
-        return gd11x5_rx(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle = gd11x5_rx(type: playEn, name: LotPlayConfig.getName(playEn));
+        break;
       case '11x5_q2zxfx':
       case '11x5_q3zxfx':
-        return cqssc_zxfx(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle =  cqssc_zxfx(type: playEn, name: LotPlayConfig.getName(playEn));
+        break;
       case '11x5_q2zuxfx':
       case '11x5_q3zuxfx':
-        return gd11x5_zux(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle = gd11x5_zux(type: playEn, name: LotPlayConfig.getName(playEn));
+        break ;
     }
-    return null;
+
+    if(playStyle!=null){
+      playStyle.oddsMap = oddMap;
+    }
+    return playStyle;
   }
 }
 /*

@@ -49,6 +49,17 @@ flutter:
     - assets/images/app_back.png
     - assets/images/move.png
     - assets/images/avatar.png
+    - assets/images/ball-pk00.png
+    - assets/images/ball-pk01.png
+    - assets/images/ball-pk02.png
+    - assets/images/ball-pk03.png
+    - assets/images/ball-pk04.png
+    - assets/images/ball-pk05.png
+    - assets/images/ball-pk06.png
+    - assets/images/ball-pk07.png
+    - assets/images/ball-pk08.png
+    - assets/images/ball-pk09.png
+    - assets/images/ball-pk10.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

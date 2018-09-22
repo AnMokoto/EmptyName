@@ -636,9 +636,10 @@ class Stylessc extends StyleManagerIMPL {
   const Stylessc();
 
   static List<String> plays = [];
-
-  factory Stylessc.of(String str ,List<String> playEns) {
+  static Map<String ,List<dynamic>> oddMap = {};
+  factory Stylessc.of(String str ,List<String> playEns ,Map<String ,List<dynamic>> oddMap1) {
     plays = playEns;
+    oddMap = oddMap1;
     return const Stylessc();
   }
 
@@ -654,54 +655,69 @@ class Stylessc extends StyleManagerIMPL {
 
   @override
   PlayStyle playStyle(String playEn) {
+    PlayStyle playStyle =null;
     switch (playEn) {
       case 'ssc_1xfx':
-        return cqssc_1xfx(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle = cqssc_1xfx(type: playEn, name: LotPlayConfig.getName(playEn));
+        break;
       case 'ssc_h2zuxbd':
       case 'ssc_q2zuxbd':
-        return cqssc_zuxbd(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle =cqssc_zuxbd(type: playEn, name: LotPlayConfig.getName(playEn));
+        break;
       case 'ssc_q2zuxbd':
-        return cqssc_hz(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle= cqssc_hz(type: playEn, name: LotPlayConfig.getName(playEn));
+        break;
       case 'ssc_h2zxhz':
       case 'ssc_q2zxhz':
-        return cqssc_zuxfx(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle= cqssc_zuxfx(type: playEn, name: LotPlayConfig.getName(playEn));
+        break;
       case 'ssc_h2zuxhz':
       case 'ssc_q2zuxhz':
-        return cqssc_zuxhz(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle= cqssc_zuxhz(type: playEn, name: LotPlayConfig.getName(playEn));
+        break;
       case 'ssc_z3zxkd':
       case 'ssc_q3zxkd':
       case 'ssc_h3zxkd':
       case 'ssc_q2zxkd':
       case 'ssc_h2zxkd':
-        return cqssc_kd(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle= cqssc_kd(type: playEn, name: LotPlayConfig.getName(playEn));
+        break;
       case 'ssc_z3zxhz':
       case 'ssc_q3zxhz':
       case 'ssc_h3zxhz':
-        return cqssc_hz3(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle= cqssc_hz3(type: playEn, name: LotPlayConfig.getName(playEn));
+        break;
       case 'ssc_z3zxfx':
       case 'ssc_q3zxfx':
       case 'ssc_h3zxfx':
       case 'ssc_h2zxfx':
       case 'ssc_q2zxfx':
-        return cqssc_q2fx(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle= cqssc_q2fx(type: playEn, name: LotPlayConfig.getName(playEn));
+        break;
       case 'ssc_5xsbd':
       case 'ssc_5xebd':
       case 'ssc_4xebd':
       case 'ssc_z3ebd':
       case 'ssc_h3ebd':
       case 'ssc_q3ebd':
-        return cqssc_bd2(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle= cqssc_bd2(type: playEn, name: LotPlayConfig.getName(playEn));
+        break;
       case 'ssc_5xybd':
       case 'ssc_4xybd':
       case 'ssc_z3ybd':
       case 'ssc_h3ybd':
       case 'ssc_q3ybd':
       case 'ssc_5xybd':
-        return cqssc_bd1(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle= cqssc_bd1(type: playEn, name: LotPlayConfig.getName(playEn));
+        break;
       case 'ssc_5xzxfx':
       case 'ssc_4xzxfx':
-        return cqssc_5xzxfx(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle= cqssc_5xzxfx(type: playEn, name: LotPlayConfig.getName(playEn));
+        break;
     }
-    return null;
+    if(playStyle!=null){
+      playStyle.oddsMap = oddMap;
+    }
+    return playStyle;
   }
 }

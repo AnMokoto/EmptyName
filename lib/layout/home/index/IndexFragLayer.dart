@@ -35,6 +35,7 @@ class _IndexFragState extends State<IndexFragLayer> {
     dispatch(context, new IndexRequestAction(context, {'type':'home'}));
     dispatch(context, new BannerRequestAction(context, new Map()));
     dispatch(context, new LotplayRequestAction(context, {}));
+    dispatch(context, new SxRequestAction(context, {}));
   }
 
   @override

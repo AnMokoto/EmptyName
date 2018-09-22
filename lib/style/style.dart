@@ -34,6 +34,14 @@ abstract class PlayStyle extends Object {
   @protected
   double _price;
   double get price => _price;
+  ///赔率
+//  @protected
+  Map<String ,List<dynamic>> oddsMap ;
+//  Map<String ,List<dynamic>> get oddsMap=> _oddsMap;
+//  setOddsMap(Map<String ,List<dynamic>> oddsMap){
+//    _oddsMap = oddsMap;
+//  }
+
 
   @protected
   PlayStyle(
@@ -193,6 +201,17 @@ abstract class PlayStyle extends Object {
   /// 强制转换数据显示
   @protected
   dynamic forceTransform(dynamic d) => d;
+  ///赔率
+  @protected
+  dynamic forceTransformOdd(dynamic d) {
+    if (oddsMap == null || oddsMap.isEmpty) return '';
+    List<dynamic> odds = oddsMap[type];
+    if (odds != null && odds.length > 0) {
+      final odd = odds.firstWhere((it) => it['key'] == d)['odd'];
+      return "赔率${odd}";
+    }
+    return '';
+  }
 
   /// 当前期号显示个数
   /// return int
@@ -259,7 +278,7 @@ abstract class PlayStyle extends Object {
               isSelect: isSelect,
               child: getChildItem(position, index),
             ),
-            new Offstage(
+            /*new Offstage(
               offstage: multipleItem > 0,
               child: new Container(
                 margin: EdgeInsets.all(3.0),
@@ -267,7 +286,7 @@ abstract class PlayStyle extends Object {
                   child: new Text("$multipleItem 倍"),
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
       );
@@ -283,13 +302,29 @@ abstract class PlayStyle extends Object {
   Widget getChildItem(int position, int index) {
     final data = initialArray()[position];
     final isSelect = data[index] != -1;
+    final showData = "${forceTransform(index)}";
+    final showOdd =  "${forceTransformOdd('$showData')}";
     return new Center(
-      child: new Text(
-        "${forceTransform(index)}",
+      child: new Column(children: <Widget>[
+        new Text(
+        "$showData",
         maxLines: 1,
         style: new TextStyle(
             color: isSelect ? Colors.white : Colors.red, fontSize: 17.0),
-      ),
+      ) ,
+
+       getOdd(showOdd, isSelect),
+      ],),
+    );
+  }
+
+  getOdd(final showOdd, final isSelect) {
+    if (showOdd == '') return new Container();
+    return new Text(
+      '$showOdd',
+      maxLines: 1,
+      style: new TextStyle(
+          color: isSelect ? Colors.white : Colors.grey, fontSize: 11.0),
     );
   }
 }

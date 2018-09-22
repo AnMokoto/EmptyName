@@ -45,17 +45,7 @@ class _LoginPageState extends State<LoginLayer> {
       body: new Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          new Container(
-            constraints: BoxConstraints.expand(),
-            color: Colors.transparent,
-            child: new InkWell(
-              onTap: () {
-                print("TextInput.hide-----------------------");
-                SystemChannels.textInput.invokeMethod("TextInput.hide");
-                FocusScope.of(context).requestFocus(new FocusNode());
-              },
-            ),
-          ),
+
           new Container(
             // constraints: new BoxConstraints(maxHeight: 150.0),
             child: new Column(

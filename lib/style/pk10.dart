@@ -25,10 +25,10 @@ abstract class _pk10 extends PlayStyle {
     return new ShapeCircle();
   }
 
-  @override
+  /*@override
   BoxConstraints get constraints =>
       new BoxConstraints(minWidth: 10.0, maxWidth: 20.0, minHeight: 35.0);
-
+*/
   @override
   LotteryStyle get layerStyle => new LotteryStyleDefault(count: _getCount());
 
@@ -64,16 +64,16 @@ abstract class _pk10 extends PlayStyle {
   forceTransform(d) {
     if (type.contains("pk10_gyhz")) {
       if (d == 0) {
-        return "大";
+        return "和大";
       }
       if (d == 1) {
-        return "小";
+        return "和小";
       }
       if (d == 2) {
-        return "单";
+        return "和单";
       }
       if (d == 3) {
-        return "双";
+        return "和双";
       }
       return "${d - 1}";
     }
@@ -230,9 +230,10 @@ class Stylepk10 extends StyleManagerIMPL {
   const Stylepk10();
 
   static List<String> plays = [ ];
-
-  factory Stylepk10.of(String str,List<String> playEns) {
+  static Map<String ,List<dynamic>> oddMap = {};
+  factory Stylepk10.of(String str,List<String> playEns ,Map<String ,List<dynamic>> oddMap1) {
     plays = playEns;
+    oddMap = oddMap1;
     return const Stylepk10();
   }
 
@@ -246,18 +247,25 @@ class Stylepk10 extends StyleManagerIMPL {
 
   @override
   PlayStyle playStyle(String playEn) {
+    PlayStyle playStyle = null;
     switch (playEn) {
       case 'pk10_q5zxfx':
       case 'pk10_q4zxfx':
       case 'pk10_q3zxfx':
       case 'pk10_q2zxfx':
       case 'pk10_q1zxfx':
-        return cqssc_zxfx(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle = cqssc_zxfx(type: playEn, name: LotPlayConfig.getName(playEn));
+        break;
       case 'pk10_dwd':
-        return pk10_dwd(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle= pk10_dwd(type: playEn, name: LotPlayConfig.getName(playEn));
+        break ;
       case 'pk10_gyhz':
-        return cqssc_hz(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle =cqssc_hz(type: playEn, name: LotPlayConfig.getName(playEn));
+        break ;
     }
-    return null;
+    if(playStyle!=null){
+      playStyle.oddsMap = oddMap;
+    }
+    return playStyle;
   }
 }

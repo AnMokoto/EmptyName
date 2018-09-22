@@ -4,6 +4,8 @@ import 'package:lowlottery/conf/LotIcon.dart';
 import 'package:lowlottery/store/appStore.dart';
 import 'RedUtil.dart';
 import 'ProjectDetail.dart';
+import 'Nodata.dart';
+
 class LotterBetRecordLayer extends StatefulWidget {
   _LotterBetRecordState createState() => new _LotterBetRecordState();
 }
@@ -12,7 +14,6 @@ class _LotterBetRecordState extends State<LotterBetRecordLayer>
     with SingleTickerProviderStateMixin<LotterBetRecordLayer> {
   final titles = [
     "全部",
-
   ];
 
   @protected
@@ -97,6 +98,8 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, List<dynamic>>(
         builder: (context, state) {
+      Container nodata = Nodata.nodata(state);
+      if (nodata != null) return nodata;
       return new ListView.builder(
         itemCount: state == null ? 0 : state.length,
         itemBuilder: (context, index) {
@@ -124,7 +127,8 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
 //                      new Icon(AppIcons.getLot("${value["gameEn"]}"),size: 33.0,),
                         LotIcon.logo("${value["gameEn"]}", 33.0),
                         new Text(
-                            LotConfig.getLotShortName("${value["gameEn"] ?? "-"}"),
+                            LotConfig.getLotShortName(
+                                "${value["gameEn"] ?? "-"}"),
                             style: new TextStyle(
                                 fontSize: 11.0, color: Colors.black54))
                       ],
@@ -145,10 +149,11 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                                     child: new Stack(
                                       children: <Widget>[
                                         new Positioned(
-                                          left: 0.0,
-                                          top: 0.0,
-                                          child: RedUtil.buildText("${value['statusDesc']}", "${value['isRed']}")
-                                        ),
+                                            left: 0.0,
+                                            top: 0.0,
+                                            child: RedUtil.buildText(
+                                                "${value['statusDesc']}",
+                                                "${value['isRed']}")),
                                         new Positioned(
                                           right: 0.0,
                                           top: 0.0,
