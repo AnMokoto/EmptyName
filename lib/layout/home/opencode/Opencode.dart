@@ -4,6 +4,7 @@ import 'package:lowlottery/conf/XglhcColor.dart';
 import 'package:lowlottery/font/index.dart';
 
 class OpenCode {
+  static String defaultText = '-' ;
   static Container opencode(String gameEn, var _str, int index) {
     if (gameEn == 'pk10') {
       return _pk10(_str, index);
@@ -19,6 +20,7 @@ class OpenCode {
   }
 
   static Container _common(_str, int index) {
+    String text = getText(_str, index);
     return new Container(
       margin: EdgeInsets.only(left: 5.0),
       decoration: new BoxDecoration(
@@ -29,7 +31,7 @@ class OpenCode {
       height: 28.0,
       child: new Center(
         child: new Text(
-          _str.length > 1 ? _str[index] : "-",
+          text,
           // _str[index] ?? "-",
           style: const TextStyle(fontSize: 14.0, color: Colors.white),
           textAlign: TextAlign.center,
@@ -40,17 +42,18 @@ class OpenCode {
   }
 
   static Container _xglhc(_str, int index) {
+    String text = getText(_str, index);
     return new Container(
       margin: EdgeInsets.only(left: 5.0),
       decoration: new BoxDecoration(
-        color: XglhcColor.colors(_str[index]),
+        color: XglhcColor.colors(text),
         shape: BoxShape.circle,
       ),
       width: 28.0,
       height: 28.0,
       child: new Center(
         child: new Text(
-          _str.length > 1 ? _str[index] : "-",
+          text,
           // _str[index] ?? "-",
           style: const TextStyle(fontSize: 14.0, color: Colors.white),
           textAlign: TextAlign.center,
@@ -60,10 +63,22 @@ class OpenCode {
     );
   }
 
+  static String getText(_str, int index) {
+    var text = defaultText;
+    if(_str.length>1){
+      text = _str[index] ;
+    }
+    return text;
+  }
+
   /**
    * pk10样式
    */
   static Container _pk10(_str, int index) {
+    String text = getText(_str, index);
+    if(text == defaultText){
+      text = '00';
+    }
     return new Container(
       margin: EdgeInsets.only(left: 4.0),
       decoration: new BoxDecoration(
@@ -73,7 +88,7 @@ class OpenCode {
       width: 20.0,
 //      height: 30.0,
       child: new Image.asset(
-        'assets/images/ball-pk${_str[index]}.png',
+        'assets/images/ball-pk${text}.png',
         fit: BoxFit.contain,
       ),
     );
