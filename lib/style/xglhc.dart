@@ -27,11 +27,13 @@ abstract class _xglhc extends PlayStyle {
     }
     return new ShapeCircle();
   }
+/*
 
   @override
   BoxConstraints get constraints =>
       new BoxConstraints(minWidth: 10.0, maxWidth: 20.0, minHeight: 35.0);
 
+*/
   @override
   LotteryStyle get layerStyle => new LotteryStyleDefault(count: _getCount());
 
@@ -159,6 +161,7 @@ abstract class _xglhc extends PlayStyle {
     if (d < 9) return "0${d + 1}";
     return "${d + 1}";
   }
+
 }
 
 /**
@@ -323,9 +326,10 @@ class Stylexglhc extends StyleManagerIMPL {
   const Stylexglhc();
 
   static List<String> plays = [ ];
-
-  factory Stylexglhc.of(String str,List<String> playEns) {
+  static Map<String ,List<dynamic>> oddMap = {};
+  factory Stylexglhc.of(String str,List<String> playEns ,Map<String ,List<dynamic>> oddMap1 ) {
     plays = playEns;
+    oddMap =oddMap1;
     return const Stylexglhc();
   }
 
@@ -339,6 +343,7 @@ class Stylexglhc extends StyleManagerIMPL {
 
   @override
   PlayStyle playStyle(String playEn) {
+    PlayStyle playStyle = null;
     switch (playEn) {
       case 'xglhc_tmzx':
       case 'xglhc_zmz6t':
@@ -358,7 +363,8 @@ class Stylexglhc extends StyleManagerIMPL {
       case 'xglhc_zmz2lm':
       case 'xglhc_zmz1lm':
       case 'xglhc_zmrx':
-        return cqssc_hz(type: playEn, name: LotPlayConfig.getName(playEn));
+         playStyle = cqssc_hz(type: playEn, name: LotPlayConfig.getName(playEn));
+       break ;
       case 'xglhc_ws4wl':
       case 'xglhc_ws3wl':
       case 'xglhc_ws2wl':
@@ -373,8 +379,13 @@ class Stylexglhc extends StyleManagerIMPL {
       case 'xglhc_bz7':
       case 'xglhc_bz6':
       case 'xglhc_bz5':
-        return xglhc_rx(type: playEn, name: LotPlayConfig.getName(playEn));
+        playStyle = xglhc_rx(type: playEn, name: LotPlayConfig.getName(playEn));
+        break ;
     }
-    return null;
+
+    if(playStyle!=null){
+      playStyle.oddsMap = oddMap;
+    }
+    return playStyle;
   }
 }
