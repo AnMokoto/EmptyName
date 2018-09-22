@@ -70,8 +70,13 @@ abstract class PlayStyle extends Object {
   }
 
   List<List<int>> get multiple => __multiple;
-  set multiple(List<List<int>> multiple) {
-    this.__multiple = multiple;
+  set multiple(List<dynamic> multiple) {
+    var list = new List.generate(initialType().length, (i) {
+      return new List.generate(this.initialCount, (index) {
+        return -1;
+      });
+    });
+    this.__multiple = list;
   }
 
   /// 需要结算的数据
@@ -278,7 +283,7 @@ abstract class PlayStyle extends Object {
               child: new Container(
                 margin: EdgeInsets.all(3.0),
                 child: new Center(
-                  child: new Text("$multipleItem"),
+                  child: new Text("$multipleItem 倍"),
                 ),
               ),
             ),*/
@@ -393,17 +398,16 @@ abstract class StyleManagerIMPL {
   String get name;
 
   List<PlayStyle> get all {
-   return playEns().map((playEn)=> playStyle(playEn)).where((play)=>play!=null).toList();
+    return playEns()
+        .map((playEn) => playStyle(playEn))
+        .where((play) => play != null)
+        .toList();
   }
+
   @protected
-  PlayStyle playStyle(String playEn){
-
-  }
+  PlayStyle playStyle(String playEn) {}
   @protected
-  List<String> playEns(){
-
-  }
-
+  List<String> playEns() {}
 }
 
 abstract class LotteryStyle {

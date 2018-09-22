@@ -32,14 +32,13 @@ class AppState {
   LotteryRecord record;
   HomeModel homeModel;
   HttpRetrofit httpRetrofit;
-  PaywayModel paywayModel ;
+  PaywayModel paywayModel;
   WithdrawMoel withdrawMoel;
 
   AppState() {
-
-    this.lotplayModel =new LotplayModel();
-    this.withdrawMoel =new WithdrawMoel();
-    this.paywayModel =new PaywayModel() ;
+    this.lotplayModel = new LotplayModel();
+    this.withdrawMoel = new WithdrawMoel();
+    this.paywayModel = new PaywayModel();
     this.opencodeModel = new OpencodeModel();
     this.homeModel = HomeModel();
     this.lottery = new LotteryState();
