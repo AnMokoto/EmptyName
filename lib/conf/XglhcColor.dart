@@ -46,9 +46,9 @@ class XglhcColor {
     '49',
   ];
 
-  static Color colors(String gameEn) {
-    if (_red.contains(gameEn)) return Colors.red;
-    if (_green.contains(gameEn)) return Colors.green;
+  static Color colors(String number) {
+    if (_red.contains(number)) return Colors.red;
+    if (_green.contains(number)) return Colors.green;
     return Colors.blue;
   }
 }

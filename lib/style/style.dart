@@ -4,7 +4,7 @@ import 'package:lowlottery/store/models/playModel.dart';
 export 'package:lowlottery/store/models/playModel.dart';
 import 'dart:math';
 import 'package:reflectable/reflectable.dart';
-
+import 'package:lowlottery/conf/HaomaColor.dart';
 class Reflector extends Reflectable {
   const Reflector()
       : super(invokingCapability, typingCapability, reflectedTypeCapability);
@@ -312,7 +312,7 @@ abstract class PlayStyle extends Object {
               "$showData",
               maxLines: 1,
               style: new TextStyle(
-                  color: isSelect ? Colors.white : Colors.red, fontSize: 17.0),
+                  color: isSelect ? Colors.white : HaomaoColor.haoma(type,showData), fontSize: 17.0),
             ),
           ),
           getOdd(showOdd, isSelect),
