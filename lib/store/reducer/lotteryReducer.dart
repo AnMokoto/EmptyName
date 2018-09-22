@@ -51,7 +51,7 @@ AppState _initContentWithDetail(AppState state) {
     money += f.money;
     count += f.zhushu;
   });
-  state.betModel.money = money.toString();
+  state.betModel.money = money;
   state.betModel.zhushu = count;
 
   return state;

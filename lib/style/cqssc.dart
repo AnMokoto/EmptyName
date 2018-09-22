@@ -71,7 +71,7 @@ class cqssc_1xfx extends _cqssc {
         }
       });
       state.zhushu = count;
-      state.money = count * price;
+      state.money = count * price* state.beishu;
 
       String code = transformToWithPoint(choice);
       Log.message("${type}_item===$code");
@@ -123,7 +123,7 @@ class cqssc_5xzxfx extends _cqssc {
       value.add(code);
     });
     state.zhushu = acount;
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
     String code = transformToString(value, type);
     Log.message("${type}_value===$code");
     state.code = code;
@@ -179,7 +179,7 @@ class cqssc_q2fx extends _cqssc {
     });
 
     state.zhushu = acount;
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
 
     String code = transformToString(value, type);
     Log.message("${type}_value===$code");
@@ -228,7 +228,7 @@ class cqssc_hz extends _cqssc {
       }
     });
     state.zhushu = count;
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
 
     String code = transformToString(value, type);
     Log.message("${type}_value===$code");
@@ -282,7 +282,7 @@ class cqssc_zuxfx extends _cqssc {
 
     var count = ZuheUtil.combination(value.length, len);
     state.zhushu = count.toInt();
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
     String code = transformToString(value, type);
     Log.message("${type}_value===$code");
     state.code = code;
@@ -342,7 +342,7 @@ class cqssc_zuxhz extends _cqssc {
       }
     });
     state.zhushu = count;
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
 
     String code = transformToString(value, type);
     Log.message(
@@ -401,7 +401,7 @@ class cqssc_zuxbd extends _cqssc {
     });
     //前二后二组选包胆固定注数 9
     state.zhushu = 9;
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
 
     String code = transformToString(value, type);
     Log.message(
@@ -452,7 +452,7 @@ class cqssc_bd1 extends _cqssc {
       }
     });
     state.zhushu = value.length;
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
 
     String code = transformToString(value, type);
     Log.message(
@@ -514,7 +514,7 @@ class cqssc_bd2 extends _cqssc {
     });
     var com = ZuheUtil.combination(value.length, zuheCount);
     state.zhushu = com.toInt();
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
 
     String code = transformToString(value, type);
     Log.message(
@@ -575,7 +575,7 @@ class cqssc_kd extends _cqssc {
       }
     });
     state.zhushu = count;
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
 
     String code = transformToString(value, type);
     Log.message(

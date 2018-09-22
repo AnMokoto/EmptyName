@@ -124,7 +124,7 @@ class k3_hzs extends _k3 {
       }
     });
     state.zhushu = value.length;
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
 
     String code = transformToString(value, type);
     Log.message("${type}_value===$code");
@@ -167,7 +167,7 @@ class k3_thdx extends _k3 {
       }
     });
     state.zhushu = value.length;
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
 
     String code = transformToString(value, type);
     Log.message("${type}_value===$code");
@@ -224,7 +224,7 @@ class k3_buthdx extends _k3 {
       }
     });
     state.zhushu = ZuheUtil.combination(value.length, numCount).toInt();
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
 
     String code = transformToString(value, type);
     Log.message("${type}_value===$code");

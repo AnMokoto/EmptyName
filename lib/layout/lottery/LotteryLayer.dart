@@ -16,6 +16,7 @@ import 'package:lowlottery/conf/Lot.dart';
 import 'LotPlayDesc.dart';
 import 'package:lowlottery/layout/home/opencode/Opencode.dart';
 import 'Header.dart';
+
 /// callback when who preclick the item.
 /// [position] item count position
 /// [index] inline index
@@ -26,6 +27,7 @@ class _LotteryMenu extends StatefulWidget {
   final PlayStyle style;
   final StyleManagerIMPL impl;
   dynamic f;
+
   _LotteryMenu({this.impl, this.style, this.f}) : assert(style != null);
 
   @override
@@ -36,6 +38,7 @@ class _LotteryMenuState extends State<_LotteryMenu>
     with SingleTickerProviderStateMixin<_LotteryMenu> {
   AnimationController controller;
   Animation animation;
+
   _LotteryMenuState() {
     controller = AnimationController(
       vsync: this,
@@ -147,16 +150,20 @@ class LotteryLayer extends StatefulWidget {
   StyleManagerIMPL impl;
   String gameEn;
   PlayStyle style;
+
   LotteryLayer({this.impl, this.gameEn}) {
     this.style = impl.all[0];
     this.gameEn = gameEn;
     print("..............." + gameEn);
   }
+
   @override
   _LotteryState createState() => new _LotteryState();
 }
 
 class _LotteryState extends State<LotteryLayer> {
+  var _userNameController = new TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -176,6 +183,10 @@ class _LotteryState extends State<LotteryLayer> {
   @override
   void didUpdateWidget(LotteryLayer oldWidget) {
     super.didUpdateWidget(oldWidget);
+  }
+
+  void _handleSubmitted(String text) {
+    _userNameController.clear();
   }
 
   @override
@@ -269,6 +280,40 @@ class _LotteryState extends State<LotteryLayer> {
                   ),
                 ),
 
+                /// 倍数
+                new Container(
+                    child: Row(
+                  children: <Widget>[
+                    new IconButton(
+                      icon: new Icon(
+                        AppIcons.jian,
+                        size: 20.0,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        style.transform.beishu--;
+
+                        print('less ${style.transform.beishu}');
+                      },
+                    ),
+                    new IconButton(
+                      icon: new Icon(
+                        AppIcons.add,
+                        size: 20.0,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        style.transform.beishu++;
+                        print('add${style.transform.beishu}');
+                      },
+                    ),
+                    new Text(
+                      "倍",
+                      style: new TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                )),
+
                 /// footer
                 new Container(
                   color: Colors.white,
@@ -306,41 +351,50 @@ class _LotteryState extends State<LotteryLayer> {
                                       size: 40.0,
                                       color: Colors.white,
                                     ),
-                                    new Container(
-                                      margin: EdgeInsets.only(left: 15.0),
-                                      constraints:
-                                          new BoxConstraints.tightForFinite(),
-                                      child: new Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          new SafeArea(
-                                            bottom: false,
-                                            child: new Text(
-                                              "共${model.zhushu}注，${model.money}元",
-                                              style: new TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15.0,
-                                              ),
-                                            ),
-                                          ),
-                                          new Container(
-                                            constraints: new BoxConstraints
-                                                .tightForFinite(width: 180.0),
-                                            child: new Text(_code ?? "",
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                                softWrap: false,
+                                    new StoreConnector<AppState, PlayModel>(
+                                        builder: (context, state) {
+                                      return new Container(
+                                        margin: EdgeInsets.only(left: 15.0),
+                                        constraints:
+                                            new BoxConstraints.tightForFinite(),
+                                        child: new Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            new SafeArea(
+                                              bottom: false,
+                                              child: new Text(
+                                                "共${style.transform.zhushu}注${style.transform.beishu}倍，${model.money}元",
                                                 style: new TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 15.0,
-                                                )),
-                                          )
-                                        ],
-                                      ),
-                                    ),
+                                                ),
+                                              ),
+                                            ),
+                                            new Container(
+                                              constraints: new BoxConstraints
+                                                  .tightForFinite(width: 180.0),
+                                              child: new Text(_code ?? "",
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  softWrap: false,
+                                                  style: new TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 15.0,
+                                                  )),
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    }, converter: (state) {
+                                      var content =
+                                          state.state.betModel.content;
+                                      print(state.state.betModel.money);
+                                      return state.state.betModel;
+                                    }),
                                   ],
                                 ),
                               ),
@@ -416,7 +470,6 @@ class _LotteryState extends State<LotteryLayer> {
     );
   }
 }
-
 
 class LotteryItem extends StatefulWidget {
   final PlayStyle style;

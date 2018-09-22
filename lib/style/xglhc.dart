@@ -248,7 +248,7 @@ class xglhc_rx extends _xglhc {
     });
     var com = ZuheUtil.combination(value.length, zuheCount);
     state.zhushu = com.toInt();
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price *state.beishu;
 
     String code = transformToString(value, type);
     Log.message(
@@ -307,7 +307,7 @@ class cqssc_hz extends _xglhc {
       }
     });
     state.zhushu = value.length;
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price * state.beishu;
 
     String code = transformToString(value, type);
     Log.message("${type}_value===$code");

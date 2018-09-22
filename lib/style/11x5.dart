@@ -85,7 +85,7 @@ class cqssc_zxfx extends _11x5 {
     String code = transformToString(value, type);
     int zhushu = Pk10Zhushuzxfx.calZhushu(code);
     state.zhushu = zhushu;
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price * state.beishu;
 
     Log.message("${type}_value===$code");
     state.code = code;
@@ -155,7 +155,7 @@ class gd11x5_rx extends _11x5 {
     });
     var com = ZuheUtil.combination(value.length, zuheCount);
     state.zhushu = com.toInt();
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
 
     String code = transformToString(value, type);
     Log.message(
@@ -222,7 +222,7 @@ class gd11x5_zux extends _11x5 {
     });
     var com = ZuheUtil.combination(value.length, zuheCount);
     state.zhushu = com.toInt();
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
 
     String code = transformToString(value, type);
     Log.message(

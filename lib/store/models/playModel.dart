@@ -1,5 +1,5 @@
 library app.store.models.play;
-
+import 'package:lowlottery/store/AppStore.dart';
 /////////
 /// @author An'Mokoto
 /// [bet] 下注的数字 [0,1,-,-,-] 共计 五位
@@ -18,7 +18,7 @@ library app.store.models.play;
 class PlayModel extends Object {
   String gameEn;
   String expectNo;
-  String money;
+  double money;
   int zhushu;
   double beishu;
   List<PlayModelItem> content;
@@ -53,8 +53,9 @@ class PlayModelItem extends Object {
   String playEn;
   int zhushu;
   double money;
+  int beishu;
 
-  PlayModelItem({this.code, this.playEn: "", this.zhushu: 0, this.money: 0.0});
+  PlayModelItem({this.code, this.playEn: "", this.zhushu: 0, this.money: 0.0 ,this.beishu:1});
 
   Map<String, dynamic> toMap() {
     return {
@@ -63,7 +64,8 @@ class PlayModelItem extends Object {
 
       "playEn": playEn,
       "zhushu": zhushu,
-      "money": money
+      "money": money ,
+      "beishu": beishu,
     };
   }
 
@@ -72,6 +74,8 @@ class PlayModelItem extends Object {
         code: item.code,
         playEn: item.playEn,
         zhushu: item.zhushu,
-        money: item.money);
+        money: item.money = item.beishu* item.zhushu * AppState.price,
+      beishu: item.beishu,
+    );
   }
 }

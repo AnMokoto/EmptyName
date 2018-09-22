@@ -85,7 +85,7 @@ class _LotteryState extends State<LotteryBetLayer> {
                                         ///x${model.beishu}倍
                                         LotPlayConfig.getName(
                                                 "${data.playEn}") +
-                                            "  ${data.zhushu}注x${AppState.price}元 = ${data.money}元 ",
+                                            "  ${data.zhushu}注x${data.beishu}倍 = ${data.money}元 ",
 
                                         style: new TextStyle(
                                             color: Colors.black45,

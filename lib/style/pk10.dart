@@ -111,7 +111,7 @@ class cqssc_hz extends _pk10 {
       }
     });
     state.zhushu = value.length;
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
 
     String code = transformToString(value, type);
     Log.message("${type}_value===$code");
@@ -170,8 +170,7 @@ class cqssc_zxfx extends _pk10 {
     String code = transformToString(value, type);
     int zhushu = Pk10Zhushuzxfx.calZhushu(code);
     state.zhushu = zhushu;
-    state.money = state.zhushu * price;
-
+    state.money = state.zhushu * price* state.beishu;
     Log.message("${type}_value===$code");
     state.code = code;
 
@@ -217,7 +216,7 @@ class pk10_dwd extends _pk10 {
 
     String code = transformToString(value, type);
     state.zhushu = acount;
-    state.money = state.zhushu * price;
+    state.money = state.zhushu * price* state.beishu;
 
     Log.message("${type}_value===$code");
     state.code = code;
