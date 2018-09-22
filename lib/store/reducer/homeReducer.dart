@@ -10,7 +10,7 @@ final List<Reducer<AppState>> homeReducer = <Reducer<AppState>>[
     return state;
   }),
   new TypedReducer<AppState, SecondResponseAction>((state, action) {
-    state.homeModel.second = action.model;
+    state.homeModel.opencodes = action.model;
     return state;
   }),
   new TypedReducer<AppState, ThirdResponseAction>((state, action) {
@@ -19,6 +19,9 @@ final List<Reducer<AppState>> homeReducer = <Reducer<AppState>>[
   }),
   new TypedReducer<AppState, BannerResponseAction>((state, action) {
     state.homeModel.banners = action.model;
+    return state;
+  }), new TypedReducer<AppState, SxResponseAction>((state, action) {
+    state.homeModel.sxConfig = action.model;
     return state;
   }),
 ];

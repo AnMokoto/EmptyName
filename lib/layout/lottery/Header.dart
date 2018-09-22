@@ -109,8 +109,10 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
 //          margin: EdgeInsets.only(right: 5.0),
           padding: EdgeInsets.all(3.0),
           child: new Container(
-              child: new StoreConnector<AppState, LotteryState>(
-            builder: (context, state) {
+              child: new StoreConnector<AppState, AppState>(
+            builder: (context, appstate) {
+              LotteryState state = appstate.lottery;
+              List<dynamic> sxList = appstate.homeModel.sxConfig;
               return new InkWell(
                   onTap: () {
                     print('to opencode list');
@@ -144,14 +146,14 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
                                   .split(",");
 
                               var gameEn = widget.gameEn;
-                              return OpenCode.opencode(gameEn, _str, index);
+                              return OpenCode.opencode(gameEn, _str, index ,sxList);
                             })),
                       ),
                     ],
                   ));
             },
             converter: (state) {
-              return state.state.lottery;
+              return state.state;
             },
           )),
         ),

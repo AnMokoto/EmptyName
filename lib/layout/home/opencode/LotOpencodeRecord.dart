@@ -97,8 +97,11 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
 
   @override
   Widget build(BuildContext context) {
-    return new StoreConnector<AppState, List<dynamic>>(
-      builder: (context, state) {
+    return new StoreConnector<AppState, AppState>(
+      builder: (context, appstate) {
+        List<dynamic> state = appstate.opencodeModel.list;
+        List<dynamic> sxList = appstate.homeModel.sxConfig;
+
         Container nodata = Nodata.nodata(state);
         if (nodata != null) return nodata;
         return new ListView.builder(
@@ -107,7 +110,7 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
             var value = state[index];
             return new Container(
               constraints: new BoxConstraints(
-                maxHeight: 80.0,
+                maxHeight: value['gameEn'].toString().contains("lhc")?120.0: 80.0 ,
               ),
 //              margin: EdgeInsets.all(10.0),
               child: new InkWell(
@@ -148,7 +151,7 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                                   var _str =
                                       "${value["opencode"] ?? "-"}".split(",");
                                   var gameEn = '${value["gameEn"]}';
-                                  return OpenCode.opencode(gameEn, _str, index);
+                                  return OpenCode.opencode(gameEn, _str, index ,sxList);
                                 })),
                           )),
                           new Divider(),
@@ -163,7 +166,7 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
         );
       },
       converter: (state) {
-        return state.state.opencodeModel.list;
+        return state.state;
       },
     );
   }

@@ -49,7 +49,34 @@ final homeMiddleware = <Middleware<AppState>>[
           next(HttpProgressAction(action.context, false));
         }
     next(action);
-  }),
+  }), new TypedMiddleware<AppState, SxRequestAction>(
+          (store, action, NextDispatcher next) async {
+        next(HttpProgressAction(action.context, true));
+
+        var key = CacheKey.getSxKey();
+        var cache = await SPHelper.value(key: key, def: null).then((token) {
+          if (token == null) {
+            return "0";
+          } else {
+            print('sx data from cache') ;
+            next(SxResponseAction(json.decode(token)));
+          }
+          return "1";
+        });
+        if(cache == '0') {
+          var api = store.state.httpRetrofit;
+          var response = await api.post(path: action.path, body: action.body);
+          transform(response, next, action.context).then((value) {
+            print("${action.path}-------$value");
+            if (!(value is Exception)) {
+              SPHelper.save(key:key, value: json.encode(value));
+              next(SxResponseAction(value));
+            }
+          });
+          next(HttpProgressAction(action.context, false));
+        }
+        next(action);
+      }),
   new TypedMiddleware<AppState, BannerRequestAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));

@@ -6,9 +6,10 @@ class HomeModel {
   List<FixBoxModel> model = [];
 
   ///开奖号码
-  List<dynamic> second = [];
+  List<dynamic> opencodes = [];
 
   ///购彩大厅
   List<FixBoxModel> third = [];
   List<dynamic> banners = [];
+  List<dynamic> sxConfig = [];
 }
