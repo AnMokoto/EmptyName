@@ -18,30 +18,35 @@ abstract class PlayStyle extends Object {
   /// 玩法样式
   @protected
   String _type;
+
   String get type => _type;
 
   /// 玩法描述
   @protected
   String _desc;
+
   String get desc => _desc;
 
   /// 显示名称
   @protected
   String _showName;
+
   String get name => _showName;
 
   ///默认一注好多钱
   @protected
   double _price;
+
   double get price => _price;
+
   ///赔率
 //  @protected
-  Map<String ,List<dynamic>> oddsMap ;
+  Map<String, List<dynamic>> oddsMap;
+
 //  Map<String ,List<dynamic>> get oddsMap=> _oddsMap;
 //  setOddsMap(Map<String ,List<dynamic>> oddsMap){
 //    _oddsMap = oddsMap;
 //  }
-
 
   @protected
   PlayStyle(
@@ -65,11 +70,13 @@ abstract class PlayStyle extends Object {
   List<List<int>> __data, __multiple;
 
   List<List<int>> get data => __data;
+
   set data(List<List<int>> datas) {
     this.__data = datas;
   }
 
   List<List<int>> get multiple => __multiple;
+
   set multiple(List<dynamic> multiple) {
     var list = new List.generate(initialType().length, (i) {
       return new List.generate(this.initialCount, (index) {
@@ -201,6 +208,7 @@ abstract class PlayStyle extends Object {
   /// 强制转换数据显示
   @protected
   dynamic forceTransform(dynamic d) => d;
+
   ///赔率
   @protected
   dynamic forceTransformOdd(dynamic d) {
@@ -278,15 +286,7 @@ abstract class PlayStyle extends Object {
               isSelect: isSelect,
               child: getChildItem(position, index),
             ),
-            /*new Offstage(
-              offstage: multipleItem > 0,
-              child: new Container(
-                margin: EdgeInsets.all(3.0),
-                child: new Center(
-                  child: new Text("$multipleItem 倍"),
-                ),
-              ),
-            ),*/
+
           ],
         ),
       );
@@ -303,28 +303,34 @@ abstract class PlayStyle extends Object {
     final data = initialArray()[position];
     final isSelect = data[index] != -1;
     final showData = "${forceTransform(index)}";
-    final showOdd =  "${forceTransformOdd('$showData')}";
+    final showOdd = "${forceTransformOdd('$showData')}";
     return new Center(
-      child: new Column(children: <Widget>[
-        new Text(
-        "$showData",
-        maxLines: 1,
-        style: new TextStyle(
-            color: isSelect ? Colors.white : Colors.red, fontSize: 17.0),
-      ) ,
-
-       getOdd(showOdd, isSelect),
-      ],),
+      child: new Column(
+        children: <Widget>[
+          new Container(
+            child: new Text(
+              "$showData",
+              maxLines: 1,
+              style: new TextStyle(
+                  color: isSelect ? Colors.white : Colors.red, fontSize: 17.0),
+            ),
+          ),
+          getOdd(showOdd, isSelect),
+        ],
+      ),
     );
   }
 
   getOdd(final showOdd, final isSelect) {
     if (showOdd == '') return new Container();
-    return new Text(
-      '$showOdd',
-      maxLines: 1,
-      style: new TextStyle(
-          color: isSelect ? Colors.white : Colors.grey, fontSize: 11.0),
+    return Container(
+      padding: EdgeInsets.only(bottom: 4.0),
+      child: new Text(
+        '$showOdd',
+        maxLines: 1,
+        style: new TextStyle(
+            color: isSelect ? Colors.white : Colors.redAccent, fontSize: 11.0),
+      ),
     );
   }
 }
@@ -406,6 +412,7 @@ abstract class StyleManagerIMPL {
 
   @protected
   PlayStyle playStyle(String playEn) {}
+
   @protected
   List<String> playEns() {}
 }
@@ -426,6 +433,7 @@ class LotteryStyleDefault extends LotteryStyle {
 abstract class Shape {
   /// 获取背景样式
   Decoration get decoration;
+
   Decoration get onPressDecoration;
 }
 
