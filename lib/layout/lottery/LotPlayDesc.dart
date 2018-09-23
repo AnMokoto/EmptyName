@@ -13,6 +13,7 @@ import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/conf/date.dart';
 import 'package:lowlottery/widget/Lottery2Layer.dart';
 import 'package:lowlottery/conf/Lot.dart';
+import 'package:lowlottery/layout/pops/LotplayDetailPop.dart';
 
 /// callback when who preclick the item.
 /// [position] item count position
@@ -22,12 +23,12 @@ typedef void OnLotteryPushClick(int position, int index);
 class LotteryHeadSliverPersistentHeaderDelegate
     extends SliverPersistentHeaderDelegate {
   String playEn;
-
+  Map<String, List<dynamic>> oddsMap;
   Store<AppState> state;
 
   String desc;
 
-  LotteryHeadSliverPersistentHeaderDelegate({this.playEn}) {}
+  LotteryHeadSliverPersistentHeaderDelegate({this.playEn ,this.oddsMap}) {}
 
   @override
   Widget build(
@@ -36,27 +37,31 @@ class LotteryHeadSliverPersistentHeaderDelegate
       child: new Semantics(
         child: new StoreConnector<AppState, List<dynamic>>(
             builder: (context, state) {
-              var m = new Map() ;
-          Map val = state.firstWhere((e) => e['playEn'] == playEn ,orElse: ()=>m);
-          if (val.length>0) {
-            String odd;
-            if (val['odd'] > 0) {
-              odd = val['odd'].toString();
-            } else if (val['awardMoney'] > 0) {
-              odd = val['awardMoney'].toString() + " 元";
-            } else {
-              odd = '';
+          var m = new Map();
+          Map val =
+              state.firstWhere((e) => e['playEn'] == playEn, orElse: () => m);
+          if (val.length > 0) {
+            List<dynamic> odds = [];
+            if (oddsMap != null && oddsMap.isNotEmpty) {
+              odds = oddsMap[playEn];
+
             }
-            return new Container(
-              child: new Column(children: <Widget>[
-                new Container(
-                  child: new Text(
-                    "${val['desc']} ${odd}",
-                    style: new TextStyle(color: Colors.grey),
-                  ),
-                ),
-              ]),
-            );
+            return new InkWell(
+                onTap: () {
+                  print('show detail');
+                  LotPlayDetailPop.lotPlayDetail(
+                      context, '玩法描述', '${val["desc"]}' ,odds);
+                },
+                child: new Container(
+                  child: new Column(children: <Widget>[
+                    new Container(
+                      child: new Text(
+                        "${val['shortDesc']} ",
+                        style: new TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                  ]),
+                ));
           }
           return new Text("");
         }, converter: (state) {

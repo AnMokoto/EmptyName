@@ -230,17 +230,17 @@ class _LotteryState extends State<LotteryLayer> {
                       shrinkWrap: true,
                       slivers: <Widget>[
                         new SliverPadding(
-                          padding: EdgeInsets.all(10.0),
+                          padding: EdgeInsets.only(top: 4.0),
                           sliver: new SliverPersistentHeader(
                             delegate:
                                 new LotteryHeadSliverPersistentHeaderDelegate(
-                                    playEn: style.type),
+                                    playEn: style.type ,oddsMap: style.oddsMap),
                             pinned: false,
                             floating: false,
                           ),
                         ),
                         new SliverPadding(
-                          padding: EdgeInsets.all(10.0),
+                          padding: EdgeInsets.all(1.0),
                           sliver: new SliverList(
                             delegate: new SliverChildBuilderDelegate(
                               (context, index) {

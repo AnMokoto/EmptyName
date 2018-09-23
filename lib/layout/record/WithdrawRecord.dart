@@ -78,7 +78,7 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     dispatch(context,
-        new TradeRequestAction(context, {"pageIndex": 0, "pageSize": 100}));
+        new TradeRequestAction(context, {"pageIndex": 0, "pageSize": 100 ,'type':1}));
   }
 
   @override

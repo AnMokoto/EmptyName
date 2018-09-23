@@ -11,14 +11,14 @@ import 'ModifyPwdLayer.dart';
 import 'package:lowlottery/layout/login/LoginLayer.dart';
 import 'package:lowlottery/store/sp.dart';
 
-class AnquanLayer extends StatefulWidget {
-  AnquanLayer();
+class KefuLayer extends StatefulWidget {
+  KefuLayer();
 
   _OpencodeRecordState createState() => new _OpencodeRecordState();
 }
 
-class _OpencodeRecordState extends State<AnquanLayer>
-    with SingleTickerProviderStateMixin<AnquanLayer> {
+class _OpencodeRecordState extends State<KefuLayer>
+    with SingleTickerProviderStateMixin<KefuLayer> {
   final titles = [
     "全部",
   ];
@@ -43,7 +43,7 @@ class _OpencodeRecordState extends State<AnquanLayer>
           centerTitle: true,
           backgroundColor: Colors.red,
           title: new Text(
-            "安全中心",
+            "客服中心",
             style: new TextStyle(color: Colors.white),
           ),
         ),
@@ -109,60 +109,6 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                 trailing: Icon(Icons.navigate_next),
               ),
             ),
-
-            new Container(
-              color: Colors.grey[100],
-//            margin: EdgeInsets.only(top: 10.0),
-              child: new ListTile(
-                onTap: () {
-                  Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new AlipayLayer(),
-                  ));
-                },
-                leading: Icon(AppIcons.alipay, color: Colors.grey),
-                title: new Text("绑定支付宝,提现到支付宝"),
-                trailing: Icon(Icons.navigate_next),
-              ),
-            ),
-            new Container(
-              color: Colors.grey[100],
-//            margin: EdgeInsets.only(top: 10.0),
-              child: new ListTile(
-                onTap: () {
-                  Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new CardLayer(),
-                  ));
-                },
-                leading: Icon(AppIcons.chongzhi, color: Colors.grey),
-                title: new Text("银行卡管理"),
-                trailing: Icon(Icons.navigate_next),
-              ),
-            ),
-            new StoreConnector<AppState, AppState>(builder: (context, state) {
-              return new Container(
-                width: 360.0,
-                margin: new EdgeInsets.all(40.0),
-                child: new Card(
-                  color: Colors.red,
-                  elevation: 6.0,
-                  child: new FlatButton(
-                    onPressed: () {
-                     state.token = '' ;
-                      SPHelper.clearAll();
-                      Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                        builder: (context) => new LoginLayer(),
-                      ));
-                    },
-                    child: new Text(
-                      '退出登录',
-                      style: new TextStyle(color: Colors.white, fontSize: 16.0),
-                    ),
-                  ),
-                ),
-              );
-            }, converter: (state) {
-              return state.state;
-            }),
 
           ],
         ),

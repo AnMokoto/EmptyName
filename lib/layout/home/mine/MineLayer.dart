@@ -15,6 +15,7 @@ import 'package:lowlottery/style/k3.dart';
 import 'package:lowlottery/layout/recharge/Chongzhiqudao.dart';
 import 'package:lowlottery/layout/recharge/Withdraw.dart';
 import 'AnquanLayer.dart';
+import 'KefuLayer.dart';
 class MineLayer extends StatefulWidget {
   _MineState createState() => new _MineState();
 }
@@ -297,7 +298,7 @@ class _MineState extends State<MineLayer>
               child: new ListTile(
                 onTap: () {
                   Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => new AnquanLayer(),
+                    builder: (context) => new KefuLayer(),
                   ));
                 },
                 leading: Icon(AppIcons.kefu, color: Colors.red),
