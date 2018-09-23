@@ -54,9 +54,9 @@ class AppIcons {
    * 获取彩种logo
    */
   static IconData getLot(String gameEn) {
-    if (gameEn.contains("ssc5")) return IconData(0xe639, fontFamily: "Alibaba");
-    if (gameEn.contains("ssc3")) return IconData(0xe638, fontFamily: "Alibaba");
-    if (gameEn.contains("ssc1")) return IconData(0xe637, fontFamily: "Alibaba");
+    if (gameEn.contains("ssc5")) return IconData(0xe643, fontFamily: "Alibaba");
+    if (gameEn.contains("ssc3")) return IconData(0xe642, fontFamily: "Alibaba");
+    if (gameEn.contains("ssc1")) return IconData(0xe648, fontFamily: "Alibaba");
     if (gameEn.contains("txssc")) return IconData(0xe685, fontFamily: "Alibaba");
     if (gameEn.contains("ssc")) return IconData(0xe606, fontFamily: "Alibaba");
     if (gameEn.contains("kl10")) return IconData(0xe603, fontFamily: "Alibaba");

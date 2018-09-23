@@ -7,9 +7,10 @@ class LotConfig {
   LotConfig._();
 
   static Map<String, String> _lot = {
+    "pk10ffc": "极速赛车",
     "xglhc": "香港六合彩",
     "xglhcffc": "大发六合彩",
-    "pk10": "北京快车",
+    "pk10": "北京PK10",
     "gdkl10": "广东快乐十分",
     "cqkl10": "重庆快乐十分",
     "hunkl10": "湖南快乐十分",
@@ -66,7 +67,8 @@ class LotConfig {
   }
 
   static String getLotShortName(String gameEn) {
-    if (gameEn.contains("pk10")) return "pk10";
+    if (gameEn.contains("pk10ffc")) return "极速赛车";
+    if (gameEn.contains("pk10")) return "PK10";
     if (gameEn.contains("11x5")) return "11选5";
     if (gameEn.contains("k3")) return "快三";
     if (gameEn.contains("lhc")) return "六合彩";
