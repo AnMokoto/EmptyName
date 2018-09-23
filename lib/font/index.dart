@@ -63,6 +63,7 @@ class AppIcons {
     if (gameEn.contains("11x5")) return IconData(0xe605, fontFamily: "Alibaba");
     if (gameEn.contains("lhc")) return IconData(0xe608, fontFamily: "Alibaba");
     if (gameEn.contains("lhc")) return IconData(0xe608, fontFamily: "Alibaba");
+    if (gameEn.contains("pk10ffc")) return IconData(0xe635, fontFamily: "Alibaba");
     if (gameEn.contains("pk10")) return IconData(0xe604, fontFamily: "Alibaba");
     if (gameEn.contains("k3")) return IconData(0xe607, fontFamily: "Alibaba");
   }
