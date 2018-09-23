@@ -22,6 +22,7 @@ class LotIcon {
     if (gameEn.contains("kl10")) return Colors.deepPurple;
     if (gameEn.contains("11x5")) return Colors.pinkAccent;
     if (gameEn.contains("lhc")) return Colors.blueAccent;
+    if (gameEn.contains("pk10ffc")) return Colors.deepOrange;
     if (gameEn.contains("pk10")) return Colors.pink;
     if (gameEn.contains("k3")) return Colors.red;
   }

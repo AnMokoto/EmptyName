@@ -8,7 +8,7 @@ class OpenCode {
 
   static Container opencode(
       String gameEn, var _str, int index, List<dynamic> sxList) {
-    if (gameEn == 'pk10') {
+    if (gameEn.contains('pk10')) {
       return _pk10(_str, index);
     }
     if (gameEn.contains('xglhc')) {
@@ -48,9 +48,7 @@ class OpenCode {
 
     String sx = defaultText;
     if (text != defaultText) {
-
-      sx =
-          sxList.firstWhere((it) => it['code'].contains(text))['sx'];
+      sx = sxList.firstWhere((it) => it['code'].contains(text))['sx'];
     }
     return Container(
       child: new Column(
