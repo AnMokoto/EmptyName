@@ -109,52 +109,61 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
 //          margin: EdgeInsets.only(right: 5.0),
           padding: EdgeInsets.all(3.0),
           child: new Container(
-              child: new StoreConnector<AppState, AppState>(
-            builder: (context, appstate) {
-              LotteryState state = appstate.lottery;
-              List<dynamic> sxList = appstate.homeModel.sxConfig;
-              return new InkWell(
-                  onTap: () {
-                    print('to opencode list');
-                    Navigator.of(context).push(new MaterialPageRoute(
-                        builder: (context) => new LotOpencodeRecordLayer(
-                              gameEn: widget.gameEn,
-                            )));
-                  },
-                  child: new Column(
-                    children: <Widget>[
-                      new Text(
-                        (state.history != null
-                                ? (state.history.isNotEmpty
-                                    ? state.history[0].expectNo ?? ""
+              child: new InkWell(
+            onTap: () {
+              print('to opencode list');
+              Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (context) => new LotOpencodeRecordLayer(
+                        gameEn: widget.gameEn,
+                      )));
+            },
+            child: new StoreConnector<AppState, List<Lottery>>(
+              builder: (context, history) {
+                return new Column(
+                  children: <Widget>[
+                    new Text(
+                      (history != null
+                              ? (history.isNotEmpty
+                                  ? history[0].expectNo ?? ""
+                                  : "")
+                              : "") +
+                          "期开奖号码",
+                      style: headStyle,
+                    ),
+                    new Container(
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: new List.generate(
+                          style.count,
+                          (index) {
+                            var _str = (history != null
+                                    ? (history.isNotEmpty
+                                        ? history[0].opencode as String ?? ""
+                                        : "")
                                     : "")
-                                : "") +
-                            "期开奖号码",
-                        style: headStyle,
-                      ),
-                      new Container(
-                        child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: new List.generate(style.count, (index) {
-                              var _str = (state.history != null
-                                      ? (state.history.isNotEmpty
-                                          ? state.history[0].opencode
-                                                  as String ??
-                                              ""
-                                          : "")
-                                      : "")
-                                  .split(",");
+                                .split(",");
 
-                              var gameEn = widget.gameEn;
-                              return OpenCode.opencode(gameEn, _str, index ,sxList);
-                            })),
+                            var gameEn = widget.gameEn;
+                            return new StoreConnector<AppState, List<dynamic>>(
+                              builder: (context, sxList) {
+                                return OpenCode.opencode(
+                                    gameEn, _str, index, sxList);
+                              },
+                              converter: (state) {
+                                return state.state.homeModel.sxConfig;
+                              },
+                            );
+                          },
+                        ),
                       ),
-                    ],
-                  ));
-            },
-            converter: (state) {
-              return state.state;
-            },
+                    ),
+                  ],
+                );
+              },
+              converter: (state) {
+                return state.state.lottery.history;
+              },
+            ),
           )),
         ),
 
@@ -168,14 +177,13 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
           children: <Widget>[
             new Container(
                 margin: EdgeInsets.only(right: 5.0),
-                child: new StoreConnector<AppState, LotteryState>(
+                child: new StoreConnector<AppState, LotteryModel>(
                   builder: (c, state) {
-                    var store = state.lottery;
                     var time =
                         "00:00:00"; //"${store == null ? "" : store.remainTime ?? ""}"
 
-                    if (store != null) {
-                      final deadLine = store.remainTime as int;
+                    if (state != null) {
+                      final deadLine = state.remainTime as int;
                       // if (_timer != null) {
                       //   if (_timer.isActive) {
                       //     _timer.cancel();
@@ -187,7 +195,7 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
                         if (!isShowDialog) {
                           isShowDialog = true;
                           Future.delayed(Duration(milliseconds: 100), () {
-                            showPopDialog(context, state.lottery);
+                            showPopDialog(context, state);
                           });
                         }
                         time = "";
@@ -203,7 +211,7 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
                     return new Column(
                       children: <Widget>[
                         new Text(
-                          "${store == null ? "" : store.expectNo ?? ""}期",
+                          "${state == null ? "" : state.expectNo ?? ""}期",
                           style: headStyle,
                         ),
 
@@ -226,7 +234,7 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
                     );
                   },
                   converter: (state) {
-                    return state.state.lottery;
+                    return state.state.lottery.lottery;
                   },
                 )),
           ],

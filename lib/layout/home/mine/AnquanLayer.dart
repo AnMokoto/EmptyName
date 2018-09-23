@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lowlottery/font/index.dart';
-import 'package:lowlottery/store/AppStore.dart';
 import 'package:lowlottery/store/appStore.dart';
 import 'CardLayer.dart';
 import 'AlipayLayer.dart';
@@ -95,7 +94,6 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
         padding: EdgeInsets.only(bottom: 20.0),
         child: new Column(
           children: <Widget>[
-
             new Container(
               color: Colors.grey[100],
               child: new ListTile(
@@ -109,7 +107,6 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                 trailing: Icon(Icons.navigate_next),
               ),
             ),
-
             new Container(
               color: Colors.grey[100],
 //            margin: EdgeInsets.only(top: 10.0),
@@ -138,32 +135,28 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                 trailing: Icon(Icons.navigate_next),
               ),
             ),
-            new StoreConnector<AppState, AppState>(builder: (context, state) {
-              return new Container(
-                width: 360.0,
-                margin: new EdgeInsets.all(40.0),
-                child: new Card(
-                  color: Colors.red,
-                  elevation: 6.0,
-                  child: new FlatButton(
-                    onPressed: () {
-                     state.token = '' ;
-                      SPHelper.clearAll();
-                      Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                        builder: (context) => new LoginLayer(),
-                      ));
-                    },
-                    child: new Text(
-                      '退出登录',
-                      style: new TextStyle(color: Colors.white, fontSize: 16.0),
-                    ),
+            new Container(
+              width: 360.0,
+              margin: new EdgeInsets.all(40.0),
+              child: new Card(
+                color: Colors.red,
+                elevation: 6.0,
+                child: new FlatButton(
+                  onPressed: () {
+                    dispatch(context, LogOutAction());
+                    // state.token = '';
+                    SPHelper.clearAll();
+                    Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                      builder: (context) => new LoginLayer(),
+                    ));
+                  },
+                  child: new Text(
+                    '退出登录',
+                    style: new TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 ),
-              );
-            }, converter: (state) {
-              return state.state;
-            }),
-
+              ),
+            ),
           ],
         ),
       ),

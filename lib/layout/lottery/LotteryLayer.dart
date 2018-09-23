@@ -195,9 +195,22 @@ class _LotteryState extends State<LotteryLayer> {
   Widget build(BuildContext context) {
     var style = widget.style;
 
-    var _code = style.transform.code;
-
     var model = style.transform;
+
+    var _code = model.code;
+
+    final ignore = new StoreConnector<AppState, LotplayModel>(
+      builder: (context, state) {
+        final map = state.list.firstWhere((w) => w['playEn'] == style.type);
+        if (map != null && map['odds'] != null) {
+          style.multiple = map['odds'];
+        }
+        // return new Text("");
+      },
+      converter: (state) {
+        return state.state.lotplayModel;
+      },
+    );
 
     return new WillPopScope(
       child: new Scaffold(
@@ -234,7 +247,7 @@ class _LotteryState extends State<LotteryLayer> {
                           sliver: new SliverPersistentHeader(
                             delegate:
                                 new LotteryHeadSliverPersistentHeaderDelegate(
-                                    playEn: style.type ,oddsMap: style.oddsMap),
+                                    playEn: style.type, oddsMap: style.oddsMap),
                             pinned: false,
                             floating: false,
                           ),
@@ -246,28 +259,13 @@ class _LotteryState extends State<LotteryLayer> {
                               (context, index) {
                                 return new Column(
                                   children: <Widget>[
-                                    new StoreConnector<AppState, LotplayModel>(
-                                      builder: (context, state) {
-                                        final map = state.list.firstWhere(
-                                            (w) => w['playEn'] == style.type);
-                                        if (map != null &&
-                                            map['odds'] != null) {
-                                          style.multiple = map['odds'];
-                                        }
-
-                                        return new LotteryItem(
-                                          position: index,
-                                          style: style,
-                                          callback: (index, position) {
-                                            setState(() {
-                                              style.toBet2System(
-                                                  index, position);
-                                            });
-                                          },
-                                        );
-                                      },
-                                      converter: (state) {
-                                        return state.state.lotplayModel;
+                                    new LotteryItem(
+                                      position: index,
+                                      style: style,
+                                      callback: (index, position) {
+                                        setState(() {
+                                          style.toBet2System(index, position);
+                                        });
                                       },
                                     ),
                                     new Divider(),
@@ -393,9 +391,6 @@ class _LotteryState extends State<LotteryLayer> {
                                         ),
                                       );
                                     }, converter: (state) {
-                                      var content =
-                                          state.state.betModel.content;
-                                      print(state.state.betModel.money);
                                       return state.state.betModel;
                                     }),
                                   ],

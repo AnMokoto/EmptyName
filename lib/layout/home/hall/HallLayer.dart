@@ -63,21 +63,31 @@ class _IndexFragState extends State<HallIndexLayer> {
 
   @override
   Widget build(BuildContext context) {
-    return new StoreConnector<AppState, AppState>(
+    return new StoreConnector<AppState, List<FixBoxModel>>(
       builder: (context, state) {
         return new FixBoxWidget(
-            models: state.homeModel.third ?? [],
+            models: state ?? [],
             onItemClick: (model, position) {
               Navigator.of(context).push(new MaterialPageRoute(
-                builder: (context) => new LotteryLayer(
-                      impl: StyleSplit.of(model.gameEn , state.lotplayModel.list),
-                      gameEn: model.gameEn,
-                    ),
-              ));
+                  builder: (context) => getLayer(model.gameEn)));
             });
       },
       converter: (state) {
-        return state.state;
+        return state.state.homeModel.third;
+      },
+    );
+  }
+
+  Widget getLayer(String gameEn) {
+    return new StoreConnector<AppState, List<dynamic>>(
+      builder: (context, d) {
+        return new LotteryLayer(
+          impl: StyleSplit.of(gameEn, d),
+          gameEn: gameEn,
+        );
+      },
+      converter: (state) {
+        return state.state.lotplayModel.list;
       },
     );
   }

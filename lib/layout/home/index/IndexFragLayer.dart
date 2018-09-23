@@ -7,6 +7,7 @@ import 'package:lowlottery/layout/lottery/LotteryLayer.dart';
 import 'package:lowlottery/style/index.dart' show StyleSplit;
 import 'package:lowlottery/store/appStore.dart';
 import 'dart:async';
+
 class IndexFragLayer extends StatefulWidget {
   // final index_type = [
   //   "assets/lottery/cqssc.png",
@@ -26,16 +27,18 @@ class _IndexFragState extends State<IndexFragLayer> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Future.delayed(Duration(seconds: 2), () {
+      dispatch(context, LotplayRequestAction(context, {}));
+      dispatch(context, new SxRequestAction(context, {}));
+    });
   }
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    dispatch(context, new IndexRequestAction(context, {'type':'home'}));
+    dispatch(context, new IndexRequestAction(context, {'type': 'home'}));
     dispatch(context, new BannerRequestAction(context, new Map()));
-    dispatch(context, new LotplayRequestAction(context, {}));
-    dispatch(context, new SxRequestAction(context, {}));
   }
 
   @override
@@ -44,8 +47,8 @@ class _IndexFragState extends State<IndexFragLayer> {
       children: <Widget>[
         new AspectRatio(
           aspectRatio: 16.0 / 9.0,
-          child: Image.network('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535553838059&di=1ca43aa1c063ce6d4ac55478f156a30e&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0153ed5850ab46a8012060c8c42cd9.png%40900w_1l_2o_100sh.jpg'
-            ,
+          child: Image.network(
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535553838059&di=1ca43aa1c063ce6d4ac55478f156a30e&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0153ed5850ab46a8012060c8c42cd9.png%40900w_1l_2o_100sh.jpg',
             fit: BoxFit.cover,
           ),
         ), //banner
@@ -65,25 +68,36 @@ class _IndexFragState extends State<IndexFragLayer> {
           ),
         ),*/
         new Expanded(
-          child: new StoreConnector<AppState,AppState >(
+          child: new StoreConnector<AppState, List<FixBoxModel>>(
             builder: (context, state) {
               return new FixBoxWidget(
-                  models: state.homeModel.model ?? [],
+                  models: state ?? [],
                   onItemClick: (model, position) {
                     Navigator.of(context).push(new MaterialPageRoute(
-                      builder: (context) => new LotteryLayer(
-                            impl: StyleSplit.of(model.gameEn ,state.lotplayModel.list),
-                            gameEn: model.gameEn,
-                          ),
-                    ));
+                        builder: (context) => getLayer(model.gameEn)));
                   });
             },
             converter: (state) {
-              return state.state;
+              return state.state.homeModel.model;
             },
           ),
         ),
       ],
+    );
+  }
+
+  Widget getLayer(String gameEn) {
+    return new StoreConnector<AppState, List<dynamic>>(
+      builder: (context, d) {
+        print(" yizhishua...............");
+        return new LotteryLayer(
+          impl: StyleSplit.of(gameEn, d),
+          gameEn: gameEn,
+        );
+      },
+      converter: (state) {
+        return state.state.lotplayModel.list;
+      },
     );
   }
 }

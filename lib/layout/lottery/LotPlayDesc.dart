@@ -28,15 +28,14 @@ class LotteryHeadSliverPersistentHeaderDelegate
 
   String desc;
 
-  LotteryHeadSliverPersistentHeaderDelegate({this.playEn ,this.oddsMap}) {}
+  LotteryHeadSliverPersistentHeaderDelegate({this.playEn, this.oddsMap}) {}
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return new SafeArea(
-      child: new Semantics(
-        child: new StoreConnector<AppState, List<dynamic>>(
-            builder: (context, state) {
+      child: new StoreConnector<AppState, List<dynamic>>(
+        builder: (context, state) {
           var m = new Map();
           Map val =
               state.firstWhere((e) => e['playEn'] == playEn, orElse: () => m);
@@ -44,36 +43,33 @@ class LotteryHeadSliverPersistentHeaderDelegate
             List<dynamic> odds = [];
             if (oddsMap != null && oddsMap.isNotEmpty) {
               odds = oddsMap[playEn];
-
             }
             return new InkWell(
-                onTap: () {
-                  print('show detail');
-                  LotPlayDetailPop.lotPlayDetail(
-                      context, '玩法描述', '${val["desc"]}' ,odds);
-                },
-                child: new Container(
-                  child: new Column(children: <Widget>[
-                    new Container(
-                      child: new Text(
-                        "${val['shortDesc']} ",
-                        style: new TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                  ]),
-                ));
+              onTap: () {
+                print('show detail');
+                LotPlayDetailPop.lotPlayDetail(
+                    context, '玩法描述', '${val["desc"]}', odds);
+              },
+              child: new Container(
+                child: new Text(
+                  "${val['shortDesc']} ",
+                  style: new TextStyle(color: Colors.grey),
+                ),
+              ),
+            );
           }
           return new Text("");
-        }, converter: (state) {
+        },
+        converter: (state) {
           var content = state.state.lotplayModel.list;
           return content;
-        }),
+        },
       ),
     );
   }
 
   @override
-  double get maxExtent => 50.0;
+  double get maxExtent => 70.0;
 
   @override
   double get minExtent => 0.0;
