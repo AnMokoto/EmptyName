@@ -16,6 +16,7 @@ import 'package:lowlottery/conf/Lot.dart';
 import 'LotPlayDesc.dart';
 import 'package:lowlottery/layout/home/opencode/Opencode.dart';
 import 'Header.dart';
+import 'package:lowlottery/conf/BeishuConf.dart';
 
 /// callback when who preclick the item.
 /// [position] item count position
@@ -230,7 +231,7 @@ class _LotteryState extends State<LotteryLayer> {
             child: new Column(
               children: <Widget>[
                 /// header
-                new LotteryHeadLayer(
+                 new LotteryHeadLayer(
                   gameEn: widget.gameEn,
                   style: style,
                 ),
@@ -282,38 +283,57 @@ class _LotteryState extends State<LotteryLayer> {
                 ),
 
                 /// 倍数
-                new Container(
-                    child: Row(
-                  children: <Widget>[
-                    new IconButton(
-                      icon: new Icon(
-                        AppIcons.jian,
-                        size: 20.0,
-                        color: Colors.grey,
+                new StoreConnector<AppState, PlayModelItem>(
+                    builder: (context, state) {
+                  return new Container(
+                      child: Row(
+                    children: <Widget>[
+                      new IconButton(
+                        icon: new Icon(
+                          AppIcons.jian,
+                          size: 20.0,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          if (style.transform.beishu > BeishuConf.min()) {
+                            style.transform.beishu--;
+                            setState(() {
+                              widget.style.transform;
+                            });
+                          } else {
+                            print('倍数不能小于1');
+                          }
+                          print('less ${style.transform.beishu}');
+                        },
                       ),
-                      onPressed: () {
-                        style.transform.beishu--;
-
-                        print('less ${style.transform.beishu}');
-                      },
-                    ),
-                    new IconButton(
-                      icon: new Icon(
-                        AppIcons.add,
-                        size: 20.0,
-                        color: Colors.grey,
+                      new IconButton(
+                        icon: new Icon(
+                          AppIcons.add,
+                          size: 20.0,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          if (style.transform.beishu < BeishuConf.max()) {
+                            style.transform.beishu++;
+                            setState(() {
+                              widget.style.transform;
+                            });
+                            print(
+                                'add${style.transform.beishu} ${state.beishu}');
+                          } else {
+                            print('最高倍数');
+                          }
+                        },
                       ),
-                      onPressed: () {
-                        style.transform.beishu++;
-                        print('add${style.transform.beishu}');
-                      },
-                    ),
-                    new Text(
-                      "倍",
-                      style: new TextStyle(color: Colors.grey),
-                    ),
-                  ],
-                )),
+                      new Text(
+                        "倍",
+                        style: new TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ));
+                }, converter: (state) {
+                  return model;
+                }),
 
                 /// footer
                 new Container(
@@ -352,7 +372,7 @@ class _LotteryState extends State<LotteryLayer> {
                                       size: 40.0,
                                       color: Colors.white,
                                     ),
-                                    new StoreConnector<AppState, PlayModel>(
+                                    new StoreConnector<AppState, PlayModelItem>(
                                         builder: (context, state) {
                                       return new Container(
                                         margin: EdgeInsets.only(left: 15.0),
@@ -367,7 +387,7 @@ class _LotteryState extends State<LotteryLayer> {
                                             new SafeArea(
                                               bottom: false,
                                               child: new Text(
-                                                "共${style.transform.zhushu}注${style.transform.beishu}倍，${model.money}元",
+                                                "共${style.transform.zhushu}注${style.transform.beishu}倍，${style.transform.money}元",
                                                 style: new TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 15.0,
@@ -390,8 +410,8 @@ class _LotteryState extends State<LotteryLayer> {
                                           ],
                                         ),
                                       );
-                                    }, converter: (state) {
-                                      return state.state.betModel;
+                                    }, converter: (style) {
+                                      return model;
                                     }),
                                   ],
                                 ),
