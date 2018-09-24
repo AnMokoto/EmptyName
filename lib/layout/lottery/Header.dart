@@ -77,8 +77,8 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
           _startTimer();
 
           ///发送更改时间
-//          dispatch(context, LotteryRefreshDeadLineAction());
-          //setState(() {});
+          dispatch(context, LotteryRefreshDeadLineAction());
+          setState(() {});
         } catch (e) {}
       }
     });
