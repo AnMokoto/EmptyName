@@ -108,7 +108,7 @@ class _LoginPageState extends State<ModefyPwdLayer> {
                         print("the pass is" + _userPassController.text);
                         StoreProvider.of<AppState>(context)
                             .dispatch(new ModifyPwdRequestAction(context, {
-//                          "password": _userNameController.text,
+                          "ext": _userNameController.text,
                           "val": _userPassController.text,
                           "key": 'password'
                         }));

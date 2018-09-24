@@ -4,7 +4,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/store/AppStore.dart';
-import 'package:lowlottery/store/appStore.dart';
 import 'CardLayer.dart';
 import 'AlipayLayer.dart';
 import 'ModifyPwdLayer.dart';
