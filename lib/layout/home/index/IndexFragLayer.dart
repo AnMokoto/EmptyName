@@ -87,7 +87,7 @@ class _IndexFragState extends State<IndexFragLayer> {
   }
 
   Widget getLayer(String gameEn) {
-    /*return new StoreConnector<AppState, List<dynamic>>(
+    return new StoreConnector<AppState, List<dynamic>>(
       builder: (context, d) {
         print(" yizhishua...............");
         return new LotteryLayer(
@@ -98,10 +98,10 @@ class _IndexFragState extends State<IndexFragLayer> {
       converter: (state) {
         return state.state.lotplayModel.list;
       },
-    );*/
+    );/*
     return new LotteryLayer(
       impl: StyleSplit.of(gameEn, []),
       gameEn: gameEn,
-    );
+    );*/
   }
 }
