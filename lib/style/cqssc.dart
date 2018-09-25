@@ -636,10 +636,8 @@ class Stylessc extends StyleManagerIMPL {
   const Stylessc();
 
   static List<String> plays = [];
-  static Map<String ,List<dynamic>> oddMap = {};
-  factory Stylessc.of(String str ,List<String> playEns ,Map<String ,List<dynamic>> oddMap1) {
+  factory Stylessc.of(String str ,List<String> playEns) {
     plays = playEns;
-    oddMap = oddMap1;
     return const Stylessc();
   }
 
@@ -714,9 +712,6 @@ class Stylessc extends StyleManagerIMPL {
       case 'ssc_4xzxfx':
         playStyle= cqssc_5xzxfx(type: playEn, name: LotPlayConfig.getName(playEn));
         break;
-    }
-    if(playStyle!=null){
-      playStyle.oddsMap = oddMap;
     }
     return playStyle;
   }

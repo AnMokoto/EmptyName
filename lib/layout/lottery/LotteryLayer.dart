@@ -248,7 +248,7 @@ class _LotteryState extends State<LotteryLayer> {
                           sliver: new SliverPersistentHeader(
                             delegate:
                                 new LotteryHeadSliverPersistentHeaderDelegate(
-                                    playEn: style.type, oddsMap: style.oddsMap),
+                                    playEn: style.type, oddsMap: {}),
                             pinned: false,
                             floating: false,
                           ),

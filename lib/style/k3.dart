@@ -286,10 +286,8 @@ class Stylek3 extends StyleManagerIMPL {
   const Stylek3();
 
   static List<String> plays = [];
-  static Map<String ,List<dynamic>> oddMap = {};
-  factory Stylek3.of(String str,List<String> playEns ,Map<String ,List<dynamic>> oddMap1) {
+  factory Stylek3.of(String str,List<String> playEns ) {
     plays = playEns;
-    oddMap = oddMap1;
     return const Stylek3();
   }
 
@@ -326,9 +324,6 @@ class Stylek3 extends StyleManagerIMPL {
       case 'k3_2bth':
         playStyle= k3_buthdx(type: playEn, name: LotPlayConfig.getName(playEn));
         break ;
-    }
-    if(playStyle!=null){
-      playStyle.oddsMap= oddMap;
     }
     return playStyle;
   }

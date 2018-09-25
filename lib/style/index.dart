@@ -135,19 +135,12 @@ class StyleSplit {
   static StyleManagerIMPL of(String str ,List<dynamic> lotPlayList) {
 
     List<String> temp = getPlayEn(lotPlayList);
-    Map<String ,List<dynamic>> oddMap = {};
-    for (var it in lotPlayList) {
-     List<dynamic> odds = it['odds'] ;
-     if(odds.length>0) {
-       oddMap.putIfAbsent(it['playEn'], ()=> odds);
-     }
-    }
-    if (str.contains("ssc")) return Stylessc.of(str ,temp ,oddMap);
-    if (str.contains("11x5")) return Style11x5.of(str ,temp ,oddMap);
-    if (str.contains("pk10")) return Stylepk10.of(str ,temp ,oddMap);
+    if (str.contains("ssc")) return Stylessc.of(str ,temp );
+    if (str.contains("11x5")) return Style11x5.of(str ,temp );
+    if (str.contains("pk10")) return Stylepk10.of(str ,temp );
     if (str.contains("kl10")) return Stylekl10.of(str);
-    if (str.contains("lhc"))return  Stylexglhc.of(str ,temp ,oddMap);
-    if (str.contains("k3")) return  Stylek3.of(str ,temp ,oddMap);
+    if (str.contains("lhc"))return  Stylexglhc.of(str ,temp );
+    if (str.contains("k3")) return  Stylek3.of(str ,temp );
   }
 
   static List<String> getPlayEn(List<dynamic> lotPlayList) {

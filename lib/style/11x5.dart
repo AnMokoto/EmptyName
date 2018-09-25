@@ -242,10 +242,8 @@ class Style11x5 extends StyleManagerIMPL {
   const Style11x5();
 
   static List<String> plays = [];
-  static Map<String ,List<dynamic>> oddMap = {};
-  factory Style11x5.of(String str,List<String> playEns ,Map<String ,List<dynamic>> oddMap1) {
+  factory Style11x5.of(String str,List<String> playEns) {
     plays = playEns;
-    oddMap = oddMap1;
     return const Style11x5();
   }
 
@@ -281,9 +279,6 @@ class Style11x5 extends StyleManagerIMPL {
         break ;
     }
 
-    if(playStyle!=null){
-      playStyle.oddsMap = oddMap;
-    }
     return playStyle;
   }
 }

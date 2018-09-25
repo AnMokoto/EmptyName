@@ -229,10 +229,8 @@ class Stylepk10 extends StyleManagerIMPL {
   const Stylepk10();
 
   static List<String> plays = [ ];
-  static Map<String ,List<dynamic>> oddMap = {};
-  factory Stylepk10.of(String str,List<String> playEns ,Map<String ,List<dynamic>> oddMap1) {
+  factory Stylepk10.of(String str,List<String> playEns  ) {
     plays = playEns;
-    oddMap = oddMap1;
     return const Stylepk10();
   }
 
@@ -261,9 +259,6 @@ class Stylepk10 extends StyleManagerIMPL {
       case 'pk10_gyhz':
         playStyle =cqssc_hz(type: playEn, name: LotPlayConfig.getName(playEn));
         break ;
-    }
-    if(playStyle!=null){
-      playStyle.oddsMap = oddMap;
     }
     return playStyle;
   }

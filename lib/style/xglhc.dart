@@ -326,10 +326,8 @@ class Stylexglhc extends StyleManagerIMPL {
   const Stylexglhc();
 
   static List<String> plays = [ ];
-  static Map<String ,List<dynamic>> oddMap = {};
-  factory Stylexglhc.of(String str,List<String> playEns ,Map<String ,List<dynamic>> oddMap1 ) {
+  factory Stylexglhc.of(String str,List<String> playEns   ) {
     plays = playEns;
-    oddMap =oddMap1;
     return const Stylexglhc();
   }
 
@@ -383,9 +381,7 @@ class Stylexglhc extends StyleManagerIMPL {
         break ;
     }
 
-    if(playStyle!=null){
-      playStyle.oddsMap = oddMap;
-    }
+
     return playStyle;
   }
 }

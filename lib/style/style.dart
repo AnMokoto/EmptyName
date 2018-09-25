@@ -39,15 +39,6 @@ abstract class PlayStyle extends Object {
 
   double get price => _price;
 
-  ///赔率
-//  @protected
-  Map<String, List<dynamic>> oddsMap;
-
-//  Map<String ,List<dynamic>> get oddsMap=> _oddsMap;
-//  setOddsMap(Map<String ,List<dynamic>> oddsMap){
-//    _oddsMap = oddsMap;
-//  }
-
   @protected
   PlayStyle(
       {@required String type,
@@ -209,17 +200,7 @@ abstract class PlayStyle extends Object {
   @protected
   dynamic forceTransform(dynamic d) => d;
 
-  ///赔率
-  @protected
-  dynamic forceTransformOdd(dynamic d) {
-    if (oddsMap == null || oddsMap.isEmpty) return '';
-    List<dynamic> odds = oddsMap[type];
-    if (odds != null && odds.length > 0) {
-      final odd = odds.firstWhere((it) => it['key'] == d)['odd'];
-      return "赔率${odd}";
-    }
-    return '';
-  }
+
 
   /// 当前期号显示个数
   /// return int
