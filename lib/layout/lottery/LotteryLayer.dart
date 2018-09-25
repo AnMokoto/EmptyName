@@ -506,10 +506,24 @@ class _LotteryItemState extends State<LotteryItem> {
   Widget build(BuildContext context) {
     var value = widget.style;
     int position = widget.position;
-    return new Lottery2Layer(
-      billboard: value.billboard(position),
-      style: value.layerStyle,
-      child: value.generate(position, widget.callback),
+  return   new StoreConnector<AppState, LotplayModel>(
+      builder: (context, state) {
+        final map = state.list.firstWhere((w) => w['playEn'] == value.type);
+        List<dynamic> odds = [];
+        if (map != null && map['odds'] != null) {
+           odds=map['odds'] ;
+        }
+       return new Lottery2Layer(
+          billboard: value.billboard(position),
+          style: value.layerStyle,
+          child: value.generate(position, widget.callback ,odds),
+        );
+        // return new Text("");
+      },
+      converter: (state) {
+        return state.state.lotplayModel;
+      },
     );
+
   }
 }

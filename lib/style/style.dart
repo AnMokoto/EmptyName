@@ -268,7 +268,7 @@ abstract class PlayStyle extends Object {
 
   /// 返回需要展示的Item
   /// [position] => [initialArray]
-  List<Widget> generate(int position, fun(int p, int i)) {
+  List<Widget> generate(int position, fun(int p, int i ,) ,List<dynamic> odds) {
     final data = initialArray()[position];
     final multiple = initialMultiple()[position];
     return new List.generate(data.length, (index) {
@@ -284,7 +284,7 @@ abstract class PlayStyle extends Object {
               shape: shape(position, index),
               constraints: constraints,
               isSelect: isSelect,
-              child: getChildItem(position, index),
+              child: getChildItem(position, index ,odds),
             ),
 
           ],
@@ -293,17 +293,29 @@ abstract class PlayStyle extends Object {
     });
   }
 
+  /**
+   * 获取当前号码对应的赔率信息
+   */
+  static String getNumberShowOdd(List<dynamic> odds  ,String data) {
+    if (odds != null && odds.length > 0) {
+      final odd = odds.firstWhere((it) => it['key'] == data)['odd'];
+      return "赔率${odd}";
+    }
+    return '';
+  }
+
+
   ///  返回单个布局样式
   /// 可以不重写这个方法，默认返回
   /// [position] 当前item
   /// [index] item inside
   /// 重写 [generate]后这个方法可以省略
   @protected
-  Widget getChildItem(int position, int index) {
+  Widget getChildItem(int position, int index ,List<dynamic> odds) {
     final data = initialArray()[position];
     final isSelect = data[index] != -1;
     final showData = "${forceTransform(index)}";
-    final showOdd = "${forceTransformOdd('$showData')}";
+    String showOdd = getNumberShowOdd(odds, showData);
     return new Center(
       child: new Column(
         children: <Widget>[
