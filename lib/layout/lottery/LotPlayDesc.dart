@@ -23,12 +23,11 @@ typedef void OnLotteryPushClick(int position, int index);
 class LotteryHeadSliverPersistentHeaderDelegate
     extends SliverPersistentHeaderDelegate {
   String playEn;
-  Map<String, List<dynamic>> oddsMap;
   Store<AppState> state;
 
   String desc;
 
-  LotteryHeadSliverPersistentHeaderDelegate({this.playEn, this.oddsMap}) {}
+  LotteryHeadSliverPersistentHeaderDelegate({this.playEn}) {}
 
   @override
   Widget build(
@@ -40,15 +39,12 @@ class LotteryHeadSliverPersistentHeaderDelegate
           Map val =
               state.firstWhere((e) => e['playEn'] == playEn, orElse: () => m);
           if (val.length > 0) {
-            List<dynamic> odds = [];
-            if (oddsMap != null && oddsMap.isNotEmpty) {
-              odds = oddsMap[playEn];
-            }
+
             return new InkWell(
               onTap: () {
                 print('show detail');
                 LotPlayDetailPop.lotPlayDetail(
-                    context, '玩法描述', '${val["desc"]}', odds);
+                    context, '玩法描述', '${val["desc"]}');
               },
               child: new Container(
                 child: new Text(

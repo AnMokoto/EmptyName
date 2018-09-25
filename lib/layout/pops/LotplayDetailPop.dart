@@ -8,7 +8,7 @@ class LotPlayDetailPop {
    * 通用弹框
    */
   static void lotPlayDetail(
-      BuildContext context, String title, String data, List<dynamic> odds) {
+      BuildContext context, String title, String data ) {
     Container container = new Container();
     ListView listView = new ListView();
     var leftstyle = new TextStyle(
@@ -21,23 +21,6 @@ class LotPlayDetailPop {
       data,
       style: leftstyle,
     ));
-    if (odds != null && odds.length > 0) {
-      for (var value in odds) {
-        container = new Container(
-          margin: EdgeInsets.all(5.0),
-          child: new Row(
-            children: <Widget>[
-              new Container(
-                width:100.0,
-                child: new Text('号码：${value["key"]}' , style: new TextStyle(color: Colors.grey),),
-              ),
-              new Expanded(child: new Text('赔率： ${value["odd"]}' ,style: new TextStyle(color: Colors.redAccent),)),
-            ],
-          ),
-        );
-        li.add(container);
-      }
-    }
 
     showDialog(
       context: context,

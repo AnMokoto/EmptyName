@@ -200,18 +200,7 @@ class _LotteryState extends State<LotteryLayer> {
 
     var _code = model.code;
 
-    final ignore = new StoreConnector<AppState, LotplayModel>(
-      builder: (context, state) {
-        final map = state.list.firstWhere((w) => w['playEn'] == style.type);
-        if (map != null && map['odds'] != null) {
-          style.multiple = map['odds'];
-        }
-        // return new Text("");
-      },
-      converter: (state) {
-        return state.state.lotplayModel;
-      },
-    );
+
 
     return new WillPopScope(
       child: new Scaffold(
@@ -248,7 +237,7 @@ class _LotteryState extends State<LotteryLayer> {
                           sliver: new SliverPersistentHeader(
                             delegate:
                                 new LotteryHeadSliverPersistentHeaderDelegate(
-                                    playEn: style.type, oddsMap: {}),
+                                    playEn: style.type ),
                             pinned: false,
                             floating: false,
                           ),
