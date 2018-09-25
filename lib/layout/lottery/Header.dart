@@ -38,7 +38,8 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
     with WidgetsBindingObserver {
   //Timer _timer;
   bool isAlive, isShowDialog = false;
-
+int count=0 ;
+int hideCount=0; //5秒后删除弹框
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // TODO: implement didChangeAppLifecycleState
@@ -67,6 +68,14 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
     WidgetsBinding.instance.addObserver(this);
     isAlive = true;
     _startTimer();
+
+    countDown();
+  }
+  void countDown() {
+    var _duration = new Duration(seconds: 3);
+    new Future.delayed(_duration, (){
+      print('print down') ;
+    });
   }
 
   Future _startTimer() async {
@@ -75,10 +84,11 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
       if (isAlive) {
         try {
           _startTimer();
+          print('=======================================time') ;
 
           ///发送更改时间
           dispatch(context, LotteryRefreshDeadLineAction());
-          setState(() {});
+//          setState(() {});
         } catch (e) {}
       }
     });
@@ -179,31 +189,35 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
                 margin: EdgeInsets.only(right: 5.0),
                 child: new StoreConnector<AppState, LotteryModel>(
                   builder: (c, state) {
-                    var time =
-                        "00:00:00"; //"${store == null ? "" : store.remainTime ?? ""}"
-
+                    var time =  "00:00:00"; //"${store == null ? "" : store.remainTime ?? ""}"
                     if (state != null) {
                       final deadLine = state.remainTime as int;
-                      // if (_timer != null) {
-                      //   if (_timer.isActive) {
-                      //     _timer.cancel();
-                      //   }
-                      //   _timer = null;
-                      // }
-
                       if (deadLine <= 0) {
+                        count++;
+                        print(isShowDialog);
                         if (!isShowDialog) {
                           isShowDialog = true;
                           Future.delayed(Duration(milliseconds: 100), () {
                             showPopDialog(context, state);
                           });
+                          count=0;
                         }
-                        time = "";
+                        if(count>3){
+//                          Navigator.of(context).pop();
+                          ////启动重新开始的时间计时器
+//                          _requestNewQState();
+                          isShowDialog = false;
+                          count=0;
+                        }
+                        hideCount=0;
                       } else {
-                        // if (!isAlive) {
-                        //   isAlive = true;
-                        //   _startTimer();
-                        // }
+                        if(hideCount>=5 && isShowDialog){
+                          Navigator.of(context).pop();
+                          isShowDialog=false;
+                          hideCount=0;
+
+                        }else
+                        hideCount++;
                         time = DateHelper.invoke(deadLine);
                       }
                     }
@@ -253,7 +267,7 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
     );
     showDialog(
         context: context,
-        //barrierDismissible: false,
+        barrierDismissible: true,
         builder: (context) {
           _requestNewQState();
           return new CupertinoAlertDialog(
@@ -262,7 +276,7 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
               style: dialogTextStyle,
             ),
             content: new Text(
-              "$expectNo 期已截止投注",
+              "$expectNo 期已截止投注\n投注时请注意期号",
               style: dialogTextStyle,
             ),
             actions: <Widget>[
@@ -273,8 +287,6 @@ class _LotteryHeadState extends State<LotteryHeadLayer>
                 ),
                 isDefaultAction: true,
                 onPressed: () {
-                  //isAlive = true;
-                  //_startTimer();
                   Navigator.of(context).pop();
                   ////启动重新开始的时间计时器
                   _requestNewQState();
