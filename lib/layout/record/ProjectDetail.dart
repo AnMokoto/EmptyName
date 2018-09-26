@@ -13,7 +13,12 @@ import 'package:lowlottery/layout/lottery/LotteryLayer.dart';
 import 'package:lowlottery/style/index.dart' show StyleSplit;
 import 'package:lowlottery/store/appStore.dart';
 import 'Tickets.dart';
+import 'package:lowlottery/layout/pops/ToastUtil.dart';
+import 'package:flutter/services.dart';
 
+/**
+ * 方案详情
+ */
 class ProjectDetail extends StatefulWidget {
   final String projectEn;
 
@@ -67,10 +72,19 @@ class _LotteryBetRecordDetailsState extends State<ProjectDetail> {
                       children: <Widget>[
                         new Positioned(
                           left: 0.0,
-                          child: new Column(
+                          child: new Row(
                             children: <Widget>[
                               // Image.network(""),
-                              LotIcon.logo("${_map["gameEn"] ?? ''}", 33.0),
+                              new Container(
+                                child: LotIcon.logo(
+                                    "${_map["gameEn"] ?? ''}", 33.0),
+                              ),
+                              new Container(
+                                margin: new EdgeInsets.all(15.0),
+                                child: new Text(LotConfig.getLotName(
+                                    "${_map["gameEn"] ?? "-"}")),
+                              )
+
 //                        new Text(LotConfig.getLotName("${_map["gameEn"]??"-"}"))
                             ],
                           ),
@@ -93,8 +107,6 @@ class _LotteryBetRecordDetailsState extends State<ProjectDetail> {
                     child: new Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        new Text("彩        种：" +
-                            LotConfig.getLotName("${_map["gameEn"] ?? "-"}")),
                         new Text(
                           "期        号：第${_map["expectNo"] ?? ""}期",
                           style: style,
@@ -127,11 +139,25 @@ class _LotteryBetRecordDetailsState extends State<ProjectDetail> {
                   ),
                   new Container(
                     padding: EdgeInsets.all(10.0),
-                    child: new Text("方案编号：${_map["projectEn"] ?? ""}"),
+                    height: 60.0,
+                    child: new InkWell(
+                      onTap: () {
+                        print('${_map["projectEn"]}');
+                        ToastUtil.show('方案号码已复制');
+                        Clipboard.setData(
+                            new ClipboardData(text: '${_map["projectEn"]}'));
+                      },
+                      child: new Row(
+                        children: <Widget>[
+                          new Text("方案编号：${_map["projectEn"] ?? ""}"),
+                          new Text('    点击复制'),
+                        ],
+                      ),
+                    ),
                   ),
                   new Container(
                     width: 360.0,
-                    margin: new EdgeInsets.all(40.0),
+                    margin: new EdgeInsets.fromLTRB(40.0, 1.0, 40.0, 10.0),
                     child: new Card(
                       color: Colors.red,
                       elevation: 6.0,
@@ -139,8 +165,8 @@ class _LotteryBetRecordDetailsState extends State<ProjectDetail> {
                         onPressed: () {
                           Navigator.of(context).push(new MaterialPageRoute(
                             builder: (context) => new LotteryLayer(
-                                  impl:
-                                      StyleSplit.of("${_map["gameEn"] ?? ""}" ,[]),
+                                  impl: StyleSplit.of(
+                                      "${_map["gameEn"] ?? ""}", []),
                                   gameEn: "${_map["gameEn"] ?? ""}",
                                 ),
                           ));
