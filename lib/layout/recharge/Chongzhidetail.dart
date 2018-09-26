@@ -58,7 +58,10 @@ class _LotterBetRecordState extends State<ChongzhidetailLayer>
                 controller: _tabController,
                 children: titles.map((s) {
                   /// 待增加回退清除
-                  return new LotterBetRecorderFragLayer(en: widget.en,content: widget.content,);
+                  return new LotterBetRecorderFragLayer(
+                    en: widget.en,
+                    content: widget.content,
+                  );
                 }).toList(),
               ),
             )
@@ -88,8 +91,9 @@ class LotterBetRecorderFragLayer extends StatefulWidget {
 
 class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
   TextStyle small = new TextStyle(fontSize: 90.0);
- TextEditingController text = new TextEditingController();
- TextEditingController desc = new TextEditingController();
+  TextEditingController text = new TextEditingController();
+  TextEditingController desc = new TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -126,68 +130,86 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
             ),
             new Container(
               color: Colors.grey[100],
-              child: new Row(children: <Widget>[
-                new Container(
-                  width:100.0,
-                  padding: EdgeInsets.only(left: 10.0),
-                  child: new Text("充值金额："),
-                ),
-                new Expanded(
-
-                  child: new TextField(
-                    keyboardType: TextInputType.number,
-                    maxLines: 1,
-                    textInputAction: TextInputAction.done,
-                    controller: text,
-                    decoration: new InputDecoration(
-                      hintText: "充值金额最少1元",
-                      border: new UnderlineInputBorder(),
+              child: new Row(
+                children: <Widget>[
+                  new Container(
+                    width: 100.0,
+                    padding: EdgeInsets.only(left: 10.0),
+                    child: new Text("充值金额："),
+                  ),
+                  new Expanded(
+                    child: new TextField(
+                      keyboardType: TextInputType.number,
+                      maxLines: 1,
+                      textInputAction: TextInputAction.done,
+                      controller: text,
+                      decoration: new InputDecoration(
+                        hintText: "充值金额最少1元",
+                        border: new UnderlineInputBorder(),
+                      ),
+                      onChanged: (val) {
+                        print(val);
+                        int num = int.parse(val);
+                      },
                     ),
-                    onChanged: (val){
-                      print(val);
-                      int num = int.parse(val) ;
-                    },
                   ),
-                ),
 //                new Container(width: 200.0,)
-              ],) ,
+                ],
+              ),
             ),
-          new Container(
-            color: Colors.grey[100],
-            child: new Row(children: <Widget>[
-              new Container(
-                width:100.0,
-
-                padding: EdgeInsets.only(left: 30.0),
-                child: new Text("备注："),
-              ),
-              new Expanded(
-
-                child: new TextField(
-                  keyboardType: TextInputType.text,
-                  maxLines: 1,
-                  textInputAction: TextInputAction.done,
-                  controller: desc,
-                  decoration: new InputDecoration(
-                    hintText: "建议填写您的真实姓名",
-                    border: new UnderlineInputBorder(),
-                  ),
-                  onChanged: (val){
-                    print(val);
-                    int num = int.parse(val) ;
-                  },
-                ),
-              ),
-//                new Container(width: 200.0,)
-            ],) ,
-          ),
             new Container(
               color: Colors.grey[100],
-              child: new ListTile(
-                title: new Text("扫描支付："),
+              child: new Row(
+                children: <Widget>[
+                  new Container(
+                    width: 100.0,
+                    padding: EdgeInsets.only(left: 30.0),
+                    child: new Text("备注："),
+                  ),
+                  new Expanded(
+                    child: new TextField(
+                      keyboardType: TextInputType.text,
+                      maxLines: 1,
+                      textInputAction: TextInputAction.done,
+                      controller: desc,
+                      decoration: new InputDecoration(
+                        hintText: "建议填写您的真实姓名",
+                        border: new UnderlineInputBorder(),
+                      ),
+                      onChanged: (val) {
+                        print(val);
+                        int num = int.parse(val);
+                      },
+                    ),
+                  ),
+//                new Container(width: 200.0,)
+                ],
               ),
             ),
             new Container(
+              padding: EdgeInsets.all(  20.0),
+              color: Colors.grey[100],
+              child: new Row(
+                children: <Widget>[
+                  new Container(
+                    child:
+                        new Text("扫描支付："),
+
+                  ),
+                  new Container(
+                    margin: EdgeInsets.all(  20.0),
+                    width: 100.0,
+                    height: 100.0,
+                    child: Image.network(
+                      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535553838059&di=1ca43aa1c063ce6d4ac55478f156a30e&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0153ed5850ab46a8012060c8c42cd9.png%40900w_1l_2o_100sh.jpg',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            new Container(
+              color: Colors.grey[100],
               width: 360.0,
               margin: new EdgeInsets.fromLTRB(10.0, 40.0, 10.0, 0.0),
               child: new Card(
@@ -195,7 +217,7 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                 elevation: 6.0,
                 child: new FlatButton(
                   onPressed: () {
-                    print(text.text) ;
+                    print(text.text);
                     StoreProvider.of<AppState>(context).dispatch(
                       new RechargeRequestAction(
                         context,
