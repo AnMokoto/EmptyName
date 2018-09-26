@@ -8,6 +8,7 @@ import 'package:lowlottery/store/actions/tradeAction.dart';
 import 'package:lowlottery/layout/pops/CommonPop.dart';
 @protected
 final tradeMiddleware = <Middleware<AppState>>[
+  //流水明细
   new TypedMiddleware<AppState, TradeRequestAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));
@@ -24,6 +25,7 @@ final tradeMiddleware = <Middleware<AppState>>[
   }),
 ];
 final rechargeMiddleware = <Middleware<AppState>>[
+  //用户提交充值申请
   new TypedMiddleware<AppState, RechargeRequestAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));

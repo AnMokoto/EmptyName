@@ -7,6 +7,7 @@ import '../net/net.dart';
 import 'package:lowlottery/layout/pops/CommonPop.dart';
 @protected
 final paywayMiddleware = <Middleware<AppState>>[
+  //支付方式列表
   new TypedMiddleware<AppState, PaywayRequestAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));
@@ -23,6 +24,7 @@ final paywayMiddleware = <Middleware<AppState>>[
   }),
 ];
 final withdrawlMiddleware = <Middleware<AppState>>[
+  //提现申请
   new TypedMiddleware<AppState, WithrawRequestAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));
@@ -39,6 +41,7 @@ final withdrawlMiddleware = <Middleware<AppState>>[
   }),
 ];
 final cardMiddleware = <Middleware<AppState>>[
+  //添加银行卡，支付宝
   new TypedMiddleware<AppState, CardRequestAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));
@@ -54,7 +57,9 @@ final cardMiddleware = <Middleware<AppState>>[
     next(action);
   }),
 ];
+
 final modifyPwdMiddleware = <Middleware<AppState>>[
+  //修改用户信息
   new TypedMiddleware<AppState, ModifyPwdRequestAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));

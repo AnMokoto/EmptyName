@@ -94,6 +94,7 @@ final userMiddleware = <Middleware<AppState>>[
 /// 获取用户数据
 @protected
 final userXMiddleware = <Middleware<AppState>>[
+  //获取用户信息
   new TypedMiddleware<AppState, UserRequestAction>(
       (store, action, NextDispatcher next) async {
     //next(new HttpProgressAction(action.context, true));
@@ -107,6 +108,7 @@ final userXMiddleware = <Middleware<AppState>>[
     });
     next(action);
   }),
+  //用户额度查询
   new TypedMiddleware<AppState, UserRequestBalanceAction>(
       (store, action, NextDispatcher next) async {
         next(HttpProgressAction(action.context, true));

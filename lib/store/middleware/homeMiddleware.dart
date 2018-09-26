@@ -13,6 +13,7 @@ import '../sp.dart';
 import 'package:lowlottery/conf/CacheKey.dart';
 @protected
 final homeMiddleware = <Middleware<AppState>>[
+  //首页彩种获取
   new TypedMiddleware<AppState, IndexRequestAction>(
       (store, action, NextDispatcher next) async {
         var type = '${action.body['type']}';
@@ -49,7 +50,9 @@ final homeMiddleware = <Middleware<AppState>>[
           next(HttpProgressAction(action.context, false));
         }
     next(action);
-  }), new TypedMiddleware<AppState, SxRequestAction>(
+  }),
+  //生肖信息获取
+  new TypedMiddleware<AppState, SxRequestAction>(
           (store, action, NextDispatcher next) async {
         next(HttpProgressAction(action.context, true));
 
@@ -105,6 +108,7 @@ final homeMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, false));
     next(action);
   }),
+  //彩种开奖号码
   new TypedMiddleware<AppState, OpencodeRequestAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));
@@ -120,7 +124,7 @@ final homeMiddleware = <Middleware<AppState>>[
     next(action);
   }),
 ];
-
+//彩种玩法信息
 final lotplayMiddleware = <Middleware<AppState>>[
   new TypedMiddleware<AppState, LotplayRequestAction>(
           (store, action, NextDispatcher next) async {

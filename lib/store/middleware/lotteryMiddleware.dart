@@ -47,6 +47,7 @@ void requestWhenwhohasreallytoPaySuccess(BuildContext context, dynamic data) {
 
 @protected
 final betMiddleware = <Middleware<AppState>>[
+  //方案下单
   new TypedMiddleware<AppState, LotterBetRequestAction>(
       (store, action, next) async {
     next(HttpProgressAction(action.context, true));
@@ -64,6 +65,7 @@ final betMiddleware = <Middleware<AppState>>[
     //next(HttpProgressAction(action.context, false));
     next(action);
   }),
+  //方案支付
   new TypedMiddleware<AppState, LotterBetPayRequestAction>(
       (store, action, next) async {
     //next(HttpProgressAction(action.context, true));
@@ -83,6 +85,7 @@ final betMiddleware = <Middleware<AppState>>[
 
 @protected
 final lotterMiddleware = <Middleware<AppState>>[
+  //当前期号数据
   new TypedMiddleware<AppState, LotteryExpectNowAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));
@@ -103,6 +106,7 @@ final lotterMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, false));
     next(action);
   }),
+  //获取期号数据
   new TypedMiddleware<AppState, LotteryExpectRecordAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));
@@ -123,6 +127,7 @@ final lotterMiddleware = <Middleware<AppState>>[
 //// record
 @protected
 final recordMiddleware = <Middleware<AppState>>[
+  //购彩记录
   new TypedMiddleware<AppState, LotteryRecordAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));
@@ -137,6 +142,7 @@ final recordMiddleware = <Middleware<AppState>>[
     next(HttpProgressAction(action.context, false));
     next(action);
   }),
+  //方案详情
   new TypedMiddleware<AppState, LotteryRecordDetailAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));

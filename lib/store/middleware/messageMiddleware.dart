@@ -6,6 +6,7 @@ import '../models/index.dart';
 import '../net/net.dart';
 @protected
 final messageMiddleware = <Middleware<AppState>>[
+  //用户消息
   new TypedMiddleware<AppState, MessageRequestAction>(
       (store, action, NextDispatcher next) async {
     next(HttpProgressAction(action.context, true));
