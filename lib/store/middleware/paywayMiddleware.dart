@@ -4,6 +4,7 @@ import 'package:redux/redux.dart';
 import '../actions/index.dart';
 import '../models/index.dart';
 import '../net/net.dart';
+import 'package:lowlottery/layout/pops/CommonPop.dart';
 @protected
 final paywayMiddleware = <Middleware<AppState>>[
   new TypedMiddleware<AppState, PaywayRequestAction>(
@@ -30,7 +31,7 @@ final withdrawlMiddleware = <Middleware<AppState>>[
     transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
-        next(WithdrawResponseAction(value));
+        CommonPop.pop(action.context, '提现申请', '${value}') ;
       }
     });
     next(HttpProgressAction(action.context, false));

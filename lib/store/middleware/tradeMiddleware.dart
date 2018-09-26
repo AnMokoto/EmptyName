@@ -5,6 +5,7 @@ import '../actions/index.dart';
 import '../net/net.dart';
 import 'package:lowlottery/widget/fixbox/FixBoxModel.dart';
 import 'package:lowlottery/store/actions/tradeAction.dart';
+import 'package:lowlottery/layout/pops/CommonPop.dart';
 @protected
 final tradeMiddleware = <Middleware<AppState>>[
   new TypedMiddleware<AppState, TradeRequestAction>(
@@ -31,7 +32,8 @@ final rechargeMiddleware = <Middleware<AppState>>[
     transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
-        next(RechargeResponseAction(value));
+        CommonPop.pop(action.context, "充值申请", '${value}');
+//        next(RechargeResponseAction(value));
       }
     });
     next(HttpProgressAction(action.context, false));

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lowlottery/store/appStore.dart';
 import 'Nodata.dart';
 /**
-    提现
+    提现记录
  */
 class WithdrawRecordLayer extends StatefulWidget {
   _WithdrawRecordState createState() => new _WithdrawRecordState();
@@ -125,7 +125,7 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
                                           left: 0.0,
                                           bottom: 0.0,
                                           child: new Text(
-                                              "${value["desc"] ?? "-"}",
+                                              "提现",
                                               style: new TextStyle()),
                                         )
                                       ],

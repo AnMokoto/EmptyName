@@ -88,7 +88,8 @@ class LotterBetRecorderFragLayer extends StatefulWidget {
 
 class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
   TextStyle small = new TextStyle(fontSize: 90.0);
-
+ TextEditingController text = new TextEditingController();
+ TextEditingController desc = new TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -125,16 +126,61 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
             ),
             new Container(
               color: Colors.grey[100],
-              child: new ListTile(
-                title: new Text("充值金额："),
-              ),
+              child: new Row(children: <Widget>[
+                new Container(
+                  width:100.0,
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: new Text("充值金额："),
+                ),
+                new Expanded(
+
+                  child: new TextField(
+                    keyboardType: TextInputType.number,
+                    maxLines: 1,
+                    textInputAction: TextInputAction.done,
+                    controller: text,
+                    decoration: new InputDecoration(
+                      hintText: "充值金额最少1元",
+                      border: new UnderlineInputBorder(),
+                    ),
+                    onChanged: (val){
+                      print(val);
+                      int num = int.parse(val) ;
+                    },
+                  ),
+                ),
+//                new Container(width: 200.0,)
+              ],) ,
             ),
-            new Container(
-              color: Colors.grey[100],
-              child: new ListTile(
-                title: new Text("微信昵称："),
+          new Container(
+            color: Colors.grey[100],
+            child: new Row(children: <Widget>[
+              new Container(
+                width:100.0,
+
+                padding: EdgeInsets.only(left: 30.0),
+                child: new Text("备注："),
               ),
-            ),
+              new Expanded(
+
+                child: new TextField(
+                  keyboardType: TextInputType.text,
+                  maxLines: 1,
+                  textInputAction: TextInputAction.done,
+                  controller: desc,
+                  decoration: new InputDecoration(
+                    hintText: "建议填写您的真实姓名",
+                    border: new UnderlineInputBorder(),
+                  ),
+                  onChanged: (val){
+                    print(val);
+                    int num = int.parse(val) ;
+                  },
+                ),
+              ),
+//                new Container(width: 200.0,)
+            ],) ,
+          ),
             new Container(
               color: Colors.grey[100],
               child: new ListTile(
@@ -144,22 +190,19 @@ class _LotterBetRecorderFragState extends State<LotterBetRecorderFragLayer> {
             new Container(
               width: 360.0,
               margin: new EdgeInsets.fromLTRB(10.0, 40.0, 10.0, 0.0),
-//              padding: new EdgeInsets.fromLTRB(leftRightPadding,
-//                  topBottomPadding, leftRightPadding, topBottomPadding),
               child: new Card(
                 color: Colors.red,
                 elevation: 6.0,
                 child: new FlatButton(
                   onPressed: () {
-//                    print("the username is" + _userNameController.text);
-//                    print("the pass is" + _userPassController.text);
+                    print(text.text) ;
                     StoreProvider.of<AppState>(context).dispatch(
                       new RechargeRequestAction(
                         context,
                         {
-//                          "username": _userNameController.text,
+                          'beizhu': desc.text,
                           "en": widget.en,
-                          "amount": "3.0",
+                          "amount": text.text,
                         },
                       ),
                     );

@@ -13,7 +13,7 @@ import 'package:lowlottery/layout/record/MessageRecord.dart';
 import 'package:lowlottery/store/AppStore.dart';
 import 'package:lowlottery/style/k3.dart';
 import 'package:lowlottery/layout/recharge/Chongzhiqudao.dart';
-import 'package:lowlottery/layout/recharge/Withdraw.dart';
+import 'package:lowlottery/layout/recharge/Withdrawl.dart';
 import 'AnquanLayer.dart';
 import 'KefuLayer.dart';
 class MineLayer extends StatefulWidget {
@@ -201,7 +201,7 @@ class _MineState extends State<MineLayer>
                                                     new MaterialPageRoute(
                                                         builder: (context) =>
                                                             new WithdwarLayer(ketixian: double.parse( "${state.withdrawable}").toInt(),
-                                                             totalMoney: double.parse( "${state.withdrawable}") + double.parse("${state.totalBalance}")
+                                                             totalMoney:   double.parse("${state.totalBalance}")
                                                             )));
                                               },
                                             ),
