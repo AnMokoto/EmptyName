@@ -17,6 +17,6 @@ class BeishuConf {
    * 最高倍数
    */
   static int max() {
-    return 99999;
+    return 9999999;
   }
 }

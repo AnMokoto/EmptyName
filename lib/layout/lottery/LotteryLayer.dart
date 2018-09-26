@@ -199,9 +199,6 @@ class _LotteryState extends State<LotteryLayer> {
     var model = style.transform;
 
     var _code = model.code;
-
-
-
     return new WillPopScope(
       child: new Scaffold(
         appBar: new AppBar(
@@ -294,6 +291,38 @@ class _LotteryState extends State<LotteryLayer> {
                           }
                           print('less ${style.transform.beishu}');
                         },
+                      ),
+
+                      new Container(
+                        child: new Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            new Container(
+                              width: 60.0,
+                              child: new TextField(
+                                keyboardType: TextInputType.number,
+                                maxLines: 1,
+                                textInputAction: TextInputAction.done,
+//                                controller: new TextEditingController(text:'${style.transform.beishu}'),
+                                onChanged: (val){
+                                  print(val);
+                                  int num = int.parse(val) ;
+                                  if (num <= BeishuConf.max() && num>= BeishuConf.min()) {
+                                    style.transform.beishu = num;
+                                    setState(() {
+                                      widget.style.transform;
+                                    });
+                                   }
+                                },
+                                //obscureText: true,
+                              ),
+                            ),
+
+
+                          ],
+                        ),
                       ),
                       new IconButton(
                         icon: new Icon(
