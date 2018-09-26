@@ -90,7 +90,7 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
       physics: new AlwaysScrollableScrollPhysics(),
       controller: new ScrollController(),
       child: new Container(
-        color: Colors.grey[200],
+        color: Colors.grey[100],
         padding: EdgeInsets.only(bottom: 20.0),
         child: new Column(
           children: <Widget>[
@@ -136,24 +136,34 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
               ),
             ),
             new Container(
+              color: Colors.grey[100],
+//            margin: EdgeInsets.only(top: 10.0),
+              child: new ListTile(
+                onTap: () {
+                  SPHelper.clearAll();
+                },
+                leading: Icon(Icons.delete),
+                title: new Text("清除缓存"),
+                trailing: Icon(Icons.navigate_next),
+              ),
+            ),
+            new Container(
               width: 360.0,
               margin: new EdgeInsets.all(40.0),
-              child: new Card(
-                color: Colors.red,
-                elevation: 6.0,
-                child: new FlatButton(
-                  onPressed: () {
-                    dispatch(context, LogOutAction());
-                    // state.token = '';
-                    SPHelper.clearAll();
-                    Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                      builder: (context) => new LoginLayer(),
-                    ));
-                  },
-                  child: new Text(
-                    '退出登录',
-                    style: new TextStyle(color: Colors.white, fontSize: 16.0),
-                  ),
+              child: new OutlineButton(
+                borderSide:
+                    new BorderSide(color: Theme.of(context).primaryColor),
+                onPressed: () {
+                  dispatch(context, LogOutAction());
+                  // state.token = '';
+                  SPHelper.clearAll();
+                  Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                    builder: (context) => new LoginLayer(),
+                  ));
+                },
+                child: new Text(
+                  '退出登录',
+                  style: new TextStyle(color: Colors.redAccent, fontSize: 16.0),
                 ),
               ),
             ),

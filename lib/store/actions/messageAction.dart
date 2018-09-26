@@ -15,3 +15,17 @@ class MessageResponseAction extends StoreAction {
 
   MessageResponseAction(this.model);
 }
+
+class KefuRequestAction extends HttpStoreAction {
+  KefuRequestAction(BuildContext context, Map<String, dynamic> body)
+      : super(context: context, body: body);
+
+  @override
+  String get path => "kefus";
+}
+
+class KefuResponseAction extends StoreAction {
+  List<dynamic> model;
+
+  KefuResponseAction(this.model);
+}

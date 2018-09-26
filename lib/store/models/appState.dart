@@ -8,7 +8,7 @@ import 'OpencodeModel.dart';
 import 'user.dart';
 import 'TradeModel.dart';
 import 'MessageModel.dart';
-
+import 'KefyModel.dart';
 const price = 2.0;
 //const dynamic HOST_NAME = "http://178.128.21.119:9003/";
 const dynamic HOST_NAME = "http://api.484084.com/";
@@ -24,6 +24,7 @@ class AppState {
   UserModel userModel;
 
   MessageModel messageModel;
+  KefuModel kefuModel;
   LotplayModel lotplayModel;
   TradeModel tradeModel;
   OpencodeModel opencodeModel;
@@ -36,6 +37,7 @@ class AppState {
   WithdrawMoel withdrawMoel;
 
   AppState() {
+    this.kefuModel = new KefuModel();
     this.lotplayModel = new LotplayModel();
     this.withdrawMoel = new WithdrawMoel();
     this.paywayModel = new PaywayModel();

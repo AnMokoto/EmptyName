@@ -16,6 +16,7 @@ import 'package:lowlottery/layout/recharge/Chongzhiqudao.dart';
 import 'package:lowlottery/layout/recharge/Withdrawl.dart';
 import 'AnquanLayer.dart';
 import 'KefuLayer.dart';
+
 class MineLayer extends StatefulWidget {
   _MineState createState() => new _MineState();
 }
@@ -200,9 +201,14 @@ class _MineState extends State<MineLayer>
                                                 Navigator.of(context).push(
                                                     new MaterialPageRoute(
                                                         builder: (context) =>
-                                                            new WithdwarLayer(ketixian: double.parse( "${state.withdrawable}").toInt(),
-                                                             totalMoney:   double.parse("${state.totalBalance}")
-                                                            )));
+                                                            new WithdwarLayer(
+                                                                ketixian: double
+                                                                        .parse(
+                                                                            "${state.withdrawable}")
+                                                                    .toInt(),
+                                                                totalMoney:
+                                                                    double.parse(
+                                                                        "${state.totalBalance}"))));
                                               },
                                             ),
                                           ),
@@ -279,7 +285,8 @@ class _MineState extends State<MineLayer>
                 title: new Text("我的消息"),
                 trailing: Icon(Icons.navigate_next),
               ),
-            ),new Container(
+            ),
+            new Container(
               color: Colors.grey[100],
 //            margin: EdgeInsets.only(top: 10.0),
               child: new ListTile(
@@ -292,7 +299,8 @@ class _MineState extends State<MineLayer>
                 title: new Text("安全中心"),
                 trailing: Icon(Icons.navigate_next),
               ),
-            ),new Container(
+            ),
+            new Container(
               color: Colors.grey[100],
 //            margin: EdgeInsets.only(top: 10.0),
               child: new ListTile(
@@ -305,18 +313,8 @@ class _MineState extends State<MineLayer>
                 title: new Text("客服中心"),
                 trailing: Icon(Icons.navigate_next),
               ),
-            ),new Container(
-              color: Colors.grey[100],
-//            margin: EdgeInsets.only(top: 10.0),
-              child: new ListTile(
-                onTap: () {
-                  SPHelper.clearAll();
-                },
-                leading: Icon(AppIcons.kefu, color: Colors.red),
-                title: new Text("清除缓存"),
-                trailing: Icon(Icons.navigate_next),
-              ),
             ),
+
           ],
         ),
       ),

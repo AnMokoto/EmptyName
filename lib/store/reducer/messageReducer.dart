@@ -8,5 +8,9 @@ final List<Reducer<AppState>> messageReducer = <Reducer<AppState>>[
     state.messageModel.list  = action.model;
     return state;
   }),
+  new TypedReducer<AppState, KefuResponseAction>((state, action) {
+    state.kefuModel.list  = action.model;
+    return state;
+  }),
 
 ];
