@@ -5,6 +5,19 @@ import '../actions/index.dart';
 import '../models/index.dart';
 import '../net/net.dart';
 import 'package:lowlottery/layout/pops/CommonPop.dart';
+import 'package:lowlottery/layout/pops/ToastUtil.dart';
+
+import 'package:redux/redux.dart';
+import '../actions/index.dart';
+import '../models/index.dart';
+import '../sp.dart';
+import 'package:flutter/material.dart';
+import 'package:lowlottery/layout/login/LoginLayer.dart';
+import 'package:lowlottery/layout/home/HomeLayer.dart';
+import 'package:flutter/foundation.dart';
+import '../actions/_HttpAction.dart';
+import '../net/net.dart';
+
 @protected
 final paywayMiddleware = <Middleware<AppState>>[
   //支付方式列表
@@ -50,7 +63,8 @@ final cardMiddleware = <Middleware<AppState>>[
     transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
-        next(CardResponseAction(value));
+        CommonPop.pop(action.context, '绑定卡信息', '$value') ;
+//        next(CardResponseAction(value));
       }
     });
     next(HttpProgressAction(action.context, false));
@@ -68,7 +82,10 @@ final modifyPwdMiddleware = <Middleware<AppState>>[
     transform(response, next,action.context).then((value) {
       print("${action.path}-------$value");
       if (!(value is Exception)) {
-        next(ModifyPwdResponseAction(value));
+        ToastUtil.show('用户信息修改成功');
+//        if()
+//        next(ModifyPwdResponseAction(value));
+        Navigator.pop(action.context) ;
       }
     });
     next(HttpProgressAction(action.context, false));
