@@ -8,6 +8,7 @@ import 'package:lowlottery/style/index.dart';
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/conf/date.dart';
@@ -165,7 +166,7 @@ class LotteryLayer extends StatefulWidget {
 }
 
 class _LotteryState extends State<LotteryLayer> {
-  var _userNameController = new TextEditingController();
+  var _userNameController = new TextEditingController(text: "1");
 
   @override
   void initState() {
@@ -217,7 +218,7 @@ class _LotteryState extends State<LotteryLayer> {
             child: new Column(
               children: <Widget>[
                 /// header
-                 new LotteryHeadLayer(
+                new LotteryHeadLayer(
                   gameEn: widget.gameEn,
                   style: style,
                 ),
@@ -234,7 +235,7 @@ class _LotteryState extends State<LotteryLayer> {
                           sliver: new SliverPersistentHeader(
                             delegate:
                                 new LotteryHeadSliverPersistentHeaderDelegate(
-                                    playEn: style.type ),
+                                    playEn: style.type),
                             pinned: false,
                             floating: false,
                           ),
@@ -286,13 +287,14 @@ class _LotteryState extends State<LotteryLayer> {
                             setState(() {
                               widget.style.transform;
                             });
+                            _userNameController.text =
+                                style.transform.beishu.toString();
                           } else {
                             print('倍数不能小于1');
                           }
                           print('less ${style.transform.beishu}');
                         },
                       ),
-
                       new Container(
                         child: new Column(
                           mainAxisSize: MainAxisSize.max,
@@ -302,25 +304,32 @@ class _LotteryState extends State<LotteryLayer> {
                             new Container(
                               width: 60.0,
                               child: new TextField(
+                                textAlign: TextAlign.center,
                                 keyboardType: TextInputType.number,
                                 maxLines: 1,
                                 textInputAction: TextInputAction.done,
+                                decoration: InputDecoration.collapsed(
+                                    //hintText: state.beishu.toString(),
+                                    fillColor: Colors.transparent),
+                                controller: _userNameController,
 //                                controller: new TextEditingController(text:'${style.transform.beishu}'),
-                                onChanged: (val){
+                                onChanged: (val) {
                                   print(val);
-                                  int num = int.parse(val) ;
-                                  if (num <= BeishuConf.max() && num>= BeishuConf.min()) {
-                                    style.transform.beishu = num;
-                                    setState(() {
-                                      widget.style.transform;
-                                    });
-                                   }
+
+                                  int num = max(
+                                      BeishuConf.min(),
+                                      min(int.parse(val.isEmpty ? "1" : val),
+                                          BeishuConf.max()));
+
+                                  style.transform.beishu = num;
+                                  _userNameController.text = num.toString();
+                                  setState(() {
+                                    widget.style.transform;
+                                  });
                                 },
                                 //obscureText: true,
                               ),
                             ),
-
-
                           ],
                         ),
                       ),
@@ -336,6 +345,8 @@ class _LotteryState extends State<LotteryLayer> {
                             setState(() {
                               widget.style.transform;
                             });
+                            _userNameController.text =
+                                style.transform.beishu.toString();
                             print(
                                 'add${style.transform.beishu} ${state.beishu}');
                           } else {
@@ -524,17 +535,17 @@ class _LotteryItemState extends State<LotteryItem> {
   Widget build(BuildContext context) {
     var value = widget.style;
     int position = widget.position;
-  return   new StoreConnector<AppState, LotplayModel>(
+    return new StoreConnector<AppState, LotplayModel>(
       builder: (context, state) {
         final map = state.list.firstWhere((w) => w['playEn'] == value.type);
         List<dynamic> odds = [];
         if (map != null && map['odds'] != null) {
-           odds=map['odds'] ;
+          odds = map['odds'];
         }
-       return new Lottery2Layer(
+        return new Lottery2Layer(
           billboard: value.billboard(position),
           style: value.layerStyle,
-          child: value.generate(position, widget.callback ,odds),
+          child: value.generate(position, widget.callback, odds),
         );
         // return new Text("");
       },
@@ -542,6 +553,5 @@ class _LotteryItemState extends State<LotteryItem> {
         return state.state.lotplayModel;
       },
     );
-
   }
 }
