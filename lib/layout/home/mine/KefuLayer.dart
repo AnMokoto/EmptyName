@@ -5,7 +5,8 @@ import 'package:lowlottery/conf/Lot.dart';
 import 'package:lowlottery/font/index.dart';
 import 'package:lowlottery/layout/record/Nodata.dart';
 import 'package:lowlottery/store/appStore.dart';
-
+import 'package:flutter/services.dart';
+import 'package:lowlottery/layout/pops/ToastUtil.dart';
 class KefuLayer extends StatefulWidget {
   _OpencodeRecordState createState() => new _OpencodeRecordState();
 }
@@ -97,7 +98,12 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                 maxHeight: 80.0,
               ),
               child: new InkWell(
-                onTap: () {},
+                onTap: () {
+                  print('${value["desc"]}');
+                  ToastUtil.show('内容： ${value['desc']} 已复制');
+                  Clipboard.setData(
+                      new ClipboardData(text: '${value["desc"]}'));
+                },
                 child: new Row(
                   children: <Widget>[
                     new Expanded(
@@ -117,7 +123,6 @@ class _LotterBetRecorderFragState extends State<OpencodeRecorderFragLayer> {
                                           fontSize: 14.0,
                                           color: Colors.black87)),
 
-//                              new Icon(AppIcons.getLot("${value['gameEn']}"), size: 60.0)
                                 ],
                               ),
                             ),
