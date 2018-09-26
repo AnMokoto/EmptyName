@@ -41,6 +41,13 @@ class AppIcons {
   static IconData weixin =  IconData(0xe751, fontFamily: "Alibaba");
   static IconData qq = IconData(0xe641, fontFamily: "Alibaba");
   static IconData kefu = IconData(0xe761, fontFamily: "Alibaba");
+  static IconData province = IconData(0xe63a, fontFamily: "Alibaba");
+  static IconData city = IconData(0xe611, fontFamily: "Alibaba");
+  static IconData bank_card = IconData(0xe639, fontFamily: "Alibaba");
+  static IconData username = IconData(0xe609, fontFamily: "Alibaba");
+//  static IconData kefu = IconData(0xe761, fontFamily: "Alibaba");
+//  static IconData kefu = IconData(0xe761, fontFamily: "Alibaba");
+//  static IconData kefu = IconData(0xe761, fontFamily: "Alibaba");
 
   static IconData from(int codePoint) =>
       IconData(codePoint, fontFamily: "Alibaba");
